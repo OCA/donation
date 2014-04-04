@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright (C) 2014 Artisanat Monastique de Provence
+                       (http://www.barroux.org)
+    The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+<record id="donation_campaign_form" model="ir.ui.view">
+    <field name="name">donation.campaign.form</field>
+    <field name="model">donation.campaign</field>
+    <field name="arch" type="xml">
+        <form string="Donation Campaign Launching" version="7.0">
+            <group name="main">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="campaign_creation_date"/>
+            </group>
+            <group name="note">
+            	<field name="nota"/>
+            </group>
+        </form>
+    </field>
+</record>
+
+<record id="donation_campaign_tree" model="ir.ui.view">
+    <field name="name">donation.campaign.tree</field>
+    <field name="model">donation.campaign</field>
+    <field name="arch" type="xml">
+        <tree string="Donation Campaign Launching">
+            <field name="name"/>
+            <field name="code"/>
+            <field name="campaign_creation_date"/>
+        </tree>
+    </field>
+</record>
+
+<record id="donation_campaign_action" model="ir.actions.act_window">
+    <field name="name">Campaign of Donations</field>
+    <field name="res_model">donation.campaign</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="donation_campaign_menu" action="donation_campaign_action" parent="donation_config_menu" sequence="30"/>
+
+</data>
+</openerp>
