@@ -1,0 +1,211 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* donation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-03-13 08:50+0000\n"
+"PO-Revision-Date: 2014-03-13 08:50+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: donation
+#: code:addons/donation/donation.py:227
+#, python-format
+msgid "Missing price on product"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,state:0
+msgid "State"
+msgstr ""
+
+#. module: donation
+#: selection:donation.donation,state:0
+msgid "Draft"
+msgstr ""
+
+#. module: donation
+#: view:donation.line:0
+msgid "Donation Line"
+msgstr ""
+
+#. module: donation
+#: field:donation.line,product_id:0
+msgid "Product"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:135
+#, python-format
+msgid "The donation is in currency '%s' but the company '%s' has a currency '%s'. We don't handle that for the moment."
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,company_id:0
+msgid "Company"
+msgstr ""
+
+#. module: donation
+#: view:donation.donation:0
+#: field:donation.line,donation_id:0
+#: model:res.groups,name:donation.group_donation
+msgid "Donation"
+msgstr ""
+
+#. module: donation
+#: constraint:donation.donation:0
+msgid "Date must be today or in the past"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,company_currency_id:0
+msgid "Company Currency"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,line_ids:0
+#: model:ir.model,name:donation.model_donation_line
+msgid "Donation Lines"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,donation_date:0
+msgid "Donation Date"
+msgstr ""
+
+#. module: donation
+#: view:donation.donation:0
+msgid "Validate"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:228
+#, python-format
+msgid "The sale price on product '%s' is 0!"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,partner_categ_id:0
+msgid "Categories"
+msgstr ""
+
+#. module: donation
+#: sql_constraint:donation.donation:0
+msgid "A donation with this number already exists for this company"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,number:0
+msgid "Donation Number"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:134
+#: code:addons/donation/donation.py:153
+#, python-format
+msgid "Error:"
+msgstr ""
+
+#. module: donation
+#: model:ir.model,name:donation.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,company_email:0
+msgid "Company Email"
+msgstr ""
+
+#. module: donation
+#: field:donation.line,amount:0
+msgid "Amount"
+msgstr ""
+
+#. module: donation
+#: model:ir.actions.act_window,name:donation.donation_action
+#: model:ir.model,name:donation.model_donation_donation
+#: model:ir.ui.menu,name:donation.donation_menu
+#: model:ir.ui.menu,name:donation.donation_title_menu
+#: view:res.company:0
+msgid "Donations"
+msgstr ""
+
+#. module: donation
+#: selection:donation.donation,state:0
+msgid "Waiting Currency Conversion"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,move_id:0
+msgid "Account Move"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,check_total:0
+msgid "Check Amount"
+msgstr ""
+
+#. module: donation
+#: field:res.company,donation_bank_account_id:0
+msgid "Bank Account for Donations"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:154
+#, python-format
+msgid "Missing income account on product '%s' or on it's related product category"
+msgstr ""
+
+#. module: donation
+#: field:donation.line,sequence:0
+msgid "Sequence"
+msgstr ""
+
+#. module: donation
+#: sql_constraint:donation.line:0
+msgid "The amount must be positive or 0."
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,partner_id:0
+msgid "Donator"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,currency_id:0
+msgid "Currency"
+msgstr ""
+
+#. module: donation
+#: selection:donation.donation,state:0
+msgid "Done"
+msgstr ""
+
+#. module: donation
+#: model:ir.model,name:donation.model_account_invoice
+msgid "Invoice"
+msgstr ""
+
+#. module: donation
+#: model:ir.actions.act_window,name:donation.donation_line_action
+#: model:ir.ui.menu,name:donation.donation_line_menu
+msgid "Donations Lines"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,journal_id:0
+msgid "Journal"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,amount_total:0
+msgid "Amount Total"
+msgstr ""
+

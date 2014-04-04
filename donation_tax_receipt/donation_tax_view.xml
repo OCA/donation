@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+<data>
+
+<record id="donation_form" model="ir.ui.view">
+    <field name="model">donation.donation</field>
+    <field name="inherit_id" ref="donation.donation_form"/>
+    <field name="arch"  type="xml">
+       <field name="company_id" position="after">
+            <field name="tax_receipt_option" on_change="tax_receipt_option_change(partner_id, tax_receipt_option, context)"/>
+            <field name="tax_receipt_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            <field name="tax_receipt_id"/>
+       </field>
+    </field>
+</record>
+
+<record id="donation_line_tree" model="ir.ui.view">
+    <field name="model">donation.line</field>
+    <field name="inherit_id" ref="donation.donation_line_tree"/>
+    <field name="arch"  type="xml">
+       <field name="amount" position="after">
+            <field name="tax_receipt_ok" groups="donation.group_donation_manager" string="Tax Receipt"/>
+       </field>
+    </field>
+</record>
+
+<record id="donation_line_form" model="ir.ui.view">
+    <field name="model">donation.line</field>
+    <field name="inherit_id" ref="donation.donation_line_form"/>
+    <field name="arch"  type="xml">
+       <field name="amount" position="after">
+            <field name="tax_receipt_ok" groups="donation.group_donation_manager"/>
+       </field>
+    </field>
+</record>
+
+
+
+<record id="donation_tax_receipt_form" model="ir.ui.view">
+    <field name="name">donation.tax.receipt.form</field>
+    <field name="model">donation.tax.receipt</field>
+    <field name="arch"  type="xml">
+        <form string="Donation Tax Receipt" version="7.0">
+            <group name="main">
+                <field name="number" readonly="1"/>
+                <field name="date"/>
+                <field name="donation_date"/>
+                <field name="type"/>
+                <field name="print_date"/>
+                <field name="amount"/>
+                <field name="partner_id"/>
+                <field name="company_id"/>
+            </group>
+            <group name="donations">
+                <field name="donation_ids" nolabel="1"/>
+            </group>
+        </form>
+    </field>
+</record>
+
+
+<record id="donation_tax_receipt_tree" model="ir.ui.view">
+    <field name="name">donation.tax.receipt.tree</field>
+    <field name="model">donation.tax.receipt</field>
+    <field name="arch"  type="xml">
+        <tree string="Donation Tax Receipt">
+            <field name="number"/>
+            <field name="partner_id"/>
+            <field name="donation_date"/>
+            <field name="type"/>
+            <field name="amount"/>
+            <field name="print_date"/>
+            <field name="company_id"/>
+        </tree>
+    </field>
+</record>
+
+
+<record id="donation_tax_receipt_search" model="ir.ui.view">
+    <field name="name">donation.tax.receipt.search</field>
+    <field name="model">donation.tax.receipt</field>
+    <field name="arch"  type="xml">
+        <search string="Search Donations Taxes Receipt">
+            <field name="number"/>
+            <field name="partner_id"/>
+            <field name="company_id"/>
+        </search>
+    </field>
+</record>
+
+
+<record id="donation_tax_receipt_action" model="ir.actions.act_window">
+    <field name="name">Donation Tax Receipt</field>
+    <field name="res_model">donation.tax.receipt</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+<menuitem id="donation_tax_receipt_menu"
+    action="donation_tax_receipt_action"
+    parent="donation.donation_title_menu"
+    sequence="20"/>
+
+</data>
+</openerp>
