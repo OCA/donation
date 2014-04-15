@@ -125,7 +125,7 @@ class tax_receipt_annual_create(orm.TransientModel):
                         cr, uid, vals['company_id'], context=context)
                     raise orm.except_orm(
                         _('Error:'),
-                        _("The Donator '%s' already has a tax receipt in the company '%s' in this timeframe.") % (partner.name, company.name))
+                        _("The Donor '%s' already has a tax receipt in the company '%s' in this timeframe.") % (partner.name, company.name))
                 tax_receipt_id = self.pool['donation.tax.receipt'].create(
                     cr, uid, vals, context=context)
                 tax_receipt_ids.append(tax_receipt_id)

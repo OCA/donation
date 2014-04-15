@@ -165,7 +165,7 @@ class donation_tax_receipt(orm.Model):
         'amount': fields.float(
             'Amount', digits_compute=dp.get_precision('Account')),
         'partner_id': fields.many2one(
-            'res.partner', 'Donator', required=True),
+            'res.partner', 'Donor', required=True),
         'company_id': fields.many2one(
             'res.company', 'Company', required=True),
         'print_date': fields.date('Print Date'),
