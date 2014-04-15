@@ -26,7 +26,7 @@ class product_template(orm.Model):
     _inherit = 'product.template'
 
     _columns = {
-        'donation_ok': fields.boolean(
+        'donation': fields.boolean(
             'Is a Donation',
             help="Specify if the product can be selected"
             "in a donation line."),
@@ -36,8 +36,8 @@ class product_template(orm.Model):
 class product_product(orm.Model):
     _inherit = 'product.product'
 
-    def donation_ok_change(self, cr, uid, ids, donation_ok, context=None):
+    def donation_change(self, cr, uid, ids, donation, context=None):
         res = {}
-        if donation_ok:
+        if donation:
             res['value'] = {'type': 'service', 'sale_ok': False}
         return res
