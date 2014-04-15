@@ -175,8 +175,8 @@ msgstr "The amount must be positive or 0."
 
 #. module: donation
 #: field:donation.donation,partner_id:0
-msgid "Donator"
-msgstr "Donator"
+msgid "Donor"
+msgstr "Donor"
 
 #. module: donation
 #: field:donation.donation,currency_id:0
