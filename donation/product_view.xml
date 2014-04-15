@@ -9,7 +9,7 @@
     <field name="inherit_id" ref="product.product_search_form_view"/>
     <field name="arch" type="xml">
         <filter name="filter_to_sell" position="after">
-            <filter name="filter_to_donation" string="Donation" domain="[('donation_ok','=',1)]"/>
+            <filter name="filter_to_donation" string="Donation" domain="[('donation','=',1)]"/>
         </filter>
     </field>
 </record>
@@ -20,8 +20,8 @@
     <field name="inherit_id" ref="product.product_normal_form_view"/>
     <field name="arch"  type="xml">
         <div name="options" position="inside">
-            <field name="donation_ok" on_change="donation_ok_change(donation_ok, context)"/>
-            <label for="donation_ok"/>
+            <field name="donation" on_change="donation_change(donation, context)"/>
+            <label for="donation"/>
         </div>
     </field>
 </record>
