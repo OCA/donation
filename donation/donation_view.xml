@@ -127,13 +127,13 @@
 <menuitem id="donation_config_menu" parent="donation_top_menu" name="Configuration" sequence="30"/>
 
 <record id="donation_partner_action" model="ir.actions.act_window">
-    <field name="name">Donators</field>
+    <field name="name">Donors</field>
     <field name="res_model">res.partner</field>
     <field name="view_type">form</field>
     <field name="view_mode">kanban,tree,form</field>
 </record>
 
-<menuitem id="donator" action="donation_partner_action" parent="donation_title_menu" sequence="50"/>
+<menuitem id="donor" action="donation_partner_action" parent="donation_title_menu" sequence="50"/>
 
 <record id="donation_product_action" model="ir.actions.act_window">
     <field name="name">Products</field>

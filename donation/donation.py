@@ -72,7 +72,7 @@ class donation_donation(orm.Model):
             _get_donation_currency, type='many2one', relation='res.currency',
             string='Currency'),
         'partner_id': fields.many2one(
-            'res.partner', 'Donator', required=True,
+            'res.partner', 'Donor', required=True,
             states={'done': [('readonly', True)]}),
         'check_total': fields.float(
             'Check Amount', digits_compute=dp.get_precision('Account'),
@@ -123,9 +123,8 @@ class donation_donation(orm.Model):
     
     def get_default_campaign(self, cr, uid, context=None):
         user = self.pool['res.users'].browse(cr, uid, uid, context=context) # here "ids" = uid where uid contains user access rules
-        return user.context_donation_campaign_id.id
-    
-         
+        return user.context_donation_campaign_id.id 
+       
    
     _defaults = {
         'state': 'draft',
@@ -174,7 +173,7 @@ class donation_donation(orm.Model):
         period_id = period_search[0]
 
         movelines = []
-        # Note : we can have negative donations for donators that use direct
+        # Note : we can have negative donations for donors that use direct
         # debit when their direct debit rejected by the bank
         for donation_line in donation.line_ids:
             account_id = donation_line.product_id.property_account_income.id
@@ -303,7 +302,7 @@ class donation_line(orm.Model):
     _columns = {
         'donation_id': fields.many2one(
             'donation.donation', 'Donation', ondelete='cascade'),
-        'product_id': fields.many2one('product.product', 'Product', domain=[('donation_ok', '=', True)]),
+        'product_id': fields.many2one('product.product', 'Product', domain=[('donation', '=', True)]),
         'quantity': fields.integer('Quantity'),
         'unit_price': fields.float(
             'Unit Price', digits_compute=dp.get_precision('Account')),

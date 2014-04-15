@@ -175,7 +175,7 @@ msgstr ""
 
 #. module: donation
 #: field:donation.donation,partner_id:0
-msgid "Donator"
+msgid "Donor"
 msgstr ""
 
 #. module: donation
