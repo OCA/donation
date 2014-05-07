@@ -41,14 +41,12 @@ class donation_donation(orm.Model):
     _rec_name = 'number'
 
     def _compute_total(self, cr, uid, ids, name, arg, context=None):
-        print "_compute_total ids=", ids
         res = {}  # key = ID, value : amount_total
         for donation in self.browse(cr, uid, ids, context=context):
             total = 0.0
             for line in donation.line_ids:
                 total += line.quantity * line.unit_price
             res[donation.id] = total
-        print "_compute_total res=", total
         return res
 
     def _get_donation_from_lines(self, cr, uid, ids, context=None):
@@ -156,7 +154,7 @@ class donation_donation(orm.Model):
         'A donation with this number already exists for this company'
         )]
 
-    def _prepare_donation_move(self, cr, uid, donation, context=None):
+    def _prepare_donation_move(self, cr, uid, donation, number, context=None):
         if context is None:
             context = {}
 
@@ -194,6 +192,7 @@ class donation_donation(orm.Model):
                 'credit': credit,
                 'debit': debit,
                 'account_id': account_id,
+                'partner_id': donation.partner_id.id,
                 }))
 
         # counter-part
@@ -209,16 +208,17 @@ class donation_donation(orm.Model):
                 'credit': credit,
                 'name': _('Don de %s') % donation.partner_id.name,
                 'account_id': donation.journal_id.default_debit_account_id.id,
+                'partner_id': donation.partner_id.id,
             }))
 
         vals = {
             'journal_id': donation.journal_id.id,
             'date': donation.donation_date,
             'period_id': period_id,
-            'ref': _('Don %s de %s') % (donation.number, donation.partner_id.name),
+#             'ref': _('Don %s de %s') % (number, donation.partner_id.name),
+            'ref': number,
             'line_id': movelines,
             }
-        print "_prepare_donation_move vals=", vals
         return vals
 
     def validate(self, cr, uid, ids, context=None):
@@ -230,8 +230,6 @@ class donation_donation(orm.Model):
                 _('Error:'),
                 _('Cannot validate a donation without lines!'))
 
-        print "donation.check_total=", donation.check_total
-        print "donation.amount_total=", donation.amount_total
         if donation.check_total != donation.amount_total:
             raise orm.except_orm(
                 _('Error:'),
@@ -246,18 +244,22 @@ class donation_donation(orm.Model):
                 )
 
         donation_write_vals = {'state': 'done'}
+        if not donation.number:
+            sequence = self.pool.get('ir.sequence')
+            current_user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+            donation_write_vals['number'] = sequence.next_by_code(cr, uid, 
+                        'donation.donation.' + current_user.login, context=context) \
+                        or sequence.next_by_code(cr, uid, 
+                        'donation.donation', context=context)
+
         if donation.amount_total:
             move_vals = self._prepare_donation_move(
-                cr, uid, donation, context=context)
+                cr, uid, donation, donation_write_vals['number'], context=context)
             move_id = self.pool['account.move'].create(
                 cr, uid, move_vals, context=context)
 
             self.pool['account.move'].post(cr, uid, [move_id], context=context)
             donation_write_vals['move_id'] = move_id
-
-        if not donation.number:
-            donation_write_vals['number'] = self.pool['ir.sequence'].next_by_code(
-                cr, uid, 'donation.donation', context=context)
 
         self.write(cr, uid, donation.id, donation_write_vals, context=context)
         return
@@ -361,11 +363,4 @@ class account_journal(orm.Model):
             "Select 'Donations' for donation journals."
             ),
         }
-
-
-    
-   
-    
-    
-    
     
