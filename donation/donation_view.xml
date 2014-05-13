@@ -18,7 +18,7 @@
                     <field name="partner_id" on_change="partner_id_change(partner_id, context)"/>
                     <field name="journal_id" widget="selection"/>
                     <field name="check_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                    
+                    <field name="currency_id" invisible="1"/>
                     <field name="donation_campaign_id"/>
                     <field name="donation_date"/>
                 </group>
