@@ -289,12 +289,8 @@ class donation_donation(orm.Model):
         donation_write_vals = {'state': 'done'}
         number = donation.number
         if not number:
-            sequence = self.pool.get('ir.sequence')
-            current_user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-            number = sequence.next_by_code(cr, uid, 
-                        'donation.donation.' + current_user.login, context=context) \
-                        or sequence.next_by_code(cr, uid, 
-                        'donation.donation', context=context)
+            number = self.pool['ir.sequence'].next_by_code(
+                cr, uid, 'donation.donation', context=context)
             donation_write_vals['number'] = number
 
         if donation.amount_total:
@@ -331,7 +327,6 @@ class donation_donation(orm.Model):
             self.pool['account.move'].unlink(
                 cr, uid, donation.move_id.id, context=context)
         donation.write({'state': 'draft'}, context=context)
-        # TODO : does it work if the account.move is reconciled ??? It should not.
         return
 
 
