@@ -197,5 +197,4 @@ class donation_tax_receipt(orm.Model):
                 % seq_type)
         number = self.pool['ir.sequence'].next_by_code(
             cr, uid, seq_type, context=context)
-        print "xxxxxxxxx number=", number
         return number

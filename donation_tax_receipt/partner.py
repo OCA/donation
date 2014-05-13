@@ -37,6 +37,7 @@ class res_partner(orm.Model):
         }
 
     def _commercial_fields(self, cr, uid, context=None):
-        res = super(res_partner, self)._commercial_fields(cr, uid, context=context)
+        res = super(res_partner, self)._commercial_fields(
+            cr, uid, context=context)
         res.append('tax_receipt_option')
         return res

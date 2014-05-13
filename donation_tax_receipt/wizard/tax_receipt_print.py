@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    Donation Tax Receipt module for OpenERP
-#    Copyright (C) 2014 Artisanat Monastique de Provence (http://www.barroux.org)
+#    Copyright (C) 2014 Artisanat Monastique de Provence
+#       (http://www.barroux.org)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as

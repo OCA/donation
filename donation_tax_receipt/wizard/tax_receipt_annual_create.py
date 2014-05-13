@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    Donation Tax Receipt module for OpenERP
-#    Copyright (C) 2014 Artisanat Monastique de Provence (http://www.barroux.org)
+#    Copyright (C) 2014 Artisanat Monastique de Provence
+#       (http://www.barroux.org)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -35,12 +36,10 @@ class tax_receipt_annual_create(orm.TransientModel):
     }
 
     def _default_end_date(self, cr, uid, context=None):
-        today = datetime.today()
-        end_date = datetime(datetime.today().year -1, 12, 31)
+        end_date = datetime(datetime.today().year - 1, 12, 31)
         return datetime.strftime(end_date, DEFAULT_SERVER_DATE_FORMAT)
 
     def _default_start_date(self, cr, uid, context=None):
-        today = datetime.today()
         start_date = datetime(datetime.today().year - 1, 1, 1)
         return datetime.strftime(start_date, DEFAULT_SERVER_DATE_FORMAT)
 
@@ -83,9 +82,10 @@ class tax_receipt_annual_create(orm.TransientModel):
             ['tax_receipt_total', 'partner_id', 'company_id'],
             context=context)
         tax_receipt_annual = {}
-        # {company_id:
-        #    {partner_id:
-        #       {'amount': amount, 'donation_ids': [donation1_id, donation2_id]}}
+        # {company_id: {
+        #    partner_id: {
+        #       'amount': amount,
+        #       'donation_ids': [donation1_id, donation2_id]}}
         for donation in donations:
             company_id = donation['company_id'][0]
             partner_id = donation['partner_id'][0]
@@ -99,8 +99,10 @@ class tax_receipt_annual_create(orm.TransientModel):
                     'donation_ids': [donation_id],
                 }
             else:
-                tax_receipt_annual[company_id][partner_id]['amount'] += tax_receipt_amount
-                tax_receipt_annual[company_id][partner_id]['donation_ids'].append(donation_id)
+                tax_receipt_annual[company_id][partner_id]['amount'] +=\
+                    tax_receipt_amount
+                tax_receipt_annual[company_id][partner_id]['donation_ids']\
+                    .append(donation_id)
 
         print "tax_receipt_annual=", tax_receipt_annual
         tax_receipt_ids = []
@@ -111,13 +113,14 @@ class tax_receipt_annual_create(orm.TransientModel):
                     wizard, context=context)
                 # Block if the partner already has an annual fiscal receipt
                 # or an each fiscal receipt
-                already_tax_receipt_ids = self.pool['donation.tax.receipt'].search(
-                    cr, uid, [
-                        ('date', '<=', wizard.end_date),
-                        ('date', '>=', wizard.start_date),
-                        ('company_id', '=', vals['company_id']),
-                        ('partner_id', '=', vals['partner_id']),
-                        ], context=context)
+                already_tax_receipt_ids = \
+                    self.pool['donation.tax.receipt'].search(
+                        cr, uid, [
+                            ('date', '<=', wizard.end_date),
+                            ('date', '>=', wizard.start_date),
+                            ('company_id', '=', vals['company_id']),
+                            ('partner_id', '=', vals['partner_id']),
+                            ], context=context)
                 if already_tax_receipt_ids:
                     partner = self.pool['res.partner'].browse(
                         cr, uid, vals['partner_id'], context=context)
@@ -125,7 +128,9 @@ class tax_receipt_annual_create(orm.TransientModel):
                         cr, uid, vals['company_id'], context=context)
                     raise orm.except_orm(
                         _('Error:'),
-                        _("The Donor '%s' already has a tax receipt in the company '%s' in this timeframe.") % (partner.name, company.name))
+                        _("The Donor '%s' already has a tax receipt in the "
+                            "company '%s' in this timeframe.")
+                        % (partner.name, company.name))
                 tax_receipt_id = self.pool['donation.tax.receipt'].create(
                     cr, uid, vals, context=context)
                 tax_receipt_ids.append(tax_receipt_id)
