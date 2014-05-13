@@ -20,8 +20,7 @@
 ##############################################################################
 
 from openerp.osv import orm, fields
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
-from datetime import datetime
+
 
 class donation_campaign(orm.Model):
     _name = 'donation.campaign'
@@ -30,11 +29,11 @@ class donation_campaign(orm.Model):
     _columns = {
         'code': fields.char('Code', size=10),
         'name': fields.char('Name', size=64, required=True),
-        'campaign_creation_date': fields.date('Campaign Creation Date', readonly=True),
-        'nota':fields.text('Notes'),
+        'campaign_creation_date': fields.date(
+            'Campaign Creation Date', readonly=True),
+        'nota': fields.text('Notes'),
     }
 
     _defaults = {
-        'campaign_creation_date' : fields.date.context_today,
-        
+        'campaign_creation_date': fields.date.context_today,
     }
