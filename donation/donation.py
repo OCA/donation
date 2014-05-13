@@ -285,17 +285,19 @@ class donation_donation(orm.Model):
                 % (donation.check_total, donation.amount_total))
 
         donation_write_vals = {'state': 'done'}
-        if not donation.number:
+        number = donation.number
+        if not number:
             sequence = self.pool.get('ir.sequence')
             current_user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-            donation_write_vals['number'] = sequence.next_by_code(cr, uid, 
+            number = sequence.next_by_code(cr, uid, 
                         'donation.donation.' + current_user.login, context=context) \
                         or sequence.next_by_code(cr, uid, 
                         'donation.donation', context=context)
+            donation_write_vals['number'] = number
 
         if donation.amount_total:
             move_vals = self._prepare_donation_move(
-                cr, uid, donation, donation_write_vals['number'], context=context)
+                cr, uid, donation, number, context=context)
             move_id = self.pool['account.move'].create(
                 cr, uid, move_vals, context=context)
 
