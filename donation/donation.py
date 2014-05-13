@@ -154,6 +154,12 @@ class donation_donation(orm.Model):
         'A donation with this number already exists for this company'
         )]
 
+
+    def _get_analytic_account_id(
+            self, cr, uid, donation_line, account_id, context=None):
+        analytic_account_id = donation_line.analytic_account_id.id or False
+        return analytic_account_id
+
     def _prepare_donation_move(self, cr, uid, donation, number, context=None):
         if context is None:
             context = {}
@@ -171,9 +177,21 @@ class donation_donation(orm.Model):
         period_id = period_search[0]
 
         movelines = []
+        if donation.company_id.currency_id.id != donation.currency_id.id:
+            currency_id = donation.currency_id.id
+        else:
+            currency_id = False
+            total_amount_currency = 0.0
         # Note : we can have negative donations for donors that use direct
         # debit when their direct debit rejected by the bank
+        amount_total_company_cur = 0.0
+        name = _('Don de %s') % donation.partner_id.name
+
+        aml = {}
+        # key = (account_id, analytic_account_id)
+        # value = {'credit': ..., 'debit': ..., 'amount_currency': ...}
         for donation_line in donation.line_ids:
+            amount_total_company_cur += donation_line.amount_company_currency
             account_id = donation_line.product_id.property_account_income.id
             if not account_id:
                 account_id = donation_line.product_id.categ_id.property_account_income_categ.id
@@ -181,41 +199,71 @@ class donation_donation(orm.Model):
                 raise orm.except_orm(
                     _('Error:'),
                     _("Missing income account on product '%s' or on it's related product category") % donation_line.product_id.name)
-            if donation_line.amount > 0:
-                credit = donation_line.amount
+            analytic_account_id = self._get_analytic_account_id(
+                cr, uid, donation_line, account_id, context=context)
+            if not currency_id:
+                amount_currency = 0.0
+            if donation_line.amount_company_currency > 0:
+                credit = donation_line.amount_company_currency
                 debit = 0
+                if currency_id:
+                    amount_currency = donation_line.amount * -1
             else:
-                debit = donation_line.amount * -1
+                debit = donation_line.amount_company_currency * -1
                 credit = 0
+                if currency_id:
+                    amount_currency = donation_line.amount
+
+            #TODO Take into account the option group_invoice_lines ??
+            if (account_id, analytic_account_id) in aml:
+                aml[(account_id, analytic_account_id)]['credit'] += credit
+                aml[(account_id, analytic_account_id)]['debit'] += debit
+                aml[(account_id, analytic_account_id)]['amount_currency'] += amount_currency
+            else:
+                aml[(account_id, analytic_account_id)] = {
+                    'credit': credit,
+                    'debit': debit,
+                    'amount_currency': amount_currency,
+                    }
+
+        for (account_id, analytic_account_id), content in aml.iteritems():
             movelines.append((0, 0, {
-                'name': donation_line.product_id.name,
-                'credit': credit,
-                'debit': debit,
+                'name': name,
+                'credit': content['credit'],
+                'debit': content['debit'],
                 'account_id': account_id,
+                'analytic_account_id': analytic_account_id,
                 'partner_id': donation.partner_id.id,
+                'currency_id': currency_id,
+                'amount_currency': content['amount_currency'],
                 }))
 
         # counter-part
-        if donation.amount_total > 0:
-            debit = donation.amount_total
+        if amount_total_company_cur > 0:
+            debit = amount_total_company_cur
             credit = 0
+            if currency_id:
+                total_amount_currency = donation.amount_total
         else:
-            credit = donation.amount_total * -1
+            credit = amount_total_company_cur * -1
             debit = 0
+            if currency_id:
+                total_amount_currency = donation.amount_total * -1
         movelines.append(
             (0, 0, {
                 'debit': debit,
                 'credit': credit,
-                'name': _('Don de %s') % donation.partner_id.name,
+                'name': name,
                 'account_id': donation.journal_id.default_debit_account_id.id,
                 'partner_id': donation.partner_id.id,
+                'currency_id': currency_id,
+                'amount_currency': total_amount_currency,
             }))
 
         vals = {
             'journal_id': donation.journal_id.id,
             'date': donation.donation_date,
             'period_id': period_id,
-#             'ref': _('Don %s de %s') % (number, donation.partner_id.name),
             'ref': number,
             'line_id': movelines,
             }
@@ -235,13 +283,6 @@ class donation_donation(orm.Model):
                 _('Error:'),
                 _("The amount of the donation (%s) is different from the sum of the donation lines (%s).")
                 % (donation.check_total, donation.amount_total))
-
-        # We only manage donations of the same currency for the moment
-        if donation.currency_id.id != donation.company_id.currency_id.id:
-            raise orm.except_orm(
-                _('Error:'),
-                _("The donation is in currency '%s' but the company '%s' has a currency '%s'. We don't handle that for the moment.") % (donation.currency_id.name, donation.company_id.name, donation.company_id.currency_id.name)
-                )
 
         donation_write_vals = {'state': 'done'}
         if not donation.number:
@@ -298,21 +339,46 @@ class donation_line(orm.Model):
     def _compute_amount(self, cr, uid, ids, name, arg, context=None):
         res = {}
         for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = line.quantity * line.unit_price
+            amount = line.quantity * line.unit_price
+            company_cur_id = line.donation_id.company_id.currency_id.id
+            donation_cur_id = line.donation_id.currency_id.id
+            if company_cur_id == donation_cur_id:
+                amount_company_currency = amount
+            else:
+                ctx_convert = context.copy()
+                ctx_convert['date'] = line.donation_id.donation_date
+                amount_company_currency = self.pool['res.currency'].compute(
+                    cr, uid, donation_cur_id, company_cur_id, amount,
+                    context=ctx_convert)
+            res[line.id] = {
+                'amount': amount,
+                'amount_company_currency': amount_company_currency,
+                }
         return res
 
     _columns = {
         'donation_id': fields.many2one(
             'donation.donation', 'Donation', ondelete='cascade'),
-        'product_id': fields.many2one('product.product', 'Product', domain=[('donation', '=', True)]),
+        'product_id': fields.many2one(
+            'product.product', 'Product', required=True,
+            domain=[('donation', '=', True)]),
         'quantity': fields.integer('Quantity'),
         'unit_price': fields.float(
             'Unit Price', digits_compute=dp.get_precision('Account')),
         'amount': fields.function(
-            _compute_amount, string='Amount',
+            _compute_amount, multi="donline", type="float", string='Amount',
             digits_compute=dp.get_precision('Account'), store={
                 'donation.line': (lambda self, cr, uid, ids, c={}: ids, ['quantity', 'unit_price'], 10),
                 }),
+        'amount_company_currency': fields.function(
+            _compute_amount, multi="donline", type="float",
+            string='Amount in Company Currency',
+            digits_compute=dp.get_precision('Account'), store={
+                'donation.line': (lambda self, cr, uid, ids, c={}: ids, ['quantity', 'unit_price'], 10),
+                }),
+        'analytic_account_id':  fields.many2one(
+            'account.analytic.account', 'Analytic Account',
+            domain=[('type', 'not in', ('view', 'template'))]),
         'sequence': fields.integer('Sequence'),
         }
 
