@@ -80,6 +80,7 @@
             <field name="product_id" on_change="product_id_change(product_id, context)"/>
             <field name="quantity"/>
             <field name="unit_price"/>
+            <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
             <field name="amount"/>
             <field name="sequence" invisible="1"/>
         </tree>
@@ -96,7 +97,9 @@
                 <field name="product_id" on_change="product_id_change(product_id, context)"/>
                 <field name="quantity"/>
                 <field name="unit_price"/>
+                <field name="analytic_account_id"/>
                 <field name="amount"/>
+                <field name="amount_company_currency"/>
                 <field name="sequence"/>
             </group>
         </form>
