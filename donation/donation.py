@@ -303,7 +303,7 @@ class donation_donation(orm.Model):
             donation_write_vals['move_id'] = move_id
 
         self.write(cr, uid, donation.id, donation_write_vals, context=context)
-        return
+        return True
 
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
@@ -327,7 +327,7 @@ class donation_donation(orm.Model):
             self.pool['account.move'].unlink(
                 cr, uid, donation.move_id.id, context=context)
         donation.write({'state': 'draft'}, context=context)
-        return
+        return True
 
 
 class donation_line(orm.Model):
@@ -428,4 +428,3 @@ class account_journal(orm.Model):
             "Select 'Donations' for donation journals."
             ),
         }
-    
