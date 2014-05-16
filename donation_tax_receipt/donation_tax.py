@@ -41,7 +41,8 @@ class donation_donation(orm.Model):
                     print "line.tax_receipt=", line.tax_receipt_ok
                     print "line product tax r=", line.product_id.tax_receipt_ok
                     if line.tax_receipt_ok:     # Filter the lines eligible for a tax receipt.
-                        total += line.amount
+                        print "line AMOUNT=", line.amount
+                        total += line.quantity * line.unit_price
             res[donation.id] = total
         print "_tax_receipt_total res=", total
         return res
