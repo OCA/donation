@@ -402,6 +402,15 @@ class res_partner(orm.Model):
             'donation.donation', 'partner_id', 'Donations'),
         }
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default.update({
+            'donation_ids': False,
+        })
+        return super(res_partner, self).copy(
+            cr, uid, id, default=default, context=context)
+
 
 class account_journal(orm.Model):
     _inherit = 'account.journal'
