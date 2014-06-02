@@ -49,10 +49,11 @@ class tax_receipt_annual_create(orm.TransientModel):
     }
 
     def _prepare_annual_tax_receipt(
-            self, cr, uid, company_id, partner_id, partner_dict,
+            self, cr, uid, company, partner_id, partner_dict,
             wizard, context=None):
         vals = {
-            'company_id': company_id,
+            'company_id': company.id,
+            'currency_id': company.currency_id.id,
             'amount': partner_dict['amount'],
             'type': 'annual',
             'partner_id': partner_id,
@@ -107,9 +108,11 @@ class tax_receipt_annual_create(orm.TransientModel):
         print "tax_receipt_annual=", tax_receipt_annual
         tax_receipt_ids = []
         for company_id, partners_dict in tax_receipt_annual.iteritems():
+            company = self.pool['res.company'].browse(
+                cr, uid, company_id, context=context)
             for partner_id, partner_dict in partners_dict.iteritems():
                 vals = self._prepare_annual_tax_receipt(
-                    cr, uid, company_id, partner_id, partner_dict,
+                    cr, uid, company, partner_id, partner_dict,
                     wizard, context=context)
                 # Block if the partner already has an annual fiscal receipt
                 # or an each fiscal receipt
@@ -124,8 +127,6 @@ class tax_receipt_annual_create(orm.TransientModel):
                 if already_tax_receipt_ids:
                     partner = self.pool['res.partner'].browse(
                         cr, uid, vals['partner_id'], context=context)
-                    company = self.pool['res.company'].browse(
-                        cr, uid, vals['company_id'], context=context)
                     raise orm.except_orm(
                         _('Error:'),
                         _("The Donor '%s' already has a tax receipt in the "

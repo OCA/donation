@@ -33,14 +33,19 @@ class donation_donation(orm.Model):
         print "_tax_receipt_total ids=", ids
         res = {}
         for donation in self.browse(cr, uid, ids, context=context):
-            # Do not consider other currencies for tax receipts
             total = 0.0
+            # Do not consider other currencies for tax receipts
+            # because, for the moment, only very very few countries
+            # accept tax receipts from other countries, and never in another
+            # currency. If you know such cases, please tell us and we will
+            # update the code of this module
             if donation.currency_id == donation.company_id.currency_id:
                 for line in donation.line_ids:
                     print "line product=", line.product_id.name
                     print "line.tax_receipt=", line.tax_receipt_ok
                     print "line product tax r=", line.product_id.tax_receipt_ok
-                    if line.tax_receipt_ok:     # Filter the lines eligible for a tax receipt.
+                    # Filter the lines eligible for a tax receipt.
+                    if line.tax_receipt_ok:
                         print "line AMOUNT=", line.amount
                         total += line.quantity * line.unit_price
             res[donation.id] = total
@@ -73,10 +78,10 @@ class donation_donation(orm.Model):
         return super(donation_donation, self).copy(
             cr, uid, id, default=default, context=context)
 
-
     def _prepare_tax_receipt(self, cr, uid, donation, context=None):
         vals = {
             'company_id': donation.company_id.id,
+            'currency_id': donation.currency_id.id,
             'donation_date': donation.donation_date,
             'amount': donation.tax_receipt_total,
             'type': 'each',
@@ -165,6 +170,8 @@ class donation_tax_receipt(orm.Model):
         'donation_date': fields.date('Donation Date'),
         'amount': fields.float(
             'Amount', digits_compute=dp.get_precision('Account')),
+        'currency_id': fields.many2one(
+            'res.currency', 'Currency', required=True),
         'partner_id': fields.many2one(
             'res.partner', 'Donor', required=True),
         'company_id': fields.many2one(

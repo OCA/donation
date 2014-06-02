@@ -8,8 +8,10 @@
     <field name="inherit_id" ref="donation.donation_form"/>
     <field name="arch"  type="xml">
        <field name="company_id" position="after">
-            <field name="tax_receipt_option" on_change="tax_receipt_option_change(partner_id, tax_receipt_option, context)"/>
-            <field name="tax_receipt_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            <field name="tax_receipt_option"
+                on_change="tax_receipt_option_change(partner_id, tax_receipt_option, context)"/>
+            <field name="tax_receipt_total" widget="monetary"
+                options="{'currency_field': 'currency_id'}"/>
             <field name="tax_receipt_id"/>
        </field>
     </field>
@@ -20,7 +22,8 @@
     <field name="inherit_id" ref="donation.donation_line_tree"/>
     <field name="arch"  type="xml">
        <field name="amount" position="after">
-            <field name="tax_receipt_ok" groups="donation.group_donation_manager" string="Tax Receipt"/>
+            <field name="tax_receipt_ok"
+                groups="donation.group_donation_manager" string="Tax Receipt"/>
        </field>
     </field>
 </record>
@@ -48,7 +51,9 @@
                 <field name="donation_date"/>
                 <field name="type"/>
                 <field name="print_date"/>
-                <field name="amount"/>
+                <field name="currency_id"/>
+                <field name="amount" widget="monetary"
+                    options="{'currency_field': 'currency_id'}"/>
                 <field name="partner_id"/>
                 <field name="company_id"/>
             </group>
@@ -70,6 +75,7 @@
             <field name="donation_date"/>
             <field name="type"/>
             <field name="amount"/>
+            <field name="currency_id"/>
             <field name="print_date"/>
             <field name="company_id"/>
         </tree>
@@ -84,7 +90,6 @@
         <search string="Search Donations Taxes Receipt">
             <field name="number"/>
             <field name="partner_id"/>
-            <field name="company_id"/>
         </search>
     </field>
 </record>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+<data noupdate="1">
+
+<record id="donation.product_template_donation" model="product.template">
+    <field name="tax_receipt_ok">1</field>
+</record>
+
+</data>
+</openerp>
