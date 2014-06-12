@@ -87,19 +87,32 @@
     <field name="name">donation.tax.receipt.search</field>
     <field name="model">donation.tax.receipt</field>
     <field name="arch"  type="xml">
-        <search string="Search Donations Taxes Receipt">
+        <search string="Search Donation Taxes Receipts">
             <field name="number"/>
             <field name="partner_id"/>
+            <group string="Group By..." name="groupby">
+                <filter name="date" string="Date" context="{'group_by': 'donation_date'}"/>
+                <filter name="type" string="Type" context="{'group_by': 'type'}"/>
+                <filter name="partner_id" string="Partner" context="{'group_by': 'partner_id'}"/>
+            </group>
         </search>
     </field>
 </record>
 
+<record id="donation_tax_receipt_graph" model="ir.ui.view">
+    <field name="name">donation.tax.receipt.graph</field>
+    <field name="model">donation.tax.receipt</field>
+    <field name="arch"  type="xml">
+        <graph string="Donation Taxes Receipts" type="pivot">
+            <field name="amount" type="measure"/>
+        </graph>
+    </field>
+</record>
 
 <record id="donation_tax_receipt_action" model="ir.actions.act_window">
     <field name="name">Donation Tax Receipt</field>
     <field name="res_model">donation.tax.receipt</field>
-    <field name="view_type">form</field>
-    <field name="view_mode">tree,form</field>
+    <field name="view_mode">tree,form,graph</field>
 </record>
 
 

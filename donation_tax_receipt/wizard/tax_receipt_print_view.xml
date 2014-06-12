@@ -30,7 +30,6 @@
 <record id="donation_tax_receipt_print_action" model="ir.actions.act_window">
     <field name="name">Print Receipts</field>
     <field name="res_model">donation.tax.receipt.print</field>
-    <field name="view_type">form</field>
     <field name="view_mode">form</field>
     <field name="target">new</field>
 </record>

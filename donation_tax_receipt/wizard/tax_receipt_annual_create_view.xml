@@ -31,7 +31,6 @@
 <record id="tax_receipt_annual_create_action" model="ir.actions.act_window">
     <field name="name">Create Annual Receipts</field>
     <field name="res_model">tax.receipt.annual.create</field>
-    <field name="view_type">form</field>
     <field name="view_mode">form</field>
     <field name="target">new</field>
 </record>
