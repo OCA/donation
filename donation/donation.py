@@ -43,12 +43,26 @@ class donation_donation(orm.Model):
     _rec_name = 'number'
 
     def _compute_total(self, cr, uid, ids, name, arg, context=None):
+        if context is None:
+            context = {}
         res = {}  # key = ID, value : amount_total
         for donation in self.browse(cr, uid, ids, context=context):
             total = 0.0
             for line in donation.line_ids:
                 total += line.quantity * line.unit_price
-            res[donation.id] = total
+            if donation.currency_id == donation.company_id.currency_id:
+                total_company_currency = total
+            else:
+                ctx_convert = context.copy()
+                ctx_convert['date'] = donation.donation_date
+                total_company_currency = self.pool['res.currency'].compute(
+                    cr, uid, donation.currency_id.id,
+                    donation.company_id.currency_id.id, total,
+                    context=ctx_convert)
+            res[donation.id] = {
+                'amount_total': total,
+                'amount_total_company_currency': total_company_currency,
+                }
         return res
 
     def _get_donation_from_lines(self, cr, uid, ids, context=None):
@@ -78,8 +92,15 @@ class donation_donation(orm.Model):
             'Check Amount', digits_compute=dp.get_precision('Account'),
             states={'done': [('readonly', True)]}),
         'amount_total': fields.function(
-            _compute_total, type='float', string='Amount Total', store={
+            _compute_total, type='float', multi="donation",
+            string='Amount Total', store={
                 'donation.line': (_get_donation_from_lines, ['unit_price', 'quantity', 'donation_id'], 10),
+            }),
+        'amount_total_company_currency': fields.function(
+            _compute_total, type='float', multi="donation",
+            string='Amount Total in Company Currency', store={
+                'donation.donation': (lambda self, cr, uid, ids, c={}: ids, ['currency_id', 'journal_id'], 10),
+                'donation.line': (_get_donation_from_lines, ['unit_price', 'quantity', 'donation_id'], 20),
             }),
         'donation_date': fields.date(
             'Donation Date', required=True,
@@ -120,12 +141,11 @@ class donation_donation(orm.Model):
         (model, res_id) = self.pool['ir.model.data'].get_object_reference(cr, uid, 'donation', 'donation_journal')
         assert model == 'account.journal', 'Wrong model'
         return res_id
-    
+
     def get_default_campaign(self, cr, uid, context=None):
         user = self.pool['res.users'].browse(cr, uid, uid, context=context) # here "ids" = uid where uid contains user access rules
-        return user.context_donation_campaign_id.id 
-       
-   
+        return user.context_donation_campaign_id.id
+
     _defaults = {
         'state': 'draft',
         'company_id': lambda self, cr, uid, context: \
