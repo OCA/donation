@@ -41,7 +41,6 @@
 <record id="donation_campaign_action" model="ir.actions.act_window">
     <field name="name">Campaign of Donations</field>
     <field name="res_model">donation.campaign</field>
-    <field name="view_type">form</field>
     <field name="view_mode">tree,form</field>
 </record>
 
