@@ -66,12 +66,25 @@
             <field name="number"/>
             <field name="partner_id"/>
             <group string="Group By..." name="groupby">
+                <filter name="date_groupby" string="Date" context="{'group_by': 'donation_date'}"/>
                 <filter name="partner_groupby" string="Partner" context="{'group_by': 'partner_id'}"/>
                 <filter name="campaign_groupby" string="Campaign" context="{'group_by': 'donation_campaign_id'}"/>
             </group>
         </search>
     </field>
 </record>
+
+
+<record id="donation_graph" model="ir.ui.view">
+    <field name="name">donation.graph</field>
+    <field name="model">donation.donation</field>
+    <field name="arch"  type="xml">
+        <graph string="Donations" type="pivot">
+            <field name="amount_total_company_currency" type="measure"/>
+        </graph>
+    </field>
+</record>
+
 
 <record id="donation_line_tree" model="ir.ui.view">
     <field name="name">donation.line.tree</field>
@@ -108,18 +121,15 @@
     </field>
 </record>
 
-
 <record id="donation_action" model="ir.actions.act_window">
     <field name="name">Donations</field>
     <field name="res_model">donation.donation</field>
-    <field name="view_type">form</field>
-    <field name="view_mode">tree,form</field>
+    <field name="view_mode">tree,form,graph</field>
 </record>
 
 <record id="donation_line_action" model="ir.actions.act_window">
     <field name="name">Donations Lines</field>
     <field name="res_model">donation.line</field>
-    <field name="view_type">form</field>
     <field name="view_mode">tree,form</field>
 </record>
 
@@ -137,7 +147,6 @@
     <field name="name">Products</field>
     <field name="res_model">product.product</field>
     <field name="view_mode">kanban,tree,form</field>
-    <field name="view_type">form</field>
     <field name="context">{'search_default_filter_to_donation': 1}</field>
 </record>
 
