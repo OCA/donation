@@ -31,7 +31,7 @@ class res_users(orm.Model):
 
     _columns = {
         'context_donation_campaign_id': fields.many2one(
-            'donation.campaign', 'Donation Campaign User'),
+            'donation.campaign', 'Current Donation Campaign'),
         # begin with context_ to allow user to change it by itself
         }
 
