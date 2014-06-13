@@ -46,6 +46,7 @@ It has been developped by brother Bernard and brother Irenee from Barroux Abbey 
         'security/ir.model.access.csv',
         'wizard/tax_receipt_print_view.xml',
         'wizard/tax_receipt_annual_create_view.xml',
+        'security/tax_receipt_security.xml',
         ],
     'demo': ['donation_tax_demo.xml'],
     'active': False,
