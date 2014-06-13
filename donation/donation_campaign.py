@@ -25,15 +25,26 @@ from openerp.osv import orm, fields
 class donation_campaign(orm.Model):
     _name = 'donation.campaign'
     _description = 'Code attributed for a Donation Campaign'
+    _order = 'code'
+
+    def name_get(self, cr, uid, ids, context=None):
+        res = []
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        for record in self.browse(cr, uid, ids, context=context):
+            if record.code:
+                res.append((record.id, u'[%s] %s' % (record.code, record.name)))
+            else:
+                res.append((record.id, record.name))
+        return res
 
     _columns = {
         'code': fields.char('Code', size=10),
         'name': fields.char('Name', size=64, required=True),
-        'campaign_creation_date': fields.date(
-            'Campaign Creation Date', readonly=True),
+        'start_date': fields.date('Start Date'),
         'nota': fields.text('Notes'),
     }
 
     _defaults = {
-        'campaign_creation_date': fields.date.context_today,
+        'start_date': fields.date.context_today,
     }
