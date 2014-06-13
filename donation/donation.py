@@ -142,8 +142,8 @@ class donation_donation(orm.Model):
         assert model == 'account.journal', 'Wrong model'
         return res_id
 
-    def get_default_campaign(self, cr, uid, context=None):
-        user = self.pool['res.users'].browse(cr, uid, uid, context=context) # here "ids" = uid where uid contains user access rules
+    def _get_default_campaign(self, cr, uid, context=None):
+        user = self.pool['res.users'].browse(cr, uid, uid, context=context)
         return user.context_donation_campaign_id.id
 
     _defaults = {
@@ -153,7 +153,7 @@ class donation_donation(orm.Model):
                 cr, uid, 'donation.donation', context=context),
         'currency_id': _get_default_currency,
         'journal_id': _get_default_journal,
-        'donation_campaign_id': get_default_campaign,
+        'donation_campaign_id': _get_default_campaign,
         }
 
     def _check_donation_date(self, cr, uid, ids):
