@@ -27,7 +27,7 @@
                         <field name="check_total" widget="monetary"
                             options="{'currency_field': 'currency_id'}"/>
                         <field name="currency_id" invisible="1"/>
-                        <field name="donation_campaign_id"/>
+                        <field name="campaign_id"/>
                         <field name="donation_date"/>
                     </group>
                     <group name="auto">
@@ -58,7 +58,7 @@
             <field name="donation_date"/>
             <field name="amount_total"/>
             <field name="journal_id"/>
-            <field name="donation_campaign_id"/>
+            <field name="campaign_id"/>
             <field name="state"/>
         </tree>
     </field>
@@ -77,7 +77,7 @@
             <group string="Group By..." name="groupby">
                 <filter name="date_groupby" string="Date" context="{'group_by': 'donation_date'}"/>
                 <filter name="partner_groupby" string="Partner" context="{'group_by': 'partner_id'}"/>
-                <filter name="campaign_groupby" string="Campaign" context="{'group_by': 'donation_campaign_id'}"/>
+                <filter name="campaign_groupby" string="Campaign" context="{'group_by': 'campaign_id'}"/>
             </group>
         </search>
     </field>

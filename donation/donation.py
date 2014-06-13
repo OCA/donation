@@ -124,8 +124,7 @@ class donation_donation(orm.Model):
         'company_currency_id': fields.related(
             'company_id', 'currency_id', type='many2one',
             relation="res.currency", string="Company Currency"),
-        #'origin_id': fields.many2one('donation.origin', 'Origin of Donation'),
-        'donation_campaign_id': fields.many2one(
+        'campaign_id': fields.many2one(
             'donation.campaign', 'Donation Campaign'),
         'create_uid': fields.many2one('res.users', 'Created by'),
     }
@@ -153,7 +152,7 @@ class donation_donation(orm.Model):
                 cr, uid, 'donation.donation', context=context),
         'currency_id': _get_default_currency,
         'journal_id': _get_default_journal,
-        'donation_campaign_id': _get_default_campaign,
+        'campaign_id': _get_default_campaign,
         }
 
     def _check_donation_date(self, cr, uid, ids):
@@ -375,6 +374,10 @@ class donation_line(orm.Model):
                 }
         return res
 
+    def _get_lines_from_donation(self, cr, uid, ids, context=None):
+        return self.pool['donation.line'].search(
+            cr, uid, [('donation_id', 'in', ids)], context=context)
+
     _columns = {
         'donation_id': fields.many2one(
             'donation.donation', 'Donation', ondelete='cascade'),
@@ -394,6 +397,7 @@ class donation_line(orm.Model):
             string='Amount in Company Currency',
             digits_compute=dp.get_precision('Account'), store={
                 'donation.line': (lambda self, cr, uid, ids, c={}: ids, ['quantity', 'unit_price'], 10),
+                'donation.donation': (_get_lines_from_donation, ['journal_id', 'currency_id'], 10),
                 }),
         'analytic_account_id':  fields.many2one(
             'account.analytic.account', 'Analytic Account',
