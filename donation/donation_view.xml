@@ -9,32 +9,41 @@
     <field name="arch"  type="xml">
         <form string="Donation" version="7.0">
             <header>
-                <button type="object" name="validate" string="Validate" class="oe_highlight" states="draft" groups="donation.group_donation_user"/>
-                <button type="object" name="back_to_draft" string="Back to Draft" states="done" groups="donation.group_donation_user"/>
+                <button type="object" name="validate" string="Validate"
+                    class="oe_highlight" states="draft"
+                    groups="donation.group_donation_user"/>
+                <button type="object" name="back_to_draft"
+                    string="Back to Draft" states="done"
+                    groups="donation.group_donation_user"/>
                 <field name="state" widget="statusbar"/>
             </header>
-            <group name="main">
-                <group name="manual">
-                    <field name="partner_id"
-                        on_change="partner_id_change(partner_id, context)"
-                        domain="[('customer', '=', True)]"/>
-                    <field name="journal_id" widget="selection"/>
-                    <field name="check_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                    <field name="currency_id" invisible="1"/>
-                    <field name="donation_campaign_id"/>
-                    <field name="donation_date"/>
+            <sheet>
+                <group name="main">
+                    <group name="manual">
+                        <field name="partner_id"
+                            on_change="partner_id_change(partner_id, context)"
+                            domain="[('customer', '=', True)]"/>
+                        <field name="journal_id" widget="selection"/>
+                        <field name="check_total" widget="monetary"
+                            options="{'currency_field': 'currency_id'}"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="donation_campaign_id"/>
+                        <field name="donation_date"/>
+                    </group>
+                    <group name="auto">
+                        <field name="number"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="amount_total" widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                            invisible="1"/>
+                        <field name="move_id"/>
+                        <field name="create_uid" readonly="1"/>
+                    </group>
                 </group>
-                <group name="auto">
-                    <field name="number"/>
-                    <field name="company_id" groups="base.group_multi_company"/>
-                    <field name="amount_total" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="1"/>
-                    <field name="move_id"/>
-                    <field name="create_uid" readonly="1"/>
+                <group name="lines">
+                    <field name="line_ids" nolabel="1"/>
                 </group>
-            </group>
-            <group name="lines">
-                <field name="line_ids" nolabel="1"/>
-            </group>
+            </sheet>
         </form>
     </field>
 </record>
