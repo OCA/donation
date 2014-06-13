@@ -30,9 +30,10 @@
     <field name="key2">client_print_multi</field>
     <field name="model">donation.donation</field>
     <field name="name">Thanks Letter</field>
-    <field name="value" eval="'ir.actions.report.xml,'+str(report_thanks)" />
+    <field name="value" eval="'ir.actions.report.xml,%d'%report_thanks" />
 </record>
 
+<!-- The print button in the form view is defined in donation_view.xml -->
 
 </data>
 </openerp>
