@@ -46,6 +46,7 @@ It has been developped by brother Bernard and brother Irenee from Barroux Abbey 
         'campaign_user_view.xml',
         'security/ir.model.access.csv',
         'partner_view.xml',
+        'report/donation_report_view.xml',
         ],
     'demo': [
         'product_demo.xml',
