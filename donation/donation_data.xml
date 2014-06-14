@@ -3,23 +3,20 @@
 <openerp>
 <data noupdate="1">
 
-<record id="donation_seq_type" model="ir.sequence.type">
-    <field name="name">Donation Number</field>
-    <field name="code">donation.donation</field>
-</record>
-
 <record id="donation_seq" model="ir.sequence">
     <field name="name">Donation</field>
     <field name="code">donation.donation</field>
     <field name="prefix">DON-</field>
     <field name="padding">6</field>
-    <field name="company_id" eval="False"/>
+    <field name="company_id" ref="base.main_company"/>
 </record>
 
 <record id="donation_journal" model="account.journal">
     <field name="name">Donation Journal</field>
     <field name="code">DON</field>
     <field name="type">donation</field>
+    <field name="sequence_id" ref="donation_seq"/>
+    <field name="company_id" ref="base.main_company"/>
 </record>
 
 </data>
