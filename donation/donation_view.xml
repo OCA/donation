@@ -74,7 +74,7 @@
             <filter name="done" string="Done" domain="[('state', '=', 'done')]" />
             <field name="number"/>
             <field name="partner_id"/>
-            <group string="Group By..." name="groupby">
+            <group string="Group By" name="groupby">
                 <filter name="date_groupby" string="Date" context="{'group_by': 'donation_date'}"/>
                 <filter name="partner_groupby" string="Partner" context="{'group_by': 'partner_id'}"/>
                 <filter name="campaign_groupby" string="Campaign" context="{'group_by': 'campaign_id'}"/>
