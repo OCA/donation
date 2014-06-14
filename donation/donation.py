@@ -129,31 +129,20 @@ class donation_donation(orm.Model):
         'create_uid': fields.many2one('res.users', 'Created by'),
     }
 
-    def _get_default_currency(self, cr, uid, context=None):
-        company_id = self.pool['res.company']._company_default_get(
-            cr, uid, 'donation.donation', context=context)
-        company = self.pool['res.company'].browse(
-            cr, uid, company_id, context=context)
-        return company.currency_id.id
-
-    def _get_default_journal(self, cr, uid, context=None):
-        (model, res_id) = self.pool['ir.model.data'].get_object_reference(cr, uid, 'donation', 'donation_journal')
-        assert model == 'account.journal', 'Wrong model'
-        return res_id
-
-    def _get_default_campaign(self, cr, uid, context=None):
+    def default_get(self, cr, uid, fields_list, context=None):
+        res = {'state': 'draft'}
         user = self.pool['res.users'].browse(cr, uid, uid, context=context)
-        return user.context_donation_campaign_id.id
-
-    _defaults = {
-        'state': 'draft',
-        'company_id': lambda self, cr, uid, context: \
-            self.pool['res.company']._company_default_get(
-                cr, uid, 'donation.donation', context=context),
-        'currency_id': _get_default_currency,
-        'journal_id': _get_default_journal,
-        'campaign_id': _get_default_campaign,
-        }
+        res['company_id'] = self.pool['res.company']._company_default_get(
+            cr, uid, 'donation.donation', context=context)
+        journal_ids = self.pool['account.journal'].search(
+            cr, uid, [
+                ('company_id', '=', res['company_id']),
+                ('type', '=', 'donation'),
+                ], context=context)
+        if journal_ids:  # Take first donation journal
+            res['journal_id'] = journal_ids[0]
+        res['campaign_id'] = user.context_donation_campaign_id.id or False
+        return res
 
     def _check_donation_date(self, cr, uid, ids):
         today_dt = datetime.today()
