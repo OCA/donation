@@ -8,7 +8,7 @@
     <field name="model">donation.report</field>
     <field name="arch"  type="xml">
         <search string="Donations Analysis">
-            <group string="Group By..." name="groupby">
+            <group string="Group By" name="groupby">
                 <filter name="date_groupby" string="Date" context="{'group_by': 'donation_date'}"/>
                 <filter name="partner_groupby" string="Partner" context="{'group_by': 'partner_id'}"/>
                 <filter name="company_groupby" string="Company" context="{'group_by': 'company_id'}"/>

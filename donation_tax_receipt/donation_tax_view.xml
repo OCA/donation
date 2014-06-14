@@ -90,7 +90,7 @@
         <search string="Search Donation Taxes Receipts">
             <field name="number"/>
             <field name="partner_id"/>
-            <group string="Group By..." name="groupby">
+            <group string="Group By" name="groupby">
                 <filter name="date" string="Date" context="{'group_by': 'donation_date'}"/>
                 <filter name="type" string="Type" context="{'group_by': 'type'}"/>
                 <filter name="partner_id" string="Partner" context="{'group_by': 'partner_id'}"/>
