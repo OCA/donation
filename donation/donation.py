@@ -39,7 +39,7 @@ class res_users(orm.Model):
 class donation_donation(orm.Model):
     _name = 'donation.donation'
     _description = 'Donations'
-    _order = 'id desc'
+    _order = 'number desc, id desc'
     _rec_name = 'number'
 
     def _compute_total(self, cr, uid, ids, name, arg, context=None):
@@ -80,8 +80,6 @@ class donation_donation(orm.Model):
         return res
 
     _columns = {
-        'number': fields.char(
-            'Donation Number', size=32, readonly=True),
         'currency_id': fields.function(
             _get_donation_currency, type='many2one', relation='res.currency',
             string='Currency'),
@@ -113,6 +111,9 @@ class donation_donation(orm.Model):
             states={'done': [('readonly', True)]}),
         'move_id': fields.many2one(
             'account.move', 'Account Move', readonly=True),
+        'number': fields.related(
+            'move_id', 'name', type='char', readonly=True, size=64,
+            relation='account.move', store=True, string='Donation Number'),
         'journal_id': fields.many2one(
             'account.journal', 'Payment Method', required=True,
             domain=[('type', '=', 'donation')],
@@ -158,19 +159,12 @@ class donation_donation(orm.Model):
         ['donation_date']
         )]
 
-    _sql_constraints = [(
-        'number_company_unique',
-        'unique(company_id, number)',
-        'A donation with this number already exists for this company'
-        )]
-
-
     def _get_analytic_account_id(
             self, cr, uid, donation_line, account_id, context=None):
         analytic_account_id = donation_line.analytic_account_id.id or False
         return analytic_account_id
 
-    def _prepare_donation_move(self, cr, uid, donation, number, context=None):
+    def _prepare_donation_move(self, cr, uid, donation, context=None):
         if context is None:
             context = {}
 
@@ -274,7 +268,7 @@ class donation_donation(orm.Model):
             'journal_id': donation.journal_id.id,
             'date': donation.donation_date,
             'period_id': period_id,
-            'ref': number,
+            'ref': False,  # TODO
             'line_id': movelines,
             }
         return vals
@@ -295,15 +289,10 @@ class donation_donation(orm.Model):
                 % (donation.check_total, donation.amount_total))
 
         donation_write_vals = {'state': 'done'}
-        number = donation.number
-        if not number:
-            number = self.pool['ir.sequence'].next_by_code(
-                cr, uid, 'donation.donation', context=context)
-            donation_write_vals['number'] = number
 
         if donation.amount_total:
             move_vals = self._prepare_donation_move(
-                cr, uid, donation, number, context=context)
+                cr, uid, donation, context=context)
             move_id = self.pool['account.move'].create(
                 cr, uid, move_vals, context=context)
 
@@ -318,7 +307,6 @@ class donation_donation(orm.Model):
             default = {}
         default['state'] = 'draft'
         default['move_id'] = False
-        default['number'] = False
         res = super(donation_donation, self).copy(
             cr, uid, id, default=default, context=context)
         return res
