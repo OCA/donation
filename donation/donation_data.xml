@@ -4,8 +4,7 @@
 <data noupdate="1">
 
 <record id="donation_seq" model="ir.sequence">
-    <field name="name">Donation</field>
-    <field name="code">donation.donation</field>
+    <field name="name">Account Donation Journal</field>
     <field name="prefix">DON-</field>
     <field name="padding">6</field>
     <field name="company_id" ref="base.main_company"/>
