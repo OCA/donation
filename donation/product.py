@@ -28,7 +28,7 @@ class product_template(orm.Model):
     _columns = {
         'donation': fields.boolean(
             'Is a Donation',
-            help="Specify if the product can be selected"
+            help="Specify if the product can be selected "
             "in a donation line."),
         }
 

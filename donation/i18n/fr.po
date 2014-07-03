@@ -1,35 +1,162 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* donation
+# 	* donation
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
+"Project-Id-Version: OpenERP Server 8.0alpha1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-13 08:55+0000\n"
-"PO-Revision-Date: 2014-03-13 08:55+0000\n"
+"POT-Creation-Date: 2014-07-01 13:43+0000\n"
+"PO-Revision-Date: 2014-07-01 15:54+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. module: donation
-#: code:addons/donation/donation.py:227
-#, python-format
-msgid "Missing price on product"
-msgstr "Prix manquant sur le produit"
+#: field:res.partner,donation_count:0
+msgid "# of Donations"
+msgstr "# de dons"
 
 #. module: donation
-#: field:donation.donation,state:0
-msgid "State"
-msgstr "État"
+#: field:res.partner,stay_count:0
+msgid "# of Stays"
+msgstr "# de séjours"
 
 #. module: donation
-#: selection:donation.donation,state:0
-msgid "Draft"
-msgstr "Brouillon"
+#: field:donation.donation,move_id:0
+msgid "Account Move"
+msgstr "Ecriture comptable"
+
+#. module: donation
+#: field:donation.line,amount:0
+msgid "Amount"
+msgstr "Montant"
+
+#. module: donation
+#: field:donation.report,amount_company_currency:0
+msgid "Amount Company Currency"
+msgstr "Montant dans la devise de la Sté"
+
+#. module: donation
+#: field:donation.donation,amount_total:0
+msgid "Amount Total"
+msgstr "Montant total"
+
+#. module: donation
+#: field:donation.donation,amount_total_company_currency:0
+msgid "Amount Total in Company Currency"
+msgstr "Montant total dans la devise de la Sté"
+
+#. module: donation
+#: field:donation.line,amount_company_currency:0
+msgid "Amount in Company Currency"
+msgstr "Montant dans la devise de la Sté"
+
+#. module: donation
+#: field:donation.line,analytic_account_id:0
+msgid "Analytic Account"
+msgstr "Compte analytique"
+
+#. module: donation
+#: view:donation.donation:0
+msgid "Back to Draft"
+msgstr "Retour à l'état brouillon"
+
+#. module: donation
+#: view:donation.donation:0
+msgid "Campaign"
+msgstr "Campagne de don"
+
+#. module: donation
+#: field:donation.report,product_categ_id:0
+msgid "Category of Product"
+msgstr "Catégorie de produit"
+
+#. module: donation
+#: field:donation.donation,check_total:0
+msgid "Check Amount"
+msgstr "Montant"
+
+#. module: donation
+#: field:donation.campaign,code:0
+msgid "Code"
+msgstr "Code"
+
+#. module: donation
+#: model:ir.model,name:donation.model_donation_campaign
+msgid "Code attributed for a Donation Campaign"
+msgstr "Code attribué pour une campagne de don"
+
+#. module: donation
+#: field:donation.donation,company_id:0 view:donation.report:0
+#: field:donation.report,company_id:0
+msgid "Company"
+msgstr "Société"
+
+#. module: donation
+#: field:donation.donation,company_currency_id:0
+msgid "Company Currency"
+msgstr "Monnaie de la Société"
+
+#. module: donation
+#: model:ir.ui.menu,name:donation.donation_config_menu
+msgid "Configuration"
+msgstr "Configuration"
+
+#. module: donation
+#: field:donation.donation,create_uid:0
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: donation
+#: field:donation.donation,currency_id:0
+msgid "Currency"
+msgstr "Devise"
+
+#. module: donation
+#: field:res.users,context_donation_campaign_id:0
+msgid "Current Donation Campaign"
+msgstr "Campagne de don courante"
+
+#. module: donation
+#: view:donation.donation:0 view:donation.report:0
+msgid "Date"
+msgstr "Date"
+
+#. module: donation
+#: constraint:donation.donation:0
+msgid "Date must be today or in the past"
+msgstr "La date doit être du jour ou passée"
+
+#. module: donation
+#: view:donation.donation:0 field:donation.line,donation_id:0
+#: model:ir.module.category,name:donation.module_category_donation
+#: view:product.product:0
+msgid "Donation"
+msgstr "Don"
+
+#. module: donation
+#: view:donation.campaign:0 field:donation.donation,campaign_id:0
+#: view:donation.report:0 field:donation.report,campaign_id:0
+msgid "Donation Campaign"
+msgstr "Campagne de don"
+
+#. module: donation
+#: view:donation.campaign:0
+#: model:ir.actions.act_window,name:donation.donation_campaign_action
+#: model:ir.ui.menu,name:donation.donation_campaign_menu
+msgid "Donation Campaigns"
+msgstr "Campagnes de don"
+
+#. module: donation
+#: field:donation.donation,donation_date:0
+#: field:donation.report,donation_date:0
+msgid "Donation Date"
+msgstr "Date du don"
 
 #. module: donation
 #: view:donation.line:0
@@ -37,175 +164,182 @@ msgid "Donation Line"
 msgstr "Ligne de don"
 
 #. module: donation
-#: field:donation.line,product_id:0
-msgid "Product"
-msgstr "Produit"
-
-#. module: donation
-#: code:addons/donation/donation.py:135
-#, python-format
-msgid "The donation is in currency '%s' but the company '%s' has a currency '%s'. We don't handle that for the moment."
-msgstr "The donation is in currency '%s' but the company '%s' has a currency '%s'. We don't handle that for the moment."
-
-#. module: donation
-#: field:donation.donation,company_id:0
-msgid "Company"
-msgstr "Société"
-
-#. module: donation
-#: view:donation.donation:0
-#: field:donation.line,donation_id:0
-#: model:res.groups,name:donation.group_donation
-msgid "Donation"
-msgstr "Don"
-
-#. module: donation
-#: constraint:donation.donation:0
-msgid "Date must be today or in the past"
-msgstr "Date must be today or in the past"
-
-#. module: donation
-#: field:donation.donation,company_currency_id:0
-msgid "Company Currency"
-msgstr "Company Currency"
-
-#. module: donation
 #: field:donation.donation,line_ids:0
 #: model:ir.model,name:donation.model_donation_line
 msgid "Donation Lines"
-msgstr "Donation Lines"
-
-#. module: donation
-#: field:donation.donation,donation_date:0
-msgid "Donation Date"
-msgstr "Date du don"
-
-#. module: donation
-#: view:donation.donation:0
-msgid "Validate"
-msgstr "Validate"
-
-#. module: donation
-#: code:addons/donation/donation.py:228
-#, python-format
-msgid "The sale price on product '%s' is 0!"
-msgstr "The sale price on product '%s' is 0!"
-
-#. module: donation
-#: field:donation.donation,partner_categ_id:0
-msgid "Categories"
-msgstr "Categories"
-
-#. module: donation
-#: sql_constraint:donation.donation:0
-msgid "A donation with this number already exists for this company"
-msgstr "A donation with this number already exists for this company"
+msgstr "Lignes de don"
 
 #. module: donation
 #: field:donation.donation,number:0
 msgid "Donation Number"
-msgstr "Donation Number"
+msgstr "Numéro de don"
 
 #. module: donation
-#: code:addons/donation/donation.py:134
-#: code:addons/donation/donation.py:153
-#, python-format
-msgid "Error:"
-msgstr "Error:"
-
-#. module: donation
-#: model:ir.model,name:donation.model_res_company
-msgid "Companies"
-msgstr "Sociétés"
-
-#. module: donation
-#: field:donation.donation,company_email:0
-msgid "Company Email"
-msgstr "Company Email"
-
-#. module: donation
-#: field:donation.line,amount:0
-msgid "Amount"
-msgstr "Amount"
-
-#. module: donation
+#: view:donation.donation:0
 #: model:ir.actions.act_window,name:donation.donation_action
+#: model:ir.actions.act_window,name:donation.partner_donation_action
 #: model:ir.model,name:donation.model_donation_donation
 #: model:ir.ui.menu,name:donation.donation_menu
+#: model:ir.ui.menu,name:donation.donation_report_title_menu
 #: model:ir.ui.menu,name:donation.donation_title_menu
-#: view:res.company:0
+#: model:ir.ui.menu,name:donation.donation_top_menu view:res.partner:0
+#: field:res.partner,donation_ids:0
 msgid "Donations"
-msgstr "Donations"
+msgstr "Dons"
 
 #. module: donation
-#: selection:donation.donation,state:0
-msgid "Waiting Currency Conversion"
-msgstr "Waiting Currency Conversion"
-
-#. module: donation
-#: field:donation.donation,move_id:0
-msgid "Account Move"
-msgstr "Account Move"
-
-#. module: donation
-#: field:donation.donation,check_total:0
-msgid "Check Amount"
-msgstr "Check Amount"
-
-#. module: donation
-#: field:res.company,donation_bank_account_id:0
-msgid "Bank Account for Donations"
-msgstr "Bank Account for Donations"
-
-#. module: donation
-#: code:addons/donation/donation.py:154
-#, python-format
-msgid "Missing income account on product '%s' or on it's related product category"
-msgstr "Missing income account on product '%s' or on it's related product category"
-
-#. module: donation
-#: field:donation.line,sequence:0
-msgid "Sequence"
-msgstr "Sequence"
-
-#. module: donation
-#: sql_constraint:donation.line:0
-msgid "The amount must be positive or 0."
-msgstr "The amount must be positive or 0."
-
-#. module: donation
-#: field:donation.donation,partner_id:0
-msgid "Donor"
-msgstr "Donor"
-
-#. module: donation
-#: field:donation.donation,currency_id:0
-msgid "Currency"
-msgstr "Currency"
-
-#. module: donation
-#: selection:donation.donation,state:0
-msgid "Done"
-msgstr "Done"
-
-#. module: donation
-#: model:ir.model,name:donation.model_account_invoice
-msgid "Invoice"
-msgstr "Facture"
+#: view:donation.report:0
+#: model:ir.actions.act_window,name:donation.donation_report_action
+#: model:ir.model,name:donation.model_donation_report
+#: model:ir.ui.menu,name:donation.donation_report_menu
+msgid "Donations Analysis"
+msgstr "Analyse des dons"
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_line_action
-#: model:ir.ui.menu,name:donation.donation_line_menu
 msgid "Donations Lines"
-msgstr "Donations Lines"
+msgstr "Lignes de dons"
 
 #. module: donation
-#: field:donation.donation,journal_id:0
+#: view:donation.donation:0 selection:donation.donation,state:0
+msgid "Done"
+msgstr "Validé"
+
+#. module: donation
+#: field:donation.donation,partner_id:0 field:donation.report,partner_id:0
+msgid "Donor"
+msgstr "Donateur"
+
+#. module: donation
+#: model:ir.ui.menu,name:donation.donor
+msgid "Donors"
+msgstr "Donateurs"
+
+#. module: donation
+#: model:product.category,name:donation.product_category_donation
+msgid "Dons"
+msgstr "Dons"
+
+#. module: donation
+#: view:donation.donation:0 selection:donation.donation,state:0
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: donation
+#: view:donation.donation:0 view:donation.report:0
+msgid "Group By"
+msgstr "Grouper par"
+
+#. module: donation
+#: field:product.template,donation:0
+msgid "Is a Donation"
+msgstr "Don"
+
+#. module: donation
+#: model:ir.model,name:donation.model_account_journal
 msgid "Journal"
 msgstr "Journal"
 
 #. module: donation
-#: field:donation.donation,amount_total:0
-msgid "Amount Total"
-msgstr "Amount Total"
+#: model:ir.module.category,description:donation.module_category_donation
+msgid "Manage donations"
+msgstr "Gérer les dons"
 
+#. module: donation
+#: model:res.groups,name:donation.group_donation_manager
+msgid "Manager"
+msgstr "Responsable"
+
+#. module: donation
+#: field:donation.campaign,name:0
+msgid "Name"
+msgstr "Nom"
+
+#. module: donation
+#: field:donation.campaign,nota:0
+msgid "Notes"
+msgstr "Notes"
+
+#. module: donation
+#: view:donation.donation:0 view:donation.report:0
+#: model:ir.model,name:donation.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: donation
+#: field:donation.donation,journal_id:0
+msgid "Payment Method"
+msgstr "Méthode de paiement"
+
+#. module: donation
+#: field:donation.line,product_id:0 view:donation.report:0
+#: field:donation.report,product_id:0
+#: model:ir.model,name:donation.model_product_product
+msgid "Product"
+msgstr "Produit"
+
+#. module: donation
+#: view:donation.report:0
+msgid "Product Category"
+msgstr "Catégorie de produit"
+
+#. module: donation
+#: model:ir.model,name:donation.model_product_template
+msgid "Product Template"
+msgstr "Modèle d'article"
+
+#. module: donation
+#: model:ir.actions.act_window,name:donation.donation_product_action
+#: model:ir.ui.menu,name:donation.donation_products
+msgid "Products"
+msgstr "Articles"
+
+#. module: donation
+#: field:donation.line,quantity:0
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: donation
+#: view:donation.donation:0
+msgid "Search Donations"
+msgstr "Recherche des dons"
+
+#. module: donation
+#: field:donation.line,sequence:0
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: donation
+#: help:product.template,donation:0
+msgid "Specify if the product can be selected in a donation line."
+msgstr "Spécifier si le produit peut être sélectionné dans une ligne de don."
+
+#. module: donation
+#: field:donation.campaign,start_date:0
+msgid "Start Date"
+msgstr "Date de départ"
+
+#. module: donation
+#: field:donation.donation,state:0
+msgid "State"
+msgstr "État"
+
+#. module: donation
+#: field:donation.line,unit_price:0
+msgid "Unit Price"
+msgstr "Prix unitaire"
+
+#. module: donation
+#: model:res.groups,name:donation.group_donation_user
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: donation
+#: model:ir.model,name:donation.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"
+
+#. module: donation
+#: view:donation.donation:0
+msgid "Validate"
+msgstr "Valider"
