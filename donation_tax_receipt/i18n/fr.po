@@ -1,0 +1,225 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* donation_tax_receipt
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 8.0alpha1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-20 14:59+0000\n"
+"PO-Revision-Date: 2014-06-25 16:58+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 1.5.7\n"
+
+#. module: donation_tax_receipt
+#: field:donation.tax.receipt,amount:0
+msgid "Amount"
+msgstr "Montant"
+
+#. module: donation_tax_receipt
+#: selection:donation.donation,tax_receipt_option:0
+#: selection:donation.tax.receipt,type:0
+#: selection:res.partner,tax_receipt_option:0
+msgid "Annual Tax Receipt"
+msgstr "Reçu fiscal annuel"
+
+#. module: donation_tax_receipt
+#: view:donation.tax.receipt.print:0 view:tax.receipt.annual.create:0
+msgid "Cancel"
+msgstr "Quitter"
+
+#. module: donation_tax_receipt
+#: field:donation.tax.receipt,company_id:0
+msgid "Company"
+msgstr "Société"
+
+#. module: donation_tax_receipt
+#: model:ir.actions.act_window,name:donation_tax_receipt.tax_receipt_annual_create_action
+#: model:ir.ui.menu,name:donation_tax_receipt.tax_receipt_annual_create_menu
+msgid "Create Annual Receipts"
+msgstr "Créer des reçus annuels"
+
+#. module: donation_tax_receipt
+#: field:donation.tax.receipt,currency_id:0
+msgid "Currency"
+msgstr "Devise"
+
+#. module: donation_tax_receipt
+#: view:donation.tax.receipt:0 field:donation.tax.receipt,date:0
+msgid "Date"
+msgstr "Date"
+
+#. module: donation_tax_receipt
+#: field:donation.tax.receipt,donation_date:0
+msgid "Donation Date"
+msgstr "Date du don"
+
+#. module: donation_tax_receipt
+#: model:ir.model,name:donation_tax_receipt.model_donation_line
+msgid "Donation Lines"
+msgstr "Lignes de don"
+
+#. module: donation_tax_receipt
+#: view:donation.tax.receipt:0
+#: model:ir.actions.act_window,name:donation_tax_receipt.donation_tax_receipt_action
+#: model:ir.ui.menu,name:donation_tax_receipt.donation_tax_receipt_menu
+msgid "Donation Tax Receipt"
+msgstr "Reçu fiscal pour don"
+
+#. module: donation_tax_receipt
+#: view:donation.tax.receipt:0
+msgid "Donation Taxes Receipts"
+msgstr "Reçus fiscaux pour dons"
+
+#. module: donation_tax_receipt
+#: model:ir.model,name:donation_tax_receipt.model_donation_donation
+msgid "Donations"
+msgstr "Dons"
+
+#. module: donation_tax_receipt
+#: field:donation.tax.receipt,partner_id:0
+msgid "Donor"
+msgstr "Donateur"
+
+#. module: donation_tax_receipt
+#: field:donation.line,tax_receipt_ok:0
+msgid "Eligible for a Tax Receipt"
+msgstr "Eligible au reçu fiscal"
+
+#. module: donation_tax_receipt
+#: field:tax.receipt.annual.create,end_date:0
+msgid "End Date"
+msgstr "Date de fin"
+
+#. module: donation_tax_receipt
+#: selection:donation.donation,tax_receipt_option:0
+#: selection:donation.tax.receipt,type:0
+#: selection:res.partner,tax_receipt_option:0
+msgid "For Each Donation"
+msgstr "Pour chaque don"
+
+#. module: donation_tax_receipt
+#: view:tax.receipt.annual.create:0
+msgid "Generate"
+msgstr "Générer"
+
+#. module: donation_tax_receipt
+#: model:ir.model,name:donation_tax_receipt.model_tax_receipt_annual_create
+msgid "Generate Annual Tax Receipt"
+msgstr "Générer reçu fiscal annuel"
+
+#. module: donation_tax_receipt
+#: view:tax.receipt.annual.create:0
+msgid "Generate Annual Tax Receipts"
+msgstr "Générer reçus fiscaux annuel"
+
+#. module: donation_tax_receipt
+#: view:donation.tax.receipt:0
+msgid "Group By"
+msgstr "Grouper par"
+
+#. module: donation_tax_receipt
+#: field:product.template,tax_receipt_ok:0
+msgid "Is Eligible for a Tax Receipt"
+msgstr "Eligible au reçu fiscal"
+
+#. module: donation_tax_receipt
+#: selection:donation.donation,tax_receipt_option:0
+#: selection:res.partner,tax_receipt_option:0
+msgid "None"
+msgstr "Aucun"
+
+#. module: donation_tax_receipt
+#: view:donation.tax.receipt:0
+#: model:ir.model,name:donation_tax_receipt.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: donation_tax_receipt
+#: field:donation.tax.receipt,print_date:0
+msgid "Print Date"
+msgstr "Date d'impression"
+
+#. module: donation_tax_receipt
+#: model:ir.model,name:donation_tax_receipt.model_donation_tax_receipt_print
+msgid "Print Donation Tax Receipt"
+msgstr "Imprimer reçu fiscal du don"
+
+#. module: donation_tax_receipt
+#: view:donation.tax.receipt.print:0
+#: model:ir.actions.act_window,name:donation_tax_receipt.donation_tax_receipt_print_action
+#: model:ir.ui.menu,name:donation_tax_receipt.donation_tax_receipt_print_menu
+msgid "Print Receipts"
+msgstr "Imprimer reçus"
+
+#. module: donation_tax_receipt
+#: view:donation.tax.receipt.print:0
+msgid "Print Tax Receipts"
+msgstr "Imprimer reçus fiscaux"
+
+#. module: donation_tax_receipt
+#: model:ir.model,name:donation_tax_receipt.model_product_template
+msgid "Product Template"
+msgstr "Modèle d'article"
+
+#. module: donation_tax_receipt
+#: field:donation.tax.receipt,number:0
+msgid "Receipt Number"
+msgstr "Numéro de reçu"
+
+#. module: donation_tax_receipt
+#: field:donation.tax.receipt.print,receipt_ids:0
+msgid "Receipts To Print"
+msgstr "Reçus à imprimer"
+
+#. module: donation_tax_receipt
+#: field:donation.tax.receipt,donation_ids:0
+msgid "Related Donations"
+msgstr "Dons liés"
+
+#. module: donation_tax_receipt
+#: view:donation.tax.receipt:0
+msgid "Search Donation Taxes Receipts"
+msgstr "Recherche des reçus fiscaux"
+
+#. module: donation_tax_receipt
+#: help:product.template,tax_receipt_ok:0
+msgid "Specify if the product is eligible for a tax receiptin a donation line."
+msgstr ""
+"Indiquez si le produit est éligible à un reçu fiscal sur une ligne de don"
+
+#. module: donation_tax_receipt
+#: field:tax.receipt.annual.create,start_date:0
+msgid "Start Date"
+msgstr "Date de départ"
+
+#. module: donation_tax_receipt
+#: field:donation.donation,tax_receipt_id:0 view:donation.line:0
+msgid "Tax Receipt"
+msgstr "Reçu fiscal"
+
+#. module: donation_tax_receipt
+#: field:donation.donation,tax_receipt_option:0
+#: field:res.partner,tax_receipt_option:0
+msgid "Tax Receipt Option"
+msgstr "Option reçu fiscal"
+
+#. module: donation_tax_receipt
+#: field:donation.donation,tax_receipt_total:0
+msgid "Tax Receipt Total"
+msgstr "Total reçu fiscal"
+
+#. module: donation_tax_receipt
+#: model:ir.model,name:donation_tax_receipt.model_donation_tax_receipt
+msgid "Tax Receipt for Donations"
+msgstr "Reçu fiscal pour les dons"
+
+#. module: donation_tax_receipt
+#: view:donation.tax.receipt:0 field:donation.tax.receipt,type:0
+msgid "Type"
+msgstr "Type"

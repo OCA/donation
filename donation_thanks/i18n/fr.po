@@ -1,0 +1,58 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* donation_thanks
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 8.0alpha1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-21 14:39+0000\n"
+"PO-Revision-Date: 2014-07-01 15:57+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 1.5.7\n"
+
+#. module: donation_thanks
+#. 11720
+#: aeroo:donation.thanks:0
+msgid "13 juin 2014"
+msgstr "13 juin 2014"
+
+#. module: donation_thanks
+#: model:ir.model,name:donation_thanks.model_donation_donation
+msgid "Donations"
+msgstr "Dons"
+
+#. module: donation_thanks
+#: view:donation.donation:0
+msgid "Print Thanks Letter"
+msgstr "Imprimer remerciements"
+
+#. module: donation_thanks
+#: model:ir.actions.report.xml,name:donation_thanks.report_thanks
+msgid "Thanks Letter"
+msgstr "Remerciements"
+
+#. module: donation_thanks
+#: field:donation.donation,thanks_printed:0
+msgid "Thanks Printed"
+msgstr "Remerciements imprimés"
+
+#. module: donation_thanks
+#: help:donation.donation,thanks_printed:0
+msgid ""
+"This field automatically becomes active when the thanks letter has been "
+"printed."
+msgstr ""
+"Ce champ devient actif automatiquement lorsque les remerciements sont "
+"imprimés."
+
+#. module: donation_thanks
+#. 21975
+#: aeroo:donation.thanks:0
+msgid "Tél. : "
+msgstr "Tél. :"

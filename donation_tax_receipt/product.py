@@ -28,6 +28,6 @@ class product_template(orm.Model):
     _columns = {
         'tax_receipt_ok': fields.boolean(
             'Is Eligible for a Tax Receipt',
-            help="Specify if the product is eligible for a tax receipt"
+            help="Specify if the product is eligible for a tax receipt "
             "in a donation line."),
         }
