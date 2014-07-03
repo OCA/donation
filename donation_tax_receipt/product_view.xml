@@ -7,10 +7,12 @@
     <field name="model">product.product</field>
     <field name="inherit_id" ref="donation.product_donation_form"/>
     <field name="arch"  type="xml">
-	    <label for="donation" position="after">
-	    	<field name="tax_receipt_ok" attrs="{'invisible': [('donation', '=', False)]}"/>
-	    	<label for="tax_receipt_ok" attrs="{'invisible': [('donation', '=', False)]}"/>
-	    </label>
+        <div name="donation" position="after">
+            <div name="tax_receipt">
+                <field name="tax_receipt_ok" attrs="{'invisible': [('donation', '=', False)]}"/>
+                <label for="tax_receipt_ok" attrs="{'invisible': [('donation', '=', False)]}"/>
+            </div>
+        </div>
     </field>
 </record>
 

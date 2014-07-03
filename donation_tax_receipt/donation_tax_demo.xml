@@ -3,7 +3,7 @@
 <openerp>
 <data noupdate="1">
 
-<record id="donation.product_template_donation" model="product.template">
+<record id="donation.product_product_donation" model="product.product">
     <field name="tax_receipt_ok">1</field>
 </record>
 
