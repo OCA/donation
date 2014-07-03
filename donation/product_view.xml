@@ -20,8 +20,10 @@
     <field name="inherit_id" ref="product.product_normal_form_view"/>
     <field name="arch"  type="xml">
         <div name="options" position="inside">
-            <field name="donation" on_change="donation_change(donation, context)"/>
-            <label for="donation"/>
+            <div name="donation">
+                <field name="donation" on_change="donation_change(donation, context)"/>
+                <label for="donation"/>
+            </div>
         </div>
     </field>
 </record>
