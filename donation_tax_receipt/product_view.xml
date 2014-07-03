@@ -4,6 +4,7 @@
 <data>
 
 <record id="product_template_form_view" model="ir.ui.view">
+    <field name="name">donation.tax.receipt.product.template.form</field>
     <field name="model">product.template</field>
     <field name="inherit_id" ref="donation.product_template_form_view"/>
     <field name="arch"  type="xml">
@@ -13,6 +14,17 @@
                 <label for="tax_receipt_ok" attrs="{'invisible': [('donation', '=', False)]}"/>
             </div>
         </div>
+    </field>
+</record>
+
+<record id="product_template_search_view" model="ir.ui.view">
+    <field name="name">donation.tax.receipt.product.template.search</field>
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="donation.product_template_search_view"/>
+    <field name="arch" type="xml">
+        <filter name="filter_donation" position="after">
+            <filter name="filter_tax_receipt_ok" string="Eligible for a Tax Receipt" domain="[('tax_receipt_ok', '=', True)]"/>
+        </filter>
     </field>
 </record>
 
