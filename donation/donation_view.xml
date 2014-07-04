@@ -141,7 +141,7 @@
     <field name="view_mode">tree,form</field>
 </record>
 
-<menuitem id="donation_top_menu" sequence="15" name="Donations"/>
+<menuitem id="donation_top_menu" sequence="15" name="Donations" groups="group_donation_user"/>
 
 <menuitem id="donation_title_menu" parent="donation_top_menu" sequence="15" name="Donations"/>
 
