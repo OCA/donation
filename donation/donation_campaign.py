@@ -33,7 +33,8 @@ class donation_campaign(orm.Model):
             ids = [ids]
         for record in self.browse(cr, uid, ids, context=context):
             if record.code:
-                res.append((record.id, u'[%s] %s' % (record.code, record.name)))
+                res.append(
+                    (record.id, u'[%s] %s' % (record.code, record.name)))
             else:
                 res.append((record.id, record.name))
         return res
