@@ -67,7 +67,10 @@ class donation_donation(orm.Model):
         'tax_receipt_total': fields.function(
             _tax_receipt_total, type='float', string='Tax Receipt Total',
             store={
-                'donation.line': (_get_donations_from_lines, ['donation_id', 'amount', 'product_id'], 10),
+                'donation.line': (
+                    _get_donations_from_lines,
+                    ['donation_id', 'quantity', 'unit_price', 'product_id'],
+                    10),
                 }),
         }
 
@@ -126,11 +129,14 @@ class donation_donation(orm.Model):
         if partner_id:
             partner = self.pool['res.partner'].browse(
                 cr, uid, partner_id, context=context)
-            if partner.tax_receipt_option == 'annual' and tax_receipt_option != 'annual':
+            if (
+                    partner.tax_receipt_option == 'annual'
+                    and tax_receipt_option != 'annual'):
                 res = {
                     'warning': {
                         'title': _('Error:'),
-                        'message': _('You cannot change the Tax Receipt '
+                        'message':
+                        _('You cannot change the Tax Receipt '
                             'Option when it is Annual.'),
                         },
                     'value': {'tax_receipt_option': 'annual'},
@@ -186,13 +192,16 @@ class donation_tax_receipt(orm.Model):
         }
 
     _defaults = {
-        'company_id': lambda self, cr, uid, context: self.pool['res.company']._company_default_get(cr, uid, 'donation.tax.receipt', context=context),
+        'company_id':
+        lambda self, cr, uid, context:
+        self.pool['res.company']._company_default_get(
+            cr, uid, 'donation.tax.receipt', context=context),
         'date': fields.date.context_today,
         }
 
     def get_tax_receipt_number(self, cr, uid, date, context=None):
         # Search the approriate sequence
-        assert date != False, 'Date is required'
+        assert date, 'Date is required'
         date_dt = datetime.strptime(date, DEFAULT_SERVER_DATE_FORMAT)
         seq_type = 'donation.tax.receipt.%s' % date_dt.year
         seq_type_ids = self.pool['ir.sequence.type'].search(
