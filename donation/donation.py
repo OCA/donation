@@ -92,13 +92,19 @@ class donation_donation(orm.Model):
         'amount_total': fields.function(
             _compute_total, type='float', multi="donation",
             string='Amount Total', store={
-                'donation.line': (_get_donation_from_lines, ['unit_price', 'quantity', 'donation_id'], 10),
+                'donation.line': (
+                    _get_donation_from_lines,
+                    ['unit_price', 'quantity', 'donation_id'], 10),
             }),
         'amount_total_company_currency': fields.function(
             _compute_total, type='float', multi="donation",
             string='Amount Total in Company Currency', store={
-                'donation.donation': (lambda self, cr, uid, ids, c={}: ids, ['currency_id', 'journal_id'], 10),
-                'donation.line': (_get_donation_from_lines, ['unit_price', 'quantity', 'donation_id'], 20),
+                'donation.donation': (
+                    lambda self, cr, uid, ids, c={}: ids,
+                    ['currency_id', 'journal_id'], 10),
+                'donation.line': (
+                    _get_donation_from_lines,
+                    ['unit_price', 'quantity', 'donation_id'], 20),
             }),
         'donation_date': fields.date(
             'Donation Date', required=True,
@@ -198,11 +204,14 @@ class donation_donation(orm.Model):
             amount_total_company_cur += donation_line.amount_company_currency
             account_id = donation_line.product_id.property_account_income.id
             if not account_id:
-                account_id = donation_line.product_id.categ_id.property_account_income_categ.id
+                account_id = donation_line.product_id.categ_id.\
+                    property_account_income_categ.id
             if not account_id:
                 raise orm.except_orm(
                     _('Error:'),
-                    _("Missing income account on product '%s' or on it's related product category") % donation_line.product_id.name)
+                    _("Missing income account on product '%s' or on it's "
+                        "related product category")
+                    % donation_line.product_id.name)
             analytic_account_id = self._get_analytic_account_id(
                 cr, uid, donation_line, account_id, context=context)
             if not currency_id:
@@ -218,11 +227,12 @@ class donation_donation(orm.Model):
                 if currency_id:
                     amount_currency = donation_line.amount
 
-            #TODO Take into account the option group_invoice_lines ??
+            # TODO Take into account the option group_invoice_lines ?
             if (account_id, analytic_account_id) in aml:
                 aml[(account_id, analytic_account_id)]['credit'] += credit
                 aml[(account_id, analytic_account_id)]['debit'] += debit
-                aml[(account_id, analytic_account_id)]['amount_currency'] += amount_currency
+                aml[(account_id, analytic_account_id)]['amount_currency'] \
+                    += amount_currency
             else:
                 aml[(account_id, analytic_account_id)] = {
                     'credit': credit,
@@ -285,7 +295,8 @@ class donation_donation(orm.Model):
         if donation.check_total != donation.amount_total:
             raise orm.except_orm(
                 _('Error:'),
-                _("The amount of the donation (%s) is different from the sum of the donation lines (%s).")
+                _("The amount of the donation (%s) is different from "
+                    "the sum of the donation lines (%s).")
                 % (donation.check_total, donation.amount_total))
 
         donation_write_vals = {'state': 'done'}
@@ -367,14 +378,20 @@ class donation_line(orm.Model):
         'amount': fields.function(
             _compute_amount, multi="donline", type="float", string='Amount',
             digits_compute=dp.get_precision('Account'), store={
-                'donation.line': (lambda self, cr, uid, ids, c={}: ids, ['quantity', 'unit_price'], 10),
+                'donation.line': (
+                    lambda self, cr, uid, ids, c={}: ids,
+                    ['quantity', 'unit_price'], 10),
                 }),
         'amount_company_currency': fields.function(
             _compute_amount, multi="donline", type="float",
             string='Amount in Company Currency',
             digits_compute=dp.get_precision('Account'), store={
-                'donation.line': (lambda self, cr, uid, ids, c={}: ids, ['quantity', 'unit_price'], 10),
-                'donation.donation': (_get_lines_from_donation, ['journal_id', 'currency_id'], 10),
+                'donation.line': (
+                    lambda self, cr, uid, ids, c={}: ids,
+                    ['quantity', 'unit_price'], 10),
+                'donation.donation': (
+                    _get_lines_from_donation,
+                    ['journal_id', 'currency_id'], 10),
                 }),
         'analytic_account_id':  fields.many2one(
             'account.analytic.account', 'Analytic Account',
@@ -397,7 +414,6 @@ class donation_line(orm.Model):
 
 class res_partner(orm.Model):
     _inherit = 'res.partner'
-
 
     def _donation_count(self, cr, uid, ids, field_name, arg, context=None):
         res = dict(map(lambda x: (x, 0), ids))
