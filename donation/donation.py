@@ -333,7 +333,7 @@ class donation_donation(orm.Model):
                 cr, uid, [donation.move_id.id], context=context)
             self.pool['account.move'].unlink(
                 cr, uid, donation.move_id.id, context=context)
-        donation.write({'state': 'draft'}, context=context)
+        donation.write({'state': 'draft'})
         return True
 
 
