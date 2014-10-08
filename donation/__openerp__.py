@@ -40,9 +40,10 @@ It has been developped by brother Bernard and brother Irenee from Barroux Abbey 
     'data': [
         'security/donation_security.xml',
         'donation_view.xml',
+        'account_view.xml',
         'product_view.xml',
         'donation_campaign_view.xml',
-        'campaign_user_view.xml',
+        'users_view.xml',
         'security/ir.model.access.csv',
         'partner_view.xml',
         'report/donation_report_view.xml',
