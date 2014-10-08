@@ -7,7 +7,7 @@
     <field name="name">donation.form</field>
     <field name="model">donation.donation</field>
     <field name="arch"  type="xml">
-        <form string="Donation" version="7.0">
+        <form string="Donation">
             <header>
                 <button type="object" name="validate" string="Validate"
                     class="oe_highlight" states="draft"
@@ -15,6 +15,8 @@
                 <button type="object" name="back_to_draft"
                     string="Back to Draft" states="done"
                     groups="donation.group_donation_user"/>
+                <button type="object" name="save_default_values"
+                    string="Save Default Values"/>
                 <field name="state" widget="statusbar"/>
             </header>
             <sheet>
@@ -28,6 +30,7 @@
                             groups="base.group_multi_currency"/>
                         <field name="check_total" widget="monetary"
                             options="{'currency_field': 'currency_id'}"/>
+                        <field name="payment_ref"/>
                         <field name="campaign_id"/>
                         <field name="donation_date"/>
                     </group>
@@ -118,7 +121,7 @@
     <field name="name">donation.line.form</field>
     <field name="model">donation.line</field>
     <field name="arch"  type="xml">
-        <form string="Donation Line" version="7.0">
+        <form string="Donation Line">
             <group name="main">
                 <field name="donation_id" invisible="not context.get('donation_line_main_view')"/>
                 <field name="product_id" on_change="product_id_change(product_id, context)"/>
