@@ -15,7 +15,7 @@
     <field name="name">tax_receipt_annual_create.form</field>
     <field name="model">tax.receipt.annual.create</field>
     <field name="arch"  type="xml">
-        <form string="Generate Annual Tax Receipts" version="7.0">
+        <form string="Generate Annual Tax Receipts">
             <group name="main">
                 <field name="start_date"/>
                 <field name="end_date"/>

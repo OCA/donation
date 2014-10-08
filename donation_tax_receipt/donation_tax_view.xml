@@ -44,7 +44,7 @@
     <field name="name">donation.tax.receipt.form</field>
     <field name="model">donation.tax.receipt</field>
     <field name="arch"  type="xml">
-        <form string="Donation Tax Receipt" version="7.0">
+        <form string="Donation Tax Receipt">
             <group name="main">
                 <field name="number" readonly="1"/>
                 <field name="date"/>
