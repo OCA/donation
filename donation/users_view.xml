@@ -9,6 +9,7 @@
     <field name="inherit_id" ref="base.view_users_form"/>
     <field name="arch" type="xml">
         <group name="preferences" position="inside">
+            <field name="context_donation_journal_id"/>
             <field name="context_donation_campaign_id"/>
         </group>
     </field>
@@ -20,6 +21,8 @@
     <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
     <field name="arch"  type="xml">
         <group name="preferences" position="inside">
+            <field name="context_donation_journal_id"
+                groups="donation.group_donation_user"/>
             <field name="context_donation_campaign_id"
                 groups="donation.group_donation_user"/>
         </group>
