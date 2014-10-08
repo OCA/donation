@@ -24,9 +24,10 @@
                             on_change="partner_id_change(partner_id, context)"
                             domain="[('customer', '=', True)]"/>
                         <field name="journal_id" widget="selection"/>
+                        <field name="currency_id"
+                            groups="base.group_multi_currency"/>
                         <field name="check_total" widget="monetary"
                             options="{'currency_field': 'currency_id'}"/>
-                        <field name="currency_id" invisible="1"/>
                         <field name="campaign_id"/>
                         <field name="donation_date"/>
                     </group>
@@ -56,6 +57,7 @@
             <field name="partner_id" invisible="context.get('partner_view')"/>
             <field name="donation_date"/>
             <field name="amount_total"/>
+            <field name="currency_id" groups="base.group_multi_currency"/>
             <field name="journal_id"/>
             <field name="campaign_id"/>
             <field name="state"/>
@@ -77,6 +79,8 @@
                 <filter name="date_groupby" string="Date" context="{'group_by': 'donation_date'}"/>
                 <filter name="partner_groupby" string="Partner" context="{'group_by': 'partner_id'}"/>
                 <filter name="campaign_groupby" string="Campaign" context="{'group_by': 'campaign_id'}"/>
+                <filter name="currency_groupby" string="Currency" context="{'group_by': 'currency_id'}"/>
+                <filter name="journal_groupby" string="Payment Method" context="{'group_by': 'journal_id'}"/>
             </group>
         </search>
     </field>
