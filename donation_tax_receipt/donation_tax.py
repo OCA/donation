@@ -101,7 +101,7 @@ class donation_donation(orm.Model):
                 cr, uid, donation, context=context)
             receipt_id = self.pool['donation.tax.receipt'].create(
                 cr, uid, receipt_vals, context=context)
-            donation.write({'tax_receipt_id': receipt_id}, context=context)
+            donation.write({'tax_receipt_id': receipt_id})
         return res
 
     def partner_id_change(self, cr, uid, ids, partner_id, context=None):
