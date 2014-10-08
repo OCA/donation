@@ -32,6 +32,11 @@ class res_users(orm.Model):
     _columns = {
         'context_donation_campaign_id': fields.many2one(
             'donation.campaign', 'Current Donation Campaign'),
+        'context_donation_journal_id': fields.many2one(
+            'account.journal', 'Current Donation Payment Method',
+            domain=[
+                ('type', 'in', ('bank', 'cash')),
+                ('allow_donation', '=', True)]),
         # begin with context_ to allow user to change it by itself
         }
 
@@ -70,19 +75,10 @@ class donation_donation(orm.Model):
             cr, uid, [('line_ids', 'in', ids)], context=context)
         return res
 
-    def _get_donation_currency(self, cr, uid, ids, name, arg, context=None):
-        res = {}
-        for donation in self.browse(cr, uid, ids, context=context):
-            if donation.journal_id.currency:
-                res[donation.id] = donation.journal_id.currency.id
-            else:
-                res[donation.id] = donation.company_id.currency_id.id
-        return res
-
     _columns = {
-        'currency_id': fields.function(
-            _get_donation_currency, type='many2one', relation='res.currency',
-            string='Currency'),
+        'currency_id': fields.many2one(
+            'res.currency', 'Currency', required=True,
+            states={'done': [('readonly', True)]}),
         'partner_id': fields.many2one(
             'res.partner', 'Donor', required=True,
             states={'done': [('readonly', True)]}),
@@ -116,18 +112,20 @@ class donation_donation(orm.Model):
             'donation.line', 'donation_id', 'Donation Lines',
             states={'done': [('readonly', True)]}),
         'move_id': fields.many2one(
-            'account.move', 'Account Move', readonly=True),
+            'account.move', 'Account Move', readonly=True, copy=False),
         'number': fields.related(
             'move_id', 'name', type='char', readonly=True, size=64,
             relation='account.move', store=True, string='Donation Number'),
         'journal_id': fields.many2one(
             'account.journal', 'Payment Method', required=True,
-            domain=[('type', '=', 'donation')],
+            domain=[
+                ('type', 'in', ('bank', 'cash')),
+                ('allow_donation', '=', True)],
             states={'done': [('readonly', True)]}),
         'state': fields.selection([
             ('draft', 'Draft'),
             ('done', 'Done'),
-            ], 'State', readonly=True),
+            ], 'State', readonly=True, copy='draft'),
         'company_currency_id': fields.related(
             'company_id', 'currency_id', type='many2one',
             relation="res.currency", string="Company Currency"),
@@ -137,18 +135,18 @@ class donation_donation(orm.Model):
     }
 
     def default_get(self, cr, uid, fields_list, context=None):
-        res = {'state': 'draft'}
         user = self.pool['res.users'].browse(cr, uid, uid, context=context)
-        res['company_id'] = self.pool['res.company']._company_default_get(
+        company_id = self.pool['res.company']._company_default_get(
             cr, uid, 'donation.donation', context=context)
-        journal_ids = self.pool['account.journal'].search(
-            cr, uid, [
-                ('company_id', '=', res['company_id']),
-                ('type', '=', 'donation'),
-                ], context=context)
-        if journal_ids:  # Take first donation journal
-            res['journal_id'] = journal_ids[0]
-        res['campaign_id'] = user.context_donation_campaign_id.id or False
+        company = self.pool['res.company'].browse(
+            cr, uid, company_id, context=context)
+        res = {
+            'state': 'draft',
+            'journal_id': user.context_donation_journal_id.id or False,
+            'campaign_id': user.context_donation_campaign_id.id or False,
+            'company_id': company_id,
+            'currency_id': company.currency_id.id,
+            }
         return res
 
     def _check_donation_date(self, cr, uid, ids):
@@ -191,10 +189,10 @@ class donation_donation(orm.Model):
             currency_id = donation.currency_id.id
         else:
             currency_id = False
-            total_amount_currency = 0.0
         # Note : we can have negative donations for donors that use direct
         # debit when their direct debit rejected by the bank
         amount_total_company_cur = 0.0
+        total_amount_currency = 0.0
         name = _('Don de %s') % donation.partner_id.name
 
         aml = {}
@@ -214,18 +212,15 @@ class donation_donation(orm.Model):
                     % donation_line.product_id.name)
             analytic_account_id = self._get_analytic_account_id(
                 cr, uid, donation_line, account_id, context=context)
-            if not currency_id:
-                amount_currency = 0.0
+            amount_currency = 0.0
             if donation_line.amount_company_currency > 0:
                 credit = donation_line.amount_company_currency
                 debit = 0
-                if currency_id:
-                    amount_currency = donation_line.amount * -1
+                amount_currency = donation_line.amount * -1
             else:
                 debit = donation_line.amount_company_currency * -1
                 credit = 0
-                if currency_id:
-                    amount_currency = donation_line.amount
+                amount_currency = donation_line.amount
 
             # TODO Take into account the option group_invoice_lines ?
             if (account_id, analytic_account_id) in aml:
@@ -249,20 +244,19 @@ class donation_donation(orm.Model):
                 'analytic_account_id': analytic_account_id,
                 'partner_id': donation.partner_id.id,
                 'currency_id': currency_id,
-                'amount_currency': content['amount_currency'],
+                'amount_currency': (
+                    currency_id and content['amount_currency'] or 0.0),
                 }))
 
         # counter-part
         if amount_total_company_cur > 0:
             debit = amount_total_company_cur
             credit = 0
-            if currency_id:
-                total_amount_currency = donation.amount_total
+            total_amount_currency = donation.amount_total
         else:
             credit = amount_total_company_cur * -1
             debit = 0
-            if currency_id:
-                total_amount_currency = donation.amount_total * -1
+            total_amount_currency = donation.amount_total * -1
         movelines.append(
             (0, 0, {
                 'debit': debit,
@@ -271,7 +265,8 @@ class donation_donation(orm.Model):
                 'account_id': donation.journal_id.default_debit_account_id.id,
                 'partner_id': donation.partner_id.id,
                 'currency_id': currency_id,
-                'amount_currency': total_amount_currency,
+                'amount_currency': (
+                    currency_id and total_amount_currency or 0.0),
             }))
 
         vals = {
@@ -313,15 +308,6 @@ class donation_donation(orm.Model):
         self.write(cr, uid, donation.id, donation_write_vals, context=context)
         return True
 
-    def copy(self, cr, uid, id, default=None, context=None):
-        if default is None:
-            default = {}
-        default['state'] = 'draft'
-        default['move_id'] = False
-        res = super(donation_donation, self).copy(
-            cr, uid, id, default=default, context=context)
-        return res
-
     def partner_id_change(self, cr, uid, ids, partner_id, context=None):
         return {}
 
@@ -335,6 +321,17 @@ class donation_donation(orm.Model):
                 cr, uid, donation.move_id.id, context=context)
         donation.write({'state': 'draft'})
         return True
+
+    def unlink(self, cr, uid, ids, context=None):
+        for donation in self.browse(cr, uid, ids, context=context):
+            if donation.state == 'done':
+                raise orm.except_orm(
+                    _('Error:'),
+                    _("The donation '%s' is in Done state, so you must "
+                        "set it back to draft before deleting it.")
+                    % donation.number)
+        return super(donation_donation, self).unlink(
+            cr, uid, ids, context=context)
 
 
 class donation_line(orm.Model):
@@ -427,43 +424,31 @@ class res_partner(orm.Model):
 
     _columns = {
         'donation_ids': fields.one2many(
-            'donation.donation', 'partner_id', 'Donations'),
+            'donation.donation', 'partner_id', 'Donations', copy=False),
         'donation_count': fields.function(
             _donation_count, string="# of Donations", type='integer'),
         }
-
-    def copy(self, cr, uid, id, default=None, context=None):
-        if default is None:
-            default = {}
-        default.update({
-            'donation_ids': False,
-        })
-        return super(res_partner, self).copy(
-            cr, uid, id, default=default, context=context)
 
 
 class account_journal(orm.Model):
     _inherit = 'account.journal'
 
     _columns = {
-        'type': fields.selection([
-            ('sale', 'Sale'),
-            ('sale_refund', 'Sale Refund'),
-            ('purchase', 'Purchase'),
-            ('purchase_refund', 'Purchase Refund'),
-            ('cash', 'Cash'),
-            ('bank', 'Bank and Checks'),
-            ('general', 'General'),
-            ('situation', 'Opening/Closing Situation'),
-            ('donation', 'Donation'),
-            ], 'Type', size=32, required=True,
-            help="Select 'Sale' for customer invoices journals. "
-            "Select 'Purchase' for supplier invoices journals. "
-            "Select 'Cash' or 'Bank' for journals that are used in "
-            "customer or supplier payments. "
-            "Select 'General' for miscellaneous operations journals. "
-            "Select 'Opening/Closing Situation' for entries generated for "
-            " new fiscal years. "
-            "Select 'Donations' for donation journals."
-            ),
+        'allow_donation': fields.boolean('Donation Payment Method'),
         }
+
+    def _check_donation(self, cr, uid, ids):
+        for journal in self.browse(cr, uid, ids):
+            if journal.allow_donation and journal.type not in ('bank', 'cash'):
+                raise orm.except_orm(
+                    _('Error:'),
+                    _("The journal '%s' has the option 'Allow Donation', "
+                        "so it's type should be 'Cash' or 'Bank and Checks.")
+                    % journal.name)
+        return True
+
+    _constraints = [(
+        _check_donation,
+        'Wrong configuration of journal',
+        ['type', 'allow_donation']
+        )]
