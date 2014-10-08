@@ -122,6 +122,9 @@ class donation_donation(orm.Model):
                 ('type', 'in', ('bank', 'cash')),
                 ('allow_donation', '=', True)],
             states={'done': [('readonly', True)]}),
+        'payment_ref': fields.char(
+            'Payment Reference', size=32,
+            states={'done': [('readonly', True)]}),
         'state': fields.selection([
             ('draft', 'Draft'),
             ('done', 'Done'),
@@ -193,7 +196,7 @@ class donation_donation(orm.Model):
         # debit when their direct debit rejected by the bank
         amount_total_company_cur = 0.0
         total_amount_currency = 0.0
-        name = _('Don de %s') % donation.partner_id.name
+        name = _('Donation of %s') % donation.partner_id.name
 
         aml = {}
         # key = (account_id, analytic_account_id)
@@ -273,7 +276,7 @@ class donation_donation(orm.Model):
             'journal_id': donation.journal_id.id,
             'date': donation.donation_date,
             'period_id': period_id,
-            'ref': False,  # TODO
+            'ref': donation.payment_ref,
             'line_id': movelines,
             }
         return vals
@@ -310,6 +313,18 @@ class donation_donation(orm.Model):
 
     def partner_id_change(self, cr, uid, ids, partner_id, context=None):
         return {}
+
+    def save_default_values(self, cr, uid, ids, context=None):
+        assert len(ids) == 1, 'Only 1 ID'
+        donation = self.browse(cr, uid, ids[0], context=context)
+        self.pool['res.users'].write(
+            cr, uid, uid, {
+                'context_donation_journal_id':
+                donation.journal_id.id or False,
+                'context_donation_campaign_id':
+                donation.campaign_id.id or False,
+            }, context=context)
+        return
 
     def back_to_draft(self, cr, uid, ids, context=None):
         assert len(ids) == 1, 'only one ID for back2draft'
