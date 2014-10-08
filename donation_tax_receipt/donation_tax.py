@@ -58,7 +58,8 @@ class donation_donation(orm.Model):
 
     _columns = {
         'tax_receipt_id': fields.many2one(
-            'donation.tax.receipt', 'Tax Receipt', readonly=True),
+            'donation.tax.receipt', 'Tax Receipt', readonly=True,
+            copy=False),
         'tax_receipt_option': fields.selection([
             ('none', 'None'),
             ('each', 'For Each Donation'),
@@ -73,13 +74,6 @@ class donation_donation(orm.Model):
                     10),
                 }),
         }
-
-    def copy(self, cr, uid, id, default=None, context=None):
-        if default is None:
-            default = {}
-        default['tax_receipt_id'] = False
-        return super(donation_donation, self).copy(
-            cr, uid, id, default=default, context=context)
 
     def _prepare_tax_receipt(self, cr, uid, donation, context=None):
         vals = {
