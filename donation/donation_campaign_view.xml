@@ -13,7 +13,7 @@
     <field name="name">donation.campaign.form</field>
     <field name="model">donation.campaign</field>
     <field name="arch" type="xml">
-        <form string="Donation Campaign" version="7.0">
+        <form string="Donation Campaign">
             <group name="main">
                 <field name="name"/>
                 <field name="code"/>
