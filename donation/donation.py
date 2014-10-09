@@ -47,7 +47,7 @@ class res_users(orm.Model):
 class donation_donation(orm.Model):
     _name = 'donation.donation'
     _description = 'Donations'
-    _order = 'number desc, id desc'
+    _order = 'id desc'
     _rec_name = 'number'
 
     def _compute_total(self, cr, uid, ids, name, arg, context=None):
@@ -328,7 +328,8 @@ class donation_donation(orm.Model):
         self.write(cr, uid, donation.id, donation_write_vals, context=context)
         return True
 
-    def partner_id_change(self, cr, uid, ids, partner_id, context=None):
+    def partner_id_change(
+            self, cr, uid, ids, partner_id, company_id, context=None):
         return {}
 
     def save_default_values(self, cr, uid, ids, context=None):
@@ -432,7 +433,7 @@ class donation_line(orm.Model):
         'quantity': 1,
         }
 
-    def product_id_change(self, cr, uid, ids, product_id, context):
+    def product_id_change(self, cr, uid, ids, product_id, context=None):
         res = {'value': {}}
         if product_id:
             product = self.pool['product.product'].browse(
