@@ -115,10 +115,12 @@
     <field name="view_mode">tree,form,graph</field>
 </record>
 
+<menuitem id="donation_tax_title_menu" parent="donation.donation_top_menu"
+    sequence="20" name="Tax Receipts"/>
 
 <menuitem id="donation_tax_receipt_menu"
     action="donation_tax_receipt_action"
-    parent="donation.donation_title_menu"
+    parent="donation_tax_title_menu"
     sequence="20"/>
 
 </data>

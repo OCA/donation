@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Donation module for OpenERP
-#    Copyright (C) 2014 Abbaye du Barroux
+#    Donation Recurring Tax Receipt module for Odoo
+#    Copyright (C) 2014 Abbaye du Barroux (www.barroux.org)
+#    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,37 +22,22 @@
 
 
 {
-    'name': 'Donation',
+    'name': 'Donation Recurring Tax Receipt',
     'version': '0.1',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
-    'summary': 'Manage donations',
+    'summary': 'Manage recurring donations with tax receipts',
     'description': """
-Donation
-========
+Donation Recurring Tax Receipts
+===============================
 
-This module handles donations.
+This module adds a constraints and an on_change to oblige to have annual fiscal receipts for recurring donations.
 
 It has been developped by brother Bernard and brother Irenee from Barroux Abbey and by Alexis de Lattre from Akretion.
     """,
     'author': 'Barroux, Akretion',
     'website': 'http://www.barroux.org',
-    'depends': ['account_accountant'],
-    'data': [
-        'security/donation_security.xml',
-        'donation_view.xml',
-        'account_view.xml',
-        'product_view.xml',
-        'donation_campaign_view.xml',
-        'users_view.xml',
-        'security/ir.model.access.csv',
-        'partner_view.xml',
-        'report/donation_report_view.xml',
-        'wizard/donation_validate_view.xml',
-        ],
-    'demo': [
-        'product_demo.xml',
-        'donation_demo.xml',
-        ],
-    'active': False,
+    'depends': ['donation_recurring', 'donation_tax_receipt'],
+    'data': ['donation_view.xml'],
+    'demo': [],
 }

@@ -35,7 +35,7 @@
     <field name="target">new</field>
 </record>
 
-<menuitem id="tax_receipt_annual_create_menu" sequence="45" action="tax_receipt_annual_create_action" parent="donation.donation_title_menu"/>
+<menuitem id="tax_receipt_annual_create_menu" sequence="45" action="tax_receipt_annual_create_action" parent="donation_tax_title_menu"/>
 
 
 </data>
