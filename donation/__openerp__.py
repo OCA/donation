@@ -47,6 +47,7 @@ It has been developped by brother Bernard and brother Irenee from Barroux Abbey 
         'security/ir.model.access.csv',
         'partner_view.xml',
         'report/donation_report_view.xml',
+        'wizard/donation_validate_view.xml',
         ],
     'demo': [
         'product_demo.xml',
