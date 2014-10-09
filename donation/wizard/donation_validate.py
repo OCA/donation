@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Donation module for OpenERP
-#    Copyright (C) 2014 Barroux Abbey
+#    Donation module for Odoo
+#    Copyright (C) 2014 Barroux Abbey (www.barroux.org)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,8 +19,20 @@
 #
 ##############################################################################
 
-from . import donation_campaign
-from . import donation
-from . import product
-from . import report
-from . import wizard
+from openerp.osv import orm
+
+
+class donation_validate(orm.TransientModel):
+    _name = 'donation.validate'
+    _description = 'Validate Donations'
+
+    def run(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        assert context.get('active_model') == 'donation.donation',\
+            'Source model must be donations'
+        assert context.get('active_ids'), 'No donation selected'
+        for donation_id in context['active_ids']:
+            self.pool['donation.donation'].validate(
+                cr, uid, [donation_id], context=context)
+        return True

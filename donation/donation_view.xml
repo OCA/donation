@@ -11,13 +11,15 @@
             <header>
                 <button type="object" name="validate" string="Validate"
                     class="oe_highlight" states="draft"
-                    groups="donation.group_donation_user"/>
+                    groups="donation.group_donation_user"
+                    invisible="context.get('recurring_view')"/>
                 <button type="object" name="back_to_draft"
                     string="Back to Draft" states="done"
                     groups="donation.group_donation_user"/>
                 <button type="object" name="save_default_values"
                     string="Save Default Values"/>
-                <field name="state" widget="statusbar"/>
+                <field name="state" widget="statusbar"
+                    invisible="context.get('recurring_view')"/>
             </header>
             <sheet>
                 <group name="main">
@@ -43,9 +45,11 @@
                         <field name="create_uid" readonly="1"/>
                     </group>
                 </group>
-                <group name="lines">
-                    <field name="line_ids" nolabel="1"/>
-                </group>
+                <notebook>
+                    <page string="Lines" name="lines">
+                        <field name="line_ids" nolabel="1"/>
+                    </page>
+                </notebook>
             </sheet>
         </form>
     </field>
@@ -56,14 +60,14 @@
     <field name="model">donation.donation</field>
     <field name="arch"  type="xml">
         <tree string="Donation" colors="blue:state=='draft'">
-            <field name="number"/>
+            <field name="number" invisible="context.get('recurring_view')"/>
             <field name="partner_id" invisible="context.get('partner_view')"/>
             <field name="donation_date"/>
             <field name="amount_total"/>
             <field name="currency_id" groups="base.group_multi_currency"/>
             <field name="journal_id"/>
             <field name="campaign_id"/>
-            <field name="state"/>
+            <field name="state" invisible="context.get('recurring_view')"/>
         </tree>
     </field>
 </record>

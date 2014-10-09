@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Donation module for OpenERP
-#    Copyright (C) 2014 Barroux Abbey
+#    Donation module for Odoo
+#    Copyright (C) 2014 Barroux Abbey (www.barroux.org)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,8 +19,4 @@
 #
 ##############################################################################
 
-from . import donation_campaign
-from . import donation
-from . import product
-from . import report
-from . import wizard
+from . import donation_validate
