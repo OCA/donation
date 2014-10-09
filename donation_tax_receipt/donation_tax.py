@@ -104,9 +104,10 @@ class donation_donation(orm.Model):
             donation.write({'tax_receipt_id': receipt_id})
         return res
 
-    def partner_id_change(self, cr, uid, ids, partner_id, context=None):
+    def partner_id_change(
+            self, cr, uid, ids, partner_id, company_id, context=None):
         res = super(donation_donation, self).partner_id_change(
-            cr, uid, ids, partner_id, context=context)
+            cr, uid, ids, partner_id, company_id, context=context)
         if 'value' not in res:
             res['value'] = {}
         if partner_id:
