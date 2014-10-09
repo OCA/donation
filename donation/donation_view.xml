@@ -25,7 +25,7 @@
                 <group name="main">
                     <group name="manual">
                         <field name="partner_id"
-                            on_change="partner_id_change(partner_id, context)"
+                            on_change="partner_id_change(partner_id, company_id, context)"
                             domain="[('customer', '=', True)]"/>
                         <field name="journal_id" widget="selection"/>
                         <field name="currency_id"
