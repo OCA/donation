@@ -32,8 +32,11 @@ class res_users(orm.Model):
     _columns = {
         'context_donation_campaign_id': fields.many2one(
             'donation.campaign', 'Current Donation Campaign'),
-        'context_donation_journal_id': fields.many2one(
-            'account.journal', 'Current Donation Payment Method',
+        # TODO : a write on this field via the interface
+        # is not saved and I don't know why
+        'context_donation_journal_id': fields.property(
+            type='many2one', relation='account.journal',
+            string='Current Donation Payment Method',
             domain=[
                 ('type', 'in', ('bank', 'cash')),
                 ('allow_donation', '=', True)]),
@@ -110,7 +113,7 @@ class donation_donation(orm.Model):
             states={'done': [('readonly', True)]}),
         'line_ids': fields.one2many(
             'donation.line', 'donation_id', 'Donation Lines',
-            states={'done': [('readonly', True)]}),
+            states={'done': [('readonly', True)]}, copy=True),
         'move_id': fields.many2one(
             'account.move', 'Account Move', readonly=True, copy=False),
         'number': fields.related(
@@ -153,18 +156,23 @@ class donation_donation(orm.Model):
         return res
 
     def _check_donation_date(self, cr, uid, ids):
+        # I don't have the context, so I can't use fields.date.context_today
         today_dt = datetime.today()
         today_str = today_dt.strftime(DEFAULT_SERVER_DATE_FORMAT)
         for donation in self.browse(cr, uid, ids):
             if donation.donation_date > today_str:
-                return False
+                raise orm.except_orm(
+                    _('Error:'),
+                    _('The date of the donation of %s should be today '
+                        'or in the past, not in the future!')
+                    % donation.partner_id.name)
         return True
 
     _constraints = [(
         _check_donation_date,
-        "Date must be today or in the past",
+        "Error on Donation Date",
         ['donation_date']
-        )]
+    )]
 
     def _get_analytic_account_id(
             self, cr, uid, donation_line, account_id, context=None):
@@ -288,14 +296,23 @@ class donation_donation(orm.Model):
         if not donation.line_ids:
             raise orm.except_orm(
                 _('Error:'),
-                _('Cannot validate a donation without lines!'))
+                _("Cannot validate the donation of %s because it doesn't "
+                    "have any lines!") % donation.partner_id.name)
+
+        if donation.state != 'draft':
+            raise orm.except_orm(
+                _('Error:'),
+                _("Cannot validate the donation of %s because it is not "
+                    "in draft state.") % donation.partner_id.name)
+
 
         if donation.check_total != donation.amount_total:
             raise orm.except_orm(
                 _('Error:'),
-                _("The amount of the donation (%s) is different from "
-                    "the sum of the donation lines (%s).")
-                % (donation.check_total, donation.amount_total))
+                _("The amount of the donation of %s (%s) is different from "
+                    "the sum of the donation lines (%s).") % (
+                    donation.partner_id.name, donation.check_total,
+                    donation.amount_total))
 
         donation_write_vals = {'state': 'done'}
 
