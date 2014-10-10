@@ -13,9 +13,9 @@
     <field name="model">donation.donation</field>
     <field name="inherit_id" ref="donation.donation_form"/>
     <field name="arch" type="xml">
-        <field name="create_uid" position="before">
+        <group name="auto" position="inside">
             <field name="thanks_printed"/>
-        </field>
+        </group>
         <button name="validate" position="after">
             <button name="print_thanks" string="Print Thanks Letter" type="object" groups="donation.group_donation_user" attrs="{'invisible': ['|', ('thanks_printed', '=', True), ('state', '!=', 'done')]}" class="oe_highlight"/>
         </button>
