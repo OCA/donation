@@ -8,7 +8,7 @@
     <field name="model">donation.donation</field>
     <field name="inherit_id" ref="donation.donation_form"/>
     <field name="arch"  type="xml">
-        <group name="auto" position="inside">
+        <group name="other" position="inside">
             <field name="recurring_template"/>
             <field name="source_recurring_id"
                 attrs="{'invisible': [('recurring_template', '!=', False)]}"/>
