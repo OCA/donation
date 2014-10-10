@@ -179,6 +179,10 @@ class donation_donation(orm.Model):
         analytic_account_id = donation_line.analytic_account_id.id or False
         return analytic_account_id
 
+    def _prepare_move_line_name(self, cr, uid, donation, context=None):
+        name = _('Donation of %s') % donation.partner_id.name
+        return name
+
     def _prepare_donation_move(self, cr, uid, donation, context=None):
         if context is None:
             context = {}
@@ -204,7 +208,8 @@ class donation_donation(orm.Model):
         # debit when their direct debit rejected by the bank
         amount_total_company_cur = 0.0
         total_amount_currency = 0.0
-        name = _('Donation of %s') % donation.partner_id.name
+        name = self._prepare_move_line_name(
+            cr, uid, donation, context=context)
 
         aml = {}
         # key = (account_id, analytic_account_id)
