@@ -37,17 +37,21 @@
                         <field name="donation_date"/>
                     </group>
                     <group name="auto">
-                        <field name="move_id"/>
                         <field name="company_id" groups="base.group_multi_company"/>
                         <field name="amount_total" widget="monetary"
                             options="{'currency_field': 'currency_id'}"
                             invisible="1"/>
-                        <field name="create_uid" readonly="1"/>
                     </group>
                 </group>
                 <notebook>
-                    <page string="Lines" name="lines">
+                    <page string="Donation Lines" name="lines">
                         <field name="line_ids" nolabel="1"/>
+                    </page>
+                    <page string="Other Information" name="other">
+                        <group name="other">
+                            <field name="create_uid" readonly="1"/>
+                            <field name="move_id"/>
+                        </group>
                     </page>
                 </notebook>
             </sheet>
