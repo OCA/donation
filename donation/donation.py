@@ -141,18 +141,20 @@ class donation_donation(orm.Model):
     }
 
     def default_get(self, cr, uid, fields_list, context=None):
+        res = super(donation_donation, self).default_get(
+            cr, uid, fields_list, context=context)
         user = self.pool['res.users'].browse(cr, uid, uid, context=context)
         company_id = self.pool['res.company']._company_default_get(
             cr, uid, 'donation.donation', context=context)
         company = self.pool['res.company'].browse(
             cr, uid, company_id, context=context)
-        res = {
+        res.update({
             'state': 'draft',
             'journal_id': user.context_donation_journal_id.id or False,
             'campaign_id': user.context_donation_campaign_id.id or False,
             'company_id': company_id,
             'currency_id': company.currency_id.id,
-            }
+            })
         return res
 
     def _check_donation_date(self, cr, uid, ids):
