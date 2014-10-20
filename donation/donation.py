@@ -32,8 +32,6 @@ class res_users(orm.Model):
     _columns = {
         'context_donation_campaign_id': fields.many2one(
             'donation.campaign', 'Current Donation Campaign'),
-        # TODO : a write on this field via the interface
-        # is not saved and I don't know why
         'context_donation_journal_id': fields.property(
             type='many2one', relation='account.journal',
             string='Current Donation Payment Method',
