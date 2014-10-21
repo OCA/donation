@@ -6,7 +6,7 @@
 <record id="donation_recur1" model="donation.donation">
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">80</field>
-    <field name="partner_id" ref="base.res_partner_address_21"/>
+    <field name="partner_id" ref="base.res_partner_address_9"/>
     <field name="donation_date" eval="time.strftime('%Y-01-01')"/>
     <field name="journal_id" ref="account.check_journal"/>
     <field name="payment_ref"></field>
@@ -24,7 +24,7 @@
 <record id="donation_recur2" model="donation.donation">
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">50</field>
-    <field name="partner_id" ref="base.res_partner_address_24"/>
+    <field name="partner_id" ref="base.res_partner_address_12"/>
     <field name="donation_date" eval="time.strftime('%Y-01-01')"/>
     <field name="journal_id" ref="account.check_journal"/>
     <field name="payment_ref"></field>
