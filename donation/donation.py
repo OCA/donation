@@ -83,6 +83,13 @@ class donation_donation(orm.Model):
         'partner_id': fields.many2one(
             'res.partner', 'Donor', required=True,
             states={'done': [('readonly', True)]}),
+        # country_id is here to have stats per country
+        # We don't want an invalidation function, because if the partner
+        # moves to another country, we want to keep the old country for
+        # past donations
+        'country_id': fields.related(
+            'partner_id', 'country_id', type='many2one',
+            relation='res.country', store=True),
         'check_total': fields.float(
             'Check Amount', digits_compute=dp.get_precision('Account'),
             states={'done': [('readonly', True)]}),
