@@ -32,12 +32,16 @@ class product_template(orm.Model):
             "in a donation line."),
         }
 
+    def donation_change(self, cr, uid, ids, donation, context=None):
+        res = {'value': {}}
+        if donation:
+            res['value'] = {'type': 'service', 'sale_ok': False}
+        return res
+
 
 class product_product(orm.Model):
     _inherit = 'product.product'
 
     def donation_change(self, cr, uid, ids, donation, context=None):
-        res = {}
-        if donation:
-            res['value'] = {'type': 'service', 'sale_ok': False}
-        return res
+        return self.pool['product.template'].donation_change(
+            cr, uid, [], donation, context=context)
