@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+<data noupdate="1">
+
+<record id="donation_recur1" model="donation.donation">
+    <field name="currency_id" ref="base.EUR"/>
+    <field name="check_total">80</field>
+    <field name="partner_id" ref="base.res_partner_address_21"/>
+    <field name="donation_date" eval="time.strftime('%Y-01-01')"/>
+    <field name="journal_id" ref="account.check_journal"/>
+    <field name="payment_ref"></field>
+    <field name="campaign_id" ref="donation.prospecting_origin"/>
+    <field name="recurring_template">active</field>
+</record>
+
+<record id="donation_recur1_l1" model="donation.line">
+    <field name="donation_id" ref="donation_recur1"/>
+    <field name="product_id" ref="donation.product_product_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">80</field>
+</record>
+
+<record id="donation_recur2" model="donation.donation">
+    <field name="currency_id" ref="base.EUR"/>
+    <field name="check_total">50</field>
+    <field name="partner_id" ref="base.res_partner_address_24"/>
+    <field name="donation_date" eval="time.strftime('%Y-01-01')"/>
+    <field name="journal_id" ref="account.check_journal"/>
+    <field name="payment_ref"></field>
+    <field name="campaign_id" ref="donation.prospecting_origin"/>
+    <field name="recurring_template">active</field>
+</record>
+
+<record id="donation_recur2_l1" model="donation.line">
+    <field name="donation_id" ref="donation_recur2"/>
+    <field name="product_id" ref="donation.product_product_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">50</field>
+</record>
+
+
+</data>
+</openerp>
