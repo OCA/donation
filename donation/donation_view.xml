@@ -89,6 +89,7 @@
             <group string="Group By" name="groupby">
                 <filter name="date_groupby" string="Date" context="{'group_by': 'donation_date'}"/>
                 <filter name="partner_groupby" string="Partner" context="{'group_by': 'partner_id'}"/>
+                <filter name="partner_country_groupby" string="Partner Country" context="{'group_by': 'country_id'}"/>
                 <filter name="campaign_groupby" string="Campaign" context="{'group_by': 'campaign_id'}"/>
                 <filter name="currency_groupby" string="Currency" context="{'group_by': 'currency_id'}"/>
                 <filter name="journal_groupby" string="Payment Method" context="{'group_by': 'journal_id'}"/>
