@@ -35,6 +35,8 @@ class donation_report(orm.Model):
         'product_id': fields.many2one(
             'product.product', 'Product', readonly=True),
         'partner_id': fields.many2one('res.partner', 'Donor', readonly=True),
+        'country_id': fields.many2one(
+            'res.country', 'Partner Country', readonly=True),
         'company_id': fields.many2one('res.company', 'Company', readonly=True),
         'product_categ_id': fields.many2one(
             'product.category', 'Category of Product', readonly=True),
@@ -52,6 +54,7 @@ class donation_report(orm.Model):
                 pt.categ_id AS product_categ_id,
                 d.company_id AS company_id,
                 d.partner_id AS partner_id,
+                d.country_id AS country_id,
                 d.campaign_id AS campaign_id,
                 sum(l.amount_company_currency) AS amount_company_currency
                 """
@@ -78,6 +81,7 @@ class donation_report(orm.Model):
                 pt.categ_id,
                 d.donation_date,
                 d.partner_id,
+                d.country_id,
                 d.campaign_id,
                 d.company_id
             """

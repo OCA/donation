@@ -11,6 +11,7 @@
             <group string="Group By" name="groupby">
                 <filter name="date_groupby" string="Date" context="{'group_by': 'donation_date'}"/>
                 <filter name="partner_groupby" string="Partner" context="{'group_by': 'partner_id'}"/>
+                <filter name="partner_country_groupby" string="Partner Country" context="{'group_by': 'country_id'}"/>
                 <filter name="company_groupby" string="Company" context="{'group_by': 'company_id'}"/>
                 <filter name="product_groupby" string="Product" context="{'group_by': 'product_id'}"/>
                 <filter name="product_categ_groupby" string="Product Category" context="{'group_by': 'product_categ_id'}"/>
