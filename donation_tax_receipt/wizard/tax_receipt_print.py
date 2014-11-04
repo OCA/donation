@@ -60,7 +60,7 @@ class donation_tax_receipt_print(orm.TransientModel):
             cr, uid, receipt_ids, {'print_date': today}, context=context)
         action = {
             'type': 'ir.actions.report.xml',
-            'report_name': 'donation.tax.receipt.webkit',
+            'report_name': 'donation.tax.receipt',
             'datas': datas,
             'context': context,
         }
