@@ -42,5 +42,5 @@ It has been developped by brother Bernard and brother Irenee from Barroux Abbey 
         'donation_view.xml',
         'wizard/donation_recurring_generate_view.xml',
         ],
-    'demo': [],
+    'demo': ['donation_recurring_demo.xml'],
 }
