@@ -31,6 +31,9 @@
             <field name="recurring_template"
                 invisible="not context.get('recurring_view')"/>
         </field>
+        <xpath expr="/tree" position="attributes">
+            <attribute name="colors">red:recurring_template=='suspended';blue:state=='draft'</attribute>
+        </xpath>
     </field>
 </record>
 
