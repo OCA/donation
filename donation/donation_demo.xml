@@ -23,10 +23,30 @@
     <field name="name">Catalog</field>
 </record>
 
+<record id="donor1" model="res.partner">
+    <field name="name">Rémi Duplat</field>
+    <field name="customer" eval="1"/>
+    <field name="street">12 rue de l'espérance</field>
+    <field name="zip">69100</field>
+    <field name="city">Villeurbanne</field>
+    <field name="country_id" ref="base.fr"/>
+    <field name="email">vincent.duplat@yahoo.example.com</field>
+</record>
+
+<record id="donor2" model="res.partner">
+    <field name="name">Lucie Dubois</field>
+    <field name="customer" eval="1"/>
+    <field name="street">34 rue Pierre Dupont</field>
+    <field name="zip">69004</field>
+    <field name="city">Lyon</field>
+    <field name="country_id" ref="base.fr"/>
+    <field name="email">lucie.dubois@yahoo.example.com</field>
+</record>
+
 <record id="donation1" model="donation.donation">
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">100</field>
-    <field name="partner_id" ref="base.res_partner_address_8"/>
+    <field name="partner_id" ref="donor1"/>
     <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
     <field name="journal_id" ref="account.check_journal"/>
     <field name="payment_ref">CHQ BNP 239023</field>
@@ -43,14 +63,14 @@
 <record id="donation2" model="donation.donation">
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">120</field>
-    <field name="partner_id" ref="base.res_partner_address_2"/>
+    <field name="partner_id" ref="donor2"/>
     <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
     <field name="journal_id" ref="account.cash_journal"/>
     <field name="payment_ref"></field>
     <field name="campaign_id" ref="quest_origin"/>
 </record>
 
-<record id="donation2_l2" model="donation.line">
+<record id="donation2_l1" model="donation.line">
     <field name="donation_id" ref="donation2"/>
     <field name="product_id" ref="product_product_donation"/>
     <field name="quantity">1</field>
