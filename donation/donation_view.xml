@@ -49,12 +49,15 @@
                     </page>
                     <page string="Other Information" name="other">
                         <group name="other">
-                            <field name="create_uid" readonly="1"/>
                             <field name="move_id"/>
                         </group>
                     </page>
                 </notebook>
             </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
         </form>
     </field>
 </record>
@@ -166,6 +169,14 @@
 <menuitem id="donation_config_menu" parent="donation_top_menu" name="Configuration" sequence="30"/>
 
 <menuitem id="donor" action="base.action_partner_form" parent="donation_title_menu" sequence="50" name="Donors" />
+
+<!-- Notification in the chatter -->
+<record id="donation_done" model="mail.message.subtype">
+    <field name="name">Donation Validated</field>
+    <field name="res_model">donation.donation</field>
+    <field name="default" eval="False"/>
+    <field name="description">Donation Validated</field>
+</record>
 
 </data>
 </openerp>
