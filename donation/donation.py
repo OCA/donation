@@ -47,6 +47,12 @@ class donation_donation(orm.Model):
     _description = 'Donations'
     _order = 'id desc'
     _rec_name = 'number'
+    _inherit = ['mail.thread']
+    _track = {
+        'state': {
+            'donation.donation_done':
+            lambda self, cr, uid, obj, ctx=None: obj['state'] == 'done'}
+        }
 
     def _compute_total(self, cr, uid, ids, name, arg, context=None):
         if context is None:
@@ -79,10 +85,12 @@ class donation_donation(orm.Model):
     _columns = {
         'currency_id': fields.many2one(
             'res.currency', 'Currency', required=True,
-            states={'done': [('readonly', True)]}),
+            states={'done': [('readonly', True)]},
+            track_visibility='onchange'),
         'partner_id': fields.many2one(
             'res.partner', 'Donor', required=True,
-            states={'done': [('readonly', True)]}),
+            states={'done': [('readonly', True)]},
+            track_visibility='onchange'),
         # country_id is here to have stats per country
         # We don't want an invalidation function, because if the partner
         # moves to another country, we want to keep the old country for
@@ -92,7 +100,8 @@ class donation_donation(orm.Model):
             relation='res.country', store=True),
         'check_total': fields.float(
             'Check Amount', digits_compute=dp.get_precision('Account'),
-            states={'done': [('readonly', True)]}),
+            states={'done': [('readonly', True)]},
+            track_visibility='onchange'),
         'amount_total': fields.function(
             _compute_total, type='float', multi="donation",
             string='Amount Total', store={
@@ -112,7 +121,8 @@ class donation_donation(orm.Model):
             }),
         'donation_date': fields.date(
             'Donation Date', required=True,
-            states={'done': [('readonly', True)]}),
+            states={'done': [('readonly', True)]},
+            track_visibility='onchange'),
         'company_id': fields.many2one(
             'res.company', 'Company', required=True,
             states={'done': [('readonly', True)]}),
@@ -129,20 +139,22 @@ class donation_donation(orm.Model):
             domain=[
                 ('type', 'in', ('bank', 'cash')),
                 ('allow_donation', '=', True)],
-            states={'done': [('readonly', True)]}),
+            states={'done': [('readonly', True)]},
+            track_visibility='onchange'),
         'payment_ref': fields.char(
             'Payment Reference', size=32,
             states={'done': [('readonly', True)]}),
         'state': fields.selection([
             ('draft', 'Draft'),
             ('done', 'Done'),
-            ], 'State', readonly=True, copy='draft'),
+            ], 'State', readonly=True, copy='draft',
+            track_visibility='onchange'),
         'company_currency_id': fields.related(
             'company_id', 'currency_id', type='many2one',
             relation="res.currency", string="Company Currency"),
         'campaign_id': fields.many2one(
-            'donation.campaign', 'Donation Campaign'),
-        'create_uid': fields.many2one('res.users', 'Created by'),
+            'donation.campaign', 'Donation Campaign',
+            track_visibility='onchange'),
     }
 
     def default_get(self, cr, uid, fields_list, context=None):
@@ -316,7 +328,6 @@ class donation_donation(orm.Model):
                 _('Error:'),
                 _("Cannot validate the donation of %s because it is not "
                     "in draft state.") % donation.partner_id.name)
-
 
         if donation.check_total != donation.amount_total:
             raise orm.except_orm(
