@@ -37,7 +37,7 @@
     <field name="name">Lucie Dubois</field>
     <field name="customer" eval="1"/>
     <field name="street">34 rue Pierre Dupont</field>
-    <field name="zip">69004</field>
+    <field name="zip">69001</field>
     <field name="city">Lyon</field>
     <field name="country_id" ref="base.fr"/>
     <field name="email">lucie.dubois@yahoo.example.com</field>

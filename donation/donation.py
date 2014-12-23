@@ -19,30 +19,26 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning
 import openerp.addons.decimal_precision as dp
-from openerp.tools.translate import _
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
-from datetime import datetime
 
 
-class res_users(orm.Model):
+class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    _columns = {
-        'context_donation_campaign_id': fields.many2one(
-            'donation.campaign', 'Current Donation Campaign'),
-        'context_donation_journal_id': fields.property(
-            type='many2one', relation='account.journal',
-            string='Current Donation Payment Method',
-            domain=[
-                ('type', 'in', ('bank', 'cash')),
-                ('allow_donation', '=', True)]),
+    context_donation_campaign_id = fields.Many2one(
+        'donation.campaign', string='Current Donation Campaign')
+    context_donation_journal_id = fields.Many2one(
+        'account.journal', string='Current Donation Payment Method',
+        domain=[
+            ('type', 'in', ('bank', 'cash')),
+            ('allow_donation', '=', True)],
+        company_dependent=True)
         # begin with context_ to allow user to change it by itself
-        }
 
 
-class donation_donation(orm.Model):
+class DonationDonation(models.Model):
     _name = 'donation.donation'
     _description = 'Donations'
     _order = 'id desc'
@@ -51,202 +47,145 @@ class donation_donation(orm.Model):
     _track = {
         'state': {
             'donation.donation_done':
-            lambda self, cr, uid, obj, ctx=None: obj['state'] == 'done'}
+            lambda self, cr, uid, obj, ctx=None: obj.state == 'done'}
         }
 
-    def _compute_total(self, cr, uid, ids, name, arg, context=None):
-        if context is None:
-            context = {}
-        res = {}  # key = ID, value : amount_total
-        for donation in self.browse(cr, uid, ids, context=context):
-            total = 0.0
-            for line in donation.line_ids:
-                total += line.quantity * line.unit_price
-            if donation.currency_id == donation.company_id.currency_id:
-                total_company_currency = total
-            else:
-                ctx_convert = context.copy()
-                ctx_convert['date'] = donation.donation_date
-                total_company_currency = self.pool['res.currency'].compute(
-                    cr, uid, donation.currency_id.id,
-                    donation.company_id.currency_id.id, total,
-                    context=ctx_convert)
-            res[donation.id] = {
-                'amount_total': total,
-                'amount_total_company_currency': total_company_currency,
-                }
-        return res
+    @api.one
+    @api.depends(
+        'line_ids', 'line_ids.unit_price', 'line_ids.quantity',
+        'donation_date', 'currency_id', 'company_id')
+    def _compute_total(self):
+        total = 0.0
+        for line in self.line_ids:
+            total += line.quantity * line.unit_price
+        self.amount_total = total
+        donation_currency =\
+            self.currency_id.with_context(date=self.donation_date)
+        total_company_currency = donation_currency.compute(
+            total, self.company_id.currency_id)
+        self.amount_total_company_currency = total_company_currency
 
-    def _get_donation_from_lines(self, cr, uid, ids, context=None):
-        res = self.pool['donation.donation'].search(
-            cr, uid, [('line_ids', 'in', ids)], context=context)
-        return res
+    @api.model
+    def _default_currency(self):
+        company_id = self.env['res.company']._company_default_get(
+            'donation.donation')
+        return self.env['res.company'].browse(company_id).currency_id
 
-    _columns = {
-        'currency_id': fields.many2one(
-            'res.currency', 'Currency', required=True,
-            states={'done': [('readonly', True)]},
-            track_visibility='onchange'),
-        'partner_id': fields.many2one(
-            'res.partner', 'Donor', required=True,
-            states={'done': [('readonly', True)]},
-            track_visibility='onchange'),
-        # country_id is here to have stats per country
-        # We don't want an invalidation function, because if the partner
-        # moves to another country, we want to keep the old country for
-        # past donations
-        'country_id': fields.related(
-            'partner_id', 'country_id', type='many2one',
-            relation='res.country', store=True),
-        'check_total': fields.float(
-            'Check Amount', digits_compute=dp.get_precision('Account'),
-            states={'done': [('readonly', True)]},
-            track_visibility='onchange'),
-        'amount_total': fields.function(
-            _compute_total, type='float', multi="donation",
-            string='Amount Total', store={
-                'donation.line': (
-                    _get_donation_from_lines,
-                    ['unit_price', 'quantity', 'donation_id'], 10),
-            }),
-        'amount_total_company_currency': fields.function(
-            _compute_total, type='float', multi="donation",
-            string='Amount Total in Company Currency', store={
-                'donation.donation': (
-                    lambda self, cr, uid, ids, c={}: ids,
-                    ['currency_id', 'journal_id'], 10),
-                'donation.line': (
-                    _get_donation_from_lines,
-                    ['unit_price', 'quantity', 'donation_id'], 20),
-            }),
-        'donation_date': fields.date(
-            'Donation Date', required=True,
-            states={'done': [('readonly', True)]},
-            track_visibility='onchange'),
-        'company_id': fields.many2one(
-            'res.company', 'Company', required=True,
-            states={'done': [('readonly', True)]}),
-        'line_ids': fields.one2many(
-            'donation.line', 'donation_id', 'Donation Lines',
-            states={'done': [('readonly', True)]}, copy=True),
-        'move_id': fields.many2one(
-            'account.move', 'Account Move', readonly=True, copy=False),
-        'number': fields.related(
-            'move_id', 'name', type='char', readonly=True, size=64,
-            relation='account.move', store=True, string='Donation Number'),
-        'journal_id': fields.many2one(
-            'account.journal', 'Payment Method', required=True,
-            domain=[
-                ('type', 'in', ('bank', 'cash')),
-                ('allow_donation', '=', True)],
-            states={'done': [('readonly', True)]},
-            track_visibility='onchange'),
-        'payment_ref': fields.char(
-            'Payment Reference', size=32,
-            states={'done': [('readonly', True)]}),
-        'state': fields.selection([
-            ('draft', 'Draft'),
-            ('done', 'Done'),
-            ], 'State', readonly=True, copy='draft',
-            track_visibility='onchange'),
-        'company_currency_id': fields.related(
-            'company_id', 'currency_id', type='many2one',
-            relation="res.currency", string="Company Currency"),
-        'campaign_id': fields.many2one(
-            'donation.campaign', 'Donation Campaign',
-            track_visibility='onchange'),
-    }
+    currency_id = fields.Many2one(
+        'res.currency', string='Currency', required=True,
+        states={'done': [('readonly', True)]},
+        track_visibility='onchange', ondelete='restrict',
+        default=_default_currency)
+    partner_id = fields.Many2one(
+        'res.partner', string='Donor', required=True,
+        states={'done': [('readonly', True)]},
+        track_visibility='onchange', ondelete='restrict')
+    # country_id is here to have stats per country
+    # We don't want an invalidation function, because if the partner
+    # moves to another country, we want to keep the old country for
+    # past donations
+    country_id = fields.Many2one(
+        'res.country', string='Country', related='partner_id.country_id',
+        store=True)
+    check_total = fields.Float(
+        string='Check Amount', digits_compute=dp.get_precision('Account'),
+        states={'done': [('readonly', True)]},
+        track_visibility='onchange')
+    amount_total = fields.Float(
+        compute='_compute_total', string='Amount Total', store=True,
+        digits_compute=dp.get_precision('Account'), readonly=True)
+    amount_total_company_currency = fields.Float(
+        compute='_compute_total', string='Amount Total in Company Currency',
+        store=True, digits_compute=dp.get_precision('Account'), readonly=True)
+    donation_date = fields.Date(
+        string='Donation Date', required=True,
+        states={'done': [('readonly', True)]},
+        track_visibility='onchange')
+    company_id = fields.Many2one(
+        'res.company', string='Company', required=True,
+        states={'done': [('readonly', True)]},
+        default=lambda self: self.env['res.company']._company_default_get(
+            'donation.donation'))
+    line_ids = fields.One2many(
+        'donation.line', 'donation_id', string='Donation Lines',
+        states={'done': [('readonly', True)]}, copy=True)
+    move_id = fields.Many2one(
+        'account.move', string='Account Move', readonly=True, copy=False)
+    number = fields.Char(
+        related='move_id.name', readonly=True, size=64,
+        store=True, string='Donation Number')
+    journal_id = fields.Many2one(
+        'account.journal', string='Payment Method', required=True,
+        domain=[
+            ('type', 'in', ('bank', 'cash')),
+            ('allow_donation', '=', True)],
+        states={'done': [('readonly', True)]},
+        track_visibility='onchange',
+        default=lambda self: self.env.user.context_donation_journal_id)
+    payment_ref = fields.Char(
+        string='Payment Reference', size=32,
+        states={'done': [('readonly', True)]})
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('done', 'Done'),
+        ], string='State', readonly=True, copy='draft', default='draft',
+        track_visibility='onchange')
+    company_currency_id = fields.Many2one(
+        related='company_id.currency_id', string="Company Currency")
+    campaign_id = fields.Many2one(
+        'donation.campaign', string='Donation Campaign',
+        track_visibility='onchange', ondelete='restrict',
+        default=lambda self: self.env.user.context_donation_campaign_id)
 
-    def default_get(self, cr, uid, fields_list, context=None):
-        res = super(donation_donation, self).default_get(
-            cr, uid, fields_list, context=context)
-        user = self.pool['res.users'].browse(cr, uid, uid, context=context)
-        company_id = self.pool['res.company']._company_default_get(
-            cr, uid, 'donation.donation', context=context)
-        company = self.pool['res.company'].browse(
-            cr, uid, company_id, context=context)
-        res.update({
-            'state': 'draft',
-            'journal_id': user.context_donation_journal_id.id or False,
-            'campaign_id': user.context_donation_campaign_id.id or False,
-            'company_id': company_id,
-            'currency_id': company.currency_id.id,
-            })
-        return res
+    @api.one
+    @api.constrains('donation_date')
+    def _check_donation_date(self):
+        if self.donation_date > fields.Date.context_today(self):
+            raise Warning(
+                _('The date of the donation of %s should be today '
+                    'or in the past, not in the future!')
+                % self.partner_id.name)
 
-    def _check_donation_date(self, cr, uid, ids):
-        # I don't have the context, so I can't use fields.date.context_today
-        today_dt = datetime.today()
-        today_str = today_dt.strftime(DEFAULT_SERVER_DATE_FORMAT)
-        for donation in self.browse(cr, uid, ids):
-            if donation.donation_date > today_str:
-                raise orm.except_orm(
-                    _('Error:'),
-                    _('The date of the donation of %s should be today '
-                        'or in the past, not in the future!')
-                    % donation.partner_id.name)
-        return True
-
-    _constraints = [(
-        _check_donation_date,
-        "Error on Donation Date",
-        ['donation_date']
-    )]
-
-    def _get_analytic_account_id(
-            self, cr, uid, donation_line, account_id, context=None):
-        analytic_account_id = donation_line.analytic_account_id.id or False
-        return analytic_account_id
-
-    def _prepare_move_line_name(self, cr, uid, donation, context=None):
-        name = _('Donation of %s') % donation.partner_id.name
+    @api.model
+    def _prepare_move_line_name(self):
+        name = _('Donation of %s') % self.partner_id.name
         return name
 
-    def _prepare_donation_move(self, cr, uid, donation, context=None):
-        if context is None:
-            context = {}
-
-        if not donation.journal_id.default_debit_account_id:
-            raise orm.except_orm(
-                _('Error:'),
+    @api.model
+    def _prepare_donation_move(self):
+        if not self.journal_id.default_debit_account_id:
+            raise Warning(
                 _("Missing Default Debit Account on journal '%s'.")
-                % donation.journal_id.name)
+                % self.journal_id.name)
 
-        context['account_period_prefer_normal'] = True
-        period_search = self.pool['account.period'].find(
-            cr, uid, donation.donation_date, context=context)
-        assert len(period_search) == 1, 'We should get one period'
-        period_id = period_search[0]
+        period = self.env['account.period'].find(dt=self.donation_date)
 
         movelines = []
-        if donation.company_id.currency_id.id != donation.currency_id.id:
-            currency_id = donation.currency_id.id
+        if self.company_id.currency_id.id != self.currency_id.id:
+            currency_id = self.currency_id.id
         else:
             currency_id = False
         # Note : we can have negative donations for donors that use direct
         # debit when their direct debit rejected by the bank
         amount_total_company_cur = 0.0
         total_amount_currency = 0.0
-        name = self._prepare_move_line_name(
-            cr, uid, donation, context=context)
+        name = self._prepare_move_line_name()
 
         aml = {}
         # key = (account_id, analytic_account_id)
         # value = {'credit': ..., 'debit': ..., 'amount_currency': ...}
-        for donation_line in donation.line_ids:
+        for donation_line in self.line_ids:
             amount_total_company_cur += donation_line.amount_company_currency
             account_id = donation_line.product_id.property_account_income.id
             if not account_id:
                 account_id = donation_line.product_id.categ_id.\
                     property_account_income_categ.id
             if not account_id:
-                raise orm.except_orm(
-                    _('Error:'),
+                raise Warning(
                     _("Missing income account on product '%s' or on it's "
                         "related product category")
                     % donation_line.product_id.name)
-            analytic_account_id = self._get_analytic_account_id(
-                cr, uid, donation_line, account_id, context=context)
+            analytic_account_id = donation_line.get_analytic_account_id()
             amount_currency = 0.0
             if donation_line.amount_company_currency > 0:
                 credit = donation_line.amount_company_currency
@@ -258,6 +197,9 @@ class donation_donation(orm.Model):
                 amount_currency = donation_line.amount
 
             # TODO Take into account the option group_invoice_lines ?
+            print "aml=", aml
+            print "account=", account_id
+            print "ana account=", analytic_account_id
             if (account_id, analytic_account_id) in aml:
                 aml[(account_id, analytic_account_id)]['credit'] += credit
                 aml[(account_id, analytic_account_id)]['debit'] += debit
@@ -277,7 +219,7 @@ class donation_donation(orm.Model):
                 'debit': content['debit'],
                 'account_id': account_id,
                 'analytic_account_id': analytic_account_id,
-                'partner_id': donation.partner_id.id,
+                'partner_id': self.partner_id.id,
                 'currency_id': currency_id,
                 'amount_currency': (
                     currency_id and content['amount_currency'] or 0.0),
@@ -287,224 +229,190 @@ class donation_donation(orm.Model):
         if amount_total_company_cur > 0:
             debit = amount_total_company_cur
             credit = 0
-            total_amount_currency = donation.amount_total
+            total_amount_currency = self.amount_total
         else:
             credit = amount_total_company_cur * -1
             debit = 0
-            total_amount_currency = donation.amount_total * -1
+            total_amount_currency = self.amount_total * -1
         movelines.append(
             (0, 0, {
                 'debit': debit,
                 'credit': credit,
                 'name': name,
-                'account_id': donation.journal_id.default_debit_account_id.id,
-                'partner_id': donation.partner_id.id,
+                'account_id': self.journal_id.default_debit_account_id.id,
+                'partner_id': self.partner_id.id,
                 'currency_id': currency_id,
                 'amount_currency': (
                     currency_id and total_amount_currency or 0.0),
             }))
 
         vals = {
-            'journal_id': donation.journal_id.id,
-            'date': donation.donation_date,
-            'period_id': period_id,
-            'ref': donation.payment_ref,
+            'journal_id': self.journal_id.id,
+            'date': self.donation_date,
+            'period_id': period.id,
+            'ref': self.payment_ref,
             'line_id': movelines,
             }
         return vals
 
-    def validate(self, cr, uid, ids, context=None):
-        assert len(ids) == 1, 'Only one ID accepted'
-        donation = self.browse(cr, uid, ids[0], context=context)
-
-        if not donation.line_ids:
-            raise orm.except_orm(
-                _('Error:'),
+    @api.one
+    def validate(self):
+        if not self.line_ids:
+            raise Warning(
                 _("Cannot validate the donation of %s because it doesn't "
-                    "have any lines!") % donation.partner_id.name)
+                    "have any lines!") % self.partner_id.name)
 
-        if donation.state != 'draft':
-            raise orm.except_orm(
-                _('Error:'),
+        if self.state != 'draft':
+            raise Warning(
                 _("Cannot validate the donation of %s because it is not "
-                    "in draft state.") % donation.partner_id.name)
+                    "in draft state.") % self.partner_id.name)
 
-        if donation.check_total != donation.amount_total:
-            raise orm.except_orm(
-                _('Error:'),
+        if (
+                self.env['res.users'].has_group(
+                    'account.group_supplier_inv_check_total')
+                and self.check_total != self.amount_total):
+            raise Warning(
                 _("The amount of the donation of %s (%s) is different from "
                     "the sum of the donation lines (%s).") % (
-                    donation.partner_id.name, donation.check_total,
-                    donation.amount_total))
+                    self.partner_id.name, self.check_total,
+                    self.amount_total))
 
         donation_write_vals = {'state': 'done'}
 
-        if donation.amount_total:
-            move_vals = self._prepare_donation_move(
-                cr, uid, donation, context=context)
-            move_id = self.pool['account.move'].create(
-                cr, uid, move_vals, context=context)
+        if self.amount_total:
+            move_vals = self._prepare_donation_move()
+            print "move_vals=", move_vals
+            move = self.env['account.move'].create(move_vals)
+            move.post()
+            donation_write_vals['move_id'] = move.id
 
-            self.pool['account.move'].post(cr, uid, [move_id], context=context)
-            donation_write_vals['move_id'] = move_id
-
-        self.write(cr, uid, donation.id, donation_write_vals, context=context)
-        return True
-
-    def partner_id_change(
-            self, cr, uid, ids, partner_id, company_id, context=None):
-        return {}
-
-    def save_default_values(self, cr, uid, ids, context=None):
-        assert len(ids) == 1, 'Only 1 ID'
-        donation = self.browse(cr, uid, ids[0], context=context)
-        self.pool['res.users'].write(
-            cr, uid, uid, {
-                'context_donation_journal_id':
-                donation.journal_id.id or False,
-                'context_donation_campaign_id':
-                donation.campaign_id.id or False,
-            }, context=context)
+        self.write(donation_write_vals)
         return
 
-    def back_to_draft(self, cr, uid, ids, context=None):
-        assert len(ids) == 1, 'only one ID for back2draft'
-        donation = self.browse(cr, uid, ids[0], context=context)
-        if donation.move_id:
-            self.pool['account.move'].button_cancel(
-                cr, uid, [donation.move_id.id], context=context)
-            self.pool['account.move'].unlink(
-                cr, uid, donation.move_id.id, context=context)
-        donation.write({'state': 'draft'})
-        return True
+    @api.one
+    def save_default_values(self):
+        self.env.user.write({
+            'context_donation_journal_id': self.journal_id.id,
+            'context_donation_campaign_id': self.campaign_id.id,
+            })
+        return
 
-    def unlink(self, cr, uid, ids, context=None):
-        for donation in self.browse(cr, uid, ids, context=context):
+    @api.one
+    def back_to_draft(self):
+        if self.move_id:
+            self.move_id.button_cancel()
+            self.move_id.unlink()
+        self.state = 'draft'
+        return
+
+    @api.multi
+    def unlink(self):
+        for donation in self:
             if donation.state == 'done':
-                raise orm.except_orm(
-                    _('Error:'),
+                raise Warning(
                     _("The donation '%s' is in Done state, so you must "
                         "set it back to draft before deleting it.")
                     % donation.number)
-        return super(donation_donation, self).unlink(
-            cr, uid, ids, context=context)
+        return super(DonationDonation, self).unlink()
+
+    @api.multi
+    @api.depends('state', 'partner_id', 'move_id')
+    def name_get(self):
+        res = []
+        for donation in self:
+            if donation.state == 'draft':
+                name = _('Draft Donation of %s') % donation.partner_id.name
+            else:
+                name = donation.number
+            res.append((donation.id, name))
+        return res
+
+    # used by module donation_tax_receipt (and donation_stay)
+    @api.onchange('partner_id')
+    def partner_id_change(self):
+        return
 
 
-class donation_line(orm.Model):
+class DonationLine(models.Model):
     _name = 'donation.line'
     _description = 'Donation Lines'
     _rec_name = 'product_id'
 
-    def _compute_amount(self, cr, uid, ids, name, arg, context=None):
-        res = {}
-        for line in self.browse(cr, uid, ids, context=context):
-            amount = line.quantity * line.unit_price
-            company_cur_id = line.donation_id.company_id.currency_id.id
-            donation_cur_id = line.donation_id.currency_id.id
-            if company_cur_id == donation_cur_id:
-                amount_company_currency = amount
-            else:
-                ctx_convert = context.copy()
-                ctx_convert['date'] = line.donation_id.donation_date
-                amount_company_currency = self.pool['res.currency'].compute(
-                    cr, uid, donation_cur_id, company_cur_id, amount,
-                    context=ctx_convert)
-            res[line.id] = {
-                'amount': amount,
-                'amount_company_currency': amount_company_currency,
-                }
-        return res
+    @api.one
+    @api.depends('unit_price', 'quantity')
+    def _compute_amount(self):
+        amount = self.quantity * self.unit_price
+        self.amount = amount
 
-    def _get_lines_from_donation(self, cr, uid, ids, context=None):
-        return self.pool['donation.line'].search(
-            cr, uid, [('donation_id', 'in', ids)], context=context)
+    @api.one
+    @api.depends(
+        'unit_price', 'quantity', 'donation_id.currency_id',
+        'donation_id.donation_date', 'donation_id.company_id')
+    def _compute_amount_company_currency(self):
+        amount = self.quantity * self.unit_price
+        donation_currency = self.donation_id.currency_id.with_context(
+            date=self.donation_id.donation_date)
+        self.amount_company_currency = donation_currency.compute(
+            amount, self.donation_id.company_id.currency_id)
 
-    _columns = {
-        'donation_id': fields.many2one(
-            'donation.donation', 'Donation', ondelete='cascade'),
-        'product_id': fields.many2one(
-            'product.product', 'Product', required=True,
-            domain=[('donation', '=', True)]),
-        'quantity': fields.integer('Quantity'),
-        'unit_price': fields.float(
-            'Unit Price', digits_compute=dp.get_precision('Account')),
-        'amount': fields.function(
-            _compute_amount, multi="donline", type="float", string='Amount',
-            digits_compute=dp.get_precision('Account'), store={
-                'donation.line': (
-                    lambda self, cr, uid, ids, c={}: ids,
-                    ['quantity', 'unit_price'], 10),
-                }),
-        'amount_company_currency': fields.function(
-            _compute_amount, multi="donline", type="float",
-            string='Amount in Company Currency',
-            digits_compute=dp.get_precision('Account'), store={
-                'donation.line': (
-                    lambda self, cr, uid, ids, c={}: ids,
-                    ['quantity', 'unit_price'], 10),
-                'donation.donation': (
-                    _get_lines_from_donation,
-                    ['journal_id', 'currency_id'], 10),
-                }),
-        'analytic_account_id':  fields.many2one(
-            'account.analytic.account', 'Analytic Account',
-            domain=[('type', 'not in', ('view', 'template'))]),
-        'sequence': fields.integer('Sequence'),
-        }
+    donation_id = fields.Many2one(
+        'donation.donation', string='Donation', ondelete='cascade')
+    product_id = fields.Many2one(
+        'product.product', string='Product', required=True,
+        domain=[('donation', '=', True)], ondelete='restrict')
+    quantity = fields.Integer(string='Quantity', default=1)
+    unit_price = fields.Float(
+        string='Unit Price', digits_compute=dp.get_precision('Account'))
+    amount = fields.Float(
+        compute='_compute_amount', string='Amount',
+        digits_compute=dp.get_precision('Account'), store=True)
+    amount_company_currency = fields.Float(
+        compute='_compute_amount_company_currency',
+        string='Amount in Company Currency',
+        digits_compute=dp.get_precision('Account'), store=True)
+    analytic_account_id = fields.Many2one(
+        'account.analytic.account', string='Analytic Account',
+        domain=[('type', 'not in', ('view', 'template'))], ondelete='restrict')
+    sequence = fields.Integer('Sequence')
 
-    _defaults = {
-        'quantity': 1,
-        }
+    @api.onchange('product_id')
+    def product_id_change(self):
+        if self.product_id and self.product_id.list_price:
+            self.unit_price = self.product_id.list_price
 
-    def product_id_change(self, cr, uid, ids, product_id, context=None):
-        res = {'value': {}}
-        if product_id:
-            product = self.pool['product.product'].browse(
-                cr, uid, product_id, context=context)
-            res['value']['unit_price'] = product.list_price
-        return res
+    @api.model
+    def get_analytic_account_id(self):
+        return self.analytic_account_id.id or False
 
 
-class res_partner(orm.Model):
+class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    def _donation_count(self, cr, uid, ids, field_name, arg, context=None):
-        res = dict(map(lambda x: (x, 0), ids))
+    @api.one
+    @api.depends('donation_ids')
+    def _donation_count(self):
         # The current user may not have access rights for donations
         try:
-            for partner in self.browse(cr, uid, ids, context):
-                res[partner.id] = len(partner.donation_ids)
+            self.donation_count = len(self.donation_ids)
         except:
-            pass
-        return res
+            self.donation_count = 0
 
-    _columns = {
-        'donation_ids': fields.one2many(
-            'donation.donation', 'partner_id', 'Donations', copy=False),
-        'donation_count': fields.function(
-            _donation_count, string="# of Donations", type='integer'),
-        }
+    donation_ids = fields.One2many(
+        'donation.donation', 'partner_id', string='Donations', copy=False)
+    donation_count = fields.Integer(
+        compute='_donation_count', string="# of Donations", readonly=True)
 
 
-class account_journal(orm.Model):
+class account_journal(models.Model):
     _inherit = 'account.journal'
 
-    _columns = {
-        'allow_donation': fields.boolean('Donation Payment Method'),
-        }
+    allow_donation = fields.Boolean(string='Donation Payment Method')
 
-    def _check_donation(self, cr, uid, ids):
-        for journal in self.browse(cr, uid, ids):
-            if journal.allow_donation and journal.type not in ('bank', 'cash'):
-                raise orm.except_orm(
-                    _('Error:'),
-                    _("The journal '%s' has the option 'Allow Donation', "
-                        "so it's type should be 'Cash' or 'Bank and Checks.")
-                    % journal.name)
-        return True
-
-    _constraints = [(
-        _check_donation,
-        'Wrong configuration of journal',
-        ['type', 'allow_donation']
-        )]
+    @api.one
+    @api.constrains('type', 'allow_donation')
+    def _check_donation(self):
+        if self.allow_donation and self.type not in ('bank', 'cash'):
+            raise Warning(
+                _("The journal '%s' has the option 'Allow Donation', "
+                    "so it's type should be 'Cash' or 'Bank and Checks.")
+                % self.name)
