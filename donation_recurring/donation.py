@@ -20,41 +20,52 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
-from openerp.tools.translate import _
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning
 
 
-class donation_donation(orm.Model):
+class DonationDonation(models.Model):
     _inherit = 'donation.donation'
 
-    _columns = {
-        'recurring_template': fields.selection([
-            ('active', 'Active'),
-            ('suspended', 'Suspended'),
-            ], 'Recurring Template', copy=False),
-        'source_recurring_id': fields.many2one(
-            'donation.donation', 'Source Recurring Template',
-            states={'done': [('readonly', True)]}),
-        'recurring_donation_ids': fields.one2many(
-            'donation.donation', 'source_recurring_id',
-            'Past Recurring Donations', readonly=True, copy=False),
-        }
+    recurring_template = fields.Selection([
+        ('active', 'Active'),
+        ('suspended', 'Suspended'),
+        ], string='Recurring Template', copy=False)
+    source_recurring_id = fields.Many2one(
+        'donation.donation', string='Source Recurring Template',
+        states={'done': [('readonly', True)]})
+    recurring_donation_ids = fields.One2many(
+        'donation.donation', 'source_recurring_id',
+        string='Past Recurring Donations', readonly=True, copy=False)
 
-    def _check_recurring_donation(self, cr, uid, ids):
-        for donation in self.browse(cr, uid, ids):
-            if donation.recurring_template and donation.state != 'draft':
-                raise orm.except_orm(
-                    _('Error:'),
-                    _("The recurring donation template of '%s' must stay in "
-                        "draft state.") % donation.partner_id.name)
-            if donation.source_recurring_id and donation.recurring_template:
-                raise orm.except_orm(
-                    _('Error:'),
-                    _("The recurring donation template of '%s' cannot have "
-                        "a Source Recurring Template")
-                    % donation.partner_id.name)
-        return True
+    @api.one
+    @api.constrains('recurring_template', 'source_recurring_id', 'state')
+    def _check_recurring_donation(self):
+        if self.recurring_template and self.state != 'draft':
+            raise Warning(
+                _("The recurring donation template of '%s' must stay in "
+                    "draft state.") % self.partner_id.name)
+        if self.source_recurring_id and self.recurring_template:
+            raise Warning(
+                _("The recurring donation template of '%s' cannot have "
+                    "a Source Recurring Template")
+                % self.partner_id.name)
 
-    _constraints = [
-        (_check_recurring_donation, 'Configuration Error in Recurring Donations', ['recurring_template', 'state']),
-    ]
+    @api.multi
+    @api.depends('state', 'partner_id', 'move_id', 'recurring_template')
+    def name_get(self):
+        res = []
+        for donation in self:
+            if donation.state == 'draft':
+                if donation.recurring_template == 'active':
+                    name = _('Recurring Donation of %s') % (
+                        donation.partner_id.name)
+                elif donation.recurring_template == 'suspended':
+                    name = _('Suspended Recurring Donation of %s') % (
+                        donation.partner_id.name)
+                else:
+                    name = _('Draft Donation of %s') % donation.partner_id.name
+            else:
+                name = donation.number
+            res.append((donation.id, name))
+        return res

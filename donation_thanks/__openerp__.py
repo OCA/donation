@@ -43,5 +43,4 @@ It has been developped by brother Bernard and brother Irenee from Barroux Abbey 
         'donation_view.xml',
         ],
     'demo': [],
-    'active': False,
 }

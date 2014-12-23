@@ -4,6 +4,7 @@
 #    Donation Tax Receipt module for OpenERP
 #    Copyright (C) 2014 Artisanat Monastique de Provence
 #       (http://www.barroux.org)
+#    @author Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,48 +21,40 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
-from openerp.tools.translate import _
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning
 
 
-class donation_tax_receipt_print(orm.TransientModel):
+class DonationTaxReceiptPrint(models.TransientModel):
     _name = 'donation.tax.receipt.print'
     _description = 'Print Donation Tax Receipt'
 
-    _columns = {
-        'receipt_ids': fields.many2many(
-            'donation.tax.receipt', id1='print_wizard_id', id2='receipt_id',
-            string='Receipts To Print'),
-    }
+    @api.model
+    def _get_receipts(self):
+        return self.env['donation.tax.receipt'].search(
+            [('print_date', '=', False)])
 
-    def _get_receipts(self, cr, uid, context=None):
-        return self.pool['donation.tax.receipt'].search(
-            cr, uid, [('print_date', '=', False)], context=context)
+    receipt_ids = fields.Many2many(
+        'donation.tax.receipt',
+        column1='print_wizard_id', column2='receipt_id',
+        string='Receipts To Print', default=_get_receipts)
 
-    _defaults = {
-        'receipt_ids': _get_receipts,
-        }
-
-    def print_receipts(self, cr, uid, ids, context=None):
-        assert len(ids) == 1, 'Only 1 ID for a wizard'
-        receipt_ids = self.read(
-            cr, uid, ids[0], ['receipt_ids'], context=context)['receipt_ids']
-        if not receipt_ids:
-            raise orm.except_orm(
-                _('Error:'),
+    @api.multi
+    def print_receipts(self):
+        self.ensure_one()
+        if not self.receipt_ids:
+            raise Warning(
                 _('There are no tax receipts to print.'))
-
         datas = {
             'model': 'donation.tax.receipt',
-            'ids': receipt_ids,
+            'ids': self.receipt_ids.ids,
         }
-        today = fields.date.context_today(self, cr, uid, context=context)
-        self.pool['donation.tax.receipt'].write(
-            cr, uid, receipt_ids, {'print_date': today}, context=context)
+        today = fields.Date.context_today(self)
+        self.receipt_ids.write({'print_date': today})
         action = {
             'type': 'ir.actions.report.xml',
-            'report_name': 'donation.tax.receipt',
-            'datas': datas,
-            'context': context,
+            'report_name': 'donation_tax_receipt.report_donationtaxreceipt',
+            'data': datas,
+            'datas': datas,  # for Aeroo
         }
         return action

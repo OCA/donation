@@ -38,6 +38,6 @@ It has been developped by brother Bernard and brother Irenee from Barroux Abbey 
     'author': 'Barroux, Akretion',
     'website': 'http://www.barroux.org',
     'depends': ['donation_recurring', 'donation_tax_receipt'],
-    'data': ['donation_view.xml'],
+    'data': [],
     'demo': [],
 }

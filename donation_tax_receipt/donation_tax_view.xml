@@ -8,8 +8,7 @@
     <field name="inherit_id" ref="donation.donation_form"/>
     <field name="arch"  type="xml">
        <field name="company_id" position="after">
-            <field name="tax_receipt_option"
-                on_change="tax_receipt_option_change(partner_id, tax_receipt_option, context)"/>
+            <field name="tax_receipt_option"/>
             <field name="tax_receipt_total" widget="monetary"
                 options="{'currency_field': 'currency_id'}"/>
             <field name="tax_receipt_id"/>
@@ -48,16 +47,16 @@
             <group name="main">
                 <field name="number" readonly="1"/>
                 <field name="date"/>
-                <field name="donation_date"/>
+                <field name="partner_id"/>
                 <field name="type"/>
+                <field name="donation_date"/>
                 <field name="print_date"/>
-                <field name="currency_id"/>
+                <field name="currency_id" invisible="1"/>
                 <field name="amount" widget="monetary"
                     options="{'currency_field': 'currency_id'}"/>
-                <field name="partner_id"/>
-                <field name="company_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
             </group>
-            <group name="donations">
+            <group name="donations" string="Related Donations">
                 <field name="donation_ids" nolabel="1"/>
             </group>
         </form>
@@ -77,7 +76,7 @@
             <field name="amount"/>
             <field name="currency_id"/>
             <field name="print_date"/>
-            <field name="company_id"/>
+            <field name="company_id" groups="base.group_multi_company"/>
         </tree>
     </field>
 </record>
@@ -90,10 +89,16 @@
         <search string="Search Donation Taxes Receipts">
             <field name="number"/>
             <field name="partner_id"/>
+            <filter name="each" string="One-Time Tax Receipts"
+                domain="[('type', '=', 'each')]" />
+            <filter name="annual" string="Annual Tax Receipts"
+                domain="[('type', '=', 'annual')]" />
             <group string="Group By" name="groupby">
-                <filter name="date" string="Date" context="{'group_by': 'donation_date'}"/>
+                <filter name="donation_date" string="Donation Date"
+                    context="{'group_by': 'donation_date'}"/>
                 <filter name="type" string="Type" context="{'group_by': 'type'}"/>
-                <filter name="partner_id" string="Partner" context="{'group_by': 'partner_id'}"/>
+                <filter name="partner_id" string="Partner"
+                    context="{'group_by': 'partner_id'}"/>
             </group>
         </search>
     </field>

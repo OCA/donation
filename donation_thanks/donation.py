@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Donation Tax Receipt module for OpenERP
-#    Copyright (C) 2014 Barroux Abbey
+#    Donation Thanks module for Odoo
+#    Copyright (C) 2014 Barroux Abbey (www.barroux.org)
+#    @author Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,26 +20,24 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import models, fields, api
 
 
-class donation_donation(orm.Model):
+class DonationDonation(models.Model):
     _inherit = "donation.donation"
 
-    _columns = {
-        'thanks_printed': fields.boolean(
-            'Thanks Printed',
-            help="This field automatically becomes active when "
-            "the thanks letter has been printed."),
-        }
+    thanks_printed = fields.Boolean(
+        string='Thanks Printed',
+        help="This field automatically becomes active when "
+        "the thanks letter has been printed.")
 
-    def print_thanks(self, cr, uid, ids, context=None):
-        assert len(ids) == 1, "Only 1 ID for this button function"
-        self.write(
-            cr, uid, ids[0], {'thanks_printed': True}, context=context)
+    @api.multi
+    def print_thanks(self):
+        self.ensure_one()
+        self.thanks_printed = True
+        print "self.id=", self.id
         return {
             'type': 'ir.actions.report.xml',
             'report_name': 'donation.thanks',
-            'datas': {'model': 'donation.donation', 'ids': ids},
-            'context': context,
+            'datas': {'model': 'donation.donation', 'ids': self.ids},
         }

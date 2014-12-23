@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<report id="report_donation_tax_receipt"
+    model="donation.tax.receipt"
+    string="Donation Tax Receipt"
+    report_type="qweb-pdf"
+    name="donation_tax_receipt.report_donationtaxreceipt"
+    file="donation_tax_receipt.report_donationtaxreceipt"
+    />
+
+</data>
+</openerp>

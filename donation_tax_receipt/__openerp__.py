@@ -23,7 +23,7 @@
 
 {
     'name': 'Donation Tax Receipt',
-    'version': '0.1',
+    'version': '0.2',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Manage tax receipts for donations',
@@ -31,13 +31,16 @@
 Donation Tax Receipt
 ====================
 
-This module handles tax receipt for donations. It has been designed for France, but it should probably work (with some adaptations) for other countries.
+This module handles tax receipt for donations. It has been designed for
+France, but it should probably work (with some adaptations) for other
+countries.
 
-It has been developped by brother Bernard and brother Irenee from Barroux Abbey and by Alexis de Lattre from Akretion.
+It has been developped by brother Bernard and brother Irenee from
+Barroux Abbey and by Alexis de Lattre from Akretion.
     """,
     'author': 'Barroux, Akretion',
     'website': 'http://www.barroux.org',
-    'depends': ['donation'],
+    'depends': ['donation', 'account_auto_fy_sequence'],
     'data': [
         'donation_tax_view.xml',
         'donation_tax_data.xml',
@@ -46,8 +49,9 @@ It has been developped by brother Bernard and brother Irenee from Barroux Abbey 
         'security/ir.model.access.csv',
         'wizard/tax_receipt_print_view.xml',
         'wizard/tax_receipt_annual_create_view.xml',
+        'report.xml',
+        'report/report_donationtax.xml',
         'security/tax_receipt_security.xml',
         ],
     'demo': ['donation_tax_demo.xml'],
-    'active': False,
 }

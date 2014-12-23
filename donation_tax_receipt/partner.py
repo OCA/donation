@@ -22,22 +22,20 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import models, fields, api
 
 
-class res_partner(orm.Model):
+class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    _columns = {
-        'tax_receipt_option': fields.selection([
-            ('none', 'None'),
-            ('each', 'For Each Donation'),
-            ('annual', 'Annual Tax Receipt'),
-            ], 'Tax Receipt Option'),
-        }
+    tax_receipt_option = fields.Selection([
+        ('none', 'None'),
+        ('each', 'For Each Donation'),
+        ('annual', 'Annual Tax Receipt'),
+        ], string='Tax Receipt Option')
 
-    def _commercial_fields(self, cr, uid, context=None):
-        res = super(res_partner, self)._commercial_fields(
-            cr, uid, context=context)
+    @api.model
+    def _commercial_fields(self):
+        res = super(ResPartner, self)._commercial_fields()
         res.append('tax_receipt_option')
         return res
