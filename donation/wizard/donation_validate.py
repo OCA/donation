@@ -3,6 +3,7 @@
 #
 #    Donation module for Odoo
 #    Copyright (C) 2014 Barroux Abbey (www.barroux.org)
+#    @author Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,20 +20,19 @@
 #
 ##############################################################################
 
-from openerp.osv import orm
+from openerp import models, api
 
 
-class donation_validate(orm.TransientModel):
+class DonationValidate(models.TransientModel):
     _name = 'donation.validate'
     _description = 'Validate Donations'
 
-    def run(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        assert context.get('active_model') == 'donation.donation',\
+    @api.one
+    def run(self):
+        assert self.env.context.get('active_model') == 'donation.donation',\
             'Source model must be donations'
-        assert context.get('active_ids'), 'No donation selected'
-        for donation_id in context['active_ids']:
-            self.pool['donation.donation'].validate(
-                cr, uid, [donation_id], context=context)
-        return True
+        assert self.env.context.get('active_ids'), 'No donations selected'
+        donations = self.env['donation.donation'].browse(
+            self.env.context.get('active_ids'))
+        donations.validate()
+        return
