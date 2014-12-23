@@ -9,7 +9,8 @@
     <field name="inherit_id" ref="donation.donation_form"/>
     <field name="arch"  type="xml">
         <group name="other" position="inside">
-            <field name="recurring_template"/>
+            <field name="recurring_template"
+                attrs="{'invisible': [('source_recurring_id', '!=', False)]}"/>
             <field name="source_recurring_id"
                 attrs="{'invisible': [('recurring_template', '!=', False)]}"/>
         </group>
