@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Donation Bank Statement module for OpenERP
+#    Donation Bank Statement module for Odoo
 #    Copyright (C) 2014 Artisanat Monastique de Provence
 #                       (http://www.barroux.org)
 #    @author: Alexis de Lattre <alexis.delattre@akretion.com>
