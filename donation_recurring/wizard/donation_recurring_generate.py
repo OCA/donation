@@ -21,50 +21,49 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
-from datetime import datetime
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning
 
-class donation_recurring_generate(orm.TransientModel):
+
+class DonationRecurringGenerate(models.TransientModel):
     _name = 'donation.recurring.generate'
     _description = 'Generate Recurring Donations'
+    _rec_name = 'date'
 
-    _columns = {
-        'date': fields.date('Date', required=True),
-        'payment_ref': fields.char('Payment Reference', size=32),
-    }
+    date = fields.Date(required=True, default=fields.Date.context_today)
+    payment_ref = fields.Char(string='Payment Reference', size=32)
 
-    _defaults = {
-        'date': fields.date.context_today,
-        }
-
-    def generate(self, cr, uid, ids, context=None):
-        assert len(ids) == 1, 'only one ID allowed here'
-        wiz = self.browse(cr, uid, ids[0], context=context)
-        doo = self.pool['donation.donation']
-        donation_ids = doo.search(
-            cr, uid, [
-                ('recurring_template', '=', 'active')], context=context)
-        new_donation_ids = []
-        for donation_id in donation_ids:
-            # Move to dedicated function ?
-            default = {
-                'donation_date': wiz.date,
-                'source_recurring_id': donation_id,
-                'payment_ref': wiz.payment_ref,
+    @api.model
+    def _prepare_donation_default(self, donation):
+        default = {
+            'donation_date': self.date,
+            'source_recurring_id': donation.id,
+            'payment_ref': self.payment_ref,
             }
-            new_donation_id = doo.copy(
-                cr, uid, donation_id, default=default, context=context)
-            new_donation_ids.append(new_donation_id)
-        action_id = self.pool['ir.model.data'].xmlid_to_res_id(
-            cr, uid, 'donation.donation_action', raise_if_not_found=True)
-        action = self.pool['ir.actions.act_window'].read(
-            cr, uid, action_id, context=context)
+        return default
+
+    @api.multi
+    def generate(self):
+        self.ensure_one()
+        doo = self.env['donation.donation']
+        donations = doo.search([('recurring_template', '=', 'active')])
+        new_donation_ids = []
+        existing_recur_donations = doo.search([
+            ('donation_date', '=', self.date),
+            ('source_recurring_id', '!=', False)])
+        if existing_recur_donations:
+            raise Warning(
+                _('Recurring donations have already been generated for %s.')
+                % self.date)
+        for donation in donations:
+            default = self._prepare_donation_default(donation)
+            new_donation = donation.copy(default=default)
+            new_donation_ids.append(new_donation.id)
+        action = self.env.ref('donation.donation_action').read()[0]
         action.update({
             'view_mode': 'tree,form,graph',
             'domain': [('id', 'in', new_donation_ids)],
             'target': 'current',
             'limit': 500,
             })
-        print "action=", action
         return action

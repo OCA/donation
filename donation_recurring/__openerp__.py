@@ -31,9 +31,13 @@
 Donation Recurring
 ==================
 
-This module handles recurring donations. For example, if you have setup a donation plan where donors can donate monthly via direct debit, you can use this module in combination with the module account_banking_sepa_direct_debit to organise your recurring donations.
+This module handles recurring donations. For example, if you have
+setup a donation plan where donors can donate monthly via direct
+debit, you can use this module in combination with the module
+account_banking_sepa_direct_debit to organise your recurring donations.
 
-It has been developped by brother Bernard and brother Irenee from Barroux Abbey and by Alexis de Lattre from Akretion.
+It has been developped by brother Bernard and brother Irenee from
+Barroux Abbey and by Alexis de Lattre from Akretion.
     """,
     'author': 'Barroux, Akretion',
     'website': 'http://www.barroux.org',
