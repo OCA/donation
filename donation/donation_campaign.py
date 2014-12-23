@@ -19,33 +19,28 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import models, fields, api
 
 
-class donation_campaign(orm.Model):
+class donation_campaign(models.Model):
     _name = 'donation.campaign'
     _description = 'Code attributed for a Donation Campaign'
     _order = 'code'
 
-    def name_get(self, cr, uid, ids, context=None):
+    @api.multi
+    @api.depends('code', 'name')
+    def name_get(self):
         res = []
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        for record in self.browse(cr, uid, ids, context=context):
+        for record in self:
             if record.code:
-                res.append(
-                    (record.id, u'[%s] %s' % (record.code, record.name)))
+                name = u'[%s] %s' % (record.code, record.name)
             else:
-                res.append((record.id, record.name))
+                name = record.name
+            res.append((record.id, name))
         return res
 
-    _columns = {
-        'code': fields.char('Code', size=10),
-        'name': fields.char('Name', size=64, required=True),
-        'start_date': fields.date('Start Date'),
-        'nota': fields.text('Notes'),
-    }
-
-    _defaults = {
-        'start_date': fields.date.context_today,
-    }
+    code = fields.Char(string='Code', size=10)
+    name = fields.Char('Name', required=True)
+    start_date = fields.Date(
+        string='Start Date', default=fields.Date.context_today)
+    nota = fields.Text(string='Notes')
