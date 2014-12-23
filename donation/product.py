@@ -19,29 +19,29 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import models, fields, api
 
 
-class product_template(orm.Model):
+class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    _columns = {
-        'donation': fields.boolean(
-            'Is a Donation',
-            help="Specify if the product can be selected "
-            "in a donation line."),
-        }
+    donation = fields.Boolean(
+        string='Is a Donation',
+        help="Specify if the product can be selected "
+        "in a donation line.")
 
-    def donation_change(self, cr, uid, ids, donation, context=None):
-        res = {'value': {}}
-        if donation:
-            res['value'] = {'type': 'service', 'sale_ok': False}
-        return res
+    @api.onchange('donation')
+    def _donation_change(self):
+        if self.donation:
+            self.type = 'service'
+            self.sale_ok = False
 
 
-class product_product(orm.Model):
+class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    def donation_change(self, cr, uid, ids, donation, context=None):
-        return self.pool['product.template'].donation_change(
-            cr, uid, [], donation, context=context)
+    @api.onchange('donation')
+    def _donation_change(self):
+        if self.donation:
+            self.type = 'service'
+            self.sale_ok = False
