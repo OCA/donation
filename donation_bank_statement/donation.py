@@ -1,9 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Donation Bank Statement module for OpenERP
-#    Copyright (C) 2014 Artisanat Monastique de Provence
-#                       (http://www.barroux.org)
+#    Donation Bank Statement module for Odoo
+#    Copyright (C) 2014 Artisanat Monastique de Provence (www.barroux.org)
 #    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -21,52 +20,48 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import models, fields, api
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-class donation_donation(orm.Model):
+class DonationDonation(models.Model):
     _inherit = 'donation.donation'
 
-    _columns = {
-        'bank_statement_line_id': fields.many2one(
-            'account.bank.statement.line',
-            'Source Bank Statement Line'),
-        }
+    bank_statement_line_id = fields.Many2one(
+        'account.bank.statement.line',
+        string='Source Bank Statement Line', ondelete='restrict')
 
-    def validate(self, cr, uid, ids, context=None):
-        res = super(donation_donation, self).validate(
-            cr, uid, ids, context=context)
-        donation = self.browse(cr, uid, ids[0], context=context)
-        if donation.bank_statement_line_id:
-            donation_mline_id = False
-            statement_mline_id = False
-            transit_account = donation.journal_id.default_debit_account_id
-            for donation_mline in donation.move_id.line_id:
+    @api.one
+    def validate(self):
+        res = super(DonationDonation, self).validate()
+        if self.bank_statement_line_id:
+            donation_mline_rec = False
+            statement_mline_rec = False
+            transit_account = self.journal_id.default_debit_account_id
+            for donation_mline in self.move_id.line_id:
                 if (
                         donation_mline.account_id == transit_account
                         and not donation_mline.reconcile_id):
-                    donation_mline_id = donation_mline.id
+                    donation_mline_rec = donation_mline
                     logger.info(
                         'Found donation move line to reconcile ID=%d'
-                        % donation_mline_id)
+                        % donation_mline_rec.id)
                     break
             for statement_mline in\
-                    donation.bank_statement_line_id.journal_entry_id.line_id:
+                    self.bank_statement_line_id.journal_entry_id.line_id:
                 if (
                         statement_mline.account_id == transit_account
                         and not statement_mline.reconcile_id):
-                    statement_mline_id = statement_mline.id
+                    statement_mline_rec = statement_mline
                     logger.info(
                         'Found bank statement move line to reconcile ID=%d'
-                        % statement_mline_id)
+                        % statement_mline_rec.id)
                     break
-            if donation_mline_id and statement_mline_id:
-                reconcile_id = self.pool['account.move.line'].reconcile(
-                    cr, uid, [donation_mline_id, statement_mline_id],
-                    context=context)
+            if donation_mline_rec and statement_mline_rec:
+                mlines_to_reconcile = donation_mline_rec + statement_mline_rec
+                reconcile_id = mlines_to_reconcile.reconcile()
                 logger.info(
                     'Successfull reconcilation between donation and '
                     'bank statement. Reconcile mark ID=%d' % reconcile_id)
