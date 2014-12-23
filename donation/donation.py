@@ -197,9 +197,6 @@ class DonationDonation(models.Model):
                 amount_currency = donation_line.amount
 
             # TODO Take into account the option group_invoice_lines ?
-            print "aml=", aml
-            print "account=", account_id
-            print "ana account=", analytic_account_id
             if (account_id, analytic_account_id) in aml:
                 aml[(account_id, analytic_account_id)]['credit'] += credit
                 aml[(account_id, analytic_account_id)]['debit'] += debit
@@ -281,7 +278,6 @@ class DonationDonation(models.Model):
 
         if self.amount_total:
             move_vals = self._prepare_donation_move()
-            print "move_vals=", move_vals
             move = self.env['account.move'].create(move_vals)
             move.post()
             donation_write_vals['move_id'] = move.id

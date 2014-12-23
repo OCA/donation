@@ -35,7 +35,6 @@ class DonationDonation(models.Model):
     def print_thanks(self):
         self.ensure_one()
         self.thanks_printed = True
-        print "self.id=", self.id
         return {
             'type': 'ir.actions.report.xml',
             'report_name': 'donation.thanks',
