@@ -25,31 +25,40 @@
                 <group name="main">
                     <group name="manual">
                         <field name="partner_id"
-                            on_change="partner_id_change(partner_id, company_id, context)"
                             domain="[('customer', '=', True)]"/>
                         <field name="journal_id" widget="selection"/>
                         <field name="currency_id"
                             groups="base.group_multi_currency"/>
                         <field name="check_total" widget="monetary"
-                            options="{'currency_field': 'currency_id'}"/>
+                            options="{'currency_field': 'currency_id'}"
+                            groups="account.group_supplier_inv_check_total"/>
                         <field name="payment_ref"/>
                         <field name="campaign_id"/>
                         <field name="donation_date"/>
                     </group>
                     <group name="auto">
                         <field name="company_id" groups="base.group_multi_company"/>
-                        <field name="amount_total" widget="monetary"
-                            options="{'currency_field': 'currency_id'}"
-                            invisible="1"/>
                     </group>
                 </group>
                 <notebook>
                     <page string="Donation Lines" name="lines">
                         <field name="line_ids" nolabel="1"/>
+                        <group name="subtotal" class="oe_subtotal_footer oe_right">
+                            <field name="amount_total" widget="monetary"
+                                options="{'currency_field': 'currency_id'}"
+                                class="oe_subtotal_footer_separator"/>
+                        </group>
+                        <group name="layout_fix">
+                            <field name="company_currency_id" invisible="1"/>
+                        </group>
                     </page>
                     <page string="Other Information" name="other">
                         <group name="other">
                             <field name="move_id"/>
+                            <field name="amount_total_company_currency"
+                                groups="base.group_multi_currency"
+                                widget="monetary"
+                                options="{'currency_field': 'company_currency_id'}"/>
                         </group>
                     </page>
                 </notebook>
@@ -119,7 +128,7 @@
     <field name="arch"  type="xml">
         <tree string="Donation Line" editable="bottom">
             <field name="donation_id" invisible="not context.get('donation_line_main_view')"/>
-            <field name="product_id" on_change="product_id_change(product_id, context)"/>
+            <field name="product_id"/>
             <field name="quantity"/>
             <field name="unit_price"/>
             <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
@@ -136,7 +145,7 @@
         <form string="Donation Line">
             <group name="main">
                 <field name="donation_id" invisible="not context.get('donation_line_main_view')"/>
-                <field name="product_id" on_change="product_id_change(product_id, context)"/>
+                <field name="product_id"/>
                 <field name="quantity"/>
                 <field name="unit_price"/>
                 <field name="analytic_account_id"/>
