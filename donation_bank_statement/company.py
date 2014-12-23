@@ -21,13 +21,11 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import models, fields
 
 
-class res_company(orm.Model):
+class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    _columns = {
-        'donation_credit_transfer_journal_id': fields.many2one(
-            'account.journal', 'Donations via Credit Transfer Journal'),
-        }
+    donation_credit_transfer_journal_id = fields.Many2one(
+        'account.journal', string='Donations via Credit Transfer Journal')
