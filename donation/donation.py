@@ -86,7 +86,7 @@ class DonationDonation(models.Model):
     # past donations
     country_id = fields.Many2one(
         'res.country', string='Country', related='partner_id.country_id',
-        store=True)
+        store=True, readonly=True)
     check_total = fields.Float(
         string='Check Amount', digits_compute=dp.get_precision('Account'),
         states={'done': [('readonly', True)]},
@@ -131,7 +131,8 @@ class DonationDonation(models.Model):
         ], string='State', readonly=True, copy='draft', default='draft',
         track_visibility='onchange')
     company_currency_id = fields.Many2one(
-        related='company_id.currency_id', string="Company Currency")
+        related='company_id.currency_id', string="Company Currency",
+        readonly=True)
     campaign_id = fields.Many2one(
         'donation.campaign', string='Donation Campaign',
         track_visibility='onchange', ondelete='restrict',
