@@ -83,6 +83,7 @@
             <field name="currency_id" groups="base.group_multi_currency"/>
             <field name="journal_id"/>
             <field name="campaign_id"/>
+            <field name="company_id" groups="base.group_multi_company"/>
             <field name="state" invisible="context.get('recurring_view')"/>
         </tree>
     </field>
