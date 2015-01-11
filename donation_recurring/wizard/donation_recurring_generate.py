@@ -46,7 +46,9 @@ class DonationRecurringGenerate(models.TransientModel):
     def generate(self):
         self.ensure_one()
         doo = self.env['donation.donation']
-        donations = doo.search([('recurring_template', '=', 'active')])
+        donations = doo.search([
+            ('recurring_template', '=', 'active'),
+            ('company_id', '=', self.env.user.company_id.id)])
         new_donation_ids = []
         existing_recur_donations = doo.search([
             ('donation_date', '=', self.date),
