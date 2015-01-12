@@ -65,6 +65,16 @@ class DonationDonation(models.Model):
             total, self.company_id.currency_id)
         self.amount_total_company_currency = total_company_currency
 
+    # We don't want a depends on partner_id.country_id, because if the partner
+    # moves to another country, we want to keep the old country for
+    # past donations
+    @api.one
+    @api.depends('partner_id')
+    def _compute_country_id(self):
+        # Use sudo() to by-pass record rules, because the same partner
+        # can have donations in several companies
+        self.sudo().country_id = self.partner_id.country_id or False
+
     @api.model
     def _default_currency(self):
         company_id = self.env['res.company']._company_default_get(
@@ -81,12 +91,13 @@ class DonationDonation(models.Model):
         states={'done': [('readonly', True)]},
         track_visibility='onchange', ondelete='restrict')
     # country_id is here to have stats per country
-    # We don't want an invalidation function, because if the partner
-    # moves to another country, we want to keep the old country for
-    # past donations
+    # WARNING : I can't put a related field, because when someone
+    # writes on the country_id of a partner, it will trigger a write
+    # on all it's donations, including donations in other companies
+    # which will be blocked by the record rule
     country_id = fields.Many2one(
-        'res.country', string='Country', related='partner_id.country_id',
-        store=True, readonly=True)
+        'res.country', string='Country', compute='_compute_country_id',
+        store=True, readonly=True, copy=False)
     check_total = fields.Float(
         string='Check Amount', digits_compute=dp.get_precision('Account'),
         states={'done': [('readonly', True)]},
@@ -128,7 +139,7 @@ class DonationDonation(models.Model):
     state = fields.Selection([
         ('draft', 'Draft'),
         ('done', 'Done'),
-        ], string='State', readonly=True, copy='draft', default='draft',
+        ], string='State', readonly=True, copy=False, default='draft',
         track_visibility='onchange')
     company_currency_id = fields.Many2one(
         related='company_id.currency_id', string="Company Currency",
