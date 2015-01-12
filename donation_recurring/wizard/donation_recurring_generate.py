@@ -52,7 +52,8 @@ class DonationRecurringGenerate(models.TransientModel):
         new_donation_ids = []
         existing_recur_donations = doo.search([
             ('donation_date', '=', self.date),
-            ('source_recurring_id', '!=', False)])
+            ('source_recurring_id', '!=', False),
+            ('company_id', '=', self.env.user.company_id.id)])
         if existing_recur_donations:
             raise Warning(
                 _('Recurring donations have already been generated for %s.')
