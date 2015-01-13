@@ -77,6 +77,9 @@
     <field name="unit_price">120</field>
 </record>
 
+<record id="base.user_demo" model="res.users">
+    <field name="groups_id" eval="[(4, ref('group_donation_user'))]"/>
+</record>
 
 </data>
 </openerp>
