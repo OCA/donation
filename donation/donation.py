@@ -397,7 +397,7 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     @api.one
-    @api.depends('donation_ids')
+    @api.depends('donation_ids.partner_id')
     def _donation_count(self):
         # The current user may not have access rights for donations
         try:
@@ -406,7 +406,7 @@ class ResPartner(models.Model):
             self.donation_count = 0
 
     donation_ids = fields.One2many(
-        'donation.donation', 'partner_id', string='Donations', copy=False)
+        'donation.donation', 'partner_id', string='Donations')
     donation_count = fields.Integer(
         compute='_donation_count', string="# of Donations", readonly=True)
 
