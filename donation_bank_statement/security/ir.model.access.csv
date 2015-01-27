@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_bank_statement_line_donation,Read access on account.bank.statement.line,account.model_account_bank_statement_line,donation.group_donation_user,1,0,0,0
+access_account_move_reconcile_donation,Read access on account.move.reconcile,account.model_account_move_reconcile,donation.group_donation_user,1,0,1,0
