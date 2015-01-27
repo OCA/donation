@@ -83,6 +83,11 @@ class AccountBankStatement(models.Model):
                             mline.credit > 0
                             and mline.account_id == transit_account
                             and not mline.reconcile_id):
+                        if not stline.partner_id:
+                            raise Warning(
+                                _("Missing partner on bank statement line "
+                                    "'%s' dated %s with amount %s.")
+                                % (stline.name, stline.date, stline.amount))
                         vals = self._prepare_donation_vals(stline, mline)
                         donation = self.env['donation.donation'].create(vals)
                         donation.partner_id_change()

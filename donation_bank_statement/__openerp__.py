@@ -61,6 +61,7 @@ Barroux Abbey and by Alexis de Lattre from Akretion.
         'company_view.xml',
         'bank_statement_view.xml',
         'donation_view.xml',
+        'security/ir.model.access.csv',
         ],
     'demo': ['demo.xml'],
 }
