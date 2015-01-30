@@ -43,6 +43,17 @@
     <field name="email">lucie.dubois@yahoo.example.com</field>
 </record>
 
+<record id="donor3" model="res.partner">
+    <field name="name">Joe Smith</field>
+    <field name="customer" eval="1"/>
+    <field name="street">Craig Pond Trail</field>
+    <field name="zip">04431</field>
+    <field name="city">East Orland</field>
+    <field name="state_id" ref="base.state_us_20"/>
+    <field name="country_id" ref="base.us"/>
+    <field name="email">joe.smith@gmail.example.com</field>
+</record>
+
 <record id="donation1" model="donation.donation">
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">100</field>
@@ -76,6 +87,24 @@
     <field name="quantity">1</field>
     <field name="unit_price">120</field>
 </record>
+
+<record id="donation3" model="donation.donation">
+    <field name="currency_id" ref="base.USD"/>
+    <field name="check_total">150</field>
+    <field name="partner_id" ref="donor3"/>
+    <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
+    <field name="journal_id" ref="account.cash_journal"/>
+    <field name="payment_ref"></field>
+    <field name="campaign_id" ref="prospecting_origin"/>
+</record>
+
+<record id="donation3_l1" model="donation.line">
+    <field name="donation_id" ref="donation3"/>
+    <field name="product_id" ref="product_product_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">150</field>
+</record>
+
 
 <record id="base.user_demo" model="res.users">
     <field name="groups_id" eval="[(4, ref('group_donation_user'))]"/>
