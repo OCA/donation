@@ -1,0 +1,29 @@
+-
+  Run the generate donation recurring wizard, validate donations and check results
+-
+  !python {model: donation.recurring.generate}: |
+    import time
+    wiz_id = self.create(cr, uid, {'payment_ref': 'Don Abbaye Sainte Madeleine'}, context=context)
+    self.generate(cr, uid, [wiz_id], context=context)
+    do = self.pool['donation.donation']
+    donation_rec1 = do.browse(cr, uid, ref('donation_rec1'), context=context)
+    donation_rec2 = do.browse(cr, uid, ref('donation_rec2'), context=context)
+    for donation_rec in [donation_rec1, donation_rec2]:
+        assert len(donation_rec.recurring_donation_ids) == 1, 'no recurring donations generated'
+        assert donation_rec.recurring_donation_ids[0].state == 'draft', 'status of generated recurring donations should be draft'
+        assert donation_rec.recurring_donation_ids[0].donation_date == time.strftime('%Y-%m-%d'), 'wrong date on generated recurring donations'
+        assert donation_rec.recurring_donation_ids[0].amount_total == donation_rec.amount_total, 'wrong amount on generated recurring donations'
+        assert donation_rec.recurring_donation_ids[0].payment_ref == 'Don Abbaye Sainte Madeleine', 'wrong payment ref on generated recurring donations'
+        assert donation_rec.recurring_donation_ids[0].campaign_id.id == donation_rec.campaign_id.id, 'wrong campaign_id on generated recurring donations'
+    donation_rec3 = do.browse(cr, uid, ref('donation_rec3'), context=context)
+    assert not donation_rec3.recurring_donation_ids, 'Suspended recurring donation should not generate donations'
+    ctx = context.copy()
+    ctx.update({'active_ids': [donation_rec1.recurring_donation_ids[0].id, donation_rec2.recurring_donation_ids[0].id], 'active_model': 'donation.donation'})
+    wiz_id = self.pool['donation.validate'].create(cr, uid, {})
+    self.pool['donation.validate'].run(cr, uid, [wiz_id], context=ctx)
+    for donation_rec in [donation_rec1, donation_rec2]:
+        assert donation_rec.recurring_donation_ids[0].state == 'done', 'state should now be done'
+        assert donation_rec.recurring_donation_ids[0].move_id.journal_id.id == donation_rec.journal_id.id, 'wrong journal on move'
+        assert donation_rec.recurring_donation_ids[0].move_id.state == 'posted', 'move not posted'
+        assert donation_rec.recurring_donation_ids[0].move_id.ref == 'Don Abbaye Sainte Madeleine', 'wrong ref on move'
+        assert donation_rec.recurring_donation_ids[0].move_id.date == time.strftime('%Y-%m-%d'), 'wrong date on move'
