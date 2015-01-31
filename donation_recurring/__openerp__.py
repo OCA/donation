@@ -47,4 +47,5 @@ Barroux Abbey and by Alexis de Lattre from Akretion.
         'wizard/donation_recurring_generate_view.xml',
         ],
     'demo': ['donation_recurring_demo.xml'],
+    'test': ['test/generate_recurring_donations.yml'],
 }
