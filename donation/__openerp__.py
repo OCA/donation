@@ -49,9 +49,6 @@ It has been developped by brother Bernard and brother Irenee from Barroux Abbey 
         'report/donation_report_view.xml',
         'wizard/donation_validate_view.xml',
         ],
-    'demo': [
-        'product_demo.xml',
-        'donation_demo.xml',
-        ],
+    'demo': ['donation_demo.xml'],
     'test': ['test/validate.yml'],
 }
