@@ -54,4 +54,5 @@ Barroux Abbey and by Alexis de Lattre from Akretion.
         'security/tax_receipt_security.xml',
         ],
     'demo': ['donation_tax_demo.xml'],
+    'test': ['test/each_tax_receipt.yml'],
 }
