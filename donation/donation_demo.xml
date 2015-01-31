@@ -3,6 +3,20 @@
 <openerp>
 <data noupdate="1">
 
+
+<record id="product_product_donation" model="product.product">
+    <field name="name">Donation</field>
+    <field name="default_code">DON</field>
+    <field name="categ_id" ref="product.product_category_5"/>
+    <field name="sale_ok" eval="False"/>
+    <field name="donation">1</field>
+    <field name="list_price">0</field>
+    <field name="type">service</field>
+    <field name="uom_id" ref="product.product_uom_unit"/>
+    <field name="uom_po_id" ref="product.product_uom_unit"/>
+    <field name="description">This is a donation product.</field>
+</record>
+
 <record id="account.check_journal" model="account.journal">
     <field name="allow_donation" eval="True"/>
 </record>
