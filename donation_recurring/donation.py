@@ -51,21 +51,18 @@ class DonationDonation(models.Model):
                     "a Source Recurring Template")
                 % self.partner_id.name)
 
-    @api.multi
+    @api.one
     @api.depends('state', 'partner_id', 'move_id', 'recurring_template')
-    def name_get(self):
-        res = []
-        for donation in self:
-            if donation.state == 'draft':
-                if donation.recurring_template == 'active':
-                    name = _('Recurring Donation of %s') % (
-                        donation.partner_id.name)
-                elif donation.recurring_template == 'suspended':
-                    name = _('Suspended Recurring Donation of %s') % (
-                        donation.partner_id.name)
-                else:
-                    name = _('Draft Donation of %s') % donation.partner_id.name
+    def _compute_display_name(self):
+        if self.state == 'draft':
+            if self.recurring_template == 'active':
+                name = _('Recurring Donation of %s') % (
+                    self.partner_id.name)
+            elif self.recurring_template == 'suspended':
+                name = _('Suspended Recurring Donation of %s') % (
+                    self.partner_id.name)
             else:
-                name = donation.number
-            res.append((donation.id, name))
-        return res
+                name = _('Draft Donation of %s') % self.partner_id.name
+        else:
+            name = donation.number
+        self.display_name = name
