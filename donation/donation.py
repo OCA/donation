@@ -42,7 +42,7 @@ class DonationDonation(models.Model):
     _name = 'donation.donation'
     _description = 'Donations'
     _order = 'id desc'
-    _rec_name = 'number'
+    _rec_name = 'display_name'
     _inherit = ['mail.thread']
     _track = {
         'state': {
@@ -148,6 +148,9 @@ class DonationDonation(models.Model):
         'donation.campaign', string='Donation Campaign',
         track_visibility='onchange', ondelete='restrict',
         default=lambda self: self.env.user.context_donation_campaign_id)
+    display_name = fields.Char(
+        string='Display Name', compute='_compute_display_name',
+        readonly=True)
 
     @api.one
     @api.constrains('donation_date')
@@ -323,17 +326,14 @@ class DonationDonation(models.Model):
                     % donation.number)
         return super(DonationDonation, self).unlink()
 
-    @api.multi
+    @api.one
     @api.depends('state', 'partner_id', 'move_id')
-    def name_get(self):
-        res = []
-        for donation in self:
-            if donation.state == 'draft':
-                name = _('Draft Donation of %s') % donation.partner_id.name
-            else:
-                name = donation.number
-            res.append((donation.id, name))
-        return res
+    def _compute_display_name(self):
+        if self.state == 'draft':
+            name = _('Draft Donation of %s') % self.partner_id.name
+        else:
+            name = self.number
+        self.display_name = name
 
     # used by module donation_tax_receipt (and donation_stay)
     @api.onchange('partner_id')
