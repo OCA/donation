@@ -99,15 +99,15 @@ class DonationDonation(models.Model):
         'res.country', string='Country', compute='_compute_country_id',
         store=True, readonly=True, copy=False)
     check_total = fields.Float(
-        string='Check Amount', digits_compute=dp.get_precision('Account'),
+        string='Check Amount', digits=dp.get_precision('Account'),
         states={'done': [('readonly', True)]},
         track_visibility='onchange')
     amount_total = fields.Float(
         compute='_compute_total', string='Amount Total', store=True,
-        digits_compute=dp.get_precision('Account'), readonly=True)
+        digits=dp.get_precision('Account'), readonly=True)
     amount_total_company_currency = fields.Float(
         compute='_compute_total', string='Amount Total in Company Currency',
-        store=True, digits_compute=dp.get_precision('Account'), readonly=True)
+        store=True, digits=dp.get_precision('Account'), readonly=True)
     donation_date = fields.Date(
         string='Donation Date', required=True,
         states={'done': [('readonly', True)]},
@@ -370,14 +370,14 @@ class DonationLine(models.Model):
         domain=[('donation', '=', True)], ondelete='restrict')
     quantity = fields.Integer(string='Quantity', default=1)
     unit_price = fields.Float(
-        string='Unit Price', digits_compute=dp.get_precision('Account'))
+        string='Unit Price', digits=dp.get_precision('Account'))
     amount = fields.Float(
         compute='_compute_amount', string='Amount',
-        digits_compute=dp.get_precision('Account'), store=True)
+        digits=dp.get_precision('Account'), store=True)
     amount_company_currency = fields.Float(
         compute='_compute_amount_company_currency',
         string='Amount in Company Currency',
-        digits_compute=dp.get_precision('Account'), store=True)
+        digits=dp.get_precision('Account'), store=True)
     analytic_account_id = fields.Many2one(
         'account.analytic.account', string='Analytic Account',
         domain=[('type', 'not in', ('view', 'template'))], ondelete='restrict')
