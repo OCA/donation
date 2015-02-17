@@ -1,0 +1,83 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* donation_bank_statement
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-17 22:35+0000\n"
+"PO-Revision-Date: 2015-02-17 22:35+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: donation_bank_statement
+#: model:ir.model,name:donation_bank_statement.model_account_bank_statement
+msgid "Bank Statement"
+msgstr ""
+
+#. module: donation_bank_statement
+#: model:ir.model,name:donation_bank_statement.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr ""
+
+#. module: donation_bank_statement
+#: model:ir.model,name:donation_bank_statement.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: donation_bank_statement
+#: view:account.bank.statement:donation_bank_statement.view_bank_statement_form
+msgid "Create Donations"
+msgstr ""
+
+#. module: donation_bank_statement
+#: code:addons/donation_bank_statement/bank_statement.py:53
+#, python-format
+msgid "Credit Transfer %s"
+msgstr ""
+
+#. module: donation_bank_statement
+#: field:account.bank.statement.line,donation_ids:0
+#: model:ir.model,name:donation_bank_statement.model_donation_donation
+msgid "Donations"
+msgstr ""
+
+#. module: donation_bank_statement
+#: field:res.company,donation_credit_transfer_journal_id:0
+msgid "Donations via Credit Transfer Journal"
+msgstr ""
+
+#. module: donation_bank_statement
+#: code:addons/donation_bank_statement/bank_statement.py:75
+#, python-format
+msgid "Missing Default Debit Account on the Journal '%s'."
+msgstr ""
+
+#. module: donation_bank_statement
+#: code:addons/donation_bank_statement/bank_statement.py:88
+#, python-format
+msgid "Missing partner on bank statement line '%s' dated %s with amount %s."
+msgstr ""
+
+#. module: donation_bank_statement
+#: code:addons/donation_bank_statement/bank_statement.py:99
+#, python-format
+msgid "No new donation to generate for this bank statement."
+msgstr ""
+
+#. module: donation_bank_statement
+#: field:donation.donation,bank_statement_line_id:0
+msgid "Source Bank Statement Line"
+msgstr ""
+
+#. module: donation_bank_statement
+#: code:addons/donation_bank_statement/bank_statement.py:69
+#, python-format
+msgid "You must configure the Journal for Donations via Credit Transfer for the company %s"
+msgstr ""
+

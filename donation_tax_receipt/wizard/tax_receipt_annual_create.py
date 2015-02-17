@@ -24,7 +24,6 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning
 from datetime import datetime
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
 class TaxReceiptAnnualCreate(models.TransientModel):
@@ -33,13 +32,11 @@ class TaxReceiptAnnualCreate(models.TransientModel):
 
     @api.model
     def _default_end_date(self):
-        end_date = datetime(datetime.today().year - 1, 12, 31)
-        return datetime.strftime(end_date, DEFAULT_SERVER_DATE_FORMAT)
+        return datetime(datetime.today().year - 1, 12, 31)
 
     @api.model
     def _default_start_date(self):
-        start_date = datetime(datetime.today().year - 1, 1, 1)
-        return datetime.strftime(start_date, DEFAULT_SERVER_DATE_FORMAT)
+        return datetime(datetime.today().year - 1, 1, 1)
 
     start_date = fields.Date(
         'Start Date', required=True, default=_default_start_date)
@@ -115,7 +112,6 @@ class TaxReceiptAnnualCreate(models.TransientModel):
             'type': 'ir.actions.act_window',
             'name': 'Tax Receipts',
             'res_model': 'donation.tax.receipt',
-            'view_type': 'form',
             'view_mode': 'tree,form,graph',
             'nodestroy': False,
             'target': 'current',

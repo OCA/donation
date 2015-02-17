@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* donation_recurring_tax_receipt
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-17 22:38+0000\n"
+"PO-Revision-Date: 2015-02-17 22:38+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: donation_recurring_tax_receipt
+#: code:addons/donation_recurring_tax_receipt/donation.py:45
+#, python-format
+msgid "As it is a recurring donation, the Tax Receipt Option has been changed from Each to Annual. You may want to change it also on the Donor form."
+msgstr ""
+
+#. module: donation_recurring_tax_receipt
+#: model:ir.model,name:donation_recurring_tax_receipt.model_donation_donation
+msgid "Donations"
+msgstr ""
+
+#. module: donation_recurring_tax_receipt
+#: code:addons/donation_recurring_tax_receipt/donation.py:35
+#, python-format
+msgid "The recurring donation of %s cannot have a tax receipt option 'Each'."
+msgstr ""
+
+#. module: donation_recurring_tax_receipt
+#: code:addons/donation_recurring_tax_receipt/donation.py:44
+#, python-format
+msgid "Update of Tax Receipt Option"
+msgstr ""
+
