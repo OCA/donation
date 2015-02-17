@@ -140,7 +140,7 @@ class DonationTaxReceipt(models.Model):
         string='Date', required=True, default=fields.Date.context_today)
     donation_date = fields.Date(string='Donation Date', required=True)
     amount = fields.Float(
-        string='Amount', digits_compute=dp.get_precision('Account'))
+        string='Amount', digits=dp.get_precision('Account'))
     currency_id = fields.Many2one(
         'res.currency', string='Currency', required=True, ondelete='restrict')
     partner_id = fields.Many2one(
