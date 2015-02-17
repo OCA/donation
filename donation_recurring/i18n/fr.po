@@ -1,0 +1,167 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* donation_recurring
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-17 22:43+0000\n"
+"PO-Revision-Date: 2015-02-17 22:43+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: donation_recurring
+#: selection:donation.donation,recurring_template:0
+msgid "Active"
+msgstr "Active"
+
+#. module: donation_recurring
+#: view:donation.donation:donation_recurring.donation_search
+msgid "Active Recurring Template"
+msgstr "Active Recurring Template"
+
+#. module: donation_recurring
+#: view:donation.recurring.generate:donation_recurring.donation_recurring_generate_form
+msgid "Cancel"
+msgstr "Cancel"
+
+#. module: donation_recurring
+#: field:donation.recurring.generate,create_uid:0
+msgid "Created by"
+msgstr "Created by"
+
+#. module: donation_recurring
+#: field:donation.recurring.generate,create_date:0
+msgid "Created on"
+msgstr "Created on"
+
+#. module: donation_recurring
+#: field:donation.recurring.generate,date:0
+msgid "Date"
+msgstr "Date"
+
+#. module: donation_recurring
+#: model:ir.model,name:donation_recurring.model_donation_donation
+msgid "Donations"
+msgstr "Dons"
+
+#. module: donation_recurring
+#: code:addons/donation_recurring/donation.py:65
+#, python-format
+msgid "Draft Donation of %s"
+msgstr "Draft Donation of %s"
+
+#. module: donation_recurring
+#: view:donation.donation:donation_recurring.donation_search
+msgid "From Recurring"
+msgstr "From Recurring"
+
+#. module: donation_recurring
+#: view:donation.recurring.generate:donation_recurring.donation_recurring_generate_form
+msgid "Generate"
+msgstr "Generate"
+
+#. module: donation_recurring
+#: view:donation.recurring.generate:donation_recurring.donation_recurring_generate_form
+#: model:ir.actions.act_window,name:donation_recurring.donation_recurring_generate_action
+#: model:ir.model,name:donation_recurring.model_donation_recurring_generate
+#: model:ir.ui.menu,name:donation_recurring.donation_recurring_generate_menu
+msgid "Generate Recurring Donations"
+msgstr "Generate Recurring Donations"
+
+#. module: donation_recurring
+#: view:donation.donation:donation_recurring.donation_form
+msgid "History"
+msgstr "History"
+
+#. module: donation_recurring
+#: field:donation.recurring.generate,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: donation_recurring
+#: field:donation.recurring.generate,write_uid:0
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: donation_recurring
+#: field:donation.recurring.generate,write_date:0
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: donation_recurring
+#: field:donation.donation,recurring_donation_ids:0
+msgid "Past Recurring Donations"
+msgstr "Past Recurring Donations"
+
+#. module: donation_recurring
+#: field:donation.recurring.generate,payment_ref:0
+msgid "Payment Reference"
+msgstr "Payment Reference"
+
+#. module: donation_recurring
+#: code:addons/donation_recurring/donation.py:59
+#, python-format
+msgid "Recurring Donation of %s"
+msgstr "Recurring Donation of %s"
+
+#. module: donation_recurring
+#: model:ir.actions.act_window,name:donation_recurring.donation_recurring_action
+#: model:ir.ui.menu,name:donation_recurring.donation_recurring_menu
+msgid "Recurring Donations"
+msgstr "Recurring Donations"
+
+#. module: donation_recurring
+#: field:donation.donation,recurring_template:0
+msgid "Recurring Template"
+msgstr "Recurring Template"
+
+#. module: donation_recurring
+#: code:addons/donation_recurring/wizard/donation_recurring_generate.py:59
+#, python-format
+msgid "Recurring donations have already been generated for %s."
+msgstr "Recurring donations have already been generated for %s."
+
+#. module: donation_recurring
+#: field:donation.donation,source_recurring_id:0
+msgid "Source Recurring Template"
+msgstr "Source Recurring Template"
+
+#. module: donation_recurring
+#: selection:donation.donation,recurring_template:0
+msgid "Suspended"
+msgstr "Suspended"
+
+#. module: donation_recurring
+#: code:addons/donation_recurring/donation.py:62
+#, python-format
+msgid "Suspended Recurring Donation of %s"
+msgstr "Suspended Recurring Donation of %s"
+
+#. module: donation_recurring
+#: view:donation.donation:donation_recurring.donation_search
+msgid "Suspended Recurring Template"
+msgstr "Suspended Recurring Template"
+
+#. module: donation_recurring
+#: code:addons/donation_recurring/donation.py:50
+#, python-format
+msgid "The recurring donation template of '%s' cannot have a Source Recurring Template"
+msgstr "The recurring donation template of '%s' cannot have a Source Recurring Template"
+
+#. module: donation_recurring
+#: code:addons/donation_recurring/donation.py:46
+#, python-format
+msgid "The recurring donation template of '%s' must stay in draft state."
+msgstr "The recurring donation template of '%s' must stay in draft state."
+
+#. module: donation_recurring
+#: view:donation.donation:donation_recurring.donation_tree
+msgid "red:recurring_template=='suspended';blue:state=='draft'"
+msgstr "red:recurring_template=='suspended';blue:state=='draft'"
+
