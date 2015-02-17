@@ -1,29 +1,19 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 #	* donation
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 8.0alpha1\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-01 12:46+0000\n"
-"PO-Revision-Date: 2014-07-01 12:46+0000\n"
+"POT-Creation-Date: 2015-02-17 22:34+0000\n"
+"PO-Revision-Date: 2015-02-17 22:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: donation
-#: field:res.partner,donation_count:0
-msgid "# of Donations"
-msgstr ""
-
-#. module: donation
-#: field:res.partner,stay_count:0
-msgid "# of Stays"
-msgstr ""
 
 #. module: donation
 #: field:donation.donation,move_id:0
@@ -61,13 +51,30 @@ msgid "Analytic Account"
 msgstr ""
 
 #. module: donation
-#: view:donation.donation:0
+#: view:donation.donation:donation.donation_form
 msgid "Back to Draft"
 msgstr ""
 
 #. module: donation
-#: view:donation.donation:0
+#: view:donation.donation:donation.donation_search
 msgid "Campaign"
+msgstr ""
+
+#. module: donation
+#: view:donation.validate:donation.donation_validate_form
+msgid "Cancel"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:274
+#, python-format
+msgid "Cannot validate the donation of %s because it doesn't have any lines!"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:279
+#, python-format
+msgid "Cannot validate the donation of %s because it is not in draft state."
 msgstr ""
 
 #. module: donation
@@ -92,14 +99,9 @@ msgstr ""
 
 #. module: donation
 #: field:donation.donation,company_id:0
-#: view:donation.report:0
+#: view:donation.report:donation.donation_report_search
 #: field:donation.report,company_id:0
 msgid "Company"
-msgstr ""
-
-#. module: donation
-#: field:donation.donation,company_currency_id:0
-msgid "Company Currency"
 msgstr ""
 
 #. module: donation
@@ -108,11 +110,28 @@ msgid "Configuration"
 msgstr ""
 
 #. module: donation
+#: field:donation.donation,country_id:0
+msgid "Country"
+msgstr ""
+
+#. module: donation
+#: field:donation.campaign,create_uid:0
 #: field:donation.donation,create_uid:0
+#: field:donation.line,create_uid:0
+#: field:donation.validate,create_uid:0
 msgid "Created by"
 msgstr ""
 
 #. module: donation
+#: field:donation.campaign,create_date:0
+#: field:donation.donation,create_date:0
+#: field:donation.line,create_date:0
+#: field:donation.validate,create_date:0
+msgid "Created on"
+msgstr ""
+
+#. module: donation
+#: view:donation.donation:donation.donation_search
 #: field:donation.donation,currency_id:0
 msgid "Currency"
 msgstr ""
@@ -123,34 +142,46 @@ msgid "Current Donation Campaign"
 msgstr ""
 
 #. module: donation
-#: view:donation.donation:0
-#: view:donation.report:0
+#: field:res.users,context_donation_journal_id:0
+msgid "Current Donation Payment Method"
+msgstr ""
+
+#. module: donation
+#: view:donation.donation:donation.donation_search
+#: view:donation.report:donation.donation_report_search
 msgid "Date"
 msgstr ""
 
 #. module: donation
-#: constraint:donation.donation:0
-msgid "Date must be today or in the past"
+#: help:donation.donation,message_last_post:0
+msgid "Date of the last message posted on the record."
 msgstr ""
 
 #. module: donation
-#: view:donation.donation:0
+#: field:donation.campaign,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: donation
+#: view:donation.donation:donation.donation_form
+#: view:donation.donation:donation.donation_tree
 #: field:donation.line,donation_id:0
 #: model:ir.module.category,name:donation.module_category_donation
-#: view:product.product:0
+#: view:product.template:donation.product_template_search_view
+#: model:product.template,name:donation.product_product_donation_product_template
 msgid "Donation"
 msgstr ""
 
 #. module: donation
-#: view:donation.campaign:0
+#: view:donation.campaign:donation.donation_campaign_form
 #: field:donation.donation,campaign_id:0
-#: view:donation.report:0
+#: view:donation.report:donation.donation_report_search
 #: field:donation.report,campaign_id:0
 msgid "Donation Campaign"
 msgstr ""
 
 #. module: donation
-#: view:donation.campaign:0
+#: view:donation.campaign:donation.donation_campaign_tree
 #: model:ir.actions.act_window,name:donation.donation_campaign_action
 #: model:ir.ui.menu,name:donation.donation_campaign_menu
 msgid "Donation Campaigns"
@@ -163,11 +194,13 @@ msgid "Donation Date"
 msgstr ""
 
 #. module: donation
-#: view:donation.line:0
+#: view:donation.line:donation.donation_line_form
+#: view:donation.line:donation.donation_line_tree
 msgid "Donation Line"
 msgstr ""
 
 #. module: donation
+#: view:donation.donation:donation.donation_form
 #: field:donation.donation,line_ids:0
 #: model:ir.model,name:donation.model_donation_line
 msgid "Donation Lines"
@@ -179,7 +212,24 @@ msgid "Donation Number"
 msgstr ""
 
 #. module: donation
-#: view:donation.donation:0
+#: field:account.journal,allow_donation:0
+msgid "Donation Payment Method"
+msgstr ""
+
+#. module: donation
+#: model:mail.message.subtype,description:donation.donation_done
+#: model:mail.message.subtype,name:donation.donation_done
+msgid "Donation Validated"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:166
+#, python-format
+msgid "Donation of %s"
+msgstr ""
+
+#. module: donation
+#: view:donation.donation:donation.donation_graph
 #: model:ir.actions.act_window,name:donation.donation_action
 #: model:ir.actions.act_window,name:donation.partner_donation_action
 #: model:ir.model,name:donation.model_donation_donation
@@ -187,13 +237,14 @@ msgstr ""
 #: model:ir.ui.menu,name:donation.donation_report_title_menu
 #: model:ir.ui.menu,name:donation.donation_title_menu
 #: model:ir.ui.menu,name:donation.donation_top_menu
-#: view:res.partner:0
+#: view:res.partner:donation.view_partner_form
 #: field:res.partner,donation_ids:0
 msgid "Donations"
 msgstr ""
 
 #. module: donation
-#: view:donation.report:0
+#: view:donation.report:donation.donation_report_graph
+#: view:donation.report:donation.donation_report_search
 #: model:ir.actions.act_window,name:donation.donation_report_action
 #: model:ir.model,name:donation.model_donation_report
 #: model:ir.ui.menu,name:donation.donation_report_menu
@@ -206,7 +257,7 @@ msgid "Donations Lines"
 msgstr ""
 
 #. module: donation
-#: view:donation.donation:0
+#: view:donation.donation:donation.donation_search
 #: selection:donation.donation,state:0
 msgid "Done"
 msgstr ""
@@ -223,20 +274,45 @@ msgid "Donors"
 msgstr ""
 
 #. module: donation
-#: model:product.category,name:donation.product_category_donation
-msgid "Dons"
-msgstr ""
-
-#. module: donation
-#: view:donation.donation:0
+#: view:donation.donation:donation.donation_search
 #: selection:donation.donation,state:0
 msgid "Draft"
 msgstr ""
 
 #. module: donation
-#: view:donation.donation:0
-#: view:donation.report:0
+#: code:addons/donation/donation.py:333
+#, python-format
+msgid "Draft Donation of %s"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,message_follower_ids:0
+msgid "Followers"
+msgstr ""
+
+#. module: donation
+#: view:donation.donation:donation.donation_search
+#: view:donation.report:donation.donation_report_search
 msgid "Group By"
+msgstr ""
+
+#. module: donation
+#: help:donation.donation,message_summary:0
+msgid "Holds the Chatter summary (number of messages, ...). This summary is directly in html format in order to be inserted in kanban views."
+msgstr ""
+
+#. module: donation
+#: field:donation.campaign,id:0
+#: field:donation.donation,id:0
+#: field:donation.line,id:0
+#: field:donation.report,id:0
+#: field:donation.validate,id:0
+msgid "ID"
+msgstr ""
+
+#. module: donation
+#: help:donation.donation,message_unread:0
+msgid "If checked new messages require your attention."
 msgstr ""
 
 #. module: donation
@@ -245,8 +321,34 @@ msgid "Is a Donation"
 msgstr ""
 
 #. module: donation
+#: field:donation.donation,message_is_follower:0
+msgid "Is a Follower"
+msgstr ""
+
+#. module: donation
 #: model:ir.model,name:donation.model_account_journal
 msgid "Journal"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,message_last_post:0
+msgid "Last Message Date"
+msgstr ""
+
+#. module: donation
+#: field:donation.campaign,write_uid:0
+#: field:donation.donation,write_uid:0
+#: field:donation.line,write_uid:0
+#: field:donation.validate,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: donation
+#: field:donation.campaign,write_date:0
+#: field:donation.donation,write_date:0
+#: field:donation.line,write_date:0
+#: field:donation.validate,write_date:0
+msgid "Last Updated on"
 msgstr ""
 
 #. module: donation
@@ -260,6 +362,28 @@ msgid "Manager"
 msgstr ""
 
 #. module: donation
+#: field:donation.donation,message_ids:0
+msgid "Messages"
+msgstr ""
+
+#. module: donation
+#: help:donation.donation,message_ids:0
+msgid "Messages and communication history"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:173
+#, python-format
+msgid "Missing Default Debit Account on journal '%s'."
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:200
+#, python-format
+msgid "Missing income account on product '%s' or on it's related product category"
+msgstr ""
+
+#. module: donation
 #: field:donation.campaign,name:0
 msgid "Name"
 msgstr ""
@@ -270,27 +394,45 @@ msgid "Notes"
 msgstr ""
 
 #. module: donation
-#: view:donation.donation:0
-#: view:donation.report:0
+#: view:donation.donation:donation.donation_form
+msgid "Other Information"
+msgstr ""
+
+#. module: donation
+#: view:donation.donation:donation.donation_search
+#: view:donation.report:donation.donation_report_search
 #: model:ir.model,name:donation.model_res_partner
 msgid "Partner"
 msgstr ""
 
 #. module: donation
+#: view:donation.donation:donation.donation_search
+#: view:donation.report:donation.donation_report_search
+#: field:donation.report,country_id:0
+msgid "Partner Country"
+msgstr ""
+
+#. module: donation
+#: view:donation.donation:donation.donation_search
 #: field:donation.donation,journal_id:0
 msgid "Payment Method"
 msgstr ""
 
 #. module: donation
+#: field:donation.donation,payment_ref:0
+msgid "Payment Reference"
+msgstr ""
+
+#. module: donation
 #: field:donation.line,product_id:0
-#: view:donation.report:0
+#: view:donation.report:donation.donation_report_search
 #: field:donation.report,product_id:0
 #: model:ir.model,name:donation.model_product_product
 msgid "Product"
 msgstr ""
 
 #. module: donation
-#: view:donation.report:0
+#: view:donation.report:donation.donation_report_search
 msgid "Product Category"
 msgstr ""
 
@@ -311,7 +453,12 @@ msgid "Quantity"
 msgstr ""
 
 #. module: donation
-#: view:donation.donation:0
+#: view:donation.donation:donation.donation_form
+msgid "Save Default Values"
+msgstr ""
+
+#. module: donation
+#: view:donation.donation:donation.donation_search
 msgid "Search Donations"
 msgstr ""
 
@@ -322,7 +469,7 @@ msgstr ""
 
 #. module: donation
 #: help:product.template,donation:0
-msgid "Specify if the product can be selectedin a donation line."
+msgid "Specify if the product can be selected in a donation line."
 msgstr ""
 
 #. module: donation
@@ -336,8 +483,52 @@ msgid "State"
 msgstr ""
 
 #. module: donation
+#: field:donation.donation,message_summary:0
+msgid "Summary"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:287
+#, python-format
+msgid "The amount of the donation of %s (%s) is different from the sum of the donation lines (%s)."
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:160
+#, python-format
+msgid "The date of the donation of %s should be today or in the past, not in the future!"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:324
+#, python-format
+msgid "The donation '%s' is in Done state, so you must set it back to draft before deleting it."
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/donation.py:424
+#, python-format
+msgid "The journal '%s' has the option 'Allow Donation', so it's type should be 'Cash' or 'Bank and Checks."
+msgstr ""
+
+#. module: donation
+#: model:product.template,description:donation.product_product_donation_product_template
+msgid "This is a donation product."
+msgstr ""
+
+#. module: donation
+#: view:donation.validate:donation.donation_validate_form
+msgid "This wizard will validate all the draft donations selected."
+msgstr ""
+
+#. module: donation
 #: field:donation.line,unit_price:0
 msgid "Unit Price"
+msgstr ""
+
+#. module: donation
+#: field:donation.donation,message_unread:0
+msgid "Unread Messages"
 msgstr ""
 
 #. module: donation
@@ -351,7 +542,18 @@ msgid "Users"
 msgstr ""
 
 #. module: donation
-#: view:donation.donation:0
+#: view:donation.donation:donation.donation_form
 msgid "Validate"
+msgstr ""
+
+#. module: donation
+#: view:donation.validate:donation.donation_validate_form
+#: model:ir.model,name:donation.model_donation_validate
+msgid "Validate Donations"
+msgstr ""
+
+#. module: donation
+#: model:ir.actions.act_window,name:donation.donation_validate_action
+msgid "Validate Draft Donations"
 msgstr ""
 
