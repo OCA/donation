@@ -64,5 +64,5 @@ class DonationDonation(models.Model):
             else:
                 name = _('Draft Donation of %s') % self.partner_id.name
         else:
-            name = donation.number
+            name = self.number
         self.display_name = name
