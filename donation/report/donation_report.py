@@ -42,6 +42,7 @@ class DonationReport(models.Model):
         'product.category', string='Category of Product', readonly=True)
     campaign_id = fields.Many2one(
         'donation.campaign', string='Donation Campaign', readonly=True)
+    in_kind = fields.Boolean(string='In Kind')
     amount_company_currency = fields.Float(
         'Amount Company Currency', readonly=True)
 
@@ -50,6 +51,7 @@ class DonationReport(models.Model):
             SELECT min(l.id) AS id,
                 d.donation_date AS donation_date,
                 l.product_id AS product_id,
+                l.in_kind AS in_kind,
                 pt.categ_id AS product_categ_id,
                 d.company_id AS company_id,
                 d.partner_id AS partner_id,
@@ -77,6 +79,7 @@ class DonationReport(models.Model):
     def _group_by(self):
         group_by = """
             GROUP BY l.product_id,
+                l.in_kind,
                 pt.categ_id,
                 d.donation_date,
                 d.partner_id,

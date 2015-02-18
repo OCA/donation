@@ -17,6 +17,19 @@
     <field name="description">This is a donation product.</field>
 </record>
 
+<record id="product_product_inkind_donation" model="product.product">
+    <field name="name">In-Kind Donation</field>
+    <field name="default_code">KIND-DON</field>
+    <field name="categ_id" ref="product.product_category_5"/>
+    <field name="sale_ok" eval="False"/>
+    <field name="donation">1</field>
+    <field name="in_kind_donation">1</field>
+    <field name="list_price">0</field>
+    <field name="type">service</field>
+    <field name="uom_id" ref="product.product_uom_unit"/>
+    <field name="uom_po_id" ref="product.product_uom_unit"/>
+</record>
+
 <record id="account.check_journal" model="account.journal">
     <field name="allow_donation" eval="True"/>
 </record>
@@ -119,6 +132,50 @@
     <field name="unit_price">150</field>
 </record>
 
+<!-- Full in-kind donation -->
+<record id="donation4" model="donation.donation">
+    <field name="currency_id" ref="base.EUR"/>
+    <field name="check_total">1000</field>
+    <field name="partner_id" ref="donor1"/>
+    <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
+    <field name="journal_id" ref="account.check_journal"/>
+    <field name="payment_ref"></field>
+    <field name="campaign_id" ref="prospecting_origin"/>
+</record>
+
+<record id="donation4_l1" model="donation.line">
+    <field name="donation_id" ref="donation4"/>
+    <field name="product_id" ref="product_product_inkind_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">1000</field>
+    <field name="in_kind" eval="True"/>
+</record>
+
+<!-- Partial in-kind donation -->
+<record id="donation5" model="donation.donation">
+    <field name="currency_id" ref="base.EUR"/>
+    <field name="check_total">1200</field>
+    <field name="partner_id" ref="donor1"/>
+    <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
+    <field name="journal_id" ref="account.check_journal"/>
+    <field name="payment_ref"></field>
+    <field name="campaign_id" ref="prospecting_origin"/>
+</record>
+
+<record id="donation5_l1" model="donation.line">
+    <field name="donation_id" ref="donation5"/>
+    <field name="product_id" ref="product_product_inkind_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">800</field>
+    <field name="in_kind" eval="True"/>
+</record>
+
+<record id="donation5_l2" model="donation.line">
+    <field name="donation_id" ref="donation5"/>
+    <field name="product_id" ref="product_product_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">400</field>
+</record>
 
 <record id="base.user_demo" model="res.users">
     <field name="groups_id" eval="[(4, ref('group_donation_user'))]"/>
