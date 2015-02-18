@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+    @author: Alexis de Lattre <alexis.delattre@akretion.com>
+    The licence is in the file __openerp__.py
+-->
 
 <openerp>
 <data>
@@ -23,6 +28,10 @@
             <div name="donation">
                 <field name="donation"/>
                 <label for="donation"/>
+            </div>
+            <div name="in_kind_donation">
+                <field name="in_kind_donation"/>
+                <label for="in_kind_donation"/>
             </div>
         </div>
     </field>

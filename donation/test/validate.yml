@@ -38,3 +38,29 @@
     - move_id.date == time.strftime('%Y-%m-01')
     - move_id.journal_id.id == ref('account.cash_journal')
     - move_id.state == 'posted'
+-
+  Validate donation4
+-
+  !function {model: donation.donation, name: validate}:
+    - eval: "[obj(ref('donation4')).id]"
+-
+  Donation4 Check that no account move has been generated (full in-kind donation)
+-
+  !python {model: donation.donation}: |
+    donation = self.browse(cr, uid, ref('donation4'), context=context)
+    assert donation.state == 'done', 'Donation has not been set to done (donation4)'
+    assert not donation.move_id, 'Donation should not have an account move (donation4)'
+-
+  Validate donation5
+-
+  !function {model: donation.donation, name: validate}:
+    - eval: "[obj(ref('donation5')).id]"
+-
+  Donation5 Check that an account move has been generated (partial in-kind donation)
+-
+  !python {model: donation.donation}: |
+    donation = self.browse(cr, uid, ref('donation5'), context=context)
+    assert donation.state == 'done', 'Donation has not been set to done (donation5)'
+    assert donation.move_id, 'No account move generated (donation5)'
+    # How to make this check work when the company currency != EUR ?
+    assert donation.move_id.amount == 400, 'Wrong amount on account move'
