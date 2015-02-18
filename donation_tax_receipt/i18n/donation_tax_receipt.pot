@@ -292,7 +292,7 @@ msgstr ""
 
 #. module: donation_tax_receipt
 #: field:donation.donation,tax_receipt_total:0
-msgid "Tax Receipt Total"
+msgid "Eligible Tax Receipt Sub-total"
 msgstr ""
 
 #. module: donation_tax_receipt

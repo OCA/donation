@@ -54,7 +54,7 @@ class DonationDonation(models.Model):
         ('annual', 'Annual Tax Receipt'),
         ], string='Tax Receipt Option', states={'done': [('readonly', True)]})
     tax_receipt_total = fields.Float(
-        compute='_tax_receipt_total', string='Tax Receipt Total',
+        compute='_tax_receipt_total', string='Eligible Tax Receipt Sub-total',
         store=True)
 
     @api.model

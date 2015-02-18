@@ -292,8 +292,8 @@ msgstr "Option reçu fiscal"
 
 #. module: donation_tax_receipt
 #: field:donation.donation,tax_receipt_total:0
-msgid "Tax Receipt Total"
-msgstr "Total reçu fiscal"
+msgid "Eligible Tax Receipt Sub-total"
+msgstr "Sous-total éligible au reçu fiscal"
 
 #. module: donation_tax_receipt
 #: model:ir.model,name:donation_tax_receipt.model_donation_tax_receipt
