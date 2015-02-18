@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Donation Tax Receipt module for OpenERP
-#    Copyright (C) 2014 Barroux Abbey
+#    Donation Tax Receipt module for Odoo
+#    Copyright (C) 2014-2015 Barroux Abbey
+#    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,8 +20,20 @@
 #
 ##############################################################################
 
-from . import donation_tax
-from . import partner
-from . import product
-from . import wizard
-from . import report
+from openerp import models, fields
+
+
+class DonationReport(models.Model):
+    _inherit = "donation.report"
+
+    tax_receipt_ok = fields.Boolean(string='Eligible for a Tax Receipt')
+
+    def _select(self):
+        select = super(DonationReport, self)._select()
+        select += ", l.tax_receipt_ok AS tax_receipt_ok"
+        return select
+
+    def _group_by(self):
+        group_by = super(DonationReport, self)._group_by()
+        group_by += ", l.tax_receipt_ok"
+        return group_by

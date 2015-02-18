@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Donation Tax Receipt module for OpenERP
-#    Copyright (C) 2014 Barroux Abbey
+#    Donation Tax Receipt module for Odoo
+#    Copyright (C) 2014-2015 Barroux Abbey
+#    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,8 +20,4 @@
 #
 ##############################################################################
 
-from . import donation_tax
-from . import partner
-from . import product
-from . import wizard
-from . import report
+from . import donation_report

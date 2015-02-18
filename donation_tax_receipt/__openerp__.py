@@ -51,6 +51,7 @@ Barroux Abbey and by Alexis de Lattre from Akretion.
         'wizard/tax_receipt_annual_create_view.xml',
         'report.xml',
         'report/report_donationtax.xml',
+        'report/donation_report_view.xml',
         'security/tax_receipt_security.xml',
         ],
     'demo': ['donation_tax_demo.xml'],

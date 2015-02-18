@@ -119,8 +119,7 @@ class DonationDonation(models.Model):
 class DonationLine(models.Model):
     _inherit = 'donation.line'
 
-    tax_receipt_ok = fields.Boolean(
-        string='Eligible for a Tax Receipt')
+    tax_receipt_ok = fields.Boolean(string='Eligible for a Tax Receipt')
 
     @api.onchange('product_id')
     def product_id_change(self):
