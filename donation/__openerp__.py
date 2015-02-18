@@ -30,7 +30,7 @@
 Donation
 ========
 
-This module handles donations.
+This module handles donations, including in-kind donations.
 
 It has been developped by brother Bernard and brother Irenee from Barroux Abbey and by Alexis de Lattre from Akretion.
     """,

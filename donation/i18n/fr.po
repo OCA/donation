@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-17 22:41+0000\n"
-"PO-Revision-Date: 2015-02-17 22:41+0000\n"
+"POT-Creation-Date: 2015-02-18 20:37+0000\n"
+"PO-Revision-Date: 2015-02-18 20:37+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -66,13 +66,13 @@ msgid "Cancel"
 msgstr "Cancel"
 
 #. module: donation
-#: code:addons/donation/donation.py:274
+#: code:addons/donation/donation.py:279
 #, python-format
 msgid "Cannot validate the donation of %s because it doesn't have any lines!"
 msgstr "Cannot validate the donation of %s because it doesn't have any lines!"
 
 #. module: donation
-#: code:addons/donation/donation.py:279
+#: code:addons/donation/donation.py:284
 #, python-format
 msgid "Cannot validate the donation of %s because it is not in draft state."
 msgstr "Cannot validate the donation of %s because it is not in draft state."
@@ -280,7 +280,7 @@ msgid "Draft"
 msgstr "Brouillon"
 
 #. module: donation
-#: code:addons/donation/donation.py:333
+#: code:addons/donation/donation.py:343
 #, python-format
 msgid "Draft Donation of %s"
 msgstr "Draft Donation of %s"
@@ -289,6 +289,12 @@ msgstr "Draft Donation of %s"
 #: field:donation.donation,message_follower_ids:0
 msgid "Followers"
 msgstr "Followers"
+
+#. module: donation
+#: code:addons/donation/donation.py:308
+#, python-format
+msgid "Full in-kind donation: no account move generated"
+msgstr "Full in-kind donation: no account move generated"
 
 #. module: donation
 #: view:donation.donation:donation.donation_search
@@ -314,6 +320,19 @@ msgstr "ID"
 #: help:donation.donation,message_unread:0
 msgid "If checked new messages require your attention."
 msgstr "If checked new messages require your attention."
+
+#. module: donation
+#: field:donation.line,in_kind:0
+#: view:donation.report:donation.donation_report_search
+#: field:donation.report,in_kind:0
+msgid "In Kind"
+msgstr "En nature"
+
+#. module: donation
+#: field:product.template,in_kind_donation:0
+#: model:product.template,name:donation.product_product_inkind_donation_product_template
+msgid "In-Kind Donation"
+msgstr "Don en nature"
 
 #. module: donation
 #: field:product.template,donation:0
@@ -378,7 +397,7 @@ msgid "Missing Default Debit Account on journal '%s'."
 msgstr "Missing Default Debit Account on journal '%s'."
 
 #. module: donation
-#: code:addons/donation/donation.py:200
+#: code:addons/donation/donation.py:202
 #, python-format
 msgid "Missing income account on product '%s' or on it's related product category"
 msgstr "Missing income account on product '%s' or on it's related product category"
@@ -488,7 +507,7 @@ msgid "Summary"
 msgstr "Summary"
 
 #. module: donation
-#: code:addons/donation/donation.py:287
+#: code:addons/donation/donation.py:292
 #, python-format
 msgid "The amount of the donation of %s (%s) is different from the sum of the donation lines (%s)."
 msgstr "The amount of the donation of %s (%s) is different from the sum of the donation lines (%s)."
@@ -500,13 +519,13 @@ msgid "The date of the donation of %s should be today or in the past, not in the
 msgstr "The date of the donation of %s should be today or in the past, not in the future!"
 
 #. module: donation
-#: code:addons/donation/donation.py:324
+#: code:addons/donation/donation.py:334
 #, python-format
 msgid "The donation '%s' is in Done state, so you must set it back to draft before deleting it."
 msgstr "The donation '%s' is in Done state, so you must set it back to draft before deleting it."
 
 #. module: donation
-#: code:addons/donation/donation.py:424
+#: code:addons/donation/donation.py:437
 #, python-format
 msgid "The journal '%s' has the option 'Allow Donation', so it's type should be 'Cash' or 'Bank and Checks."
 msgstr "The journal '%s' has the option 'Allow Donation', so it's type should be 'Cash' or 'Bank and Checks."
