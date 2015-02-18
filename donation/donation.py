@@ -190,6 +190,8 @@ class DonationDonation(models.Model):
         # key = (account_id, analytic_account_id)
         # value = {'credit': ..., 'debit': ..., 'amount_currency': ...}
         for donation_line in self.line_ids:
+            if donation_line.in_kind:
+                continue
             amount_total_company_cur += donation_line.amount_company_currency
             account_id = donation_line.product_id.property_account_income.id
             if not account_id:
@@ -223,6 +225,9 @@ class DonationDonation(models.Model):
                     'debit': debit,
                     'amount_currency': amount_currency,
                     }
+
+        if not aml:  # for full in-kind donation
+            return False
 
         for (account_id, analytic_account_id), content in aml.iteritems():
             movelines.append((0, 0, {
@@ -293,9 +298,14 @@ class DonationDonation(models.Model):
 
         if self.amount_total:
             move_vals = self._prepare_donation_move()
-            move = self.env['account.move'].create(move_vals)
-            move.post()
-            donation_write_vals['move_id'] = move.id
+            # when we have a full in-kind donation: no account move
+            if move_vals:
+                move = self.env['account.move'].create(move_vals)
+                move.post()
+                donation_write_vals['move_id'] = move.id
+            else:
+                self.message_post(
+                    _('Full in-kind donation: no account move generated'))
 
         self.write(donation_write_vals)
         return
@@ -381,12 +391,15 @@ class DonationLine(models.Model):
     analytic_account_id = fields.Many2one(
         'account.analytic.account', string='Analytic Account',
         domain=[('type', 'not in', ('view', 'template'))], ondelete='restrict')
+    in_kind = fields.Boolean(string='In Kind')
     sequence = fields.Integer('Sequence')
 
     @api.onchange('product_id')
     def product_id_change(self):
-        if self.product_id and self.product_id.list_price:
-            self.unit_price = self.product_id.list_price
+        if self.product_id:
+            if self.product_id.list_price:
+                self.unit_price = self.product_id.list_price
+            self.in_kind = self.product_id.in_kind_donation
 
     @api.model
     def get_analytic_account_id(self):
