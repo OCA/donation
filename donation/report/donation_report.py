@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Donation module for OpenERP
-#    Copyright (C) 2014 Barroux Abbey
+#    Donation module for Odoo
+#    Copyright (C) 2014-2015 Barroux Abbey
+#    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,31 +21,29 @@
 ##############################################################################
 
 from openerp import tools
-from openerp.osv import orm, fields
+from openerp import models, fields
 
 
-class donation_report(orm.Model):
+class DonationReport(models.Model):
     _name = "donation.report"
     _description = "Donations Analysis"
     _auto = False
     _rec_name = 'donation_date'
     _order = "donation_date desc"
 
-    _columns = {
-        'donation_date': fields.date('Donation Date', readonly=True),
-        'product_id': fields.many2one(
-            'product.product', 'Product', readonly=True),
-        'partner_id': fields.many2one('res.partner', 'Donor', readonly=True),
-        'country_id': fields.many2one(
-            'res.country', 'Partner Country', readonly=True),
-        'company_id': fields.many2one('res.company', 'Company', readonly=True),
-        'product_categ_id': fields.many2one(
-            'product.category', 'Category of Product', readonly=True),
-        'campaign_id': fields.many2one(
-            'donation.campaign', 'Donation Campaign', readonly=True),
-        'amount_company_currency': fields.float(
-            'Amount Company Currency', readonly=True),
-        }
+    donation_date = fields.Date(string='Donation Date', readonly=True)
+    product_id = fields.Many2one(
+        'product.product', string='Product', readonly=True)
+    partner_id = fields.Many2one('res.partner', string='Donor', readonly=True)
+    country_id = fields.Many2one(
+        'res.country', string='Partner Country', readonly=True)
+    company_id = fields.Many2one('res.company', string='Company', readonly=True)
+    product_categ_id = fields.Many2one(
+        'product.category', string='Category of Product', readonly=True)
+    campaign_id = fields.Many2one(
+        'donation.campaign', string='Donation Campaign', readonly=True)
+    amount_company_currency = fields.Float(
+        'Amount Company Currency', readonly=True)
 
     def _select(self):
         select = """
