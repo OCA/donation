@@ -27,9 +27,9 @@
     <field name="arch"  type="xml">
         <group name="preferences" position="inside">
             <field name="context_donation_journal_id"
-                groups="donation.group_donation_user"/>
+                groups="donation.group_donation_user" readonly="0"/>
             <field name="context_donation_campaign_id"
-                groups="donation.group_donation_user"/>
+                groups="donation.group_donation_user" readonly="0"/>
         </group>
     </field>
 </record>
