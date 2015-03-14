@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2015 Akretion (www.akretion.com)
+  The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+<record id="donation_form" model="ir.ui.view">
+    <field name="name">mandate.donation.form</field>
+    <field name="model">donation.donation</field>
+    <field name="inherit_id" ref="donation.donation_form"/>
+    <field name="arch" type="xml">
+        <field name="move_id" position="before">
+            <field name="mandate_id" domain="[('state', '=', 'valid'), ('partner_id', '=', partner_id)]"/>
+        </field>
+    </field>
+</record>
+
+</data>
+</openerp>
