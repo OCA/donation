@@ -117,3 +117,19 @@ class DonationDonation(models.Model):
                     "%s") % payorder.reference
             self.message_post(msg)
         return res
+
+    @api.one
+    def back_to_draft(self):
+        if self.move_id:
+            donation_mv_line_ids = [l.id for l in self.move_id.line_id]
+            if donation_mv_line_ids:
+                plines = self.env['payment.line'].search([
+                    ('move_line_id', 'in', donation_mv_line_ids)])
+                if plines:
+                    raise Warning(
+                        _("You cannot set back to draft a donation "
+                            "which is linked to a payment line in a "
+                            "direct debit order. Remove it from the "
+                            "following direct debit order: %s.")
+                        % plines[0].order_id.reference)
+        return super(DonationDonation, self).back_to_draft()
