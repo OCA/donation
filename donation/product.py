@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Donation module for OpenERP
-#    Copyright (C) 2014 Barroux Abbey
+#    Donation module for Odoo
+#    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+#    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -43,6 +44,7 @@ class ProductTemplate(models.Model):
         if self.in_kind_donation:
             self.donation = True
 
+
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
@@ -56,5 +58,3 @@ class ProductProduct(models.Model):
     def _in_kind_donation_change(self):
         if self.in_kind_donation:
             self.donation = True
-
-
