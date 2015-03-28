@@ -20,6 +20,9 @@ virtualenv:
 
 install:
   - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+  - git clone https://github.com/OCA/account-financial-tools.git ${HOME}/account-financial-tools
+  - git clone https://github.com/OCA/bank-payment.git ${HOME}/bank-payment
+  - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
 
