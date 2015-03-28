@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
+    @author: Alexis de Lattre <alexis.delattre@akretion.com>
+    The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+<!-- This is just a very basic tax receipt report
+You should customize the style and layout in a custom module -->
+
+<template id="report_donationtaxreceipt">
+
+<t t-call="report.html_container">
+<t t-foreach="docs" t-as="o">
+<t t-call="report.internal_layout">
+
+<div class="page">
+
+<h1>Donation Tax Receipt <span t-field="o.number"/></h1>
+
+<h3>Donor: <span t-field="o.partner_id.name"/></h3>
+<h3>Date: <span t-field="o.date"/></h3>
+<h3>Amount Total: <span t-field="o.amount" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/></h3>
+
+</div>
+
+</t>
+</t>
+</t>
+
+</template>
+
+</data>
+</openerp>

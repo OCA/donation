@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+   Copyright (C) 2014-2015 Akretion France (www.akretion.com)
+   The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+
+<record id="report_thanks" model="ir.actions.report.xml">
+    <field name="name">Thanks Letter</field>
+    <field name="model">donation.donation</field>
+    <field name="report_name">donation.thanks</field>
+    <field name="report_type">aeroo</field>
+    <field name="in_format">oo-odt</field>
+    <field name="report_rml">donation_thanks/thanks.odt</field>
+    <field name="parser_state">default</field>
+    <field name="tml_source">file</field>
+    <field name="multi" eval="0"/>
+    <field name="out_format" ref="report_aeroo.report_mimetypes_odt_odt"/>
+    <field name="fallback_false" eval="0"/>
+    <field name="attachment_use" eval="0"/>
+    <field name="styles_mode">default</field>
+</record>
+
+<record id="button_report_thanks" model="ir.values"> <!-- Add print button -->
+    <field name="key2">client_print_multi</field>
+    <field name="model">donation.donation</field>
+    <field name="name">Thanks Letter</field>
+    <field name="value" eval="'ir.actions.report.xml,%d'%report_thanks" />
+</record>
+
+<!-- The print button in the form view is defined in donation_view.xml -->
+
+</data>
+</openerp>

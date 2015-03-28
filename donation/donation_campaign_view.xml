@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
+    @author: Alexis de Lattre <alexis.delattre@akretion.com>
+    The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+<record id="donation_campaign_form" model="ir.ui.view">
+    <field name="name">donation.campaign.form</field>
+    <field name="model">donation.campaign</field>
+    <field name="arch" type="xml">
+        <form string="Donation Campaign">
+            <group name="main">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="start_date"/>
+                <field name="nota"/>
+            </group>
+        </form>
+    </field>
+</record>
+
+<record id="donation_campaign_tree" model="ir.ui.view">
+    <field name="name">donation.campaign.tree</field>
+    <field name="model">donation.campaign</field>
+    <field name="arch" type="xml">
+        <tree string="Donation Campaigns">
+            <field name="code"/>
+            <field name="name"/>
+            <field name="start_date"/>
+        </tree>
+    </field>
+</record>
+
+<record id="donation_campaign_action" model="ir.actions.act_window">
+    <field name="name">Donation Campaigns</field>
+    <field name="res_model">donation.campaign</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="donation_campaign_menu" action="donation_campaign_action"
+    parent="donation_config_menu" sequence="30"/>
+
+</data>
+</openerp>

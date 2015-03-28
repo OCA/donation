@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+   Copyright (C) 2014-2015 Akretion France (www.akretion.com)
+   @author: Alexis de Lattre <alexis.delattre@akretion.com>
+   The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data noupdate="1">
+
+<record id="donation_credit_trf_journal_seq" model="ir.sequence">
+    <field name="name">Journal Donations via Credit Transfer</field>
+    <field name="prefix">DONTRF/</field>
+    <field name="padding">6</field>
+    <field name="company_id" ref="base.main_company"/>
+</record>
+
+<!-- The user will have to configure manually the default_credit_account_id
+and default_debit_account_id, we can't do that for him -->
+<record id="donation_credit_trf_journal" model="account.journal">
+    <field name="name">Donations via Credit Transfer</field>
+    <field name="code">DONTF</field>
+    <field name="type">bank</field>
+    <field name="sequence_id" ref="donation_credit_trf_journal_seq"/>
+    <field name="company_id" ref="base.main_company"/>
+    <field name="allow_donation">1</field>
+</record>
+
+<record id="base.main_company" model="res.company">
+    <field name="donation_credit_transfer_journal_id" ref="donation_credit_trf_journal"/>
+</record>
+
+</data>
+</openerp>

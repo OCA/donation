@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+   Copyright (C) 2014-2015 Akretion France (www.akretion.com)
+   The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+
+<record id="donation_form" model="ir.ui.view">
+    <field name="name">add.print.thanks.donation.form</field>
+    <field name="model">donation.donation</field>
+    <field name="inherit_id" ref="donation.donation_form"/>
+    <field name="arch" type="xml">
+        <group name="auto" position="inside">
+            <field name="thanks_printed"/>
+        </group>
+        <button name="validate" position="after">
+            <button name="print_thanks" string="Print Thanks Letter" type="object" groups="donation.group_donation_user" attrs="{'invisible': ['|', ('thanks_printed', '=', True), ('state', '!=', 'done')]}" class="oe_highlight"/>
+        </button>
+    </field>
+</record>
+
+</data>
+</openerp>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<!--
+    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
+    @author: Alexis de Lattre <alexis.delattre@akretion.com>
+    The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+<record id="partner_donation_action" model="ir.actions.act_window">
+    <field name="name">Donations</field>
+    <field name="res_model">donation.donation</field>
+    <field name="view_mode">tree,form,graph</field>
+    <field name="context">{'search_default_partner_id': active_id}</field>
+</record>
+
+
+<record id="view_partner_form" model="ir.ui.view">
+    <field name="name">donation.button.res.partner.form</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form" />
+    <field name="arch" type="xml">
+        <xpath expr="//div[@name='buttons']" position="inside">
+            <button class="oe_inline oe_stat_button" type="action"
+                name="%(donation.partner_donation_action)d"
+                attrs="{'invisible': [('customer', '=', False)]}"
+                icon="fa-heart-o">
+                <field string="Donations" name="donation_count" widget="statinfo"/>
+            </button>
+        </xpath>
+    </field>
+</record>
+
+
+</data>
+</openerp>

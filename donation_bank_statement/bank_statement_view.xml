@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
+    @author: Alexis de Lattre <alexis.delattre@akretion.com>
+    The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+<record id="view_bank_statement_form" model="ir.ui.view">
+    <field name="name">donation.bank.statement.bank_statement_form</field>
+    <field name="model">account.bank.statement</field>
+    <field name="inherit_id" ref="account.view_bank_statement_form"/>
+    <field name="arch"  type="xml">
+        <button name="button_cancel" position="before">
+            <button name="create_donations" type="object"
+                string="Create Donations" class="oe_highlight"
+                states="confirm"/>
+        </button>
+        <xpath expr="//field[@name='line_ids']/tree/field[@name='bank_account_id']" position="after">
+            <field name="donation_ids"/>
+        </xpath>
+    </field>
+</record>
+
+</data>
+</openerp>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
+    @author: Alexis de Lattre <alexis.delattre@akretion.com>
+    The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+<record id="donation_report_search" model="ir.ui.view">
+    <field name="name">donation.report.search</field>
+    <field name="model">donation.report</field>
+    <field name="arch"  type="xml">
+        <search string="Donations Analysis">
+            <group string="Group By" name="groupby">
+                <filter name="date_groupby" string="Date" context="{'group_by': 'donation_date'}"/>
+                <filter name="partner_groupby" string="Partner" context="{'group_by': 'partner_id'}"/>
+                <filter name="partner_country_groupby" string="Partner Country" context="{'group_by': 'country_id'}"/>
+                <filter name="company_groupby" string="Company" context="{'group_by': 'company_id'}"/>
+                <filter name="product_groupby" string="Product" context="{'group_by': 'product_id'}"/>
+                <filter name="in_kind_groupby" string="In Kind" context="{'group_by': 'in_kind'}"/>
+                <filter name="product_categ_groupby" string="Product Category" context="{'group_by': 'product_categ_id'}"/>
+                <filter name="campaign_groupby" string="Donation Campaign" context="{'group_by': 'campaign_id'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+
+
+<record id="donation_report_graph" model="ir.ui.view">
+    <field name="name">donation.report.graph</field>
+    <field name="model">donation.report</field>
+    <field name="arch"  type="xml">
+        <graph string="Donations Analysis" type="pivot">
+            <field name="donation_date" type="row" interval="month"/>
+            <field name="product_id" type="col"/>
+            <field name="amount_company_currency" type="measure"/>
+        </graph>
+    </field>
+</record>
+
+
+<record id="donation_report_action" model="ir.actions.act_window">
+    <field name="name">Donations Analysis</field>
+    <field name="res_model">donation.report</field>
+    <field name="view_mode">graph</field>
+</record>
+
+<menuitem id="donation_report_title_menu" parent="base.menu_reporting"
+    name="Donations" sequence="10"/>
+
+<menuitem id="donation_report_menu" action="donation_report_action"
+    parent="donation_report_title_menu" sequence="10"/>
+
+</data>
+</openerp>
