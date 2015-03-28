@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    Donation Recurring Tax Receipt module for Odoo
-#    Copyright (C) 2014 Abbaye du Barroux (www.barroux.org)
+#    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+#    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
 #    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -27,15 +28,7 @@
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Manage recurring donations with tax receipts',
-    'description': """
-Donation Recurring Tax Receipts
-===============================
-
-This module adds a constraints and an on_change to oblige to have annual fiscal receipts for recurring donations.
-
-It has been developped by brother Bernard and brother Irenee from Barroux Abbey and by Alexis de Lattre from Akretion.
-    """,
-    'author': 'Barroux, Akretion',
+    'author': 'Barroux Abbey, Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.barroux.org',
     'depends': ['donation_recurring', 'donation_tax_receipt'],
     'data': [],

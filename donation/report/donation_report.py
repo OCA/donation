@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    Donation module for Odoo
-#    Copyright (C) 2014-2015 Barroux Abbey
+#    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+#    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
 #    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -37,7 +38,8 @@ class DonationReport(models.Model):
     partner_id = fields.Many2one('res.partner', string='Donor', readonly=True)
     country_id = fields.Many2one(
         'res.country', string='Partner Country', readonly=True)
-    company_id = fields.Many2one('res.company', string='Company', readonly=True)
+    company_id = fields.Many2one(
+        'res.company', string='Company', readonly=True)
     product_categ_id = fields.Many2one(
         'product.category', string='Category of Product', readonly=True)
     campaign_id = fields.Many2one(

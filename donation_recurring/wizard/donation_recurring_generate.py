@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    Donation Recurring module for Odoo
-#    Copyright (C) 2014 Artisanat Monastique de Provence www.barroux.org
+#    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+#    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
 #    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #    @author: Brother Bernard <informatique@barroux.org>
 #

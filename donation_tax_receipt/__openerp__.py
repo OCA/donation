@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Donation module for OpenERP
-#    Copyright (C) 2014 Artisanat Monastique de Provence
-#                       (http://www.barroux.org)
+#    Donation Tax Receipt module for Odoo
+#    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+#    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -27,18 +27,7 @@
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Manage tax receipts for donations',
-    'description': """
-Donation Tax Receipt
-====================
-
-This module handles tax receipt for donations. It has been designed for
-France, but it should probably work (with some adaptations) for other
-countries.
-
-It has been developped by brother Bernard and brother Irenee from
-Barroux Abbey and by Alexis de Lattre from Akretion.
-    """,
-    'author': 'Barroux, Akretion',
+    'author': 'Barroux Abbey, Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.barroux.org',
     'depends': ['donation', 'account_auto_fy_sequence'],
     'data': [
