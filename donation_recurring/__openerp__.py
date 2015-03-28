@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    Donation Recurring module for Odoo
-#    Copyright (C) 2014 Abbaye du Barroux
+#    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+#    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
 #    @author: Alexis de Lattre <alexis.delattre@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -27,19 +28,7 @@
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Manage recurring donations',
-    'description': """
-Donation Recurring
-==================
-
-This module handles recurring donations. For example, if you have
-setup a donation plan where donors can donate monthly via direct
-debit, you can use this module in combination with the module
-account_banking_sepa_direct_debit to organise your recurring donations.
-
-It has been developped by brother Bernard and brother Irenee from
-Barroux Abbey and by Alexis de Lattre from Akretion.
-    """,
-    'author': 'Barroux, Akretion',
+    'author': 'Barroux Abbey, Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.barroux.org',
     'depends': ['donation'],
     'data': [
