@@ -113,8 +113,8 @@ class DonationDonation(models.Model):
             self.env['payment.line'].sudo().create(payline_vals)
             if not msg:
                 msg = _("A new payment line has been automatically added "
-                    "to the existing draft direct debit order "
-                    "%s") % payorder.reference
+                        "to the existing draft direct debit order "
+                        "%s") % payorder.reference
             self.message_post(msg)
         return res
 

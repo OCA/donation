@@ -27,19 +27,7 @@
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Auto-generate direct debit order on donation validation',
-    'description': """
-Donation Direct Debit
-=====================
-
-With this module, when you validate a donation that has a payment method linked to a SEPA direct debit payment mode :
-
-* if a draft direct debit order for SEPA Direct Debit already exists, a new payment line is added to it for that donation,
-
-* otherwise, a new SEPA direct debit order is created for this donation.
-
-This module has been written by Alexis de Lattre from Akretion <alexis.delattre@akretion.com>.
-    """,
-    'author': 'Akretion',
+    'author': 'Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.akretion.com',
     'depends': ['account_banking_sepa_direct_debit', 'donation'],
     'data': ['donation_view.xml'],
