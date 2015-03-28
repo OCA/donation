@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Donation module for OpenERP
-#    Copyright (C) 2014 Abbaye du Barroux
+#    Donation module for Odoo
+#    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+#    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -26,15 +27,7 @@
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Manage donations',
-    'description': """
-Donation
-========
-
-This module handles donations, including in-kind donations.
-
-It has been developped by brother Bernard and brother Irenee from Barroux Abbey and by Alexis de Lattre from Akretion.
-    """,
-    'author': 'Barroux, Akretion',
+    'author': 'Barroux Abbey, Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.barroux.org',
     'depends': ['account_accountant'],
     'data': [
