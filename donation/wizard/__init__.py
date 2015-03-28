@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    Donation module for Odoo
-#    Copyright (C) 2014 Barroux Abbey (www.barroux.org)
+#    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+#    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
