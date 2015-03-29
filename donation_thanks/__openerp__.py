@@ -28,15 +28,7 @@
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Create thanks letter for a donation',
-    'description': """
-Donation Thanks
-===============
-
-This module adds a report on a donation to create a thanks letter. The thanks letter is generated in ODT format, so you need to have LibreOffice on your desktop.
-
-It has been developped by brother Bernard and brother Irenee from Barroux Abbey and by Alexis de Lattre from Akretion.
-    """,
-    'author': 'Barroux Abbey, Akretion',
+    'author': 'Barroux Abbey, Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.barroux.org',
     'depends': ['donation', 'report_aeroo'],
     'data': [
