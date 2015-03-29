@@ -28,7 +28,7 @@ install:
   - travis_install_nightly
 
 script:
-  - python ${HOME}/aeroolib/setup.py install
+  - sudo python ${HOME}/aeroolib/setup.py install
   - travis_run_tests
 
 after_success:
