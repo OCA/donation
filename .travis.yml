@@ -23,12 +23,12 @@ install:
   - git clone https://github.com/OCA/account-financial-tools.git ${HOME}/account-financial-tools
   - git clone https://github.com/OCA/bank-payment.git ${HOME}/bank-payment
   - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports
-  - git clone https://github.com/aeroo/aeroolib.git ${HOME}/aeroolib
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
+  - git clone https://github.com/aeroo/aeroolib.git ${HOME}/aeroolib
+  - sudo python ${HOME}/aeroolib/setup.py install
 
 script:
-  - sudo python ${HOME}/aeroolib/setup.py install
   - travis_run_tests
 
 after_success:
