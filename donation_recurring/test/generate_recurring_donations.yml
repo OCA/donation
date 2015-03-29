@@ -2,7 +2,8 @@
   Run the generate donation recurring wizard, validate donations and check results
 -
   !python {model: donation.recurring.generate}: |
-    import time
+    from openerp.osv import fields
+    today = fields.date.context_today(self, cr, uid, context=context)
     wiz_id = self.create(cr, uid, {'payment_ref': 'Don Abbaye Sainte Madeleine'}, context=context)
     self.generate(cr, uid, [wiz_id], context=context)
     do = self.pool['donation.donation']
@@ -11,7 +12,7 @@
     for donation_rec in [donation_rec1, donation_rec2]:
         assert len(donation_rec.recurring_donation_ids) == 1, 'no recurring donations generated'
         assert donation_rec.recurring_donation_ids[0].state == 'draft', 'status of generated recurring donations should be draft'
-        assert donation_rec.recurring_donation_ids[0].donation_date == time.strftime('%Y-%m-%d'), 'wrong date on generated recurring donations'
+        assert donation_rec.recurring_donation_ids[0].donation_date == today, 'wrong date on generated recurring donations'
         assert donation_rec.recurring_donation_ids[0].amount_total == donation_rec.amount_total, 'wrong amount on generated recurring donations'
         assert donation_rec.recurring_donation_ids[0].payment_ref == 'Don Abbaye Sainte Madeleine', 'wrong payment ref on generated recurring donations'
         assert donation_rec.recurring_donation_ids[0].campaign_id.id == donation_rec.campaign_id.id, 'wrong campaign_id on generated recurring donations'
@@ -26,4 +27,4 @@
         assert donation_rec.recurring_donation_ids[0].move_id.journal_id.id == donation_rec.journal_id.id, 'wrong journal on move'
         assert donation_rec.recurring_donation_ids[0].move_id.state == 'posted', 'move not posted'
         assert donation_rec.recurring_donation_ids[0].move_id.ref == 'Don Abbaye Sainte Madeleine', 'wrong ref on move'
-        assert donation_rec.recurring_donation_ids[0].move_id.date == time.strftime('%Y-%m-%d'), 'wrong date on move'
+        assert donation_rec.recurring_donation_ids[0].move_id.date == today, 'wrong date on move'
