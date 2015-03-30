@@ -24,7 +24,11 @@ install:
   - git clone https://github.com/OCA/bank-payment.git ${HOME}/bank-payment
   - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - sudo pip install unidecode
   - travis_install_nightly
+  - git clone https://github.com/aeroo/aeroolib.git ${HOME}/aeroolib
+  - pushd ${HOME}/aeroolib; sudo python ./setup.py install; popd
+  - sudo apt-get install python-cups
 
 script:
   - travis_run_tests
