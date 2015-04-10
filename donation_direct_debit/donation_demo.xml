@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2015 Akretion (www.akretion.com)
+  The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+<record id="donor2_iban" model="res.partner.bank">
+    <field name="acc_number">FR93 1277 1277 1277 1277 1277 127</field>
+    <field name="state">iban</field>
+    <field name="bank" ref="account_banking_payment_export.bank_fortuneo"/>
+    <field name="partner_id" ref="donation.donor2" />
+    <field name="bank_name">Fortuneo Banque</field>
+    <field name="bank_bic">FTNOFRP1XXX</field>
+</record>
+
+<record id="donor2_mandate" model="account.banking.mandate">
+    <field name="partner_bank_id" ref="donor2_iban"/>
+    <field name="type">recurrent</field>
+    <field name="recurrent_sequence_type">first</field>
+    <field name="signature_date">2014-02-20</field>
+    <field name="state">valid</field>
+</record>
+
+</data>
+</openerp>

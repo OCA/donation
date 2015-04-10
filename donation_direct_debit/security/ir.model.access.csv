@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payment_order_donation_user,Create access on payment order to donation user,account_payment.model_payment_order,donation.group_donation_user,1,0,1,0
+access_payment_line_donation_user,Create access on payment line to donation user,account_payment.model_payment_line,donation.group_donation_user,1,0,1,0
