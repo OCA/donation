@@ -104,13 +104,13 @@ class DonationDonation(models.Model):
                 payorder = payorders[0]
             else:
                 payorder_vals = self._prepare_payment_order(paymode)
-                payorder = poo.sudo().create(payorder_vals)
+                payorder = poo.create(payorder_vals)
                 msg = _(
                     "A new draft direct debit order %s has been "
                     "automatically created") % payorder.reference
             # add payment line
             payline_vals = self._prepare_payment_line(self, payorder)
-            self.env['payment.line'].sudo().create(payline_vals)
+            self.env['payment.line'].create(payline_vals)
             if not msg:
                 msg = _("A new payment line has been automatically added "
                         "to the existing draft direct debit order "
