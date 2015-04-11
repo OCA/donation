@@ -1,0 +1,18 @@
+-
+  Donation6 Validate and check that a payment line has been generated
+-
+  !python {model: donation.donation}: |
+    donation = self.browse(cr, uid, ref('donation6'), context=context)
+    donation.validate()
+    assert donation.state == 'done', 'Donation has not been set to done (donation6)'
+    assert donation.move_id, 'No account move generated (donation6)'
+    payline_ids = self.pool['payment.line'].search(cr, uid, [], order='create_date desc', limit=1)
+    payline = self.pool['payment.line'].browse(cr, uid, payline_ids[0], context=context)
+    assert payline.partner_id == donation.partner_id, 'Wrong partner on payment line'
+    assert payline.amount_currency == 150, 'Wrong amount on payment line'
+    assert payline.currency == donation.currency_id, 'Wrong currency on payment line'
+    assert payline.communication == 'Don prelev SEPA'
+    assert payline.bank_id == donation.partner_id.bank_ids[0], 'Wrong bank account'
+    assert payline.mandate_id == donation.partner_id.bank_ids[0].mandate_ids[0], 'Wrong mandate'
+    assert payline.order_id.payment_order_type == 'debit', 'Wrong payment order type'
+    assert payline.order_id.state == 'draft', 'Wrong state for payment order'

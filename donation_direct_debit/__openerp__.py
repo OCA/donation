@@ -35,5 +35,6 @@
         'security/ir.model.access.csv',
         ],
     'demo': ['donation_demo.xml'],
+    'test': ['test/direct_debit.yml'],
     'installable': True,
 }
