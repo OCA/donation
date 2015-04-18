@@ -425,7 +425,7 @@ class ResPartner(models.Model):
         compute='_donation_count', string="# of Donations", readonly=True)
 
 
-class account_journal(models.Model):
+class AccountJournal(models.Model):
     _inherit = 'account.journal'
 
     allow_donation = fields.Boolean(string='Donation Payment Method')

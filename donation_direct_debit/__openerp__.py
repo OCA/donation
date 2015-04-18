@@ -30,6 +30,11 @@
     'author': 'Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.akretion.com',
     'depends': ['account_banking_sepa_direct_debit', 'donation'],
-    'data': ['donation_view.xml'],
+    'data': [
+        'donation_view.xml',
+        'security/ir.model.access.csv',
+        ],
+    'demo': ['donation_demo.xml'],
+    'test': ['test/direct_debit.yml'],
     'installable': True,
 }

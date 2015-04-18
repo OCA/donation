@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2015 Akretion (www.akretion.com)
+  The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+<record id="donor2_iban" model="res.partner.bank">
+    <field name="acc_number">FR93 1277 1277 1277 1277 1277 127</field>
+    <field name="state">iban</field>
+    <field name="bank" ref="account_banking_payment_export.bank_fortuneo"/>
+    <field name="partner_id" ref="donation.donor2" />
+    <field name="bank_name">Fortuneo Banque</field>
+    <field name="bank_bic">FTNOFRP1XXX</field>
+</record>
+
+<record id="donor2_mandate" model="account.banking.mandate">
+    <field name="partner_bank_id" ref="donor2_iban"/>
+    <field name="type">recurrent</field>
+    <field name="recurrent_sequence_type">first</field>
+    <field name="signature_date">2014-02-20</field>
+    <field name="state">valid</field>
+</record>
+
+<record id="donor4" model="res.partner">
+    <field name="name">Bella Andalouse</field>
+    <field name="customer" eval="1"/>
+    <field name="street">42 avenue de la République</field>
+    <field name="zip">50550</field>
+    <field name="city">Saint-Vaast la Hougue</field>
+    <field name="country_id" ref="base.fr"/>
+    <field name="email">bella.andalouse@yahoo.example.com</field>
+</record>
+
+<record id="donor4_iban" model="res.partner.bank">
+    <field name="acc_number">FR50 4266 4266 4266 4266 4266 426</field>
+    <field name="state">iban</field>
+    <field name="bank" ref="account_banking_payment_export.bank_fortuneo"/>
+    <field name="partner_id" ref="donor4" />
+    <field name="bank_name">Fortuneo Banque</field>
+    <field name="bank_bic">FTNOFRP1XXX</field>
+</record>
+
+<record id="donor4_mandate" model="account.banking.mandate">
+    <field name="partner_bank_id" ref="donor4_iban"/>
+    <field name="type">recurrent</field>
+    <field name="recurrent_sequence_type">first</field>
+    <field name="signature_date">2015-01-12</field>
+    <field name="state">valid</field>
+</record>
+
+<record id="donation6" model="donation.donation">
+    <field name="currency_id" ref="base.EUR"/>
+    <field name="check_total">150</field>
+    <field name="partner_id" ref="donor4"/>
+    <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
+    <field name="journal_id" ref="account.bank_journal"/>
+    <field name="payment_ref">Don prelev SEPA</field>
+    <field name="campaign_id" ref="donation.prospecting_origin"/>
+</record>
+
+<record id="donation6_l1" model="donation.line">
+    <field name="donation_id" ref="donation6"/>
+    <field name="product_id" ref="donation.product_product_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">150</field>
+</record>
+
+</data>
+</openerp>
