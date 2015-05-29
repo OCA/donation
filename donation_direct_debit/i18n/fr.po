@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-14 11:15+0000\n"
-"PO-Revision-Date: 2015-03-14 11:15+0000\n"
+"POT-Creation-Date: 2015-05-29 23:01+0000\n"
+"PO-Revision-Date: 2015-05-29 23:01+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -29,8 +29,8 @@ msgstr "Une nouvelle ligne de paiement a été automatiquement ajoutée à l'ord
 
 #. module: donation_direct_debit
 #: model:ir.model,name:donation_direct_debit.model_donation_donation
-msgid "Donations"
-msgstr "Dons"
+msgid "Donation"
+msgstr "Don"
 
 #. module: donation_direct_debit
 #: field:donation.donation,mandate_id:0
@@ -48,4 +48,10 @@ msgstr "Aucun mandat valide trouvé pour le donateur %s"
 #, python-format
 msgid "There are 2 payment modes with the same bank journal!"
 msgstr "Il y a 2 modes de paiements liés au même journal de banque !"
+
+#. module: donation_direct_debit
+#: code:addons/donation_direct_debit/donation.py:132
+#, python-format
+msgid "You cannot cancel a donation which is linked to a payment line in a direct debit order. Remove it from the following direct debit order: %s."
+msgstr "Vous ne pouvez pas annuler un don lié à une ligne de paiement d'un ordre de prélèvement. Vous devez la supprimer de l'ordre de prélèvement %s."
 
