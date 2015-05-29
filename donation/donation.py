@@ -140,7 +140,7 @@ class DonationDonation(models.Model):
     state = fields.Selection([
         ('draft', 'Draft'),
         ('done', 'Done'),
-        ('cancel', 'Cancel'),
+        ('cancel', 'Cancelled'),
         ], string='State', readonly=True, copy=False, default='draft',
         track_visibility='onchange')
     company_currency_id = fields.Many2one(
@@ -453,6 +453,6 @@ class AccountJournal(models.Model):
     def _check_donation(self):
         if self.allow_donation and self.type not in ('bank', 'cash'):
             raise Warning(
-                _("The journal '%s' has the option 'Allow Donation', "
-                    "so it's type should be 'Cash' or 'Bank and Checks.")
+                _("The journal '%s' has the option 'Donation Payment Method', "
+                    "so it's type should be 'Cash' or 'Bank and Checks'.")
                 % self.name)
