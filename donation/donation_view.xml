@@ -19,9 +19,12 @@
                     class="oe_highlight" states="draft"
                     groups="donation.group_donation_user"
                     invisible="context.get('recurring_view')"/>
-                <button type="object" name="back_to_draft"
-                    string="Back to Draft" states="done"
+                <button type="object" name="cancel2draft"
+                    string="Back to Draft" states="cancel"
                     groups="donation.group_donation_user"/>
+                <button type="object" name="done2cancel" string="Cancel"
+                    groups="donation.group_donation_user"
+                    states="done" invisible="context.get('recurring_view')"/>
                 <button type="object" name="save_default_values"
                     string="Save Default Values"/>
                 <field name="state" widget="statusbar"
@@ -81,7 +84,7 @@
     <field name="name">donation.tree</field>
     <field name="model">donation.donation</field>
     <field name="arch"  type="xml">
-        <tree string="Donation" colors="blue:state=='draft'">
+        <tree string="Donation" colors="blue:state=='draft';grey:state=='cancel'">
             <field name="number" invisible="context.get('recurring_view')"/>
             <field name="partner_id" invisible="context.get('partner_view')"/>
             <field name="donation_date"/>
