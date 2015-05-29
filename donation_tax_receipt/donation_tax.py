@@ -83,14 +83,15 @@ class DonationDonation(models.Model):
         return res
 
     @api.one
-    def back_to_draft(self):
+    def done2cancel(self):
         if self.tax_receipt_id:
             raise Warning(
-                _("You cannot set this donation back to draft because "
+                _("You cannot cancel this donation because "
                     "it is linked to the tax receipt %s. You should first "
-                    "delete this tax receipt.")
+                    "delete this tax receipt (but it may not be legally "
+                    "allowed).")
                 % self.tax_receipt_id.number)
-        return super(DonationDonation, self).back_to_draft()
+        return super(DonationDonation, self).done2cancel()
 
     @api.onchange('partner_id')
     def partner_id_change(self):
