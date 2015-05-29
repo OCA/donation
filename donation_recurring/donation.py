@@ -64,6 +64,8 @@ class DonationDonation(models.Model):
                     self.partner_id.name)
             else:
                 name = _('Draft Donation of %s') % self.partner_id.name
+        elif self.state == 'cancel':
+            name = _('Cancelled Donation of %s') % self.partner_id.name
         else:
             name = self.number
         self.display_name = name
