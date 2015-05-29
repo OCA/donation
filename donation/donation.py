@@ -140,6 +140,7 @@ class DonationDonation(models.Model):
     state = fields.Selection([
         ('draft', 'Draft'),
         ('done', 'Done'),
+        ('cancel', 'Cancel'),
         ], string='State', readonly=True, copy=False, default='draft',
         track_visibility='onchange')
     company_currency_id = fields.Many2one(
@@ -320,10 +321,21 @@ class DonationDonation(models.Model):
         return
 
     @api.one
-    def back_to_draft(self):
+    def done2cancel(self):
+        '''from Done state to Cancel state'''
         if self.move_id:
             self.move_id.button_cancel()
             self.move_id.unlink()
+        self.state = 'cancel'
+        return
+
+    @api.one
+    def cancel2draft(self):
+        '''from Cancel state to Draft state'''
+        if self.move_id:
+            raise Warning(
+                _('A cancelled donation should not be linked to an '
+                    'account move'))
         self.state = 'draft'
         return
 
@@ -332,9 +344,13 @@ class DonationDonation(models.Model):
         for donation in self:
             if donation.state == 'done':
                 raise Warning(
-                    _("The donation '%s' is in Done state, so you must "
-                        "set it back to draft before deleting it.")
+                    _("The donation '%s' is in Done state, so you cannot "
+                        "delete it.")
                     % donation.number)
+            if donation.move_id:
+                raise Warning(
+                    _("The donation '%s' is linked to an account move, "
+                        "so you cannot delete it."))
         return super(DonationDonation, self).unlink()
 
     @api.one
@@ -342,6 +358,8 @@ class DonationDonation(models.Model):
     def _compute_display_name(self):
         if self.state == 'draft':
             name = _('Draft Donation of %s') % self.partner_id.name
+        elif self.state == 'cancel':
+            name = _('Cancelled Donation of %s') % self.partner_id.name
         else:
             name = self.number
         self.display_name = name
