@@ -288,8 +288,8 @@ class DonationDonation(models.Model):
 
         if (
                 self.env['res.users'].has_group(
-                    'account.group_supplier_inv_check_total')
-                and self.check_total != self.amount_total):
+                    'account.group_supplier_inv_check_total') and
+                self.check_total != self.amount_total):
             raise Warning(
                 _("The amount of the donation of %s (%s) is different from "
                     "the sum of the donation lines (%s).") % (
@@ -334,8 +334,8 @@ class DonationDonation(models.Model):
         '''from Cancel state to Draft state'''
         if self.move_id:
             raise Warning(
-                _('A cancelled donation should not be linked to an '
-                    'account move'))
+                _("A cancelled donation should not be linked to an "
+                  "account move"))
         self.state = 'draft'
         return
 
@@ -345,12 +345,12 @@ class DonationDonation(models.Model):
             if donation.state == 'done':
                 raise Warning(
                     _("The donation '%s' is in Done state, so you cannot "
-                        "delete it.")
+                      "delete it.")
                     % donation.number)
             if donation.move_id:
                 raise Warning(
                     _("The donation '%s' is linked to an account move, "
-                        "so you cannot delete it."))
+                      "so you cannot delete it."))
         return super(DonationDonation, self).unlink()
 
     @api.one
