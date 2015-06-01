@@ -74,9 +74,9 @@ class DonationDonation(models.Model):
     def validate(self):
         res = super(DonationDonation, self).validate()
         if (
-                self.tax_receipt_option == 'each'
-                and self.tax_receipt_total
-                and not self.tax_receipt_id):
+                self.tax_receipt_option == 'each' and
+                self.tax_receipt_total and
+                not self.tax_receipt_id):
             receipt_vals = self._prepare_tax_receipt()
             receipt = self.env['donation.tax.receipt'].create(receipt_vals)
             self.tax_receipt_id = receipt.id
@@ -103,9 +103,9 @@ class DonationDonation(models.Model):
     def tax_receipt_option_change(self):
         res = {}
         if (
-                self.partner_id
-                and self.partner_id.tax_receipt_option == 'annual'
-                and self.tax_receipt_option != 'annual'):
+                self.partner_id and
+                self.partner_id.tax_receipt_option == 'annual' and
+                self.tax_receipt_option != 'annual'):
             res = {
                 'warning': {
                     'title': _('Error:'),
