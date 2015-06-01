@@ -81,9 +81,9 @@ class AccountBankStatement(models.Model):
             if stline.amount > 0 and not stline.donation_ids:
                 for mline in stline.journal_entry_id.line_id:
                     if (
-                            mline.credit > 0
-                            and mline.account_id == transit_account
-                            and not mline.reconcile_id):
+                            mline.credit > 0 and
+                            mline.account_id == transit_account and
+                            not mline.reconcile_id):
                         if not stline.partner_id:
                             raise Warning(
                                 _("Missing partner on bank statement line "

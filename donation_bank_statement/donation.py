@@ -43,8 +43,8 @@ class DonationDonation(models.Model):
             transit_account = self.journal_id.default_debit_account_id
             for donation_mline in self.move_id.line_id:
                 if (
-                        donation_mline.account_id == transit_account
-                        and not donation_mline.reconcile_id):
+                        donation_mline.account_id == transit_account and
+                        not donation_mline.reconcile_id):
                     donation_mline_rec = donation_mline
                     logger.info(
                         'Found donation move line to reconcile ID=%d'
@@ -53,8 +53,8 @@ class DonationDonation(models.Model):
             for statement_mline in\
                     self.bank_statement_line_id.journal_entry_id.line_id:
                 if (
-                        statement_mline.account_id == transit_account
-                        and not statement_mline.reconcile_id):
+                        statement_mline.account_id == transit_account and
+                        not statement_mline.reconcile_id):
                     statement_mline_rec = statement_mline
                     logger.info(
                         'Found bank statement move line to reconcile ID=%d'
