@@ -30,7 +30,7 @@
     'summary': 'Creates donation from unreconciled bank statement lines',
     'author': 'Barroux Abbey, Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.barroux.org',
-    'depends': ['account_accountant', 'donation'],
+    'depends': ['donation'],
     'data': [
         'company_view.xml',
         'bank_statement_view.xml',
