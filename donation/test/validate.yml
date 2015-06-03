@@ -46,10 +46,9 @@
 -
   Donation4 Check that no account move has been generated (full in-kind donation)
 -
-  !python {model: donation.donation}: |
-    donation = self.browse(cr, uid, ref('donation4'), context=context)
-    assert donation.state == 'done', 'Donation has not been set to done (donation4)'
-    assert not donation.move_id, 'Donation should not have an account move (donation4)'
+  !python {id: donation4, model: donation.donation}: |
+    assert self.state == 'done', 'Donation has not been set to done (donation4)'
+    assert not self.move_id, 'Donation should not have an account move (donation4)'
 -
   Validate donation5
 -
@@ -58,9 +57,7 @@
 -
   Donation5 Check that an account move has been generated (partial in-kind donation)
 -
-  !python {model: donation.donation}: |
-    donation = self.browse(cr, uid, ref('donation5'), context=context)
-    assert donation.state == 'done', 'Donation has not been set to done (donation5)'
-    assert donation.move_id, 'No account move generated (donation5)'
-    # How to make this check work when the company currency != EUR ?
-    assert donation.move_id.amount == 400, 'Wrong amount on account move'
+  !python {id: donation5, model: donation.donation}: |
+    assert self.state == 'done', 'Donation has not been set to done (donation5)'
+    assert self.move_id, 'No account move generated (donation5)'
+    assert self.move_id.amount == 400, 'Wrong amount on account move'
