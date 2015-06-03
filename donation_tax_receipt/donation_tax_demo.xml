@@ -36,5 +36,22 @@
     <field name="tax_receipt_option">annual</field>
 </record>
 
+<record id="donation.donation1_l1" model="donation.line">
+    <field name="tax_receipt_ok">1</field>
+</record>
+
+<record id="donation.donation2_l1" model="donation.line">
+    <field name="tax_receipt_ok">1</field>
+</record>
+
+<record id="donation.donation3_l1" model="donation.line">
+    <field name="tax_receipt_ok">1</field>
+</record>
+
+<record id="donation.donation5_l2" model="donation.line">
+    <field name="tax_receipt_ok">1</field>
+</record>
+
+
 </data>
 </openerp>

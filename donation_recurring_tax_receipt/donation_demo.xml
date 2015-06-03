@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+<data noupdate="1">
+
+<record id="donation_recurring.donor_rec1" model="res.partner">
+    <field name="tax_receipt_option">annual</field>
+</record>
+
+<record id="donation_recurring.donor_rec2" model="res.partner">
+    <field name="tax_receipt_option">annual</field>
+</record>
+
+<record id="donation_recurring.donor_rec3" model="res.partner">
+    <field name="tax_receipt_option">annual</field>
+</record>
+
+<record id="donation_recurring.donation_rec1" model="donation.donation">
+    <field name="tax_receipt_option">annual</field>
+</record>
+
+<record id="donation_recurring.donation_rec2" model="donation.donation">
+    <field name="tax_receipt_option">annual</field>
+</record>
+
+<record id="donation_recurring.donation_rec3" model="donation.donation">
+    <field name="tax_receipt_option">annual</field>
+</record>
+
+<record id="donation_recurring.donation_rec1_l1" model="donation.line">
+    <field name="tax_receipt_ok">1</field>
+</record>
+
+<record id="donation_recurring.donation_rec2_l1" model="donation.line">
+    <field name="tax_receipt_ok">1</field>
+</record>
+
+<record id="donation_recurring.donation_rec3_l1" model="donation.line">
+    <field name="tax_receipt_ok">1</field>
+</record>
+
+
+</data>
+</openerp>
