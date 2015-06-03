@@ -47,14 +47,15 @@
 -
   Run wizard to generate annual tax receipts and check tax receipt
 -
-  !python {model: donation.donation}: |
+  !python {model: donation.donation, id: annual_donation1}: |
     import time
-    self.validate(cr, uid, [ref('annual_donation2'), ref('annual_donation1')], context=context)
-    wiz_id = self.pool['tax.receipt.annual.create'].create(cr, uid, {'start_date': time.strftime('%Y-01-01'), 'end_date': time.strftime('%Y-12-31')}, context=context)
-    action = self.pool['tax.receipt.annual.create'].generate_annual_receipts(cr, uid, [wiz_id], context=context)
+    self += self.env.ref('donation_tax_receipt.annual_donation2')
+    self.validate()
+    wizard = self.env['tax.receipt.annual.create'].create({'start_date': time.strftime('%Y-01-01'), 'end_date': time.strftime('%Y-12-31')})
+    action = wizard.generate_annual_receipts()
     tax_receipt_ids = action['domain'][0][2]
     assert len(tax_receipt_ids) == 1, 'No annual tax receipt generated'
-    tax_receipt = self.pool['donation.tax.receipt'].browse(cr, uid, tax_receipt_ids[0], context=context)
+    tax_receipt = self.env['donation.tax.receipt'].browse(tax_receipt_ids[0])
     assert tax_receipt.number, 'Missing number on annual tax receipt'
     assert tax_receipt.date == time.strftime('%Y-12-31'), 'Wrong date on annual tax receipt'
     assert tax_receipt.donation_date == time.strftime('%Y-12-31'), 'Wrong donation_date on annual tax receipt'
