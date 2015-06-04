@@ -32,5 +32,5 @@
     'website': 'http://www.barroux.org',
     'depends': ['donation_recurring', 'donation_tax_receipt'],
     'data': [],
-    'demo': [],
+    'demo': ['donation_demo.xml'],
 }
