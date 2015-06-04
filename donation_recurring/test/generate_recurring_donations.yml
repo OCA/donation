@@ -1,28 +1,27 @@
 -
   Run the generate donation recurring wizard, validate donations and check results
 -
-  !python {model: donation.recurring.generate}: |
-    from openerp.osv import fields
-    today = fields.date.context_today(self, cr, uid, context=context)
-    wiz_id = self.create(cr, uid, {'payment_ref': 'Don Abbaye Sainte Madeleine'}, context=context)
-    self.generate(cr, uid, [wiz_id], context=context)
-    do = self.pool['donation.donation']
-    donation_rec1 = do.browse(cr, uid, ref('donation_rec1'), context=context)
-    donation_rec2 = do.browse(cr, uid, ref('donation_rec2'), context=context)
-    for donation_rec in [donation_rec1, donation_rec2]:
+  !python {model: donation.donation, id: donation_rec1}: |
+    from openerp import fields
+    today = fields.Date.context_today(self)
+    wizard = self.env['donation.recurring.generate'].create({'payment_ref': 'Don Abbaye Sainte Madeleine'})
+    wizard.generate()
+    self += self.env.ref('donation_recurring.donation_rec2')
+    for donation_rec in self:
+
         assert len(donation_rec.recurring_donation_ids) == 1, 'no recurring donations generated'
         assert donation_rec.recurring_donation_ids[0].state == 'draft', 'status of generated recurring donations should be draft'
         assert donation_rec.recurring_donation_ids[0].donation_date == today, 'wrong date on generated recurring donations'
         assert donation_rec.recurring_donation_ids[0].amount_total == donation_rec.amount_total, 'wrong amount on generated recurring donations'
         assert donation_rec.recurring_donation_ids[0].payment_ref == 'Don Abbaye Sainte Madeleine', 'wrong payment ref on generated recurring donations'
         assert donation_rec.recurring_donation_ids[0].campaign_id.id == donation_rec.campaign_id.id, 'wrong campaign_id on generated recurring donations'
-    donation_rec3 = do.browse(cr, uid, ref('donation_rec3'), context=context)
+    donation_rec3 = self.env.ref('donation_recurring.donation_rec3')
     assert not donation_rec3.recurring_donation_ids, 'Suspended recurring donation should not generate donations'
     ctx = context.copy()
-    ctx.update({'active_ids': [donation_rec1.recurring_donation_ids[0].id, donation_rec2.recurring_donation_ids[0].id], 'active_model': 'donation.donation'})
-    wiz_id = self.pool['donation.validate'].create(cr, uid, {})
-    self.pool['donation.validate'].run(cr, uid, [wiz_id], context=ctx)
-    for donation_rec in [donation_rec1, donation_rec2]:
+    active_ids = [donation_rec.recurring_donation_ids[0].id for donation_rec in self]
+    wizard_val = self.with_context(active_ids=active_ids, active_model='donation.donation').env['donation.validate'].create({})
+    wizard_val.run()
+    for donation_rec in self:
         assert donation_rec.recurring_donation_ids[0].state == 'done', 'state should now be done'
         assert donation_rec.recurring_donation_ids[0].move_id.journal_id.id == donation_rec.journal_id.id, 'wrong journal on move'
         assert donation_rec.recurring_donation_ids[0].move_id.state == 'posted', 'move not posted'
