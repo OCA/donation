@@ -34,9 +34,10 @@ install:
   - git clone https://github.com/aeroo/aeroolib.git ${HOME}/aeroolib
   - pushd ${HOME}/aeroolib; sudo python ./setup.py install; popd
   - sudo apt-get install python-cups
+  - travis_install_nightly
 
 script:
   - travis_run_tests
 
 after_success:
-  coveralls
+  - travis_after_tests_success
