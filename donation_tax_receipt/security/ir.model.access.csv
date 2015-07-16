@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_donation_tax_receipt,Full access on donation.tax.receipt to Donation grp,model_donation_tax_receipt,donation.group_donation_user,1,1,1,1
+access_donation_tax_receipt_viewer,Read access on donation.tax.receipt to Donation Viewer grp,model_donation_tax_receipt,donation.group_donation_viewer,1,0,0,0
+access_donation_tax_receipt,Create/Write access on donation.tax.receipt to Donation User,model_donation_tax_receipt,donation.group_donation_user,1,1,1,0
+access_donation_tax_receipt_full,Full access on donation.tax.receipt to Donation Manager,model_donation_tax_receipt,donation.group_donation_manager,1,1,1,1
