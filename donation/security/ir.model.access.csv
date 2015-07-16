@@ -1,14 +1,16 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_donation_donation_viewer,Read access on donation.donation to Donation Viewer,model_donation_donation,group_donation_viewer,1,0,0,0
 access_donation_donation_user,Full access on donation.donation to Donation User,model_donation_donation,group_donation_user,1,1,1,1
 access_donation_campaign_manager,Full access on donation.campaign to Donation Manager,model_donation_campaign,group_donation_manager,1,1,1,1
-access_donation_campaign_user,Read access on donation.campaign to Donation User,model_donation_campaign,group_donation_user,1,0,0,0
+access_donation_campaign_viewer,Read access on donation.campaign to Donation Viewer,model_donation_campaign,group_donation_viewer,1,0,0,0
+access_donation_line_viewer,Read access on donation.line to Donation Viewer,model_donation_line,group_donation_viewer,1,0,0,0
 access_donation_line_user,Full access on donation.line to Donation User,model_donation_line,group_donation_user,1,1,1,1
 access_donation_donation_read,Read access on donation.donation to Employee grp,model_donation_donation,base.group_user,1,0,0,0
 access_donation_line_read,Read access on donation.line to Employee grp,model_donation_line,base.group_user,1,0,0,0
-access_account_period_donation,Read access on account.period,account.model_account_period,group_donation_user,1,0,0,0
-access_account_journal_donation,Read access on account.journal,account.model_account_journal,group_donation_user,1,0,0,0
+access_account_period_donation,Read access on account.period,account.model_account_period,group_donation_viewer,1,0,0,0
+access_account_journal_donation,Read access on account.journal,account.model_account_journal,group_donation_viewer,1,0,0,0
 access_account_journal_period_donation,Full access on account.journal.period,account.model_account_journal_period,group_donation_user,1,1,1,1
 access_account_move_donation,Full access on account.move,account.model_account_move,group_donation_user,1,1,1,1
 access_account_move_line_donation,Full access on account.move.line,account.model_account_move_line,group_donation_user,1,1,1,1
 access_account_analytic_line_donation,Full access on account.analytic.line to donation user,analytic.model_account_analytic_line,group_donation_user,1,1,1,1
-access_donation_report,Full access on donation.report to Donation User,model_donation_report,group_donation_user,1,1,1,1
+access_donation_report,Full access on donation.report to Donation Viewer,model_donation_report,group_donation_viewer,1,1,1,1
