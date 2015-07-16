@@ -37,7 +37,8 @@
 
 <menuitem id="donation_recurring_generate_menu" sequence="30"
     action="donation_recurring_generate_action"
-    parent="donation.donation_title_menu"/>
+    parent="donation.donation_title_menu"
+    groups="donation.group_donation_user"/>
 
 
 </data>
