@@ -181,15 +181,21 @@
     <field name="view_mode">tree,form</field>
 </record>
 
-<menuitem id="donation_top_menu" sequence="15" name="Donations" groups="group_donation_user"/>
+<menuitem id="donation_top_menu" sequence="15"
+    name="Donations" groups="group_donation_viewer"/>
 
-<menuitem id="donation_title_menu" parent="donation_top_menu" sequence="15" name="Donations"/>
+<menuitem id="donation_title_menu" parent="donation_top_menu"
+    sequence="15" name="Donations"/>
 
-<menuitem id="donation_menu" action="donation_action" parent="donation_title_menu" sequence="10"/>
+<menuitem id="donation_menu" action="donation_action"
+    parent="donation_title_menu" sequence="10"/>
 
-<menuitem id="donation_config_menu" parent="donation_top_menu" name="Configuration" sequence="30"/>
+<menuitem id="donation_config_menu" parent="donation_top_menu"
+    name="Configuration" sequence="30"
+    groups="donation.group_donation_manager"/>
 
-<menuitem id="donor" action="base.action_partner_form" parent="donation_title_menu" sequence="50" name="Donors" />
+<menuitem id="donor" action="base.action_partner_form"
+    parent="donation_title_menu" sequence="50" name="Donors" />
 
 <!-- Notification in the chatter -->
 <record id="donation_done" model="mail.message.subtype">
