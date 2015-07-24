@@ -1,8 +1,13 @@
+sudo: false
+cache: pip
+
 addons:
   apt:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
+      - libcups2-dev
+      - cups
 
 language: python
 
@@ -13,12 +18,6 @@ env:
   - VERSION="8.0" LINT_CHECK="1"
   - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
   - VERSION="8.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0"
-# either use the two lines above or the two below. Don't change the default if
-# it's not necessary (it is only necessary if modules in your repository can't
-# be installed in the same database. And you get a huge speed penalty in your
-# tests)
-#  - VERSION="8.0" ODOO_REPO="odoo/odoo" UNIT_TEST="1" LINT_CHECK="0"
-#  - VERSION="8.0" ODOO_REPO="OCA/OCB" UNIT_TEST="1" LINT_CHECK="0"
 
 virtualenv:
   system_site_packages: true
@@ -31,9 +30,8 @@ install:
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - pip install unidecode
   - travis_install_nightly
-  - git clone https://github.com/aeroo/aeroolib.git ${HOME}/aeroolib
-  - pushd ${HOME}/aeroolib; sudo python ./setup.py install; popd
-  - sudo apt-get install python-cups
+  - pip install git+https://github.com/aeroo/aeroolib#egg=aeroolib
+  - pip install pycups
   - travis_install_nightly
 
 script:
