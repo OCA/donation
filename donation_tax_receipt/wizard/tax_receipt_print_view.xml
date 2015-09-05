@@ -36,8 +36,8 @@
 </record>
 
 <menuitem id="donation_tax_receipt_print_menu" sequence="40"
-    action="donation_tax_receipt_print_action" parent="donation_tax_title_menu"/>
-
+    action="donation_tax_receipt_print_action" parent="donation_tax_title_menu"
+    groups="donation.group_donation_user"/>
 
 </data>
 </openerp>

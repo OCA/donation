@@ -16,9 +16,15 @@
     <field name="sequence">45</field>
 </record>
 
+<record id="group_donation_viewer" model="res.groups">
+    <field name="name">Viewer</field>
+    <field name="category_id" ref="module_category_donation"/>
+</record>
+
 <record id="group_donation_user" model="res.groups">
     <field name="name">User</field>
     <field name="category_id" ref="module_category_donation"/>
+    <field name="implied_ids" eval="[(4, ref('group_donation_viewer'))]"/>
 </record>
 
 <record id="group_donation_manager" model="res.groups">
@@ -36,7 +42,6 @@
 <record id="donation_company_rule" model="ir.rule">
     <field name="name">Donation Multi-company</field>
     <field name="model_id" ref="model_donation_donation"/>
-    <field name="global" eval="True"/>
     <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'child_of', [user.company_id.id])]</field>
 </record>
 

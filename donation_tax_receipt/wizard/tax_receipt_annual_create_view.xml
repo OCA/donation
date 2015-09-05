@@ -37,7 +37,8 @@
 </record>
 
 <menuitem id="tax_receipt_annual_create_menu" sequence="45"
-    action="tax_receipt_annual_create_action" parent="donation_tax_title_menu"/>
+    action="tax_receipt_annual_create_action" parent="donation_tax_title_menu"
+    groups="donation.group_donation_user"/>
 
 
 </data>
