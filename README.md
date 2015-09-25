@@ -26,3 +26,18 @@ The main developpers of the project are:
 
 Please refer to the README of each module to have more information about
 how to configure and use the modules.
+
+[//]: # (addons)
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[donation](donation/) | 0.1 | Manage donations
+[donation_bank_statement](donation_bank_statement/) | 0.1 | Creates donation from unreconciled bank statement lines
+[donation_direct_debit](donation_direct_debit/) | 0.1 | Auto-generate direct debit order on donation validation
+[donation_recurring](donation_recurring/) | 0.1 | Manage recurring donations
+[donation_recurring_tax_receipt](donation_recurring_tax_receipt/) | 0.1 | Manage recurring donations with tax receipts
+[donation_tax_receipt](donation_tax_receipt/) | 0.2 | Manage tax receipts for donations
+[donation_thanks](donation_thanks/) | 0.1 | Create thanks letter for a donation
+
+[//]: # (end addons)
