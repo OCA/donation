@@ -24,7 +24,7 @@
 
 {
     'name': 'Donation Thanks',
-    'version': '0.1',
+    'version': '8.0.0.1.0',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Create thanks letter for a donation',

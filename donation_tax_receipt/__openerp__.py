@@ -23,7 +23,7 @@
 
 {
     'name': 'Donation Tax Receipt',
-    'version': '0.2',
+    'version': '8.0.0.2.0',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Manage tax receipts for donations',
