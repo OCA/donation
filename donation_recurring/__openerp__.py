@@ -37,4 +37,5 @@
         ],
     'demo': ['donation_recurring_demo.xml'],
     'test': ['test/generate_recurring_donations.yml'],
+    'installable': False,
 }
