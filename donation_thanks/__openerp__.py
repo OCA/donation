@@ -36,4 +36,5 @@
         'donation_view.xml',
         ],
     'demo': [],
+    'installable': False,
 }

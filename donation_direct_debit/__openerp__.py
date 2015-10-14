@@ -36,5 +36,5 @@
         ],
     'demo': ['donation_demo.xml'],
     'test': ['test/direct_debit.yml'],
-    'installable': True,
+    'installable': False,
 }

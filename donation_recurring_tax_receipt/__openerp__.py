@@ -33,4 +33,5 @@
     'depends': ['donation_recurring', 'donation_tax_receipt'],
     'data': [],
     'demo': ['donation_demo.xml'],
+    'installable': False,
 }

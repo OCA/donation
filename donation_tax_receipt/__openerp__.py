@@ -48,4 +48,5 @@
         'test/each_tax_receipt.yml',
         'test/annual_tax_receipt.yml',
         ],
+    'installable': False,
 }
