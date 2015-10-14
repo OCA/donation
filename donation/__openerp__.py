@@ -44,4 +44,5 @@
         ],
     'demo': ['donation_demo.xml'],
     'test': ['test/validate.yml'],
+    'installable': False,
 }
