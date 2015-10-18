@@ -23,7 +23,7 @@
 ##############################################################################
 
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 
 
 class DonationRecurringGenerate(models.TransientModel):
@@ -56,7 +56,7 @@ class DonationRecurringGenerate(models.TransientModel):
             ('source_recurring_id', '!=', False),
             ('company_id', '=', self.env.user.company_id.id)])
         if existing_recur_donations:
-            raise Warning(
+            raise UserError(
                 _('Recurring donations have already been generated for %s.')
                 % self.date)
         for donation in donations:
