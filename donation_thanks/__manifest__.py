@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Donation Thanks module for Odoo
@@ -35,6 +35,5 @@
         'report_thanks.xml',
         'donation_view.xml',
         ],
-    'demo': [],
     'installable': False,
 }

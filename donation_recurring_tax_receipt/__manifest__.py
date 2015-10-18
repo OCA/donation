@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Donation Recurring Tax Receipt module for Odoo
@@ -31,7 +31,7 @@
     'author': 'Barroux Abbey, Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.barroux.org',
     'depends': ['donation_recurring', 'donation_tax_receipt'],
-    'data': [],
     'demo': ['donation_demo.xml'],
+    'auto_install': True,
     'installable': True,
 }
