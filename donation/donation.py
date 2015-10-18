@@ -21,7 +21,7 @@
 ##############################################################################
 
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError, ValidationError
 import openerp.addons.decimal_precision as dp
 
 
@@ -45,11 +45,6 @@ class DonationDonation(models.Model):
     _order = 'id desc'
     _rec_name = 'display_name'
     _inherit = ['mail.thread']
-    _track = {
-        'state': {
-            'donation.donation_done':
-            lambda self, cr, uid, obj, ctx=None: obj.state == 'done'}
-        }
 
     @api.one
     @api.depends(
@@ -78,9 +73,9 @@ class DonationDonation(models.Model):
 
     @api.model
     def _default_currency(self):
-        company_id = self.env['res.company']._company_default_get(
+        company = self.env['res.company']._company_default_get(
             'donation.donation')
-        return self.env['res.company'].browse(company_id).currency_id
+        return company.currency_id
 
     currency_id = fields.Many2one(
         'res.currency', string='Currency', required=True,
@@ -99,15 +94,17 @@ class DonationDonation(models.Model):
     country_id = fields.Many2one(
         'res.country', string='Country', compute='_compute_country_id',
         store=True, readonly=True, copy=False)
-    check_total = fields.Float(
+    check_total = fields.Monetary(
         string='Check Amount', digits=dp.get_precision('Account'),
-        states={'done': [('readonly', True)]},
+        states={'done': [('readonly', True)]}, currency_field='currency_id',
         track_visibility='onchange')
-    amount_total = fields.Float(
-        compute='_compute_total', string='Amount Total', store=True,
+    amount_total = fields.Monetary(
+        compute='_compute_total', string='Amount Total',
+        currency_field='currency_id', store=True,
         digits=dp.get_precision('Account'), readonly=True)
-    amount_total_company_currency = fields.Float(
+    amount_total_company_currency = fields.Monetary(
         compute='_compute_total', string='Amount Total in Company Currency',
+        currency_field='company_currency_id',
         store=True, digits=dp.get_precision('Account'), readonly=True)
     donation_date = fields.Date(
         string='Donation Date', required=True,
@@ -158,7 +155,8 @@ class DonationDonation(models.Model):
     @api.constrains('donation_date')
     def _check_donation_date(self):
         if self.donation_date > fields.Date.context_today(self):
-            raise Warning(
+            print "Odoo 9 BUG ? No error pop-up to user"
+            raise ValidationError(
                 _('The date of the donation of %s should be today '
                     'or in the past, not in the future!')
                 % self.partner_id.name)
@@ -171,11 +169,9 @@ class DonationDonation(models.Model):
     @api.model
     def _prepare_donation_move(self):
         if not self.journal_id.default_debit_account_id:
-            raise Warning(
+            raise UserError(
                 _("Missing Default Debit Account on journal '%s'.")
                 % self.journal_id.name)
-
-        period = self.env['account.period'].find(dt=self.donation_date)
 
         movelines = []
         if self.company_id.currency_id.id != self.currency_id.id:
@@ -195,12 +191,12 @@ class DonationDonation(models.Model):
             if donation_line.in_kind:
                 continue
             amount_total_company_cur += donation_line.amount_company_currency
-            account_id = donation_line.product_id.property_account_income.id
+            account_id = donation_line.product_id.property_account_income_id.id
             if not account_id:
                 account_id = donation_line.product_id.categ_id.\
-                    property_account_income_categ.id
+                    property_account_income_categ_id.id
             if not account_id:
-                raise Warning(
+                raise UserError(
                     _("Missing income account on product '%s' or on it's "
                         "related product category")
                     % donation_line.product_id.name)
@@ -268,21 +264,20 @@ class DonationDonation(models.Model):
         vals = {
             'journal_id': self.journal_id.id,
             'date': self.donation_date,
-            'period_id': period.id,
             'ref': self.payment_ref,
-            'line_id': movelines,
+            'line_ids': movelines,
             }
         return vals
 
     @api.one
     def validate(self):
         if not self.line_ids:
-            raise Warning(
+            raise UserError(
                 _("Cannot validate the donation of %s because it doesn't "
                     "have any lines!") % self.partner_id.name)
 
         if self.state != 'draft':
-            raise Warning(
+            raise UserError(
                 _("Cannot validate the donation of %s because it is not "
                     "in draft state.") % self.partner_id.name)
 
@@ -290,7 +285,7 @@ class DonationDonation(models.Model):
                 self.env['res.users'].has_group(
                     'account.group_supplier_inv_check_total') and
                 self.check_total != self.amount_total):
-            raise Warning(
+            raise UserError(
                 _("The amount of the donation of %s (%s) is different from "
                     "the sum of the donation lines (%s).") % (
                     self.partner_id.name, self.check_total,
@@ -333,7 +328,7 @@ class DonationDonation(models.Model):
     def cancel2draft(self):
         '''from Cancel state to Draft state'''
         if self.move_id:
-            raise Warning(
+            raise UserError(
                 _("A cancelled donation should not be linked to an "
                   "account move"))
         self.state = 'draft'
@@ -343,12 +338,12 @@ class DonationDonation(models.Model):
     def unlink(self):
         for donation in self:
             if donation.state == 'done':
-                raise Warning(
+                raise UserError(
                     _("The donation '%s' is in Done state, so you cannot "
                       "delete it.")
                     % donation.number)
             if donation.move_id:
-                raise Warning(
+                raise UserError(
                     _("The donation '%s' is linked to an account move, "
                       "so you cannot delete it."))
         return super(DonationDonation, self).unlink()
@@ -368,6 +363,15 @@ class DonationDonation(models.Model):
     @api.onchange('partner_id')
     def partner_id_change(self):
         return
+
+    @api.multi
+    def _track_subtype(self, init_values):
+        self.ensure_one()
+        if 'state' in init_values and self.state == 'done':
+            return 'donation.donation_done'
+        elif 'state' in init_values and self.state == 'cancel':
+            return 'donation.donation_cancel'
+        return super(DonationDonation, self)._track_subtype(init_values)
 
 
 class DonationLine(models.Model):
@@ -394,18 +398,26 @@ class DonationLine(models.Model):
 
     donation_id = fields.Many2one(
         'donation.donation', string='Donation', ondelete='cascade')
+    currency_id = fields.Many2one(
+        'res.currency', related='donation_id.currency_id', readonly=True)
+    company_currency_id = fields.Many2one(
+        'res.currency', related='donation_id.company_id.currency_id',
+        readonly=True)
     product_id = fields.Many2one(
         'product.product', string='Product', required=True,
         domain=[('donation', '=', True)], ondelete='restrict')
     quantity = fields.Integer(string='Quantity', default=1)
-    unit_price = fields.Float(
-        string='Unit Price', digits=dp.get_precision('Account'))
-    amount = fields.Float(
+    unit_price = fields.Monetary(
+        string='Unit Price', digits=dp.get_precision('Account'),
+        currency_field='currency_id')
+    amount = fields.Monetary(
         compute='_compute_amount', string='Amount',
-        digits=dp.get_precision('Account'), store=True)
-    amount_company_currency = fields.Float(
+        currency_field='currency_id', digits=dp.get_precision('Account'),
+        store=True)
+    amount_company_currency = fields.Monetary(
         compute='_compute_amount_company_currency',
         string='Amount in Company Currency',
+        currency_field='company_currency_id',
         digits=dp.get_precision('Account'), store=True)
     analytic_account_id = fields.Many2one(
         'account.analytic.account', string='Analytic Account',
@@ -452,7 +464,7 @@ class AccountJournal(models.Model):
     @api.constrains('type', 'allow_donation')
     def _check_donation(self):
         if self.allow_donation and self.type not in ('bank', 'cash'):
-            raise Warning(
+            raise UserError(
                 _("The journal '%s' has the option 'Donation Payment Method', "
                     "so it's type should be 'Cash' or 'Bank and Checks'.")
                 % self.name)
