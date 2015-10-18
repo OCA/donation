@@ -165,7 +165,7 @@ class DonationTaxReceipt(models.Model):
         if vals is None:
             vals = {}
         date = vals.get('donation_date')
-        #fiscalyear_id = self.env['account.fiscalyear'].find(
+        # fiscalyear_id = self.env['account.fiscalyear'].find(
         #    dt=date, exception=True)
         # If date is False, it uses today, which is our default value
         # I use account_auto_fy_sequence here:
