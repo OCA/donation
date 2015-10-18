@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Donation module for Odoo
@@ -155,7 +155,7 @@ class DonationDonation(models.Model):
     @api.constrains('donation_date')
     def _check_donation_date(self):
         if self.donation_date > fields.Date.context_today(self):
-            print "Odoo 9 BUG ? No error pop-up to user"
+            # No error pop-up to user : Odoo 9 BUG ?
             raise ValidationError(
                 _('The date of the donation of %s should be today '
                     'or in the past, not in the future!')
