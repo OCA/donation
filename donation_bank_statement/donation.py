@@ -50,15 +50,16 @@ class DonationDonation(models.Model):
                         'Found donation move line to reconcile ID=%d'
                         % donation_mline_rec.id)
                     break
-            for statement_amline in self.bank_statement_line_id.journal_entry_ids:
+            for statement_amline in\
+                    self.bank_statement_line_id.journal_entry_ids:
                 for statement_mline in statement_amline.line_ids:
                     if (
                             statement_mline.account_id == transit_account and
                             not statement_mline.reconciled):
                         statement_mline_rec = statement_mline
                         logger.info(
-                            'Found bank statement move line to reconcile ID=%d',
-                            statement_mline_rec.id)
+                            'Found bank statement move line to reconcile '
+                            'ID=%d', statement_mline_rec.id)
                         break
             if donation_mline_rec and statement_mline_rec:
                 mlines_to_reconcile = donation_mline_rec + statement_mline_rec
