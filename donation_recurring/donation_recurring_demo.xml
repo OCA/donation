@@ -33,7 +33,7 @@
     <field name="email">olivier.dumesnil@free.example.com</field>
 </record>
 
-
+<!--
 <record id="donation_rec1" model="donation.donation">
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">30</field>
@@ -84,7 +84,7 @@
     <field name="quantity">1</field>
     <field name="unit_price">35</field>
 </record>
-
+-->
 
 </data>
 </openerp>
