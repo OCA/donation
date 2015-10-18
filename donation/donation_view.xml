@@ -38,8 +38,7 @@
                         <field name="journal_id" widget="selection"/>
                         <field name="currency_id"
                             groups="base.group_multi_currency"/>
-                        <field name="check_total" widget="monetary"
-                            options="{'currency_field': 'currency_id'}"
+                        <field name="check_total"
                             groups="account.group_supplier_inv_check_total"/>
                         <field name="payment_ref"/>
                         <field name="campaign_id"/>
@@ -53,8 +52,7 @@
                     <page string="Donation Lines" name="lines">
                         <field name="line_ids" nolabel="1"/>
                         <group name="subtotal" class="oe_subtotal_footer oe_right">
-                            <field name="amount_total" widget="monetary"
-                                options="{'currency_field': 'currency_id'}"
+                            <field name="amount_total"
                                 class="oe_subtotal_footer_separator"/>
                         </group>
                         <group name="layout_fix">
@@ -65,9 +63,7 @@
                         <group name="other">
                             <field name="move_id"/>
                             <field name="amount_total_company_currency"
-                                groups="base.group_multi_currency"
-                                widget="monetary"
-                                options="{'currency_field': 'company_currency_id'}"/>
+                                groups="base.group_multi_currency"/>
                         </group>
                     </page>
                 </notebook>
@@ -120,14 +116,25 @@
     </field>
 </record>
 
-
 <record id="donation_graph" model="ir.ui.view">
     <field name="name">donation.graph</field>
     <field name="model">donation.donation</field>
     <field name="arch"  type="xml">
-        <graph string="Donations" type="pivot">
+        <graph string="Donations">
+            <field name="donation_date" type="row"/>
             <field name="amount_total_company_currency" type="measure"/>
         </graph>
+    </field>
+</record>
+
+<record id="donation_pivot" model="ir.ui.view">
+    <field name="name">donation.pivot</field>
+    <field name="model">donation.donation</field>
+    <field name="arch"  type="xml">
+        <pivot string="Donations" type="pivot">
+            <field name="donation_date"/>
+            <field name="amount_total_company_currency" type="measure"/>
+        </pivot>
     </field>
 </record>
 
@@ -172,7 +179,7 @@
 <record id="donation_action" model="ir.actions.act_window">
     <field name="name">Donations</field>
     <field name="res_model">donation.donation</field>
-    <field name="view_mode">tree,form,graph</field>
+    <field name="view_mode">tree,form,pivot,graph</field>
 </record>
 
 <record id="donation_line_action" model="ir.actions.act_window">
@@ -199,10 +206,17 @@
 
 <!-- Notification in the chatter -->
 <record id="donation_done" model="mail.message.subtype">
-    <field name="name">Donation Validated</field>
+    <field name="name">Validated</field>
     <field name="res_model">donation.donation</field>
     <field name="default" eval="False"/>
-    <field name="description">Donation Validated</field>
+    <field name="description">Donation validated</field>
+</record>
+
+<record id="donation_cancel" model="mail.message.subtype">
+    <field name="name">Cancelled</field>
+    <field name="res_model">donation.donation</field>
+    <field name="default" eval="False"/>
+    <field name="description">Donation cancelled</field>
 </record>
 
 </data>
