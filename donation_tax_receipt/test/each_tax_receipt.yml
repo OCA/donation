@@ -37,6 +37,7 @@
     logger.info("tax_receipt_id.date=%s", self.tax_receipt_id.date)
     logger.info("date today=%s", fields.Date.context_today(self))
     assert self.tax_receipt_id.date == fields.Date.context_today(self), 'Wrong date on tax receipt'
+    logger.info("tax_receipt_id.donation_date=%s", self.tax_receipt_id.donation_date)
     assert self.tax_receipt_id.donation_date == fields.Date.context_today(self), 'Wrong donation_date on tax receipt'
     assert self.tax_receipt_id.amount == 190, 'Wrong amount on tax receipt'
     assert self.tax_receipt_id.currency_id.id == ref('base.EUR'), 'Wrong currency on tax receipt'
