@@ -32,12 +32,7 @@ Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[donation](donation/) | 8.0.0.1.0 (unported) | Manage donations
-[donation_bank_statement](donation_bank_statement/) | 8.0.0.1.0 (unported) | Creates donation from unreconciled bank statement lines
 [donation_direct_debit](donation_direct_debit/) | 8.0.0.1.0 (unported) | Auto-generate direct debit order on donation validation
-[donation_recurring](donation_recurring/) | 8.0.0.1.0 (unported) | Manage recurring donations
-[donation_recurring_tax_receipt](donation_recurring_tax_receipt/) | 8.0.0.1.0 (unported) | Manage recurring donations with tax receipts
-[donation_tax_receipt](donation_tax_receipt/) | 8.0.0.2.0 (unported) | Manage tax receipts for donations
 [donation_thanks](donation_thanks/) | 8.0.0.1.0 (unported) | Create thanks letter for a donation
 
 [//]: # (end addons)

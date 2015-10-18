@@ -22,7 +22,7 @@
 ##############################################################################
 
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 
 
 class DonationDonation(models.Model):
@@ -43,11 +43,11 @@ class DonationDonation(models.Model):
     @api.constrains('recurring_template', 'source_recurring_id', 'state')
     def _check_recurring_donation(self):
         if self.recurring_template and self.state != 'draft':
-            raise Warning(
+            raise UserError(
                 _("The recurring donation template of '%s' must stay in "
                     "draft state.") % self.partner_id.name)
         if self.source_recurring_id and self.recurring_template:
-            raise Warning(
+            raise UserError(
                 _("The recurring donation template of '%s' cannot have "
                     "a Source Recurring Template")
                 % self.partner_id.name)

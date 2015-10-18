@@ -22,7 +22,7 @@
 ##############################################################################
 
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 from datetime import datetime
 
 
@@ -101,7 +101,7 @@ class TaxReceiptAnnualCreate(models.TransientModel):
                     ])
             if already_tax_receipts:
                 partner = self.env['res.partner'].browse(vals['partner_id'])
-                raise Warning(
+                raise UserError(
                     _("The Donor '%s' already has a tax receipt "
                         "in this timeframe: %s dated %s.")
                     % (partner.name, already_tax_receipts[0].number,

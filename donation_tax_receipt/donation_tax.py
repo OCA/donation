@@ -21,7 +21,7 @@
 ##############################################################################
 
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 import openerp.addons.decimal_precision as dp
 
 
@@ -54,9 +54,9 @@ class DonationDonation(models.Model):
         ('each', 'For Each Donation'),
         ('annual', 'Annual Tax Receipt'),
         ], string='Tax Receipt Option', states={'done': [('readonly', True)]})
-    tax_receipt_total = fields.Float(
+    tax_receipt_total = fields.Monetary(
         compute='_tax_receipt_total', string='Eligible Tax Receipt Sub-total',
-        store=True)
+        store=True, currency_field='currency_id')
 
     @api.model
     def _prepare_tax_receipt(self):
@@ -85,7 +85,7 @@ class DonationDonation(models.Model):
     @api.one
     def done2cancel(self):
         if self.tax_receipt_id:
-            raise Warning(
+            raise UserError(
                 _("You cannot cancel this donation because "
                     "it is linked to the tax receipt %s. You should first "
                     "delete this tax receipt (but it may not be legally "
@@ -140,8 +140,9 @@ class DonationTaxReceipt(models.Model):
     date = fields.Date(
         string='Date', required=True, default=fields.Date.context_today)
     donation_date = fields.Date(string='Donation Date', required=True)
-    amount = fields.Float(
-        string='Amount', digits=dp.get_precision('Account'))
+    amount = fields.Monetary(
+        string='Amount', digits=dp.get_precision('Account'),
+        currency_field='currency_id')
     currency_id = fields.Many2one(
         'res.currency', string='Currency', required=True, ondelete='restrict')
     partner_id = fields.Many2one(
@@ -164,10 +165,11 @@ class DonationTaxReceipt(models.Model):
         if vals is None:
             vals = {}
         date = vals.get('donation_date')
-        fiscalyear_id = self.env['account.fiscalyear'].find(
-            dt=date, exception=True)
+        #fiscalyear_id = self.env['account.fiscalyear'].find(
+        #    dt=date, exception=True)
         # If date is False, it uses today, which is our default value
         # I use account_auto_fy_sequence here:
         vals['number'] = self.env['ir.sequence'].with_context(
-            fiscalyear_id=fiscalyear_id).next_by_code('donation.tax.receipt')
+            date=date).next_by_code('donation.tax.receipt')
+        #    fiscalyear_id=fiscalyear_id).next_by_code('donation.tax.receipt')
         return super(DonationTaxReceipt, self).create(vals)

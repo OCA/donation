@@ -22,7 +22,7 @@
 ##############################################################################
 
 from openerp import models, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 
 
 class DonationDonation(models.Model):
@@ -32,7 +32,7 @@ class DonationDonation(models.Model):
     @api.constrains('recurring_template', 'tax_receipt_option')
     def _check_recurring_tax_receipt(self):
         if self.recurring_template and self.tax_receipt_option == 'each':
-            raise Warning(
+            raise UserError(
                 _("The recurring donation of %s cannot have a tax "
                     "receipt option 'Each'.")
                 % self.partner_id.name)

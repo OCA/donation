@@ -23,7 +23,7 @@
 
 {
     'name': 'Donation',
-    'version': '8.0.0.1.0',
+    'version': '9.0.0.1.0',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Manage donations',
@@ -44,5 +44,5 @@
         ],
     'demo': ['donation_demo.xml'],
     'test': ['test/validate.yml'],
-    'installable': False,
+    'installable': True,
 }

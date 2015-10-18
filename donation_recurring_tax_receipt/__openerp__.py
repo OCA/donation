@@ -24,7 +24,7 @@
 
 {
     'name': 'Donation Recurring Tax Receipt',
-    'version': '8.0.0.1.0',
+    'version': '9.0.0.1.0',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Manage recurring donations with tax receipts',
@@ -33,5 +33,5 @@
     'depends': ['donation_recurring', 'donation_tax_receipt'],
     'data': [],
     'demo': ['donation_demo.xml'],
-    'installable': False,
+    'installable': True,
 }

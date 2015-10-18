@@ -21,7 +21,7 @@
 ##############################################################################
 
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 
 
 class DonationDonation(models.Model):
@@ -56,7 +56,7 @@ class DonationDonation(models.Model):
                 ('state', '=', 'valid'),
                 ])
             if not mandates:
-                raise Warning(
+                raise UserError(
                     _('No valid mandate found for donor %s')
                     % donation.partner_id.name)
             mandate = mandates[0]
@@ -88,7 +88,7 @@ class DonationDonation(models.Model):
             ('company_id', '=', self.company_id.id),
             ('type.code', '=like', 'pain.008.001.%')])
         if len(paymodes) > 1:
-            raise Warning(
+            raise UserError(
                 _("There are 2 payment modes with the same bank journal!"))
         if paymodes and self.move_id:
             paymode = paymodes[0]
@@ -128,7 +128,7 @@ class DonationDonation(models.Model):
                     ('order_id.state', 'in', ('draft', 'open')),
                     ])
                 if plines:
-                    raise Warning(
+                    raise UserError(
                         _("You cannot cancel a donation "
                             "which is linked to a payment line in a "
                             "direct debit order. Remove it from the "
