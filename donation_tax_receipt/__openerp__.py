@@ -29,7 +29,7 @@
     'summary': 'Manage tax receipts for donations',
     'author': 'Barroux Abbey, Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.barroux.org',
-    'depends': ['donation'], #'account_auto_fy_sequence'],
+    'depends': ['donation'],  # 'account_auto_fy_sequence'],
     'data': [
         'donation_tax_view.xml',
         'donation_tax_data.xml',

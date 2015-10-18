@@ -63,6 +63,7 @@ class AccountBankStatement(models.Model):
     @api.multi
     def create_donations(self):
         self.ensure_one()
+        ddo = self.env['donation.donation']
         assert self.state == 'confirm',\
             'Statement must be in confirm state'
         if not self.company_id.donation_credit_transfer_journal_id:
@@ -89,9 +90,10 @@ class AccountBankStatement(models.Model):
                                 raise UserError(
                                     _("Missing partner on bank statement line "
                                         "'%s' dated %s with amount %s.")
-                                    % (stline.name, stline.date, stline.amount))
+                                    % (stline.name, stline.date,
+                                        stline.amount))
                             vals = self._prepare_donation_vals(stline, mline)
-                            donation = self.env['donation.donation'].create(vals)
+                            donation = ddo.create(vals)
                             donation.partner_id_change()
                             donation.line_ids.product_id_change()
                             donation_ids.append(donation.id)
