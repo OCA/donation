@@ -24,7 +24,7 @@
 
 {
     'name': 'Donation Recurring',
-    'version': '8.0.0.1.0',
+    'version': '9.0.0.1.0',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Manage recurring donations',
@@ -37,5 +37,5 @@
         ],
     'demo': ['donation_recurring_demo.xml'],
     'test': ['test/generate_recurring_donations.yml'],
-    'installable': False,
+    'installable': True,
 }
