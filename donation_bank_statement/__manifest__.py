@@ -24,7 +24,7 @@
 
 {
     'name': 'Donation Bank Statement',
-    'version': '8.0.0.1.0',
+    'version': '9.0.0.1.0',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Creates donation from unreconciled bank statement lines',
@@ -38,5 +38,5 @@
         'security/ir.model.access.csv',
         ],
     'demo': ['demo.xml'],
-    'installable': False,
+    'installable': True,
 }

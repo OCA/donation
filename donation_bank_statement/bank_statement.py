@@ -22,27 +22,27 @@
 ##############################################################################
 
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 
 
 class AccountBankStatement(models.Model):
     _inherit = 'account.bank.statement'
 
     @api.model
-    def _find_product_id(self, stline):
+    def _find_donation_product(self, stline):
         products = self.env['product.product'].search(
             [('donation', '=', True)])
         assert products, 'No donation products'
-        return products[0].id
+        return products[0]
 
     @api.model
     def _prepare_donation_vals(self, stline, move_line):
-        product_id = self._find_product_id(stline)
+        product = self._find_donation_product(stline)
         statement = stline.statement_id
         company = statement.company_id
         amount = move_line.credit
         line_vals = {
-            'product_id': product_id,
+            'product_id': product.id,
             'quantity': 1,
             'unit_price': amount,
             }
@@ -66,37 +66,38 @@ class AccountBankStatement(models.Model):
         assert self.state == 'confirm',\
             'Statement must be in confirm state'
         if not self.company_id.donation_credit_transfer_journal_id:
-            raise Warning(
+            raise UserError(
                 _("You must configure the Journal for Donations via "
                     "Credit Transfer for the company %s")
                 % self.company_id.name)
         journal = self.company_id.donation_credit_transfer_journal_id
         if not journal.default_debit_account_id:
-            raise Warning(
+            raise UserError(
                 _("Missing Default Debit Account on the Journal '%s'.")
                 % journal.name)
         donation_ids = []
         transit_account = journal.default_debit_account_id
         for stline in self.line_ids:
             if stline.amount > 0 and not stline.donation_ids:
-                for mline in stline.journal_entry_id.line_id:
-                    if (
-                            mline.credit > 0 and
-                            mline.account_id == transit_account and
-                            not mline.reconcile_id):
-                        if not stline.partner_id:
-                            raise Warning(
-                                _("Missing partner on bank statement line "
-                                    "'%s' dated %s with amount %s.")
-                                % (stline.name, stline.date, stline.amount))
-                        vals = self._prepare_donation_vals(stline, mline)
-                        donation = self.env['donation.donation'].create(vals)
-                        donation.partner_id_change()
-                        donation.line_ids.product_id_change()
-                        donation_ids.append(donation.id)
+                for amline in stline.journal_entry_ids:
+                    for mline in amline.line_ids:
+                        if (
+                                mline.credit > 0 and
+                                mline.account_id == transit_account and
+                                not mline.reconciled):
+                            if not stline.partner_id:
+                                raise UserError(
+                                    _("Missing partner on bank statement line "
+                                        "'%s' dated %s with amount %s.")
+                                    % (stline.name, stline.date, stline.amount))
+                            vals = self._prepare_donation_vals(stline, mline)
+                            donation = self.env['donation.donation'].create(vals)
+                            donation.partner_id_change()
+                            donation.line_ids.product_id_change()
+                            donation_ids.append(donation.id)
 
         if not donation_ids:
-            raise Warning(
+            raise UserError(
                 _('No new donation to generate for this bank statement.'))
         action = self.env['ir.actions.act_window'].for_xml_id(
             'donation', 'donation_action')
