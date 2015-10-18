@@ -30,17 +30,15 @@
     <field name="uom_po_id" ref="product.product_uom_unit"/>
 </record>
 
-<record id="account.check_journal" model="account.journal">
+<!--
+<record id="account.bank_journal" model="account.journal">
     <field name="allow_donation" eval="True"/>
 </record>
 
 <record id="account.cash_journal" model="account.journal">
     <field name="allow_donation" eval="True"/>
 </record>
-
-<record id="account.bank_journal" model="account.journal">
-    <field name="allow_donation" eval="True"/>
-</record>
+-->
 
 <record id="quest_origin" model="donation.campaign">
     <field name="name">Quest</field>
@@ -85,12 +83,13 @@
     <field name="email">joe.smith@gmail.example.com</field>
 </record>
 
+<!--
 <record id="donation1" model="donation.donation">
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">100</field>
     <field name="partner_id" ref="donor1"/>
     <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
-    <field name="journal_id" ref="account.check_journal"/>
+    <field name="journal_id" search="[('type', '=', 'bank'), ('allow_donation', '=', True)]"/>
     <field name="payment_ref">CHQ BNP 239023</field>
     <field name="campaign_id" ref="prospecting_origin"/>
 </record>
@@ -107,7 +106,7 @@
     <field name="check_total">120</field>
     <field name="partner_id" ref="donor2"/>
     <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
-    <field name="journal_id" ref="account.bank_journal"/>
+    <field name="journal_id" search="[('type', '=', 'bank'), ('allow_donation', '=', True)]"/>
     <field name="payment_ref"></field>
     <field name="campaign_id" ref="quest_origin"/>
 </record>
@@ -124,7 +123,7 @@
     <field name="check_total">150</field>
     <field name="partner_id" ref="donor3"/>
     <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
-    <field name="journal_id" ref="account.cash_journal"/>
+    <field name="journal_id" search="[('type', '=', 'cash'), ('allow_donation', '=', True)]"/>
     <field name="payment_ref"></field>
     <field name="campaign_id" ref="prospecting_origin"/>
 </record>
@@ -135,14 +134,16 @@
     <field name="quantity">1</field>
     <field name="unit_price">150</field>
 </record>
+-->
 
 <!-- Full in-kind donation -->
+<!--
 <record id="donation4" model="donation.donation">
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">1000</field>
     <field name="partner_id" ref="donor1"/>
     <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
-    <field name="journal_id" ref="account.check_journal"/>
+    <field name="journal_id" search="[('type', '=', 'bank'), ('allow_donation', '=', True)]"/>
     <field name="payment_ref"></field>
     <field name="campaign_id" ref="prospecting_origin"/>
 </record>
@@ -154,14 +155,16 @@
     <field name="unit_price">1000</field>
     <field name="in_kind" eval="True"/>
 </record>
+-->
 
 <!-- Partial in-kind donation -->
+<!--
 <record id="donation5" model="donation.donation">
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">1200</field>
     <field name="partner_id" ref="donor1"/>
     <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
-    <field name="journal_id" ref="account.check_journal"/>
+    <field name="journal_id" search="[('type', '=', 'bank'), ('allow_donation', '=', True)]"/>
     <field name="payment_ref"></field>
     <field name="campaign_id" ref="prospecting_origin"/>
 </record>
@@ -180,6 +183,7 @@
     <field name="quantity">1</field>
     <field name="unit_price">400</field>
 </record>
+-->
 
 <record id="base.user_demo" model="res.users">
     <field name="groups_id" eval="[(4, ref('group_donation_user'))]"/>
