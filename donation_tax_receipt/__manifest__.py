@@ -23,13 +23,13 @@
 
 {
     'name': 'Donation Tax Receipt',
-    'version': '8.0.0.2.0',
+    'version': '9.0.0.2.0',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Manage tax receipts for donations',
     'author': 'Barroux Abbey, Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.barroux.org',
-    'depends': ['donation', 'account_auto_fy_sequence'],
+    'depends': ['donation'], #'account_auto_fy_sequence'],
     'data': [
         'donation_tax_view.xml',
         'donation_tax_data.xml',
@@ -48,5 +48,5 @@
         'test/each_tax_receipt.yml',
         'test/annual_tax_receipt.yml',
         ],
-    'installable': False,
+    'installable': True,
 }

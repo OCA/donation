@@ -15,8 +15,7 @@
     <field name="arch"  type="xml">
        <field name="company_id" position="after">
             <field name="tax_receipt_option"/>
-            <field name="tax_receipt_total" widget="monetary"
-                options="{'currency_field': 'currency_id'}"/>
+            <field name="tax_receipt_total"/>
             <field name="tax_receipt_id"/>
        </field>
     </field>
@@ -58,8 +57,7 @@
                 <field name="donation_date"/>
                 <field name="print_date"/>
                 <field name="currency_id" invisible="1"/>
-                <field name="amount" widget="monetary"
-                    options="{'currency_field': 'currency_id'}"/>
+                <field name="amount"/>
                 <field name="company_id" groups="base.group_multi_company"/>
             </group>
             <group name="donations" string="Related Donations">
@@ -114,16 +112,30 @@
     <field name="name">donation.tax.receipt.graph</field>
     <field name="model">donation.tax.receipt</field>
     <field name="arch"  type="xml">
-        <graph string="Donation Taxes Receipts" type="pivot">
+        <graph string="Donation Taxes Receipts">
+            <field name="date"/>
             <field name="amount" type="measure"/>
         </graph>
     </field>
 </record>
 
+<record id="donation_tax_receipt_pivot" model="ir.ui.view">
+    <field name="name">donation.tax.receipt.pivot</field>
+    <field name="model">donation.tax.receipt</field>
+    <field name="arch"  type="xml">
+        <pivot string="Donation Taxes Receipts">
+            <field name="date" type="row"/>
+            <field name="type" type="col"/>
+            <field name="amount" type="measure"/>
+        </pivot>
+    </field>
+</record>
+
+
 <record id="donation_tax_receipt_action" model="ir.actions.act_window">
     <field name="name">Donation Tax Receipt</field>
     <field name="res_model">donation.tax.receipt</field>
-    <field name="view_mode">tree,form,graph</field>
+    <field name="view_mode">tree,form,graph,pivot</field>
 </record>
 
 <menuitem id="donation_tax_title_menu" parent="donation.donation_top_menu"

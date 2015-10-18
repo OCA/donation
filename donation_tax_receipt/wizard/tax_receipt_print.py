@@ -22,7 +22,7 @@
 ##############################################################################
 
 from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import UserError
 
 
 class DonationTaxReceiptPrint(models.TransientModel):
@@ -43,7 +43,7 @@ class DonationTaxReceiptPrint(models.TransientModel):
     def print_receipts(self):
         self.ensure_one()
         if not self.receipt_ids:
-            raise Warning(
+            raise UserError(
                 _('There are no tax receipts to print.'))
         datas = {
             'model': 'donation.tax.receipt',

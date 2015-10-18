@@ -41,29 +41,29 @@ class DonationDonation(models.Model):
             donation_mline_rec = False
             statement_mline_rec = False
             transit_account = self.journal_id.default_debit_account_id
-            for donation_mline in self.move_id.line_id:
+            for donation_mline in self.move_id.line_ids:
                 if (
                         donation_mline.account_id == transit_account and
-                        not donation_mline.reconcile_id):
+                        not donation_mline.reconciled):
                     donation_mline_rec = donation_mline
                     logger.info(
                         'Found donation move line to reconcile ID=%d'
                         % donation_mline_rec.id)
                     break
-            for statement_mline in\
-                    self.bank_statement_line_id.journal_entry_id.line_id:
-                if (
-                        statement_mline.account_id == transit_account and
-                        not statement_mline.reconcile_id):
-                    statement_mline_rec = statement_mline
-                    logger.info(
-                        'Found bank statement move line to reconcile ID=%d'
-                        % statement_mline_rec.id)
-                    break
+            for statement_amline in self.bank_statement_line_id.journal_entry_ids:
+                for statement_mline in statement_amline.line_ids:
+                    if (
+                            statement_mline.account_id == transit_account and
+                            not statement_mline.reconciled):
+                        statement_mline_rec = statement_mline
+                        logger.info(
+                            'Found bank statement move line to reconcile ID=%d',
+                            statement_mline_rec.id)
+                        break
             if donation_mline_rec and statement_mline_rec:
                 mlines_to_reconcile = donation_mline_rec + statement_mline_rec
-                reconcile_id = mlines_to_reconcile.reconcile()
+                mlines_to_reconcile.reconcile()
                 logger.info(
                     'Successfull reconcilation between donation and '
-                    'bank statement. Reconcile mark ID=%d' % reconcile_id)
+                    'bank statement.')
         return res
