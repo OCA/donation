@@ -31,7 +31,7 @@ class DonationDonation(models.Model):
     @api.one
     @api.depends(
         'line_ids', 'line_ids.quantity', 'line_ids.unit_price',
-        'line_ids.product_id')
+        'line_ids.tax_receipt_ok')
     def _tax_receipt_total(self):
         total = 0.0
         # Do not consider other currencies for tax receipts
