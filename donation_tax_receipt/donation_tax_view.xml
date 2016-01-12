@@ -22,6 +22,18 @@
     </field>
 </record>
 
+<record id="donation_search" model="ir.ui.view">
+    <field name="name">donation.tax.receipt.donation.search</field>
+    <field name="model">donation.donation</field>
+    <field name="inherit_id" ref="donation.donation_search"/>
+    <field name="arch"  type="xml">
+        <filter name="journal_groupby" position="after">
+            <filter name="tax_receipt_option_groupby" string="Tax Receipt Option"
+                context="{'group_by': 'tax_receipt_option'}"/>
+        </filter>
+    </field>
+</record>
+
 <record id="donation_line_tree" model="ir.ui.view">
     <field name="model">donation.line</field>
     <field name="inherit_id" ref="donation.donation_line_tree"/>
