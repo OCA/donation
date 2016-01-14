@@ -111,6 +111,8 @@
                 domain="[('type', '=', 'each')]" />
             <filter name="annual" string="Annual Tax Receipts"
                 domain="[('type', '=', 'annual')]" />
+            <filter name="no_print_date" string="Not Printed Yet"
+                domain="[('print_date', '=', False)]" />
             <group string="Group By" name="groupby">
                 <filter name="donation_date" string="Donation Date"
                     context="{'group_by': 'donation_date'}"/>

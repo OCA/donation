@@ -32,7 +32,7 @@ class DonationTaxReceiptPrint(models.TransientModel):
     @api.model
     def _get_receipts(self):
         return self.env['donation.tax.receipt'].search(
-            [('print_date', '=', False)])
+            [('print_date', '=', False), ('create_uid', '=', self._uid)])
 
     receipt_ids = fields.Many2many(
         'donation.tax.receipt',
