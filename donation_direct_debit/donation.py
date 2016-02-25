@@ -66,7 +66,7 @@ class DonationDonation(models.Model):
             'order_id': payment_order.id,
             'move_line_id': move_line.id,
             'partner_id': move_line.partner_id.id,
-            'amount_currency': move_line.amount_to_receive,
+            'amount_currency': move_line.debit,
             'communication':
             donation.payment_ref or donation.number.replace('/', '-'),
             'state': 'normal',
