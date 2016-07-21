@@ -38,7 +38,7 @@
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">30</field>
     <field name="partner_id" ref="donor_rec1"/>
-    <field name="donation_date" eval="time.strftime('%Y-05-01')"/>
+    <field name="donation_date" eval="time.strftime('%Y-01-01')"/>
     <field name="journal_id" ref="account.check_journal"/>
     <field name="campaign_id" ref="donation.prospecting_origin"/>
     <field name="recurring_template">active</field>
@@ -55,7 +55,7 @@
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">25</field>
     <field name="partner_id" ref="donor_rec2"/>
-    <field name="donation_date" eval="time.strftime('%Y-06-01')"/>
+    <field name="donation_date" eval="time.strftime('%Y-01-01')"/>
     <field name="journal_id" ref="account.cash_journal"/>
     <field name="campaign_id" ref="donation.prospecting_origin"/>
     <field name="recurring_template">active</field>
