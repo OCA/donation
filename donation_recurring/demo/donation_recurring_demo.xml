@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
 
-<openerp>
+<odoo>
 <data noupdate="1">
 
 <record id="donor_rec1" model="res.partner">
@@ -11,6 +16,7 @@
     <field name="city">Seythenex</field>
     <field name="country_id" ref="base.fr"/>
     <field name="email">emilie.legrand@laposte.example.com</field>
+    <field name="tax_receipt_option">annual</field>
 </record>
 
 <record id="donor_rec2" model="res.partner">
@@ -21,6 +27,7 @@
     <field name="city">Paris</field>
     <field name="country_id" ref="base.fr"/>
     <field name="email">marie.durand@free.example.com</field>
+    <field name="tax_receipt_option">annual</field>
 </record>
 
 <record id="donor_rec3" model="res.partner">
@@ -31,22 +38,24 @@
     <field name="city">Courbevoie</field>
     <field name="country_id" ref="base.fr"/>
     <field name="email">olivier.dumesnil@free.example.com</field>
+    <field name="tax_receipt_option">annual</field>
 </record>
 
-<!--
 <record id="donation_rec1" model="donation.donation">
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">30</field>
     <field name="partner_id" ref="donor_rec1"/>
-    <field name="donation_date" eval="time.strftime('%Y-05-01')"/>
-    <field name="journal_id" ref="account.check_journal"/>
+    <field name="donation_date" eval="time.strftime('%Y-01-01')"/>
+    <field name="journal_id" model="account.journal"
+        search="[('type', '=', 'bank')]"/>
     <field name="campaign_id" ref="donation.prospecting_origin"/>
     <field name="recurring_template">active</field>
+    <field name="tax_receipt_option">annual</field>
 </record>
 
 <record id="donation_rec1_l1" model="donation.line">
     <field name="donation_id" ref="donation_rec1"/>
-    <field name="product_id" ref="donation.product_product_donation"/>
+    <field name="product_id" ref="donation_base.product_product_donation"/>
     <field name="quantity">1</field>
     <field name="unit_price">30</field>
 </record>
@@ -55,15 +64,17 @@
     <field name="currency_id" ref="base.EUR"/>
     <field name="check_total">25</field>
     <field name="partner_id" ref="donor_rec2"/>
-    <field name="donation_date" eval="time.strftime('%Y-06-01')"/>
-    <field name="journal_id" ref="account.cash_journal"/>
+    <field name="donation_date" eval="time.strftime('%Y-01-01')"/>
+    <field name="journal_id" model="account.journal"
+        search="[('type', '=', 'bank')]"/>
     <field name="campaign_id" ref="donation.prospecting_origin"/>
     <field name="recurring_template">active</field>
+    <field name="tax_receipt_option">annual</field>
 </record>
 
 <record id="donation_rec2_l1" model="donation.line">
     <field name="donation_id" ref="donation_rec2"/>
-    <field name="product_id" ref="donation.product_product_donation"/>
+    <field name="product_id" ref="donation_base.product_product_donation"/>
     <field name="quantity">1</field>
     <field name="unit_price">25</field>
 </record>
@@ -73,18 +84,20 @@
     <field name="check_total">35</field>
     <field name="partner_id" ref="donor_rec3"/>
     <field name="donation_date" eval="time.strftime('%Y-01-01')"/>
-    <field name="journal_id" ref="account.bank_journal"/>
+    <field name="journal_id" model="account.journal"
+        search="[('type', '=', 'bank')]"/>
     <field name="campaign_id" ref="donation.prospecting_origin"/>
     <field name="recurring_template">suspended</field>
+    <field name="tax_receipt_option">annual</field>
 </record>
 
 <record id="donation_rec3_l1" model="donation.line">
     <field name="donation_id" ref="donation_rec3"/>
-    <field name="product_id" ref="donation.product_product_donation"/>
+    <field name="product_id" ref="donation_base.product_product_donation"/>
     <field name="quantity">1</field>
     <field name="unit_price">35</field>
 </record>
--->
+
 
 </data>
-</openerp>
+</odoo>
