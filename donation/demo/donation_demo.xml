@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<data noupdate="1">
+
+
+<record id="quest_origin" model="donation.campaign">
+    <field name="name">Quest</field>
+</record>
+
+<record id="prospecting_origin" model="donation.campaign">
+    <field name="name">Prospecting</field>
+</record>
+
+<record id="catalog_origin" model="donation.campaign">
+    <field name="name">Catalog</field>
+</record>
+
+<record id="donation1" model="donation.donation">
+    <field name="currency_id" ref="base.EUR"/>
+    <field name="check_total">100</field>
+    <field name="partner_id" ref="donation_base.donor1"/>
+    <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
+    <field name="journal_id" model="account.journal"
+        search="[('type', '=', 'bank')]"/>
+    <field name="payment_ref">CHQ BNP 239023</field>
+    <field name="campaign_id" ref="prospecting_origin"/>
+    <field name="tax_receipt_option">each</field>
+</record>
+
+<record id="donation1_l1" model="donation.line">
+    <field name="donation_id" ref="donation1"/>
+    <field name="product_id" ref="donation_base.product_product_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">100</field>
+</record>
+
+<record id="donation2" model="donation.donation">
+    <field name="currency_id" ref="base.EUR"/>
+    <field name="check_total">120</field>
+    <field name="partner_id" ref="donation_base.donor2"/>
+    <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
+    <field name="journal_id" model="account.journal"
+        search="[('type', '=', 'bank')]"/>
+    <field name="payment_ref"></field>
+    <field name="campaign_id" ref="quest_origin"/>
+    <field name="tax_receipt_option">annual</field>
+</record>
+
+<record id="donation2_l1" model="donation.line">
+    <field name="donation_id" ref="donation2"/>
+    <field name="product_id" ref="donation_base.product_product_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">120</field>
+</record>
+
+<record id="donation3" model="donation.donation">
+    <field name="currency_id" ref="base.USD"/>
+    <field name="check_total">150</field>
+    <field name="partner_id" ref="donation_base.donor3"/>
+    <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
+    <field name="journal_id" model="account.journal"
+        search="[('type', '=', 'cash')]"/>
+    <field name="payment_ref"></field>
+    <field name="campaign_id" ref="prospecting_origin"/>
+    <field name="tax_receipt_option">none</field>
+</record>
+
+<record id="donation3_l1" model="donation.line">
+    <field name="donation_id" ref="donation3"/>
+    <field name="product_id" ref="donation_base.product_product_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">150</field>
+</record>
+
+<!-- Full in-kind donation -->
+<record id="donation4" model="donation.donation">
+    <field name="currency_id" ref="base.EUR"/>
+    <field name="check_total">1000</field>
+    <field name="partner_id" ref="donation_base.donor1"/>
+    <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
+    <field name="journal_id" model="account.journal"
+        search="[('type', '=', 'bank')]"/>
+    <field name="payment_ref"></field>
+    <field name="campaign_id" ref="prospecting_origin"/>
+    <field name="tax_receipt_option">each</field>
+</record>
+
+<record id="donation4_l1" model="donation.line">
+    <field name="donation_id" ref="donation4"/>
+    <field name="product_id" ref="donation_base.product_product_inkind_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">1000</field>
+    <field name="in_kind" eval="True"/>
+</record>
+
+<!-- Partial in-kind donation -->
+<record id="donation5" model="donation.donation">
+    <field name="currency_id" ref="base.EUR"/>
+    <field name="check_total">1200</field>
+    <field name="partner_id" ref="donation_base.donor1"/>
+    <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
+    <field name="journal_id" model="account.journal"
+        search="[('type', '=', 'bank')]"/>
+    <field name="payment_ref"></field>
+    <field name="campaign_id" ref="prospecting_origin"/>
+    <field name="tax_receipt_option">each</field>
+</record>
+
+<record id="donation5_l1" model="donation.line">
+    <field name="donation_id" ref="donation5"/>
+    <field name="product_id" ref="donation_base.product_product_inkind_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">800</field>
+    <field name="in_kind" eval="True"/>
+</record>
+
+<record id="donation5_l2" model="donation.line">
+    <field name="donation_id" ref="donation5"/>
+    <field name="product_id" ref="donation_base.product_product_donation"/>
+    <field name="quantity">1</field>
+    <field name="unit_price">400</field>
+</record>
+
+<record id="base.user_demo" model="res.users">
+    <field name="groups_id" eval="[(4, ref('group_donation_user'))]"/>
+</record>
+
+</data>
+</odoo>
