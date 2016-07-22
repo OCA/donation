@@ -21,3 +21,8 @@ class AccountJournal(models.Model):
                     "The journal '%s' has the option "
                     "'Donation Payment Method', so it's type should "
                     "be 'Cash' or 'Bank and Checks'.") % journal.name)
+
+    @api.onchange('type')
+    def donation_journal_type_change(self):
+        if self.type in ('cash', 'bank'):
+            self.allow_donation = True
