@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
+    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
+    @author: Alexis de Lattre <alexis.delattre@akretion.com>
+    The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+<report id="report_donation_tax_receipt"
+    model="donation.tax.receipt"
+    string="Donation Tax Receipt"
+    report_type="qweb-pdf"
+    name="donation_tax_receipt.report_donationtaxreceipt"
+    file="donation_tax_receipt.report_donationtaxreceipt"
+    />
+
+</data>
+</openerp>
