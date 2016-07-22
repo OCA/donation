@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Copyright (C) 2015 Akretion (www.akretion.com)
-  The licence is in the file __openerp__.py
+  © 2015-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 
-<openerp>
+<odoo>
 <data>
 
 <record id="donor2_iban" model="res.partner.bank">
     <field name="acc_number">FR93 1277 1277 1277 1277 1277 127</field>
-    <field name="state">iban</field>
-    <field name="bank" ref="account_banking_payment_export.bank_fortuneo"/>
-    <field name="partner_id" ref="donation.donor2" />
-    <field name="bank_name">Fortuneo Banque</field>
-    <field name="bank_bic">FTNOFRP1XXX</field>
+    <field name="partner_id" ref="donation_base.donor2" />
+    <field name="bank_id" ref="account_payment_mode.bank_la_banque_postale"/>
 </record>
 
 <record id="donor2_mandate" model="account.banking.mandate">
@@ -32,15 +29,13 @@
     <field name="city">Saint-Vaast la Hougue</field>
     <field name="country_id" ref="base.fr"/>
     <field name="email">bella.andalouse@yahoo.example.com</field>
+    <field name="customer_payment_mode_id" ref="account_banking_sepa_direct_debit.payment_mode_inbound_sepa_dd1"/>
 </record>
 
 <record id="donor4_iban" model="res.partner.bank">
     <field name="acc_number">FR50 4266 4266 4266 4266 4266 426</field>
-    <field name="state">iban</field>
-    <field name="bank" ref="account_banking_payment_export.bank_fortuneo"/>
     <field name="partner_id" ref="donor4" />
-    <field name="bank_name">Fortuneo Banque</field>
-    <field name="bank_bic">FTNOFRP1XXX</field>
+    <field name="bank_id" ref="account_payment_mode.bank_la_banque_postale"/>
 </record>
 
 <record id="donor4_mandate" model="account.banking.mandate">
@@ -56,17 +51,20 @@
     <field name="check_total">150</field>
     <field name="partner_id" ref="donor4"/>
     <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
-    <field name="journal_id" ref="account.bank_journal"/>
+    <field name="journal_id" model="account.journal"
+        search="[('type', '=', 'bank')]"/>
     <field name="payment_ref">Don prelev SEPA</field>
     <field name="campaign_id" ref="donation.prospecting_origin"/>
+    <field name="mandate_id" ref="donor4_mandate"/>
+    <field name="payment_mode_id" ref="account_banking_sepa_direct_debit.payment_mode_inbound_sepa_dd1"/>
 </record>
 
 <record id="donation6_l1" model="donation.line">
     <field name="donation_id" ref="donation6"/>
-    <field name="product_id" ref="donation.product_product_donation"/>
+    <field name="product_id" ref="donation_base.product_product_donation"/>
     <field name="quantity">1</field>
     <field name="unit_price">150</field>
 </record>
 
 </data>
-</openerp>
+</odoo>

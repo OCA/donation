@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Copyright (C) 2015 Akretion (www.akretion.com)
-  The licence is in the file __openerp__.py
+  © 2015-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 
-<openerp>
+<odoo>
 <data>
 
 <record id="donation_form" model="ir.ui.view">
@@ -13,10 +13,12 @@
     <field name="inherit_id" ref="donation.donation_form"/>
     <field name="arch" type="xml">
         <field name="move_id" position="before">
-            <field name="mandate_id" domain="[('state', '=', 'valid'), ('partner_id', '=', partner_id)]"/>
+            <field name="mandate_id"
+                domain="[('state', '=', 'valid'), ('partner_id', '=', commercial_partner_id)]"/>
+            <field name="payment_mode_id"/>
         </field>
     </field>
 </record>
 
 </data>
-</openerp>
+</odoo>

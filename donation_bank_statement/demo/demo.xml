@@ -29,6 +29,7 @@ and default_debit_account_id, we can't do that for him -->
 
 <record id="base.main_company" model="res.company">
     <field name="donation_credit_transfer_journal_id" ref="donation_credit_trf_journal"/>
+    <field name="donation_credit_transfer_product_id" ref="donation_base.product_product_donation"/>
 </record>
 
 </data>

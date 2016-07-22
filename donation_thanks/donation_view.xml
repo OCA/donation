@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-   Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
-   Copyright (C) 2014-2015 Akretion France (www.akretion.com)
-   The licence is in the file __openerp__.py
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 
-<openerp>
+<odoo>
 <data>
 
 
@@ -18,10 +18,14 @@
             <field name="thanks_printed"/>
         </group>
         <button name="validate" position="after">
-            <button name="print_thanks" string="Print Thanks Letter" type="object" groups="donation.group_donation_user" attrs="{'invisible': ['|', ('thanks_printed', '=', True), ('state', '!=', 'done')]}" class="oe_highlight"/>
+            <button name="print_thanks" string="Print Thanks Letter"
+                type="object" groups="donation.group_donation_user"
+                attrs="{'invisible': ['|', ('thanks_printed', '=', True), ('state', '!=', 'done')]}"
+                class="oe_highlight"/>
         </button>
     </field>
 </record>
 
+
 </data>
-</openerp>
+</odoo>

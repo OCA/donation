@@ -1,27 +1,10 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Donation Bank Statement module for Odoo
-#    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
-#    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
-#    @author Alexis de Lattre <alexis.delattre@akretion.com>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2014-2016 Barroux Abbey (http://www.barroux.org)
+# © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import models, fields, api, _
+from openerp.tools import float_compare
 from openerp.exceptions import UserError
 
 
@@ -29,17 +12,19 @@ class AccountBankStatement(models.Model):
     _inherit = 'account.bank.statement'
 
     @api.model
-    def _find_donation_product(self, stline):
-        products = self.env['product.product'].search(
-            [('donation', '=', True)])
-        assert products, 'No donation products'
-        return products[0]
+    def _find_donation_product(self, stline, company):
+        '''This method is designed to be inherited'''
+        if not company.donation_credit_transfer_product_id:
+            raise UserError(_(
+                "Missing Product for Donations via Credit Transfer "
+                "on company %s") % company.name)
+        return company.donation_credit_transfer_product_id
 
     @api.model
     def _prepare_donation_vals(self, stline, move_line):
-        product = self._find_donation_product(stline)
         statement = stline.statement_id
         company = statement.company_id
+        product = self._find_donation_product(stline, company)
         amount = move_line.credit
         line_vals = {
             'product_id': product.id,
@@ -64,6 +49,7 @@ class AccountBankStatement(models.Model):
     def create_donations(self):
         self.ensure_one()
         ddo = self.env['donation.donation']
+        precision = self.env['decimal.precision'].precision_get('Account')
         assert self.state == 'confirm',\
             'Statement must be in confirm state'
         if not self.company_id.donation_credit_transfer_journal_id:
@@ -79,11 +65,16 @@ class AccountBankStatement(models.Model):
         donation_ids = []
         transit_account = journal.default_debit_account_id
         for stline in self.line_ids:
-            if stline.amount > 0 and not stline.donation_ids:
+            if (
+                    float_compare(
+                        stline.amount, 0, precision_digits=precision) == 1 and
+                    not stline.donation_ids):
                 for amline in stline.journal_entry_ids:
                     for mline in amline.line_ids:
                         if (
-                                mline.credit > 0 and
+                                float_compare(
+                                    mline.credit, 0,
+                                    precision_digits=precision) == 1 and
                                 mline.account_id == transit_account and
                                 not mline.reconciled):
                             if not stline.partner_id:
