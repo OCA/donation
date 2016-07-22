@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<openerp>
+<data noupdate="1">
+
+<record id="donation_tax_receipt_seq" model="ir.sequence">
+    <field name="name">Donation Tax Receipt</field>
+    <field name="code">donation.tax.receipt</field>
+    <!-- <field name="prefix">%(fy)s-</field> -->
+    <field name="prefix">%(year)s-</field>
+    <field name="padding">5</field>
+    <field name="company_id" eval="False"/>
+</record>
+
+</data>
+</openerp>
