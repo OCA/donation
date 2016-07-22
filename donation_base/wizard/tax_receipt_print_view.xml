@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+<data>
+
+
+<record id="donation_tax_receipt_print_form" model="ir.ui.view">
+    <field name="name">donation_tax_receipt_print.form</field>
+    <field name="model">donation.tax.receipt.print</field>
+    <field name="arch"  type="xml">
+        <form string="Print Tax Receipts">
+            <group name="main">
+                <field name="receipt_ids"/>
+            </group>
+            <footer>
+                <button type="object" name="print_receipts"
+                    string="Print Receipts" class="oe_highlight"/>
+                <button special="cancel" string="Cancel" class="oe_link"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="donation_tax_receipt_print_action" model="ir.actions.act_window">
+    <field name="name">Print Receipts</field>
+    <field name="res_model">donation.tax.receipt.print</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+</record>
+
+
+</data>
+</odoo>
