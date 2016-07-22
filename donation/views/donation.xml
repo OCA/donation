@@ -34,6 +34,7 @@
                     <group name="manual">
                         <field name="partner_id"
                             domain="[('customer', '=', True)]"/>
+                        <field name="commercial_partner_id" invisible="1"/>
                         <field name="journal_id" widget="selection"/>
                         <field name="currency_id"
                             groups="base.group_multi_currency"/>
@@ -54,7 +55,7 @@
                     <page string="Donation Lines" name="lines">
                         <field name="line_ids" nolabel="1"/>
                         <group name="subtotal" class="oe_subtotal_footer oe_right">
-                            <field name="amount_total"
+                            <field name="amount_total" string="Total"
                                 class="oe_subtotal_footer_separator"/>
                         </group>
                         <group name="layout_fix">
