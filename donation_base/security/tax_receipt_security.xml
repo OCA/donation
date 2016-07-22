@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+<data noupdate="1">
+
+<record id="donation_tax_receipt_company_rule" model="ir.rule">
+    <field name="name">Donation Tax Receipt Multi-company</field>
+    <field name="model_id" ref="model_donation_tax_receipt"/>
+    <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'child_of', [user.company_id.id])]</field>
+</record>
+
+</data>
+</odoo>
