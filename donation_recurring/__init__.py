@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 
-from . import donation
+from . import models
 from . import wizard
