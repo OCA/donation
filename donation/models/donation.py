@@ -5,6 +5,7 @@
 
 from openerp import models, fields, api, _
 from openerp.exceptions import UserError, ValidationError
+from openerp.tools import float_is_zero, float_compare
 import openerp.addons.decimal_precision as dp
 
 
@@ -183,8 +184,36 @@ class DonationDonation(models.Model):
         name = _('Donation of %s') % self.partner_id.name
         return name
 
-    @api.model
+    @api.multi
+    def _prepare_counterpart_move_line(
+            self, name, amount_total_company_cur, total_amount_currency,
+            currency_id):
+        self.ensure_one()
+        precision = self.env['decimal.precision'].precision_get('Account')
+        if float_compare(
+                amount_total_company_cur, 0, precision_digits=precision) == 1:
+            debit = amount_total_company_cur
+            credit = 0
+            total_amount_currency = self.amount_total
+        else:
+            credit = amount_total_company_cur * -1
+            debit = 0
+            total_amount_currency = self.amount_total * -1
+        vals = {
+            'debit': debit,
+            'credit': credit,
+            'name': name,
+            'account_id': self.journal_id.default_debit_account_id.id,
+            'partner_id': self.commercial_partner_id.id,
+            'currency_id': currency_id,
+            'amount_currency': (
+                currency_id and total_amount_currency or 0.0),
+            }
+        return vals
+
+    @api.multi
     def _prepare_donation_move(self):
+        self.ensure_one()
         if not self.journal_id.default_debit_account_id:
             raise UserError(
                 _("Missing Default Debit Account on journal '%s'.")
@@ -204,6 +233,7 @@ class DonationDonation(models.Model):
         aml = {}
         # key = (account_id, analytic_account_id)
         # value = {'credit': ..., 'debit': ..., 'amount_currency': ...}
+        precision = self.env['decimal.precision'].precision_get('Account')
         for donation_line in self.line_ids:
             if donation_line.in_kind:
                 continue
@@ -219,7 +249,9 @@ class DonationDonation(models.Model):
                     % donation_line.product_id.name)
             analytic_account_id = donation_line.get_analytic_account_id()
             amount_currency = 0.0
-            if donation_line.amount_company_currency > 0:
+            if float_compare(
+                    donation_line.amount_company_currency, 0,
+                    precision_digits=precision) == 1:
                 credit = donation_line.amount_company_currency
                 debit = 0
                 amount_currency = donation_line.amount * -1
@@ -251,32 +283,17 @@ class DonationDonation(models.Model):
                 'debit': content['debit'],
                 'account_id': account_id,
                 'analytic_account_id': analytic_account_id,
-                'partner_id': self.partner_id.id,
+                'partner_id': self.commercial_partner_id.id,
                 'currency_id': currency_id,
                 'amount_currency': (
                     currency_id and content['amount_currency'] or 0.0),
                 }))
 
         # counter-part
-        if amount_total_company_cur > 0:
-            debit = amount_total_company_cur
-            credit = 0
-            total_amount_currency = self.amount_total
-        else:
-            credit = amount_total_company_cur * -1
-            debit = 0
-            total_amount_currency = self.amount_total * -1
-        movelines.append(
-            (0, 0, {
-                'debit': debit,
-                'credit': credit,
-                'name': name,
-                'account_id': self.journal_id.default_debit_account_id.id,
-                'partner_id': self.partner_id.id,
-                'currency_id': currency_id,
-                'amount_currency': (
-                    currency_id and total_amount_currency or 0.0),
-            }))
+        ml_vals = self._prepare_counterpart_move_line(
+            name, amount_total_company_cur, total_amount_currency,
+            currency_id)
+        movelines.append((0, 0, ml_vals))
 
         vals = {
             'journal_id': self.journal_id.id,
@@ -290,11 +307,18 @@ class DonationDonation(models.Model):
     def validate(self):
         check_total = self.env['res.users'].has_group(
             'donation.group_donation_check_total')
+        precision = self.env['decimal.precision'].precision_get('Account')
         for donation in self:
             if not donation.line_ids:
                 raise UserError(_(
                     "Cannot validate the donation of %s because it doesn't "
                     "have any lines!") % donation.partner_id.name)
+
+            if float_is_zero(
+                    donation.amount_total, precision_digits=precision):
+                raise UserError(_(
+                    "Cannot validate the donation of %s because the "
+                    "total amount is 0 !") % donation.partner_id.name)
 
             if donation.state != 'draft':
                 raise UserError(_(
