@@ -55,12 +55,12 @@ class DonationDonation(models.Model):
         track_visibility='onchange', ondelete='restrict',
         default=_default_currency)
     partner_id = fields.Many2one(
-        'res.partner', string='Donor', required=True,
+        'res.partner', string='Donor', required=True, index=True,
         states={'done': [('readonly', True)]},
         track_visibility='onchange', ondelete='restrict')
     commercial_partner_id = fields.Many2one(
         related='partner_id.commercial_partner_id',
-        string='Parent Donor', readonly=True, store=True)
+        string='Parent Donor', readonly=True, store=True, index=True)
     # country_id is here to have stats per country
     # WARNING : I can't put a related field, because when someone
     # writes on the country_id of a partner, it will trigger a write
@@ -83,7 +83,7 @@ class DonationDonation(models.Model):
         store=True, digits=dp.get_precision('Account'), readonly=True)
     donation_date = fields.Date(
         string='Donation Date', required=True,
-        states={'done': [('readonly', True)]},
+        states={'done': [('readonly', True)]}, index=True,
         track_visibility='onchange')
     company_id = fields.Many2one(
         'res.company', string='Company', required=True,
@@ -114,7 +114,7 @@ class DonationDonation(models.Model):
         ('done', 'Done'),
         ('cancel', 'Cancelled'),
         ], string='State', readonly=True, copy=False, default='draft',
-        track_visibility='onchange')
+        index=True, track_visibility='onchange')
     company_currency_id = fields.Many2one(
         related='company_id.currency_id', string="Company Currency",
         readonly=True)
@@ -132,7 +132,8 @@ class DonationDonation(models.Model):
         ('none', 'None'),
         ('each', 'For Each Donation'),
         ('annual', 'Annual Tax Receipt'),
-        ], string='Tax Receipt Option', states={'done': [('readonly', True)]})
+        ], string='Tax Receipt Option', states={'done': [('readonly', True)]},
+        index=True)
     tax_receipt_total = fields.Monetary(
         compute='_tax_receipt_total', string='Eligible Tax Receipt Sub-total',
         store=True, currency_field='currency_id')
