@@ -13,7 +13,7 @@ class DonationDonation(models.Model):
     recurring_template = fields.Selection([
         ('active', 'Active'),
         ('suspended', 'Suspended'),
-        ], string='Recurring Template', copy=False)
+        ], string='Recurring Template', copy=False, index=True)
     source_recurring_id = fields.Many2one(
         'donation.donation', string='Source Recurring Template',
         states={'done': [('readonly', True)]})
