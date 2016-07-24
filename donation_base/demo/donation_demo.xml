@@ -14,8 +14,6 @@
     <field name="tax_receipt_ok" eval="True"/>
     <field name="list_price">0</field>
     <field name="type">service</field>
-    <field name="uom_id" ref="product.product_uom_unit"/>
-    <field name="uom_po_id" ref="product.product_uom_unit"/>
     <field name="description">This donation item is eligible for a tax receipt.</field>
 </record>
 
@@ -29,8 +27,6 @@
     <field name="tax_receipt_ok" eval="False"/>
     <field name="list_price">0</field>
     <field name="type">service</field>
-    <field name="uom_id" ref="product.product_uom_unit"/>
-    <field name="uom_po_id" ref="product.product_uom_unit"/>
     <field name="description">This donation item is not eligible for a tax receipt.</field>
 </record>
 
@@ -44,8 +40,6 @@
     <field name="in_kind_donation"  eval="True"/>
     <field name="list_price">0</field>
     <field name="type">service</field>
-    <field name="uom_id" ref="product.product_uom_unit"/>
-    <field name="uom_po_id" ref="product.product_uom_unit"/>
     <field name="description">This donation item is eligible for a tax receipt.</field>
 </record>
 
@@ -59,8 +53,6 @@
     <field name="in_kind_donation"  eval="True"/>
     <field name="list_price">0</field>
     <field name="type">service</field>
-    <field name="uom_id" ref="product.product_uom_unit"/>
-    <field name="uom_po_id" ref="product.product_uom_unit"/>
     <field name="description">This donation item is not eligible for a tax receipt.</field>
 </record>
 
