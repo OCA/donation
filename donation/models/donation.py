@@ -22,15 +22,29 @@ class DonationDonation(models.Model):
         'donation_date', 'currency_id', 'company_id')
     def _compute_total(self):
         for donation in self:
-            total = 0.0
+            total = tax_receipt_total = 0.0
+            company_currency = donation.company_currency_id
+            donation_currency = donation.currency_id
+            # Do not consider other currencies for tax receipts
+            # because, for the moment, only very very few countries
+            # accept tax receipts from other countries, and never in another
+            # currency. If you know such cases, please tell us and we will
+            # update the code of this module
             for line in donation.line_ids:
-                total += line.quantity * line.unit_price
+                line_total = line.quantity * line.unit_price
+                total += line_total
+                if (
+                        donation_currency == company_currency and
+                        line.product_id.tax_receipt_ok):
+                    tax_receipt_total += line_total
+
             donation.amount_total = total
             donation_currency =\
                 donation.currency_id.with_context(date=donation.donation_date)
             total_company_currency = donation_currency.compute(
                 total, donation.company_id.currency_id)
             donation.amount_total_company_currency = total_company_currency
+            donation.tax_receipt_total = tax_receipt_total
 
     # We don't want a depends on partner_id.country_id, because if the partner
     # moves to another country, we want to keep the old country for
@@ -135,7 +149,7 @@ class DonationDonation(models.Model):
         ], string='Tax Receipt Option', states={'done': [('readonly', True)]},
         index=True)
     tax_receipt_total = fields.Monetary(
-        compute='_tax_receipt_total', string='Eligible Tax Receipt Sub-total',
+        compute='_compute_total', string='Eligible Tax Receipt Sub-total',
         store=True, currency_field='currency_id')
 
     @api.multi
@@ -148,25 +162,6 @@ class DonationDonation(models.Model):
                     'The date of the donation of %s should be today '
                     'or in the past, not in the future!')
                     % donation.partner_id.name)
-
-    @api.multi
-    @api.depends(
-        'line_ids', 'line_ids.quantity', 'line_ids.unit_price',
-        'line_ids.product_id')
-    def _tax_receipt_total(self):
-        for donation in self:
-            total = 0.0
-            # Do not consider other currencies for tax receipts
-            # because, for the moment, only very very few countries
-            # accept tax receipts from other countries, and never in another
-            # currency. If you know such cases, please tell us and we will
-            # update the code of this module
-            if donation.currency_id == donation.company_currency_id:
-                for line in donation.line_ids:
-                    # Filter the lines eligible for a tax receipt.
-                    if line.tax_receipt_ok:
-                        total += line.quantity * line.unit_price
-            donation.tax_receipt_total = total
 
     @api.model
     def _prepare_tax_receipt(self):
