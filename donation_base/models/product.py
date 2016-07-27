@@ -47,6 +47,15 @@ class ProductTemplate(models.Model):
                     "The option 'Is Eligible for a Tax Receipt' is "
                     "active on the product '%s', so you must also activate "
                     "the option 'Is a Donation'.") % product.name)
+            # The check below is to make sure that we don't forget to remove
+            # the default sale VAT tax on the donation product, particularly
+            # for users of donation_sale. If there are countries that have
+            # sale tax on donations (!), please tell us and we can remove this
+            # constraint
+            if product.donation and product.taxes_id:
+                raise ValidationError(_(
+                    "There shouldn't have any Customer Taxes on the "
+                    "donation product '%s'.") % product.name)
 
 
 class ProductProduct(models.Model):
