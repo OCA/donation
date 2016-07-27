@@ -5,7 +5,7 @@
 
 from openerp import models, fields, api, _
 from openerp.exceptions import UserError, ValidationError
-from openerp.tools import float_is_zero, float_compare
+from openerp.tools import float_is_zero
 import logging
 
 logger = logging.getLogger(__name__)
