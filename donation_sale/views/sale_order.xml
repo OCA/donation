@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2016 La Cimade (http://www.lacimade.org/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+<data>
+
+<record id="view_order_form" model="ir.ui.view">
+    <field name="name">donation_sale.sale.order.form</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+        <field name="payment_term_id" position="after">
+            <field name="tax_receipt_option"/>
+            <field name="tax_receipt_total"/>
+        </field>
+    </field>
+</record>
+
+<record id="view_order_tree" model="ir.ui.view">
+    <field name="name">donation_sale.sale.order.tree</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_tree"/>
+    <field name="arch"  type="xml">
+        <field name="amount_total" position="after">
+            <field name="tax_receipt_total"/>
+        </field>
+    </field>
+</record>
+
+<record id="view_quotation_tree" model="ir.ui.view">
+    <field name="name">donation_sale.quotation.sale.order.tree</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_quotation_tree"/>
+    <field name="arch"  type="xml">
+        <field name="amount_total" position="after">
+            <field name="tax_receipt_total"/>
+        </field>
+    </field>
+</record>
+
+
+<record id="view_sales_order_filter" model="ir.ui.view">
+    <field name="name">donation_sale.sale.order.search</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+    <field name="arch"  type="xml">
+        <group expand="0" position="inside">
+            <filter name="tax_receipt_option_groupby" string="Tax Receipt Option"
+                context="{'group_by': 'tax_receipt_option'}"/>
+        </group>
+    </field>
+</record>
+
+
+</data>
+</odoo>
