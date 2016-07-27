@@ -11,7 +11,7 @@
     'summary': 'Manage donations in sale orders',
     'author': 'La Cimade, Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.lacimade.org',
-    'depends': ['donation_base'],
+    'depends': ['donation_base', 'sale'],
     'data': [
         'views/account_invoice.xml',
         'views/sale_order.xml',
