@@ -19,7 +19,7 @@ class DonationDonation(models.Model):
     @api.multi
     @api.depends(
         'line_ids', 'line_ids.unit_price', 'line_ids.quantity',
-        'donation_date', 'currency_id', 'company_id')
+        'line_ids.product_id', 'donation_date', 'currency_id', 'company_id')
     def _compute_total(self):
         for donation in self:
             total = tax_receipt_total = 0.0
@@ -150,7 +150,7 @@ class DonationDonation(models.Model):
         index=True)
     tax_receipt_total = fields.Monetary(
         compute='_compute_total', string='Eligible Tax Receipt Sub-total',
-        store=True, currency_field='currency_id')
+        store=True, currency_field='company_currency_id')
 
     @api.multi
     @api.constrains('donation_date')
@@ -163,11 +163,12 @@ class DonationDonation(models.Model):
                     'or in the past, not in the future!')
                     % donation.partner_id.name)
 
-    @api.model
-    def _prepare_tax_receipt(self):
+    @api.multi
+    def _prepare_each_tax_receipt(self):
+        self.ensure_one()
         vals = {
             'company_id': self.company_id.id,
-            'currency_id': self.currency_id.id,
+            'currency_id': self.company_currency_id.id,
             'donation_date': self.donation_date,
             'amount': self.tax_receipt_total,
             'type': 'each',
@@ -344,7 +345,7 @@ class DonationDonation(models.Model):
                     donation.tax_receipt_option == 'each' and
                     donation.tax_receipt_total and
                     not donation.tax_receipt_id):
-                receipt_vals = donation._prepare_tax_receipt()
+                receipt_vals = donation._prepare_each_tax_receipt()
                 receipt = self.env['donation.tax.receipt'].create(receipt_vals)
                 vals['tax_receipt_id'] = receipt.id
 
@@ -393,14 +394,18 @@ class DonationDonation(models.Model):
     def unlink(self):
         for donation in self:
             if donation.state == 'done':
-                raise UserError(
-                    _("The donation '%s' is in Done state, so you cannot "
-                      "delete it.")
-                    % donation.number)
+                raise UserError(_(
+                    "The donation '%s' is in Done state, so you cannot "
+                    "delete it.") % donation.display_name)
             if donation.move_id:
-                raise UserError(
-                    _("The donation '%s' is linked to an account move, "
-                      "so you cannot delete it."))
+                raise UserError(_(
+                    "The donation '%s' is linked to an account move, "
+                    "so you cannot delete it.") % donation.display_name)
+            if donation.tax_receipt_id:
+                raise UserError(_(
+                    "The donation '%s' is linked to the tax receipt %s, "
+                    "so you cannot delete it.")
+                    % (donation.display_name, donation.tax_receipt_id.number))
         return super(DonationDonation, self).unlink()
 
     @api.multi
@@ -510,3 +515,33 @@ class DonationTaxReceipt(models.Model):
 
     donation_ids = fields.One2many(
         'donation.donation', 'tax_receipt_id', string='Related Donations')
+
+    def update_tax_receipt_annual_dict(
+            self, tax_receipt_annual_dict, start_date, end_date, precision):
+        super(DonationTaxReceipt, self).update_tax_receipt_annual_dict(
+            tax_receipt_annual_dict)
+        donations = self.env['donation.donation'].search([
+            ('donation_date', '>=', start_date),
+            ('donation_date', '<=', end_date),
+            ('tax_receipt_option', '=', 'annual'),
+            ('tax_receipt_id', '=', False),
+            ('tax_receipt_total', '!=', 0),
+            ('company_id', '=', self.env.user.company_id.id),
+            ('state', '=', 'done'),
+            ])
+        for donation in donations:
+            tax_receipt_amount = donation.tax_receipt_total
+            if float_is_zero(tax_receipt_amount, precision_digits=precision):
+                continue
+            partner = donation.commercial_partner_id
+            if partner not in tax_receipt_annual_dict:
+                tax_receipt_annual_dict[partner] = {
+                    'amount': tax_receipt_amount,
+                    'extra_vals': {
+                        'donation_ids': [(6, 0, [donation.id])]},
+                    }
+            else:
+                tax_receipt_annual_dict[partner]['amount'] +=\
+                    tax_receipt_amount
+                tax_receipt_annual_dict[partner]['extra_vals'][
+                    'donation_ids'][0][2].append(donation.id)
