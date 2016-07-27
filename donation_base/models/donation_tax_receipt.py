@@ -15,7 +15,8 @@ class DonationTaxReceipt(models.Model):
 
     number = fields.Char(string='Receipt Number')
     date = fields.Date(
-        string='Date', required=True, default=fields.Date.context_today)
+        string='Date', required=True, default=fields.Date.context_today,
+        index=True)
     donation_date = fields.Date(string='Donation Date')
     amount = fields.Monetary(
         string='Amount', digits=dp.get_precision('Account'),
@@ -24,7 +25,7 @@ class DonationTaxReceipt(models.Model):
         'res.currency', string='Currency', required=True, ondelete='restrict')
     partner_id = fields.Many2one(
         'res.partner', string='Donor', required=True, ondelete='restrict',
-        domain=[('parent_id', '=', False)])
+        domain=[('parent_id', '=', False)], index=True)
     company_id = fields.Many2one(
         'res.company', string='Company', required=True,
         default=lambda self: self.env['res.company']._company_default_get(
@@ -44,3 +45,8 @@ class DonationTaxReceipt(models.Model):
         vals['number'] = self.env['ir.sequence'].with_context(
             date=date).next_by_code('donation.tax.receipt')
         return super(DonationTaxReceipt, self).create(vals)
+
+    @api.model
+    def update_tax_receipt_annual_dict(self, tax_receipt_annual_dict):
+        '''This method is inherited in donation and donation_sale
+        It is called by the tax.receipt.annual.create wizard'''
