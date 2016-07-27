@@ -25,72 +25,63 @@ class TaxReceiptAnnualCreate(models.TransientModel):
     end_date = fields.Date(
         'End Date', required=True, default=_default_end_date)
 
-    # TODO: adapt code to make it independant of the donation module
     @api.model
-    def _prepare_annual_tax_receipt(self, partner_id, partner_dict):
+    def _prepare_annual_tax_receipt(self, partner, partner_dict):
         vals = {
             'company_id': self.env.user.company_id.id,
             'currency_id': self.env.user.company_id.currency_id.id,
             'amount': partner_dict['amount'],
             'type': 'annual',
-            'partner_id': partner_id,
+            'partner_id': partner.id,
             'date': self.end_date,
             'donation_date': self.end_date,
-            'donation_ids': [(6, 0, partner_dict['donation_ids'])],
         }
+        # designed to add add O2M fields donation_ids and invoice_ids
+        vals.update(partner_dict['extra_vals'])
         return vals
+
+    @api.model
+    def update_tax_receipt_annual_dict(
+            self, tax_receipt_annual_dict, start_date, end_date, precision):
+        '''This method is inherited in donation and donation_sale'''
 
     @api.multi
     def generate_annual_receipts(self):
         self.ensure_one()
-        donations = self.env['donation.donation'].search([
-            ('donation_date', '>=', self.start_date),
-            ('donation_date', '<=', self.end_date),
-            ('tax_receipt_option', '=', 'annual'),
-            ('tax_receipt_id', '=', False),
-            ('tax_receipt_total', '!=', 0),
-            ('company_id', '=', self.env.user.company_id.id),
-            ('state', '=', 'done'),
-            ])
-        tax_receipt_annual = {}
-        # {partner_id: {
+        dtro = self.env['donation.tax.receipt']
+        tax_receipt_annual_dict = {}
+        precision = self.env['decimal.precision'].precision_get('Account')
+        self.env['donation.tax.receipt'].update_tax_receipt_annual_dict(
+            tax_receipt_annual_dict, self.start_date, self.end_date,
+            precision)
+        # {commercial_partner: {
         #       'amount': amount,
-        #       'donation_ids': [donation1_id, donation2_id]}}
-        for donation in donations:
-            partner_id = donation.commercial_partner_id.id
-            tax_receipt_amount = donation.tax_receipt_total
-            if partner_id not in tax_receipt_annual:
-                tax_receipt_annual[partner_id] = {
-                    'amount': tax_receipt_amount,
-                    'donation_ids': [donation.id],
-                }
-            else:
-                tax_receipt_annual[partner_id]['amount'] +=\
-                    tax_receipt_amount
-                tax_receipt_annual[partner_id]['donation_ids']\
-                    .append(donation.id)
-
+        #       'extra_vals': {donation_ids': [donation1_id, donation2_id]}}}
         tax_receipt_ids = []
-        for partner_id, partner_dict in tax_receipt_annual.iteritems():
-            vals = self._prepare_annual_tax_receipt(partner_id, partner_dict)
-            # Block if the partner already has an annual fiscal receipt
-            # or an each fiscal receipt
-            already_tax_receipts = \
-                self.env['donation.tax.receipt'].search([
-                    ('date', '<=', self.end_date),
-                    ('date', '>=', self.start_date),
-                    ('company_id', '=', vals['company_id']),
-                    ('partner_id', '=', vals['partner_id']),
-                    ])
-            if already_tax_receipts:
-                partner = self.env['res.partner'].browse(vals['partner_id'])
-                raise UserError(
-                    _("The Donor '%s' already has a tax receipt "
-                        "in this timeframe: %s dated %s.")
-                    % (partner.name, already_tax_receipts[0].number,
-                        already_tax_receipts[0].date))
-            tax_receipt = self.env['donation.tax.receipt'].create(vals)
+        existing_annual_receipts = dtro.search([
+            ('date', '<=', self.end_date),
+            ('date', '>=', self.start_date),
+            ('company_id', '=', self.env.user.company_id.id),
+            ('type', '=', 'annual'),
+            ])
+        existing_annual_receipts_dict = {}
+        for receipt in existing_annual_receipts:
+            existing_annual_receipts_dict[receipt.partner_id] = receipt
+
+        for partner, partner_dict in tax_receipt_annual_dict.iteritems():
+            # Block if the partner already has an annual tax receipt
+            if partner in existing_annual_receipts_dict:
+                existing_receipt = existing_annual_receipts_dict[partner]
+                raise UserError(_(
+                    "The Donor '%s' already has an annual tax receipt "
+                    "in this timeframe: %s dated %s.")
+                    % (partner.name, existing_receipt.number,
+                        existing_receipt.date))
+            vals = self._prepare_annual_tax_receipt(partner, partner_dict)
+            tax_receipt = dtro.create(vals)
             tax_receipt_ids.append(tax_receipt.id)
+        if not tax_receipt_ids:
+            raise UserError(_("No annual tax receipt to generate"))
         action = {
             'type': 'ir.actions.act_window',
             'name': 'Tax Receipts',
