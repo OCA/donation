@@ -23,6 +23,8 @@ class ProductTemplate(models.Model):
     def _donation_change(self):
         if self.donation:
             self.type = 'service'
+            self.taxes_id = False
+            self.supplier_taxes_id = False
 
     @api.onchange('in_kind_donation')
     def _in_kind_donation_change(self):
