@@ -22,7 +22,8 @@ class DonationTaxReceipt(models.Model):
         string='Amount', digits=dp.get_precision('Account'),
         currency_field='currency_id')
     currency_id = fields.Many2one(
-        'res.currency', string='Currency', required=True, ondelete='restrict')
+        'res.currency', string='Currency', required=True, ondelete='restrict',
+        default=lambda self: self.env.user.company_id.currency_id.id)
     partner_id = fields.Many2one(
         'res.partner', string='Donor', required=True, ondelete='restrict',
         domain=[('parent_id', '=', False)], index=True)
