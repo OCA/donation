@@ -40,11 +40,6 @@ class TaxReceiptAnnualCreate(models.TransientModel):
         vals.update(partner_dict['extra_vals'])
         return vals
 
-    @api.model
-    def update_tax_receipt_annual_dict(
-            self, tax_receipt_annual_dict, start_date, end_date, precision):
-        '''This method is inherited in donation and donation_sale'''
-
     @api.multi
     def generate_annual_receipts(self):
         self.ensure_one()

@@ -516,10 +516,11 @@ class DonationTaxReceipt(models.Model):
     donation_ids = fields.One2many(
         'donation.donation', 'tax_receipt_id', string='Related Donations')
 
+    @api.model
     def update_tax_receipt_annual_dict(
             self, tax_receipt_annual_dict, start_date, end_date, precision):
         super(DonationTaxReceipt, self).update_tax_receipt_annual_dict(
-            tax_receipt_annual_dict)
+            tax_receipt_annual_dict, start_date, end_date, precision)
         donations = self.env['donation.donation'].search([
             ('donation_date', '>=', start_date),
             ('donation_date', '<=', end_date),

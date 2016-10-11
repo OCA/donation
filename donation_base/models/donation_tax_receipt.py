@@ -48,6 +48,7 @@ class DonationTaxReceipt(models.Model):
         return super(DonationTaxReceipt, self).create(vals)
 
     @api.model
-    def update_tax_receipt_annual_dict(self, tax_receipt_annual_dict):
+    def update_tax_receipt_annual_dict(
+            self, tax_receipt_annual_dict, start_date, end_date, precision):
         '''This method is inherited in donation and donation_sale
         It is called by the tax.receipt.annual.create wizard'''
