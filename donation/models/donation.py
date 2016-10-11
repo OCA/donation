@@ -487,7 +487,7 @@ class DonationLine(models.Model):
         digits=dp.get_precision('Account'), store=True)
     analytic_account_id = fields.Many2one(
         'account.analytic.account', string='Analytic Account',
-        domain=[('type', 'not in', ('view', 'template'))], ondelete='restrict')
+        domain=[('account_type', '!=', 'closed')], ondelete='restrict')
     sequence = fields.Integer('Sequence')
     # for the fields tax_receipt_ok and in_kind, we made an important change
     # between v8 and v9: in v8, it was a reglar field set by an onchange
