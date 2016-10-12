@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-   Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
-   Copyright (C) 2014-2015 Akretion France (www.akretion.com)
-   The licence is in the file __openerp__.py
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 
-<openerp>
+<odoo>
 <data>
 
 
@@ -18,11 +18,7 @@
     <field name="report_rml">donation_thanks/thanks.odt</field>
     <field name="parser_state">default</field>
     <field name="tml_source">file</field>
-    <field name="multi" eval="0"/>
     <field name="out_format" ref="report_aeroo.report_mimetypes_odt_odt"/>
-    <field name="fallback_false" eval="0"/>
-    <field name="attachment_use" eval="0"/>
-    <field name="styles_mode">default</field>
 </record>
 
 <record id="button_report_thanks" model="ir.values"> <!-- Add print button -->
@@ -35,4 +31,4 @@
 <!-- The print button in the form view is defined in donation_view.xml -->
 
 </data>
-</openerp>
+</odoo>

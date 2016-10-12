@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+<data>
+
+<!-- This is just a very basic tax receipt report
+You should customize the style and layout in a custom module -->
+
+<template id="report_donationtaxreceipt">
+
+<t t-call="report.html_container">
+<t t-foreach="docs" t-as="o">
+<t t-call="report.internal_layout">
+
+<div class="page">
+
+<h1>Donation Tax Receipt <span t-field="o.number"/></h1>
+
+<h3>Donor: <span t-field="o.partner_id.name"/></h3>
+<h3>Date: <span t-field="o.date"/></h3>
+<h3>Amount Total: <span t-field="o.amount" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/></h3>
+
+</div>
+
+</t>
+</t>
+</t>
+
+</template>
+
+</data>
+</odoo>
