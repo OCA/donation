@@ -4,8 +4,8 @@
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 
-<odoo>
-<data>
+<odoo noupdate="1">
+
 
 <record id="donor2_iban" model="res.partner.bank">
     <field name="acc_number">FR93 1277 1277 1277 1277 1277 127</field>
@@ -66,5 +66,5 @@
     <field name="unit_price">150</field>
 </record>
 
-</data>
+
 </odoo>

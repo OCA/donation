@@ -5,7 +5,7 @@
 -->
 
 <odoo>
-<data>
+
 
 <record id="donation_form" model="ir.ui.view">
     <field name="name">mandate.donation.form</field>
@@ -20,5 +20,5 @@
     </field>
 </record>
 
-</data>
+
 </odoo>
