@@ -6,7 +6,7 @@
 -->
 
 <odoo>
-<data>
+
 
 <record id="invoice_form" model="ir.ui.view">
     <field name="name">donation_sale.customer.invoice.form</field>
@@ -56,5 +56,5 @@
     action="donation_base.tax_receipt_annual_create_action"
     parent="account_donation_menu"/>
 
-</data>
+
 </odoo>

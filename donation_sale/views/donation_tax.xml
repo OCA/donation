@@ -6,7 +6,7 @@
 -->
 
 <odoo>
-<data>
+
 
 <record id="donation_tax_receipt_form" model="ir.ui.view">
     <field name="name">donation_sale.donation.tax.receipt.form</field>
@@ -22,5 +22,4 @@
 </record>
 
 
-</data>
 </odoo>
