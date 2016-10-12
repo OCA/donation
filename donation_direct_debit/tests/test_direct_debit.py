@@ -2,8 +2,8 @@
 # © 2016 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import TransactionCase
-from openerp.tools import float_compare
+from odoo.tests.common import TransactionCase
+from odoo.tools import float_compare
 
 
 class TestDirectDebit(TransactionCase):

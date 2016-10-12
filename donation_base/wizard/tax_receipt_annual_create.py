@@ -3,8 +3,8 @@
 # © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
-from openerp.exceptions import UserError
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 from datetime import datetime
 
 
@@ -39,11 +39,6 @@ class TaxReceiptAnnualCreate(models.TransientModel):
         # designed to add add O2M fields donation_ids and invoice_ids
         vals.update(partner_dict['extra_vals'])
         return vals
-
-    @api.model
-    def update_tax_receipt_annual_dict(
-            self, tax_receipt_annual_dict, start_date, end_date, precision):
-        '''This method is inherited in donation and donation_sale'''
 
     @api.multi
     def generate_annual_receipts(self):
