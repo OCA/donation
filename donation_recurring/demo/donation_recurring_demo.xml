@@ -5,8 +5,7 @@
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 
-<odoo>
-<data noupdate="1">
+<odoo noupdate="1">
 
 <record id="donor_rec1" model="res.partner">
     <field name="name">Emilie Legrand</field>
@@ -99,5 +98,4 @@
 </record>
 
 
-</data>
 </odoo>

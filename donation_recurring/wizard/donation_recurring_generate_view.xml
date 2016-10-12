@@ -6,7 +6,7 @@
 -->
 
 <odoo>
-<data>
+
 
 <record id="donation_recurring_generate_form" model="ir.ui.view">
     <field name="name">donation_recurring_generate.form</field>
@@ -38,5 +38,4 @@
     groups="donation.group_donation_user"/>
 
 
-</data>
 </odoo>
