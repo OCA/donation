@@ -3,8 +3,8 @@
 # © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import tools
-from openerp import models, fields
+from odoo import tools
+from odoo import models, fields
 
 
 class DonationReport(models.Model):
@@ -76,8 +76,8 @@ class DonationReport(models.Model):
             """
         return group_by
 
-    def init(self, cr):
-        tools.drop_view_if_exists(cr, self._table)
-        cr.execute("CREATE OR REPLACE VIEW %s AS (%s FROM %s %s %s)" % (
+    def init(self):
+        tools.drop_view_if_exists(self._cr, self._table)
+        self._cr.execute("CREATE OR REPLACE VIEW %s AS (%s FROM %s %s %s)" % (
             self._table, self._select(), self._from(),
             self._where(), self._group_by()))

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<odoo>
-<data noupdate="1">
+<odoo noupdate="1">
 
 
 <record id="quest_origin" model="donation.campaign">
-    <field name="name">Quest</field>
+    <field name="code">Q1</field>
+    <field name="name">Quest Christmas 2015</field>
 </record>
 
 <record id="prospecting_origin" model="donation.campaign">
-    <field name="name">Prospecting</field>
+    <field name="code">P1</field>
+    <field name="name">Prospecting 2016</field>
 </record>
 
 <record id="catalog_origin" model="donation.campaign">
-    <field name="name">Catalog</field>
+    <field name="code">C1</field>
+    <field name="name">Catalog Q1 2016</field>
 </record>
 
 <record id="donation1" model="donation.donation">
@@ -126,5 +128,5 @@
     <field name="groups_id" eval="[(4, ref('group_donation_user'))]"/>
 </record>
 
-</data>
+
 </odoo>
