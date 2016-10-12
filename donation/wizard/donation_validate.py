@@ -3,7 +3,7 @@
 # © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, api
+from odoo import models, api
 
 
 class DonationValidate(models.TransientModel):

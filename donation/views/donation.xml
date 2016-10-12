@@ -6,7 +6,7 @@
 -->
 
 <odoo>
-<data>
+
 
 <record id="donation_form" model="ir.ui.view">
     <field name="name">donation.form</field>
@@ -253,5 +253,4 @@
     groups="donation.group_donation_user"/>
 
 
-</data>
 </odoo>
