@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<odoo>
-<data noupdate="1">
+<odoo noupdate="1">
 
 
 <!-- PRODUCTS -->
@@ -96,5 +95,5 @@
     <field name="tax_receipt_option">none</field>
 </record>
 
-</data>
+
 </odoo>
