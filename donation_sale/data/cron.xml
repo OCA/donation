@@ -5,9 +5,8 @@
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 
-<odoo>
+<odoo noupdate="1"> <!-- noupdate = 1 for the 'active' field -->
 
-<data noupdate="1"> <!-- noupdate = 1 for the 'active' field -->
 <record id="donation_tax_receipt_invoice_cron" model="ir.cron">
     <field name="name">Generation donation tax receipts from invoices</field>
     <field name="active" eval="False"/>
@@ -21,5 +20,4 @@
     <field name="args" eval="'()'"/>
 </record>
 
-</data>
 </odoo>
