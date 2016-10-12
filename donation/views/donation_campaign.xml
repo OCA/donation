@@ -6,7 +6,7 @@
 -->
 
 <odoo>
-<data>
+
 
 <record id="donation_campaign_form" model="ir.ui.view">
     <field name="name">donation.campaign.form</field>
@@ -44,5 +44,5 @@
 <menuitem id="donation_campaign_menu" action="donation_campaign_action"
     parent="donation_config_menu" sequence="30"/>
 
-</data>
+
 </odoo>
