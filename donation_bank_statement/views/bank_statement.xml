@@ -6,7 +6,7 @@
 -->
 
 <odoo>
-<data>
+
 
 <record id="view_bank_statement_form" model="ir.ui.view">
     <field name="name">donation.bank.statement.bank_statement_form</field>
@@ -34,5 +34,5 @@
     </field>
 </record>
 
-</data>
+
 </odoo>
