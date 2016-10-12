@@ -6,7 +6,6 @@
 -->
 
 <odoo>
-<data>
 
 
 <record id="donation_tax_receipt_form" model="ir.ui.view">
@@ -100,5 +99,4 @@
 </record>
 
 
-</data>
 </odoo>
