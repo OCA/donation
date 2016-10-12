@@ -6,7 +6,7 @@
 -->
 
 <odoo>
-<data>
+
 
 <record id="donation_report_search" model="ir.ui.view">
     <field name="name">donation.report.search</field>
@@ -74,5 +74,5 @@
 <menuitem id="donation_report_menu" action="donation_report_action"
     parent="donation_report_title_menu" sequence="10"/>
 
-</data>
+
 </odoo>

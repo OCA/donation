@@ -3,10 +3,10 @@
 # © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
-from openerp.exceptions import UserError, ValidationError
-from openerp.tools import float_is_zero, float_compare
-import openerp.addons.decimal_precision as dp
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError, ValidationError
+from odoo.tools import float_is_zero, float_compare
+import odoo.addons.decimal_precision as dp
 
 
 class DonationDonation(models.Model):
@@ -150,7 +150,7 @@ class DonationDonation(models.Model):
         index=True)
     tax_receipt_total = fields.Monetary(
         compute='_compute_total', string='Eligible Tax Receipt Sub-total',
-        store=True, currency_field='company_currency_id')
+        store=True, readonly=True, currency_field='company_currency_id')
 
     @api.multi
     @api.constrains('donation_date')
@@ -479,15 +479,15 @@ class DonationLine(models.Model):
     amount = fields.Monetary(
         compute='_compute_amount', string='Amount',
         currency_field='currency_id', digits=dp.get_precision('Account'),
-        store=True)
+        store=True, readonly=True)
     amount_company_currency = fields.Monetary(
         compute='_compute_amount_company_currency',
         string='Amount in Company Currency',
         currency_field='company_currency_id',
-        digits=dp.get_precision('Account'), store=True)
+        digits=dp.get_precision('Account'), store=True, readonly=True)
     analytic_account_id = fields.Many2one(
         'account.analytic.account', string='Analytic Account',
-        domain=[('type', 'not in', ('view', 'template'))], ondelete='restrict')
+        ondelete='restrict')
     sequence = fields.Integer('Sequence')
     # for the fields tax_receipt_ok and in_kind, we made an important change
     # between v8 and v9: in v8, it was a reglar field set by an onchange
@@ -516,10 +516,11 @@ class DonationTaxReceipt(models.Model):
     donation_ids = fields.One2many(
         'donation.donation', 'tax_receipt_id', string='Related Donations')
 
+    @api.model
     def update_tax_receipt_annual_dict(
             self, tax_receipt_annual_dict, start_date, end_date, precision):
         super(DonationTaxReceipt, self).update_tax_receipt_annual_dict(
-            tax_receipt_annual_dict)
+            tax_receipt_annual_dict, start_date, end_date, precision)
         donations = self.env['donation.donation'].search([
             ('donation_date', '>=', start_date),
             ('donation_date', '<=', end_date),

@@ -6,7 +6,7 @@
 -->
 
 <odoo>
-<data>
+
 
 <record id="partner_donation_action" model="ir.actions.act_window">
     <field name="name">Donations</field>
@@ -31,5 +31,5 @@
     </field>
 </record>
 
-</data>
+
 </odoo>
