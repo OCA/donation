@@ -13,7 +13,7 @@
     'website': 'http://www.barroux.org',
     'depends': ['donation'],
     'data': [
-        'views/company.xml',
+        'views/account_config_settings.xml',
         'views/bank_statement.xml',
         'views/donation.xml',
         'security/ir.model.access.csv',
