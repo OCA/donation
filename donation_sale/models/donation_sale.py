@@ -3,9 +3,9 @@
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
-from openerp.exceptions import UserError, ValidationError
-from openerp.tools import float_is_zero
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError, ValidationError
+from odoo.tools import float_is_zero
 import logging
 
 logger = logging.getLogger(__name__)
@@ -244,10 +244,11 @@ class DonationTaxReceipt(models.Model):
     invoice_ids = fields.One2many(
         'account.invoice', 'tax_receipt_id', string='Related Invoices')
 
+    @api.model
     def update_tax_receipt_annual_dict(
             self, tax_receipt_annual_dict, start_date, end_date, precision):
         super(DonationTaxReceipt, self).update_tax_receipt_annual_dict(
-            tax_receipt_annual_dict)
+            tax_receipt_annual_dict, start_date, end_date, precision)
         invoices = self.env['account.invoice'].search([
             ('date_invoice', '>=', start_date),
             ('date_invoice', '<=', end_date),
