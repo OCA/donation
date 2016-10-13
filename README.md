@@ -28,11 +28,21 @@ Please refer to the README of each module to have more information about
 how to configure and use the modules.
 
 [//]: # (addons)
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[donation](donation/) | 9.0.1.0.0 | Manage donations
+[donation_bank_statement](donation_bank_statement/) | 9.0.1.0.0 | Creates donation from unreconciled bank statement lines
+[donation_base](donation_base/) | 9.0.1.0.0 | Base module for donations
+[donation_direct_debit](donation_direct_debit/) | 9.0.1.0.0 | Auto-generate direct debit order on donation validation
+[donation_recurring](donation_recurring/) | 9.0.1.0.0 | Manage recurring donations
+[donation_sale](donation_sale/) | 9.0.1.0.0 | Manage donations in sale orders
+
 Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[donation_direct_debit](donation_direct_debit/) | 8.0.0.1.0 (unported) | Auto-generate direct debit order on donation validation
-[donation_thanks](donation_thanks/) | 8.0.0.1.0 (unported) | Create thanks letter for a donation
+[donation_thanks](donation_thanks/) | 9.0.1.0.0 (unported) | Create thanks letter for a donation
 
 [//]: # (end addons)
