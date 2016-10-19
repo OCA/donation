@@ -14,7 +14,7 @@ class DonationCampaign(models.Model):
 
     @api.multi
     @api.depends('code', 'name')
-    def _compute_display_name(self):
+    def _compute_display_name_field(self):
         for camp in self:
             name = camp.name
             if camp.code:
@@ -24,7 +24,7 @@ class DonationCampaign(models.Model):
     code = fields.Char(string='Code', size=10)
     name = fields.Char(string='Name', required=True)
     display_name = fields.Char(
-        string='Display Name', compute='_compute_display_name',
+        string='Display Name', compute='_compute_display_name_field',
         readonly=True, store=True)
     start_date = fields.Date(
         string='Start Date', default=fields.Date.context_today)
