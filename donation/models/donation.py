@@ -137,7 +137,7 @@ class DonationDonation(models.Model):
         track_visibility='onchange', ondelete='restrict',
         default=lambda self: self.env.user.context_donation_campaign_id)
     display_name = fields.Char(
-        string='Display Name', compute='_compute_display_name',
+        string='Display Name', compute='_compute_display_name_field',
         readonly=True)
     tax_receipt_id = fields.Many2one(
         'donation.tax.receipt', string='Tax Receipt', readonly=True,
@@ -410,7 +410,7 @@ class DonationDonation(models.Model):
 
     @api.multi
     @api.depends('state', 'partner_id', 'move_id')
-    def _compute_display_name(self):
+    def _compute_display_name_field(self):
         for donation in self:
             if donation.state == 'draft':
                 name = _('Draft Donation of %s') % donation.partner_id.name
