@@ -46,7 +46,7 @@ class DonationDonation(models.Model):
 
     @api.multi
     @api.depends('state', 'partner_id', 'move_id', 'recurring_template')
-    def _compute_display_name(self):
+    def _compute_display_name_field(self):
         for donation in self:
             if donation.state == 'draft':
                 if donation.recurring_template == 'active':
