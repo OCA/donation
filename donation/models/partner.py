@@ -11,7 +11,7 @@ class ResPartner(models.Model):
 
     @api.multi
     @api.depends('donation_ids.partner_id')
-    def _donation_count(self):
+    def _compute_donation_count(self):
         # The current user may not have access rights for donations
         for partner in self:
             try:
@@ -23,4 +23,5 @@ class ResPartner(models.Model):
         'donation.donation', 'partner_id', string='Donations',
         readonly=True)
     donation_count = fields.Integer(
-        compute='_donation_count', string="# of Donations", readonly=True)
+        compute='_compute_donation_count', string="# of Donations",
+        readonly=True)
