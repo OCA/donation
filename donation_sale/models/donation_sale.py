@@ -18,7 +18,7 @@ class AccountInvoice(models.Model):
     @api.depends(
         'invoice_line_ids.product_id', 'invoice_line_ids.price_unit',
         'invoice_line_ids.quantity')
-    def _tax_receipt_total(self):
+    def _compute_tax_receipt_total(self):
         for inv in self:
             total = 0.0
             # Do not consider other currencies for tax receipts
@@ -43,7 +43,8 @@ class AccountInvoice(models.Model):
         ], string='Tax Receipt Option', readonly=True,
         states={'draft': [('readonly', False)]}, index=True)
     tax_receipt_total = fields.Monetary(
-        compute='_tax_receipt_total', string='Eligible Tax Receipt Sub-total',
+        compute='_compute_tax_receipt_total',
+        string='Eligible Tax Receipt Sub-total',
         store=True, currency_field='company_currency_id')
 
     @api.onchange('partner_id')
@@ -163,14 +164,15 @@ class SaleOrder(models.Model):
         ], string='Tax Receipt Option', readonly=True,
         states={'draft': [('readonly', False)]})
     tax_receipt_total = fields.Monetary(
-        compute='_tax_receipt_total', string='Eligible Tax Receipt Sub-total',
+        compute='_compute_tax_receipt_total',
+        string='Eligible Tax Receipt Sub-total',
         store=True, currency_field='currency_id')
 
     @api.multi
     @api.depends(
         'order_line.product_id', 'order_line.price_unit',
         'order_line.product_uom_qty')
-    def _tax_receipt_total(self):
+    def _compute_tax_receipt_total(self):
         for sale in self:
             total = 0.0
             # Do not consider other currencies for tax receipts
