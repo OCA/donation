@@ -78,6 +78,7 @@ class DonationReport(models.Model):
 
     def init(self):
         tools.drop_view_if_exists(self._cr, self._table)
-        self._cr.execute("CREATE OR REPLACE VIEW %s AS (%s FROM %s %s %s)", (
+        sql = "CREATE OR REPLACE VIEW %s AS (%s FROM %s %s %s)" % (
             self._table, self._select(), self._from(),
-            self._where(), self._group_by()))
+            self._where(), self._group_by())
+        self._cr.execute(sql)
