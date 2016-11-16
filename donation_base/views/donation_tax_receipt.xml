@@ -60,10 +60,10 @@
             <filter name="annual" string="Annual Tax Receipts"
                 domain="[('type', '=', 'annual')]" />
             <group string="Group By" name="groupby">
-                <filter name="donation_date" string="Donation Date"
+                <filter name="donation_date_groupby" string="Donation Date"
                     context="{'group_by': 'donation_date'}"/>
-                <filter name="type" string="Type" context="{'group_by': 'type'}"/>
-                <filter name="partner_id" string="Partner"
+                <filter name="type_groupby" string="Type" context="{'group_by': 'type'}"/>
+                <filter name="partner_groupby" string="Partner"
                     context="{'group_by': 'partner_id'}"/>
             </group>
         </search>
@@ -94,7 +94,7 @@
 </record>
 
 <record id="donation_tax_receipt_action" model="ir.actions.act_window">
-    <field name="name">Donation Tax Receipt</field>
+    <field name="name">Donation Tax Receipts</field>
     <field name="res_model">donation.tax.receipt</field>
     <field name="view_mode">tree,form,graph,pivot</field>
 </record>
