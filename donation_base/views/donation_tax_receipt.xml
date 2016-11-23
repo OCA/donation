@@ -52,7 +52,7 @@
     <field name="name">donation.tax.receipt.search</field>
     <field name="model">donation.tax.receipt</field>
     <field name="arch"  type="xml">
-        <search string="Search Donation Taxes Receipts">
+        <search string="Search Donation Tax Receipts">
             <field name="number"/>
             <field name="partner_id"/>
             <filter name="each" string="One-Time Tax Receipts"
@@ -74,7 +74,7 @@
     <field name="name">donation.tax.receipt.graph</field>
     <field name="model">donation.tax.receipt</field>
     <field name="arch"  type="xml">
-        <graph string="Donation Taxes Receipts">
+        <graph string="Donation Tax Receipts">
             <field name="date"/>
             <field name="amount" type="measure"/>
         </graph>
@@ -85,7 +85,7 @@
     <field name="name">donation.tax.receipt.pivot</field>
     <field name="model">donation.tax.receipt</field>
     <field name="arch"  type="xml">
-        <pivot string="Donation Taxes Receipts">
+        <pivot string="Donation Tax Receipts">
             <field name="date" type="row"/>
             <field name="type" type="col"/>
             <field name="amount" type="measure"/>

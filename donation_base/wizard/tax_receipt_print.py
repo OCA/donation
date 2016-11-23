@@ -9,7 +9,7 @@ from openerp.exceptions import UserError
 
 class DonationTaxReceiptPrint(models.TransientModel):
     _name = 'donation.tax.receipt.print'
-    _description = 'Print Donation Tax Receipt'
+    _description = 'Print Donation Tax Receipts'
 
     @api.model
     def _get_receipts(self):
