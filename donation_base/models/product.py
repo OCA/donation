@@ -11,8 +11,7 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     donation = fields.Boolean(
-        string='Is a Donation', track_visibility='onchange',
-        help="Specify if the product can be selected in a donation line.")
+        string='Is a Donation', track_visibility='onchange')
     in_kind_donation = fields.Boolean(
         string="In-Kind Donation", track_visibility='onchange')
     tax_receipt_ok = fields.Boolean(
