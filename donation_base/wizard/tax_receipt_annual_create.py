@@ -10,7 +10,7 @@ from datetime import datetime
 
 class TaxReceiptAnnualCreate(models.TransientModel):
     _name = 'tax.receipt.annual.create'
-    _description = 'Generate Annual Tax Receipt'
+    _description = 'Generate Annual Tax Receipts'
 
     @api.model
     def _default_end_date(self):
