@@ -29,7 +29,7 @@ msgstr "Créer les reçus fiscaux annuels"
 #. module: donation_sale
 #: model:ir.ui.menu,name:donation_sale.donation_tax_receipt_menu
 msgid "Donation Tax Receipts"
-msgstr "Reçus fiscaux annuels"
+msgstr "Reçus fiscaux"
 
 #. module: donation_sale
 #: model:ir.ui.menu,name:donation_sale.account_donation_menu
