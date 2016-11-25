@@ -107,21 +107,13 @@ class AccountInvoice(models.Model):
             self.tax_receipt_option = 'annual'
         return res
 
-    @api.model
-    def _generate_each_tax_receipts(self):
-        logger.info(
-            "START to generate donation tax receipts from invoices "
-            "(type='each')")
+    @api.multi
+    def _generate_each_tax_receipt_from_invoices(self):
         precision = self.env['decimal.precision'].precision_get('Account')
-        invoices = self.env['account.invoice'].search([
-            ('tax_receipt_option', '=', 'each'),
-            ('tax_receipt_id', '=', False),
-            ('tax_receipt_total', '!=', 0),
-            ('company_id', '=', self.env.user.company_id.id),
-            ('state', '=', 'paid'),
-            ])
         dtro = self.env['donation.tax.receipt']
-        for invoice in invoices:
+        for invoice in self:
+            if invoice.tax_receipt_option != 'each':
+                continue
             tax_receipt_amount = invoice.tax_receipt_total
             if float_is_zero(tax_receipt_amount, precision_digits=precision):
                 continue
@@ -132,6 +124,20 @@ class AccountInvoice(models.Model):
             logger.debug(
                 'Tax receipt ID %d generated for invoice ID %d partner %s',
                 tax_receipt.id, invoice.id, partner.name)
+
+    @api.model
+    def _generate_each_tax_receipts(self):
+        logger.info(
+            "START to generate donation tax receipts from invoices "
+            "(type='each')")
+        invoices = self.env['account.invoice'].search([
+            ('tax_receipt_option', '=', 'each'),
+            ('tax_receipt_id', '=', False),
+            ('tax_receipt_total', '!=', 0),
+            ('company_id', '=', self.env.user.company_id.id),
+            ('state', '=', 'paid'),
+            ])
+        invoices._generate_each_tax_receipt_from_invoices()
         logger.info(
             "END of the generation of donation tax receipts from invoices "
             "(type='each')")
