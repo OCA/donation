@@ -103,10 +103,12 @@
     <field name="model">donation.donation</field>
     <field name="arch"  type="xml">
         <search string="Search Donations">
-            <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]" />
-            <filter name="done" string="Done" domain="[('state', '=', 'done')]" />
             <field name="number"/>
             <field name="partner_id"/>
+            <separator/>
+            <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]" />
+            <filter name="done" string="Done" domain="[('state', '=', 'done')]" />
+            <filter name="cancel" string="Cancelled" domain="[('state', '=', 'cancel')]" />
             <group string="Group By" name="groupby">
                 <filter name="date_groupby" string="Date" context="{'group_by': 'donation_date'}"/>
                 <filter name="partner_groupby" string="Partner" context="{'group_by': 'partner_id'}"/>
