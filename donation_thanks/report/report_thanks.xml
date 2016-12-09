@@ -6,19 +6,16 @@
 -->
 
 <odoo>
-<data>
 
 
 <record id="report_thanks" model="ir.actions.report.xml">
     <field name="name">Thanks Letter</field>
     <field name="model">donation.donation</field>
     <field name="report_name">donation.thanks</field>
-    <field name="report_type">aeroo</field>
-    <field name="in_format">oo-odt</field>
-    <field name="report_rml">donation_thanks/thanks.odt</field>
-    <field name="parser_state">default</field>
-    <field name="tml_source">file</field>
-    <field name="out_format" ref="report_aeroo.report_mimetypes_odt_odt"/>
+    <field name="report_type">py3o</field>
+    <field name="py3o_filetype">odt</field>
+    <field name="module">donation_thanks</field>
+    <field name="py3o_template_fallback">report/thanks.odt</field>
 </record>
 
 <record id="button_report_thanks" model="ir.values"> <!-- Add print button -->
@@ -28,7 +25,6 @@
     <field name="value" eval="'ir.actions.report.xml,%d'%report_thanks" />
 </record>
 
-<!-- The print button in the form view is defined in donation_view.xml -->
+<!-- The print button in the form view is defined in views/donation.xml -->
 
-</data>
 </odoo>

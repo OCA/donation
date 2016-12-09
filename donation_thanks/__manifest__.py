@@ -5,16 +5,16 @@
 
 {
     'name': 'Donation Thanks',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Create thanks letter for a donation',
-    'author': 'Barroux Abbey, Akretion, Odoo Community Association (OCA)',
+    'author': 'Barroux Abbey,Akretion,Odoo Community Association (OCA)',
     'website': 'http://www.barroux.org',
-    'depends': ['donation', 'report_aeroo'],
+    'depends': ['donation', 'report_py3o'],
     'data': [
-        'report_thanks.xml',
-        'donation_view.xml',
+        'report/report_thanks.xml',
+        'views/donation.xml',
         ],
-    'installable': False,
+    'installable': True,
 }

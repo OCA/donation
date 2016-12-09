@@ -49,7 +49,8 @@
     <field name="model">donation.donation</field>
     <field name="inherit_id" ref="donation.donation_search"/>
     <field name="arch"  type="xml">
-        <filter name="done" position="after">
+        <filter name="cancel" position="after">
+            <separator/>
             <filter name="from_recurring"
                 string="From Recurring"
                 domain="[('source_recurring_id', '!=', False)]"/>

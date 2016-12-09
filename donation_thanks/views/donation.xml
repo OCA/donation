@@ -6,7 +6,6 @@
 -->
 
 <odoo>
-<data>
 
 
 <record id="donation_form" model="ir.ui.view">
@@ -26,6 +25,17 @@
     </field>
 </record>
 
+<record id="donation_search" model="ir.ui.view">
+    <field name="name">add.print.filter.donation.search</field>
+    <field name="model">donation.donation</field>
+    <field name="inherit_id" ref="donation.donation_search"/>
+    <field name="arch" type="xml">
+        <filter name="cancel" position="after">
+            <separator/>
+            <filter name="thanks_to_print" string="Thanks to Print" domain="[('thanks_printed', '=', False)]" />
+        </filter>
+    </field>
+</record>
 
-</data>
+
 </odoo>

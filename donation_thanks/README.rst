@@ -20,7 +20,7 @@ On the form view of a validated donation, click on the button *Print Thanks Lett
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/180/9.0
+   :target: https://runbot.odoo-community.org/runbot/180/10.0
 
 Credits
 =======
