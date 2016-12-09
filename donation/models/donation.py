@@ -453,7 +453,7 @@ class DonationLine(models.Model):
     @api.depends(
         'unit_price', 'quantity', 'donation_id.currency_id',
         'donation_id.donation_date', 'donation_id.company_id')
-    def _compute_amount_company_currency(self):
+    def _compute_amount(self):
         for line in self:
             amount = line.quantity * line.unit_price
             line.amount = amount
@@ -481,7 +481,7 @@ class DonationLine(models.Model):
         currency_field='currency_id', digits=dp.get_precision('Account'),
         store=True, readonly=True)
     amount_company_currency = fields.Monetary(
-        compute='_compute_amount_company_currency',
+        compute='_compute_amount',
         string='Amount in Company Currency',
         currency_field='company_currency_id',
         digits=dp.get_precision('Account'), store=True, readonly=True)
