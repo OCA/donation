@@ -27,7 +27,7 @@
     <field name="inherit_id" ref="account.invoice_tree"/>
     <field name="arch"  type="xml">
         <field name="residual_signed" position="after">
-            <field name="tax_receipt_option"/>
+            <field name="tax_receipt_id"/>
         </field>
     </field>
 </record>
