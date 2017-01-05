@@ -61,6 +61,7 @@ class AccountInvoice(models.Model):
             'company_id': self.company_id.id,
             'currency_id': self.company_currency_id.id,
             'donation_date': self.date_invoice,
+            'date': self.date_invoice,
             'amount': self.tax_receipt_total,
             'type': 'each',
             'partner_id': self.commercial_partner_id.id,
@@ -108,6 +109,30 @@ class AccountInvoice(models.Model):
         return res
 
     @api.multi
+    def action_invoice_paid(self):
+        res = super(AccountInvoice, self).action_invoice_paid()
+        dtro = self.env['donation.tax.receipt']
+        to_gen_tax_receipt_invoices = self.filtered(
+            lambda inv: inv.state == 'paid' and not inv.tax_receipt_id and
+            inv.tax_receipt_option == 'each')
+        for invoice in to_gen_tax_receipt_invoices:
+            tax_receipt_amount = invoice.tax_receipt_total
+            if float_is_zero(
+                    tax_receipt_amount,
+                    precision_rounding=invoice.currency_id.rounding):
+                continue
+            vals = invoice._prepare_each_tax_receipt()
+            tax_receipt = dtro.with_context(
+                ir_sequence_date=invoice.date_invoice).create(vals)
+            invoice.tax_receipt_id = tax_receipt.id
+            logger.debug(
+                'Tax receipt ID %d generated for invoice ID %d partner %s',
+                tax_receipt.id, invoice.id, invoice.commercial_partner_id.name)
+        return res
+
+    # TODO: remove this method and the one below
+    # if the inherit of action_invoice_paid() works well
+    @api.multi
     def _generate_each_tax_receipt_from_invoices(self):
         precision = self.env['decimal.precision'].precision_get('Account')
         dtro = self.env['donation.tax.receipt']
@@ -119,7 +144,8 @@ class AccountInvoice(models.Model):
                 continue
             partner = invoice.commercial_partner_id
             vals = invoice._prepare_each_tax_receipt()
-            tax_receipt = dtro.create(vals)
+            tax_receipt = dtro.with_context(
+                ir_sequence_date=invoice.date_invoice).create(vals)
             invoice.tax_receipt_id = tax_receipt.id
             logger.debug(
                 'Tax receipt ID %d generated for invoice ID %d partner %s',
