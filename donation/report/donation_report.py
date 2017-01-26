@@ -28,8 +28,13 @@ class DonationReport(models.Model):
         'donation.campaign', string='Donation Campaign', readonly=True)
     in_kind = fields.Boolean(string='In Kind')
     tax_receipt_ok = fields.Boolean(string='Eligible for a Tax Receipt')
-    amount_company_currency = fields.Float(
-        'Amount Company Currency', readonly=True)
+    company_currency_id = fields.Many2one(
+        'res.currency', string='Company Currency', readonly=True)
+    amount_company_currency = fields.Monetary(
+        'Amount', readonly=True, currency_field='company_currency_id')
+    tax_receipt_amount = fields.Monetary(
+        'Tax Receipt Eligible Amount', readonly=True,
+        currency_field='company_currency_id')
 
     def _select(self):
         select = """
@@ -43,7 +48,9 @@ class DonationReport(models.Model):
                 d.partner_id AS partner_id,
                 d.country_id AS country_id,
                 d.campaign_id AS campaign_id,
-                sum(l.amount_company_currency) AS amount_company_currency
+                d.company_currency_id AS company_currency_id,
+                sum(l.amount_company_currency) AS amount_company_currency,
+                sum(l.tax_receipt_amount) AS tax_receipt_amount
                 """
         return select
 
@@ -72,7 +79,8 @@ class DonationReport(models.Model):
                 d.partner_id,
                 d.country_id,
                 d.campaign_id,
-                d.company_id
+                d.company_id,
+                d.company_currency_id
             """
         return group_by
 
