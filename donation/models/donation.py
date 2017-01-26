@@ -90,7 +90,8 @@ class DonationDonation(models.Model):
     amount_total = fields.Monetary(
         compute='_compute_total', string='Amount Total',
         currency_field='currency_id', store=True,
-        digits=dp.get_precision('Account'), readonly=True)
+        digits=dp.get_precision('Account'), readonly=True,
+        track_visibility='onchange')
     amount_total_company_currency = fields.Monetary(
         compute='_compute_total', string='Amount Total in Company Currency',
         currency_field='company_currency_id',
