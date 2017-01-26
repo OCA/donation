@@ -45,10 +45,10 @@ class TaxReceiptAnnualCreate(models.TransientModel):
         self.ensure_one()
         dtro = self.env['donation.tax.receipt']
         tax_receipt_annual_dict = {}
-        precision = self.env['decimal.precision'].precision_get('Account')
+        precision_rounding = self.env.user.company_id.currency_id.rounding
         self.env['donation.tax.receipt'].update_tax_receipt_annual_dict(
             tax_receipt_annual_dict, self.start_date, self.end_date,
-            precision)
+            precision_rounding)
         # {commercial_partner: {
         #       'amount': amount,
         #       'extra_vals': {donation_ids': [donation1_id, donation2_id]}}}

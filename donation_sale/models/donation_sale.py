@@ -195,10 +195,12 @@ class SaleOrder(models.Model):
         ('annual', 'Annual Tax Receipt'),
         ], string='Tax Receipt Option', readonly=True,
         states={'draft': [('readonly', False)]})
+    company_currency_id = fields.Many2one(
+        related='company_id.currency_id', readonly=True)
     tax_receipt_total = fields.Monetary(
         compute='_compute_tax_receipt_total',
         string='Eligible Tax Receipt Sub-total',
-        store=True, currency_field='currency_id')
+        store=True, currency_field='company_currency_id')
 
     @api.multi
     @api.depends(
@@ -207,17 +209,15 @@ class SaleOrder(models.Model):
     def _compute_tax_receipt_total(self):
         for sale in self:
             total = 0.0
-            # Do not consider other currencies for tax receipts
-            # because, for the moment, only very very few countries
-            # accept tax receipts from other countries, and never in another
-            # currency. If you know such cases, please tell us and we will
-            # update the code of this module
-            if sale.currency_id == sale.company_id.currency_id:
-                for line in sale.order_line:
-                    if line.product_id.tax_receipt_ok:
-                        # there are not sale taxes on tax receipts
-                        total += line.product_uom_qty * line.price_unit
-            sale.tax_receipt_total = total
+            for line in sale.order_line:
+                if line.product_id.tax_receipt_ok:
+                    # there are not sale taxes on tax receipts
+                    total += line.product_uom_qty * line.price_unit *\
+                        (1 - (line.discount or 0.0) / 100.0)
+            sale_currency = sale.currency_id.with_context(date=sale.date_order)
+            total_cc = sale_currency.compute(
+                total, sale.company_id.currency_id)
+            sale.tax_receipt_total = total_cc
 
     @api.onchange('partner_id')
     def donation_sale_change(self):
@@ -280,9 +280,10 @@ class DonationTaxReceipt(models.Model):
 
     @api.model
     def update_tax_receipt_annual_dict(
-            self, tax_receipt_annual_dict, start_date, end_date, precision):
+            self, tax_receipt_annual_dict, start_date, end_date,
+            precision_rounding):
         super(DonationTaxReceipt, self).update_tax_receipt_annual_dict(
-            tax_receipt_annual_dict, start_date, end_date, precision)
+            tax_receipt_annual_dict, start_date, end_date, precision_rounding)
         invoices = self.env['account.invoice'].search([
             ('date_invoice', '>=', start_date),
             ('date_invoice', '<=', end_date),
@@ -294,7 +295,8 @@ class DonationTaxReceipt(models.Model):
             ])
         for invoice in invoices:
             tax_receipt_amount = invoice.tax_receipt_total
-            if float_is_zero(tax_receipt_amount, precision_digits=precision):
+            if float_is_zero(
+                    tax_receipt_amount, precision_rounding=precision_rounding):
                 continue
             partner = invoice.commercial_partner_id
             if partner not in tax_receipt_annual_dict:

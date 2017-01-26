@@ -3,8 +3,7 @@
 # © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
-import openerp.addons.decimal_precision as dp
+from odoo import models, fields, api
 
 
 class DonationTaxReceipt(models.Model):
@@ -19,8 +18,7 @@ class DonationTaxReceipt(models.Model):
         index=True)
     donation_date = fields.Date(string='Donation Date')
     amount = fields.Monetary(
-        string='Amount', digits=dp.get_precision('Account'),
-        currency_field='currency_id')
+        string='Amount', currency_field='currency_id')
     currency_id = fields.Many2one(
         'res.currency', string='Currency', required=True, ondelete='restrict',
         default=lambda self: self.env.user.company_id.currency_id.id)
@@ -49,6 +47,7 @@ class DonationTaxReceipt(models.Model):
 
     @api.model
     def update_tax_receipt_annual_dict(
-            self, tax_receipt_annual_dict, start_date, end_date, precision):
+            self, tax_receipt_annual_dict, start_date, end_date,
+            precision_rounding):
         '''This method is inherited in donation and donation_sale
         It is called by the tax.receipt.annual.create wizard'''
