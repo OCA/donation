@@ -14,6 +14,7 @@
     'depends': ['donation_base'],
     'data': [
         'security/donation_security.xml',
+        'wizard/tax_receipt_option_switch_view.xml',
         'views/donation.xml',
         'views/account.xml',
         'views/donation_campaign.xml',
