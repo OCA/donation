@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  © 2017 Barroux Abbey (www.barroux.org)
+  © 2017 Akretion France (www.akretion.com)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  @author: Brother Bernard <informatique _at_ barroux.org>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<openerp>
+<data>
+
+<record id="donation_tax_receipt_option_switch_form" model="ir.ui.view">
+    <field name="name">donation_tax_receipt_option_switch.form</field>
+    <field name="model">donation.tax.receipt.option.switch</field>
+    <field name="arch"  type="xml">
+        <form string="Change Tax Receipt Option">
+            <group name="main">
+                <field name="donation_id" readonly="1"/>
+                <field name="new_tax_receipt_option"/>
+            </group>
+            <footer>
+                <button type="object" name="switch"
+                    string="Update" class="oe_highlight"/>
+                <button special="cancel" string="Cancel" class="oe_link"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="donation_tax_receipt_option_switch_action" model="ir.actions.act_window">
+    <field name="name">Change Tax Receipt Option</field>
+    <field name="res_model">donation.tax.receipt.option.switch</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+</record>
+
+</data>
+</openerp>
