@@ -32,7 +32,7 @@ class ResPartner(models.Model):
         ('none', 'None'),
         ('each', 'For Each Donation'),
         ('annual', 'Annual Tax Receipt'),
-        ], string='Tax Receipt Option')
+        ], string='Tax Receipt Option', track_visibility='onchange')
 
     @api.model
     def _commercial_fields(self):

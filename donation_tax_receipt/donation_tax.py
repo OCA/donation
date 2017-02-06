@@ -23,6 +23,7 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning
 import openerp.addons.decimal_precision as dp
+from openerp.tools import float_is_zero
 
 
 class DonationDonation(models.Model):
@@ -48,12 +49,13 @@ class DonationDonation(models.Model):
 
     tax_receipt_id = fields.Many2one(
         'donation.tax.receipt', string='Tax Receipt', readonly=True,
-        copy=False)
+        copy=False, track_visibility='onchange')
     tax_receipt_option = fields.Selection([
         ('none', 'None'),
         ('each', 'For Each Donation'),
         ('annual', 'Annual Tax Receipt'),
-        ], string='Tax Receipt Option', states={'done': [('readonly', True)]})
+        ], string='Tax Receipt Option', states={'done': [('readonly', True)]},
+        track_visibility='onchange')
     tax_receipt_total = fields.Float(
         compute='_tax_receipt_total', string='Eligible Tax Receipt Sub-total',
         store=True)
@@ -71,15 +73,21 @@ class DonationDonation(models.Model):
         return vals
 
     @api.one
-    def validate(self):
-        res = super(DonationDonation, self).validate()
+    def generate_each_tax_receipt(self):
+        prec = self.env['decimal.precision'].precision_get('Account')
         if (
                 self.tax_receipt_option == 'each' and
-                self.tax_receipt_total and
-                not self.tax_receipt_id):
+                not self.tax_receipt_id and
+                not float_is_zero(
+                    self.tax_receipt_total, precision_digits=prec)):
             receipt_vals = self._prepare_tax_receipt()
             receipt = self.env['donation.tax.receipt'].create(receipt_vals)
             self.tax_receipt_id = receipt.id
+
+    @api.one
+    def validate(self):
+        res = super(DonationDonation, self).validate()
+        self.generate_each_tax_receipt()
         return res
 
     @api.one
