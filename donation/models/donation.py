@@ -135,13 +135,13 @@ class DonationDonation(models.Model):
         readonly=True)
     tax_receipt_id = fields.Many2one(
         'donation.tax.receipt', string='Tax Receipt', readonly=True,
-        copy=False)
+        copy=False, track_visibility='onchange')
     tax_receipt_option = fields.Selection([
         ('none', 'None'),
         ('each', 'For Each Donation'),
         ('annual', 'Annual Tax Receipt'),
         ], string='Tax Receipt Option', states={'done': [('readonly', True)]},
-        index=True)
+        index=True, track_visibility='onchange')
     tax_receipt_total = fields.Monetary(
         compute='_compute_total', string='Tax Receipt Eligible Amount',
         store=True, readonly=True, currency_field='company_currency_id',
@@ -317,7 +317,9 @@ class DonationDonation(models.Model):
                     "Cannot validate the donation of %s because it is not "
                     "in draft state.") % donation.partner_id.name)
 
-            if check_total and donation.check_total != donation.amount_total:
+            if check_total and float_compare(
+                    donation.check_total, donation.amount_total,
+                    precision_rounding=donation.currency_id.rounding):
                 raise UserError(_(
                     "The amount of the donation of %s (%s) is different "
                     "from the sum of the donation lines (%s).") % (
@@ -326,7 +328,9 @@ class DonationDonation(models.Model):
 
             vals = {'state': 'done'}
 
-            if donation.amount_total:
+            if not float_is_zero(
+                    donation.amount_total,
+                    precision_rounding=donation.currency_id.rounding):
                 move_vals = donation._prepare_donation_move()
                 # when we have a full in-kind donation: no account move
                 if move_vals:
@@ -336,16 +340,27 @@ class DonationDonation(models.Model):
                 else:
                     donation.message_post(_(
                         'Full in-kind donation: no account move generated'))
-            if (
-                    donation.tax_receipt_option == 'each' and
-                    donation.tax_receipt_total and
-                    not donation.tax_receipt_id):
-                receipt_vals = donation._prepare_each_tax_receipt()
-                receipt = self.env['donation.tax.receipt'].create(receipt_vals)
+
+            receipt = donation.generate_each_tax_receipt()
+            if receipt:
                 vals['tax_receipt_id'] = receipt.id
 
             donation.write(vals)
         return
+
+    @api.multi
+    def generate_each_tax_receipt(self):
+        self.ensure_one()
+        receipt = False
+        if (
+                self.tax_receipt_option == 'each' and
+                not self.tax_receipt_id and
+                not float_is_zero(
+                    self.tax_receipt_total,
+                    precision_rounding=self.company_currency_id.rounding)):
+            receipt_vals = self._prepare_each_tax_receipt()
+            receipt = self.env['donation.tax.receipt'].create(receipt_vals)
+        return receipt
 
     @api.multi
     def save_default_values(self):
