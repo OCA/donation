@@ -24,6 +24,9 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class TaxReceiptAnnualCreate(models.TransientModel):
@@ -60,6 +63,9 @@ class TaxReceiptAnnualCreate(models.TransientModel):
     @api.multi
     def generate_annual_receipts(self):
         self.ensure_one()
+        logger.info(
+            'START to generate annual fiscal receipts from %s to %s',
+            self.start_date, self.end_date)
         donations = self.env['donation.donation'].search([
             ('donation_date', '>=', self.start_date),
             ('donation_date', '<=', self.end_date),
@@ -94,8 +100,8 @@ class TaxReceiptAnnualCreate(models.TransientModel):
             # or an each fiscal receipt
             already_tax_receipts = \
                 self.env['donation.tax.receipt'].search([
-                    ('date', '<=', self.end_date),
-                    ('date', '>=', self.start_date),
+                    ('donation_date', '<=', self.end_date),
+                    ('donation_date', '>=', self.start_date),
                     ('company_id', '=', vals['company_id']),
                     ('partner_id', '=', vals['partner_id']),
                     ])
@@ -108,6 +114,9 @@ class TaxReceiptAnnualCreate(models.TransientModel):
                         already_tax_receipts[0].date))
             tax_receipt = self.env['donation.tax.receipt'].create(vals)
             tax_receipt_ids.append(tax_receipt.id)
+            logger.info('Tax receipt %s generated', tax_receipt.number)
+        logger.info(
+            '%d annual fiscal receipts generated', len(tax_receipt_ids))
         action = {
             'type': 'ir.actions.act_window',
             'name': 'Tax Receipts',
