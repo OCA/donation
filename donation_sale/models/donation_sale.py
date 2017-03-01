@@ -57,11 +57,15 @@ class AccountInvoice(models.Model):
     @api.multi
     def _prepare_each_tax_receipt(self):
         self.ensure_one()
+        if self.payment_ids:
+            date = self.payment_ids[0].payment_date
+        else:
+            date = self.date_invoice
         vals = {
             'company_id': self.company_id.id,
             'currency_id': self.company_currency_id.id,
-            'donation_date': self.date_invoice,
-            'date': self.date_invoice,
+            'donation_date': date,
+            'date': date,
             'amount': self.tax_receipt_total,
             'type': 'each',
             'partner_id': self.commercial_partner_id.id,
