@@ -13,12 +13,18 @@
     <field name="model">donation.donation</field>
     <field name="inherit_id" ref="donation.donation_form"/>
     <field name="arch"  type="xml">
-       <field name="company_id" position="after">
-            <field name="tax_receipt_option"/>
+        <field name="company_id" position="after">
+            <label for="tax_receipt_option"/>
+            <div name="tax_receipt_option">
+                <field name="tax_receipt_option" class="oe_inline"/>
+                <button name="%(donation_tax_receipt_option_switch_action)d"
+                    string="Change" type="action" class="oe_link"
+                    attrs="{'invisible': ['|', ('state', '!=', 'done'), ('tax_receipt_id', '!=', False)]}"/>
+            </div>
             <field name="tax_receipt_total" widget="monetary"
                 options="{'currency_field': 'currency_id'}"/>
             <field name="tax_receipt_id"/>
-       </field>
+        </field>
     </field>
 </record>
 

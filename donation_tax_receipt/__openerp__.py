@@ -31,6 +31,7 @@
     'website': 'http://www.barroux.org',
     'depends': ['donation', 'account_auto_fy_sequence'],
     'data': [
+        'wizard/tax_receipt_option_switch_view.xml',
         'donation_tax_view.xml',
         'donation_tax_data.xml',
         'partner_view.xml',
