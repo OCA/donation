@@ -40,6 +40,7 @@ addon | version | summary
 [donation_recurring](donation_recurring/) | 9.0.1.0.0 | Manage recurring donations
 [donation_sale](donation_sale/) | 9.0.1.0.0 | Manage donations in sale orders
 
+
 Unported addons
 ---------------
 addon | version | summary
