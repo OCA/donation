@@ -28,6 +28,7 @@ Please refer to the README of each module to have more information about
 how to configure and use the modules.
 
 [//]: # (addons)
+
 Unported addons
 ---------------
 addon | version | summary
