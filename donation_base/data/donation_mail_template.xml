@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2017 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo noupdate="1">
+
+
+<record id="tax_receipt_email_template" model="mail.template">
+    <field name="name">Donation Tax Receipt - Send by Email</field>
+    <field name="email_from">${(user.email and '%s &lt;%s&gt;' % (user.name, user.email) or '')|safe}</field>
+    <field name="subject">${object.company_id.name} - Tax Receipt ${object.number or 'n/a'}</field>
+    <field name="partner_to">${object.partner_id.id}</field>
+    <field name="model_id" ref="donation_base.model_donation_tax_receipt"/>
+    <field name="auto_delete" eval="False"/>
+    <field name="report_template" ref="report_donation_tax_receipt"/>
+    <field name="report_name">${object.company_id.name.replace(' ', '_')}-Tax_Receipt_${(object.number or '').replace('/','_')}</field>
+    <field name="lang">${object.partner_id.lang}</field>
+    <field name="body_html"><![CDATA[
+<p>Dear ${object.partner_id.name}
+% if object.partner_id.parent_id:
+    (<i>${object.partner_id.parent_id.name}</i>)
+% endif
+,</p>
+
+<p>Please find enclosed your tax receipt <strong>${object.number}</strong>
+amounting in <strong>${object.amount} ${object.currency_id.name}</strong>
+from ${object.company_id.name}.
+</p>
+
+<p>Thank you very much for your donation.</p>
+]]></field>
+</record>
+
+
+</odoo>
