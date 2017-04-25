@@ -1,2 +1,2 @@
 bank-payment
-reporting-engine https://github.com/akretion/reporting-engine 10-port-py3o
+reporting-engine
