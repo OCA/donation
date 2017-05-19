@@ -54,7 +54,8 @@
 
 <menuitem id="tax_receipt_annual_create_menu" sequence="40"
     action="donation_base.tax_receipt_annual_create_action"
-    parent="account_donation_menu"/>
+    parent="account_donation_menu"
+    groups="account.group_account_invoice"/>
 
 
 </odoo>
