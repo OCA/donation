@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+
+
+<record id="donation_campaign_form" model="ir.ui.view">
+    <field name="name">donation.campaign.form</field>
+    <field name="model">donation.campaign</field>
+    <field name="arch" type="xml">
+        <form string="Donation Campaign">
+            <group name="main">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="start_date"/>
+                <field name="nota"/>
+            </group>
+        </form>
+    </field>
+</record>
+
+<record id="donation_campaign_tree" model="ir.ui.view">
+    <field name="name">donation.campaign.tree</field>
+    <field name="model">donation.campaign</field>
+    <field name="arch" type="xml">
+        <tree string="Donation Campaigns">
+            <field name="code"/>
+            <field name="name"/>
+            <field name="start_date"/>
+        </tree>
+    </field>
+</record>
+
+<record id="donation_campaign_action" model="ir.actions.act_window">
+    <field name="name">Donation Campaigns</field>
+    <field name="res_model">donation.campaign</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="donation_campaign_menu" action="donation_campaign_action"
+    parent="donation_config_menu" sequence="30"/>
+
+
+</odoo>

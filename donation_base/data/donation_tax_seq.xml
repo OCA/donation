@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo noupdate="1">
+
+<record id="donation_tax_receipt_seq" model="ir.sequence">
+    <field name="name">Donation Tax Receipt</field>
+    <field name="code">donation.tax.receipt</field>
+    <field name="prefix">%(range_year)s-</field>
+    <field name="use_date_range" eval="True"/>
+    <field name="padding">5</field>
+</record>
+
+</odoo>

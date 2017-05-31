@@ -1,3 +1,8 @@
+language: python
+
+python:
+  - "2.7"
+
 sudo: false
 cache: pip
 
@@ -9,11 +14,6 @@ addons:
       - libcups2-dev
       - cups
 
-language: python
-
-python:
-  - "2.7"
-
 env:
   - VERSION="10.0" LINT_CHECK="1"
   - VERSION="10.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
@@ -24,12 +24,9 @@ virtualenv:
 
 install:
   - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
-  - git clone https://github.com/OCA/account-financial-tools.git ${HOME}/account-financial-tools
-  - git clone https://github.com/OCA/bank-payment.git ${HOME}/bank-payment
-  - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports
   - pip install unidecode
-  - travis_install_nightly
   - pip install git+https://github.com/aeroo/aeroolib#egg=aeroolib
   - pip install pycups
   - travis_install_nightly

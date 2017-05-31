@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+<data>
+
+
+<record id="tax_receipt_annual_create_form" model="ir.ui.view">
+    <field name="name">tax_receipt_annual_create.form</field>
+    <field name="model">tax.receipt.annual.create</field>
+    <field name="arch"  type="xml">
+        <form string="Generate Annual Tax Receipts">
+            <group name="main">
+                <field name="start_date"/>
+                <field name="end_date"/>
+            </group>
+            <footer>
+                <button type="object" name="generate_annual_receipts"
+                    string="Generate" class="oe_highlight"/>
+                <button special="cancel" string="Cancel" class="oe_link"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="tax_receipt_annual_create_action" model="ir.actions.act_window">
+    <field name="name">Create Annual Receipts</field>
+    <field name="res_model">tax.receipt.annual.create</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+</record>
+
+
+</data>
+</odoo>

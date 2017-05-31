@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo noupdate="1">
+
+
+<!-- PRODUCTS -->
+<record id="product_product_donation" model="product.product">
+    <field name="name">Donation</field>
+    <field name="default_code">DON</field>
+    <field name="categ_id" ref="product.product_category_5"/>
+    <field name="sale_ok" eval="True"/>
+    <field name="donation" eval="True"/>
+    <field name="tax_receipt_ok" eval="True"/>
+    <field name="list_price">0</field>
+    <field name="type">service</field>
+    <field name="taxes_id" eval="False"/>
+    <field name="description">This donation item is eligible for a tax receipt.</field>
+</record>
+
+
+<record id="product_product_donation_notaxreceipt" model="product.product">
+    <field name="name">Donation - no tax receipt</field>
+    <field name="default_code">DON-NOTAXR</field>
+    <field name="categ_id" ref="product.product_category_5"/>
+    <field name="sale_ok" eval="True"/>
+    <field name="donation" eval="True"/>
+    <field name="tax_receipt_ok" eval="False"/>
+    <field name="list_price">0</field>
+    <field name="type">service</field>
+    <field name="taxes_id" eval="False"/>
+    <field name="description">This donation item is not eligible for a tax receipt.</field>
+</record>
+
+<record id="product_product_inkind_donation" model="product.product">
+    <field name="name">In-Kind Donation</field>
+    <field name="default_code">KIND-DON</field>
+    <field name="categ_id" ref="product.product_category_5"/>
+    <field name="sale_ok" eval="True"/>
+    <field name="donation" eval="True"/>
+    <field name="tax_receipt_ok" eval="True"/>
+    <field name="in_kind_donation"  eval="True"/>
+    <field name="list_price">0</field>
+    <field name="type">service</field>
+    <field name="taxes_id" eval="False"/>
+    <field name="description">This donation item is eligible for a tax receipt.</field>
+</record>
+
+<record id="product_product_inkind_donation_notaxreceipt" model="product.product">
+    <field name="name">In-Kind Donation - no tax receipt</field>
+    <field name="default_code">KIND-DON-NOTAXR</field>
+    <field name="categ_id" ref="product.product_category_5"/>
+    <field name="sale_ok" eval="True"/>
+    <field name="donation" eval="True"/>
+    <field name="tax_receipt_ok" eval="False"/>
+    <field name="in_kind_donation"  eval="True"/>
+    <field name="list_price">0</field>
+    <field name="type">service</field>
+    <field name="taxes_id" eval="False"/>
+    <field name="description">This donation item is not eligible for a tax receipt.</field>
+</record>
+
+
+<!-- PARTNERS -->
+<record id="donor1" model="res.partner">
+    <field name="name">Rémi Duplat</field>
+    <field name="customer" eval="1"/>
+    <field name="street">12 rue de l'espérance</field>
+    <field name="zip">69100</field>
+    <field name="city">Villeurbanne</field>
+    <field name="country_id" ref="base.fr"/>
+    <field name="email">vincent.duplat@yahoo.example.com</field>
+    <field name="tax_receipt_option">each</field>
+</record>
+
+<record id="donor2" model="res.partner">
+    <field name="name">Lucie Dubois</field>
+    <field name="customer" eval="1"/>
+    <field name="street">34 rue Pierre Dupont</field>
+    <field name="zip">69001</field>
+    <field name="city">Lyon</field>
+    <field name="country_id" ref="base.fr"/>
+    <field name="email">lucie.dubois@yahoo.example.com</field>
+    <field name="tax_receipt_option">annual</field>
+</record>
+
+<record id="donor3" model="res.partner">
+    <field name="name">Joe Smith</field>
+    <field name="customer" eval="1"/>
+    <field name="street">Craig Pond Trail</field>
+    <field name="zip">04431</field>
+    <field name="city">East Orland</field>
+    <field name="state_id" ref="base.state_us_20"/>
+    <field name="country_id" ref="base.us"/>
+    <field name="email">joe.smith@gmail.example.com</field>
+    <field name="tax_receipt_option">none</field>
+</record>
+
+
+</odoo>

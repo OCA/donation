@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+
+
+<record id="report_thanks" model="ir.actions.report.xml">
+    <field name="name">Thanks Letter</field>
+    <field name="model">donation.donation</field>
+    <field name="report_name">donation.thanks</field>
+    <field name="report_type">py3o</field>
+    <field name="py3o_filetype">odt</field>
+    <field name="module">donation_thanks</field>
+    <field name="py3o_template_fallback">report/thanks.odt</field>
+</record>
+
+<record id="button_report_thanks" model="ir.values"> <!-- Add print button -->
+    <field name="key2">client_print_multi</field>
+    <field name="model">donation.donation</field>
+    <field name="name">Thanks Letter</field>
+    <field name="value" eval="'ir.actions.report.xml,%d'%report_thanks" />
+</record>
+
+<!-- The print button in the form view is defined in views/donation.xml -->
+
+</odoo>

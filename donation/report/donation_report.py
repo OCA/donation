@@ -1,28 +1,10 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Donation module for Odoo
-#    Copyright (C) 2014-2015 Barroux Abbey (www.barroux.org)
-#    Copyright (C) 2014-2015 Akretion France (www.akretion.com)
-#    @author: Alexis de Lattre <alexis.delattre@akretion.com>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# -*- coding: utf-8 -*-
+# © 2014-2016 Barroux Abbey (http://www.barroux.org)
+# © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import tools
-from openerp import models, fields
+from odoo import tools
+from odoo import models, fields
 
 
 class DonationReport(models.Model):
@@ -45,8 +27,14 @@ class DonationReport(models.Model):
     campaign_id = fields.Many2one(
         'donation.campaign', string='Donation Campaign', readonly=True)
     in_kind = fields.Boolean(string='In Kind')
-    amount_company_currency = fields.Float(
-        'Amount Company Currency', readonly=True)
+    tax_receipt_ok = fields.Boolean(string='Eligible for a Tax Receipt')
+    company_currency_id = fields.Many2one(
+        'res.currency', string='Company Currency', readonly=True)
+    amount_company_currency = fields.Monetary(
+        'Amount', readonly=True, currency_field='company_currency_id')
+    tax_receipt_amount = fields.Monetary(
+        'Tax Receipt Eligible Amount', readonly=True,
+        currency_field='company_currency_id')
 
     def _select(self):
         select = """
@@ -54,12 +42,15 @@ class DonationReport(models.Model):
                 d.donation_date AS donation_date,
                 l.product_id AS product_id,
                 l.in_kind AS in_kind,
+                l.tax_receipt_ok AS tax_receipt_ok,
                 pt.categ_id AS product_categ_id,
                 d.company_id AS company_id,
                 d.partner_id AS partner_id,
                 d.country_id AS country_id,
                 d.campaign_id AS campaign_id,
-                sum(l.amount_company_currency) AS amount_company_currency
+                d.company_currency_id AS company_currency_id,
+                sum(l.amount_company_currency) AS amount_company_currency,
+                sum(l.tax_receipt_amount) AS tax_receipt_amount
                 """
         return select
 
@@ -82,17 +73,20 @@ class DonationReport(models.Model):
         group_by = """
             GROUP BY l.product_id,
                 l.in_kind,
+                l.tax_receipt_ok,
                 pt.categ_id,
                 d.donation_date,
                 d.partner_id,
                 d.country_id,
                 d.campaign_id,
-                d.company_id
+                d.company_id,
+                d.company_currency_id
             """
         return group_by
 
-    def init(self, cr):
-        tools.drop_view_if_exists(cr, self._table)
-        cr.execute("CREATE OR REPLACE VIEW %s AS (%s FROM %s %s %s)" % (
+    def init(self):
+        tools.drop_view_if_exists(self._cr, self._table)
+        sql = "CREATE OR REPLACE VIEW %s AS (%s FROM %s %s %s)" % (
             self._table, self._select(), self._from(),
-            self._where(), self._group_by()))
+            self._where(), self._group_by())
+        self._cr.execute(sql)
