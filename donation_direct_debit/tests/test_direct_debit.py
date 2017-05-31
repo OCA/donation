@@ -14,7 +14,11 @@ class TestDirectDebit(TransactionCase):
         # It is important to have
         # journal_id.default_debit_account_id.reconcile = True
         # to get a value on move_line.amount_residual
-        donation.journal_id.default_debit_account_id.reconcile = True
+        # By pass a constraint because we can't change to reconcile=True
+        # when there are already some moves in the account
+        self.cr.execute(
+            'UPDATE account_account set reconcile=true where id=%s',
+            (donation.journal_id.default_debit_account_id.id, ))
         donation.validate()
         self.assertEquals(donation.state, 'done')
         self.assertTrue(donation.move_id)
