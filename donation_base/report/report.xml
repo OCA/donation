@@ -12,8 +12,8 @@
     model="donation.tax.receipt"
     string="Donation Tax Receipt"
     report_type="qweb-pdf"
-    name="donation_tax_receipt.report_donationtaxreceipt"
-    file="donation_tax_receipt.report_donationtaxreceipt"
+    name="donation_base.report_donationtaxreceipt"
+    file="donation_base.report_donationtaxreceipt"
     attachment_use="True"
     attachment="'Fiscal_receipt-'+(object.number or '').replace('/','')+'.pdf'"
     />
