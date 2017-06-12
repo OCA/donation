@@ -79,3 +79,16 @@ class DonationTaxReceipt(models.Model):
             'context': ctx,
             }
         return action
+
+    def action_print(self):
+        self.ensure_one()
+        action = {
+            'type': 'ir.actions.report.xml',
+            'report_name': 'donation_tax_receipt.report_donationtaxreceipt',
+            'datas': {
+                'model': self._name,
+                'ids': self.ids,
+                },
+            'context': self._context,
+            }
+        return action
