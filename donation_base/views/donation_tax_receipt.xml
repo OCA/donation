@@ -16,6 +16,7 @@
         <form string="Donation Tax Receipt">
             <header>
                 <button name="action_send_tax_receipt" type="object" string="Send by Email" class="btn-primary"/>
+                <button name="action_print" type="object" string="Print"/>
             </header>
             <sheet>
                 <group name="main">
