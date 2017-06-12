@@ -82,13 +82,6 @@ class DonationTaxReceipt(models.Model):
 
     def action_print(self):
         self.ensure_one()
-        action = {
-            'type': 'ir.actions.report.xml',
-            'report_name': 'donation_base.report_donationtaxreceipt',
-            'datas': {
-                'model': self._name,
-                'ids': self.ids,
-                },
-            'context': self._context,
-            }
+        action = self.env['report'].get_action(
+            self, 'donation_base.report_donationtaxreceipt')
         return action
