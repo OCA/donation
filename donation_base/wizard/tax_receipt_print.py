@@ -35,7 +35,7 @@ class DonationTaxReceiptPrint(models.TransientModel):
         self.receipt_ids.write({'print_date': today})
         action = {
             'type': 'ir.actions.report.xml',
-            'report_name': 'donation_tax_receipt.report_donationtaxreceipt',
+            'report_name': 'donation_base.report_donationtaxreceipt',
             'data': datas,
             'datas': datas,  # for Aeroo
         }
