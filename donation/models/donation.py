@@ -17,7 +17,7 @@ class DonationDonation(models.Model):
 
     @api.multi
     @api.depends(
-        'line_ids', 'line_ids.unit_price', 'line_ids.quantity',
+        'line_ids.unit_price', 'line_ids.quantity',
         'line_ids.product_id', 'donation_date', 'currency_id', 'company_id')
     def _compute_total(self):
         for donation in self:
@@ -26,7 +26,8 @@ class DonationDonation(models.Model):
             for line in donation.line_ids:
                 line_total = line.quantity * line.unit_price
                 total += line_total
-                if line.product_id.tax_receipt_ok:
+                # products may be per company -> sudo()
+                if line.sudo().product_id.tax_receipt_ok:
                     tax_receipt_total += line_total
 
             donation.amount_total = total
@@ -422,10 +423,11 @@ class DonationDonation(models.Model):
     @api.depends('state', 'partner_id', 'move_id')
     def _compute_display_name_field(self):
         for donation in self:
+            partner = donation.sudo().partner_id
             if donation.state == 'draft':
-                name = _('Draft Donation of %s') % donation.partner_id.name
+                name = _('Draft Donation of %s') % partner.name
             elif donation.state == 'cancel':
-                name = _('Cancelled Donation of %s') % donation.partner_id.name
+                name = _('Cancelled Donation of %s') % partner.name
             else:
                 name = donation.number
             donation.display_name = name
@@ -461,7 +463,7 @@ class DonationLine(models.Model):
 
     @api.multi
     @api.depends(
-        'unit_price', 'quantity', 'donation_id.currency_id',
+        'unit_price', 'quantity', 'product_id', 'donation_id.currency_id',
         'donation_id.donation_date', 'donation_id.company_id')
     def _compute_amount(self):
         for line in self:
@@ -472,7 +474,7 @@ class DonationLine(models.Model):
             amount_company_currency = donation_currency.compute(
                 amount, line.donation_id.company_id.currency_id)
             tax_receipt_amount_cc = 0.0
-            if line.product_id.tax_receipt_ok:
+            if line.sudo().product_id.tax_receipt_ok:
                 tax_receipt_amount_cc = amount_company_currency
             line.amount_company_currency = amount_company_currency
             line.tax_receipt_amount = tax_receipt_amount_cc
