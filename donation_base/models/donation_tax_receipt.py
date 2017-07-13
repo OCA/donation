@@ -79,3 +79,9 @@ class DonationTaxReceipt(models.Model):
             'context': ctx,
             }
         return action
+
+    def action_print(self):
+        self.ensure_one()
+        action = self.env['report'].get_action(
+            self, 'donation_base.report_donationtaxreceipt')
+        return action
