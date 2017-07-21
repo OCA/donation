@@ -15,7 +15,6 @@ class DonationLine(models.Model):
             ana_accounts = self.product_id.product_tmpl_id.\
                 _get_product_analytic_accounts()
             ana_account = ana_accounts['income']
-            print "ana_account=", ana_account
             self.analytic_account_id = ana_account.id
         return res
 
