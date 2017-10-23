@@ -172,8 +172,9 @@ class DonationDonation(models.Model):
         }
         return vals
 
-    @api.model
+    @api.multi
     def _prepare_move_line_name(self):
+        self.ensure_one()
         name = _('Donation of %s') % self.partner_id.name
         return name
 
