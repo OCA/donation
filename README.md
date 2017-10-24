@@ -40,5 +40,6 @@ addon | version | summary
 [donation_recurring](donation_recurring/) | 10.0.1.0.0 | Manage recurring donations
 [donation_sale](donation_sale/) | 10.0.1.0.0 | Manage donations in sale orders
 [donation_thanks](donation_thanks/) | 10.0.1.0.0 | Create thanks letter for a donation
+[product_analytic_donation](product_analytic_donation/) | 10.0.1.0.0 | Glue module between donation and product_analytic
 
 [//]: # (end addons)
