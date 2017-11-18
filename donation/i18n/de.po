@@ -1,0 +1,270 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * donation
+# 
+# Translators:
+# neben <b.brich@humanilog.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-28 03:41+0000\n"
+"PO-Revision-Date: 2017-10-28 03:41+0000\n"
+"Last-Translator: neben <b.brich@humanilog.org>, 2017\n"
+"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_sale_order_count
+msgid "# of Sales Order"
+msgstr "# Verkaufsaufträge"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_property_account_payable_id
+msgid "Account Payable"
+msgstr "Kreditorenkonto"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_property_account_receivable_id
+msgid "Account Receivable"
+msgstr "Debitorenkonto"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_bank_account_count
+msgid "Bank"
+msgstr "Bank"
+
+#. module: donation
+#: model:ir.model,name:donation.model_donation_campaign
+msgid "Code attributed for a Donation Campaign"
+msgstr "Codewert für eine Spendenkampagne"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_ref_company_ids
+msgid "Companies that refers to partner"
+msgstr "Unternehmen, die sich auf Partner beziehen"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_contract_ids
+#: model:ir.model.fields,field_description:donation.field_res_users_contracts_count
+msgid "Contracts"
+msgstr "Verträge"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_payment_method_count
+msgid "Count Payment Method"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_currency_id
+msgid "Currency"
+msgstr "Währung"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_customer_payment_mode_id
+msgid "Customer Payment Mode"
+msgstr "Zahlungsarten für Kunden"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_property_payment_term_id
+msgid "Customer Payment Term"
+msgstr "Zahlungsbedingungen für Kunden"
+
+#. module: donation
+#: model:ir.model,name:donation.model_donation_donation
+msgid "Donation"
+msgstr "Spende"
+
+#. module: donation
+#: model:ir.model,name:donation.model_donation_line
+msgid "Donation Lines"
+msgstr "Spendenzeilen"
+
+#. module: donation
+#: model:ir.model,name:donation.model_donation_report
+msgid "Donations Analysis"
+msgstr "Spendenanalyse"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_property_account_position_id
+msgid "Fiscal Position"
+msgstr "Steuerzuordnung"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_has_unreconciled_entries
+msgid "Has unreconciled entries"
+msgstr "Hat unausgeglichene Einträge"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_invoice_ids
+msgid "Invoices"
+msgstr "Rechnungen"
+
+#. module: donation
+#: model:ir.model,name:donation.model_account_journal
+msgid "Journal"
+msgstr "Journal"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_issued_total
+#: model:ir.model.fields,field_description:donation.field_res_users_journal_item_count
+msgid "Journal Items"
+msgstr "Journal Einträge"
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_res_users_last_time_entries_checked
+msgid ""
+"Last time the invoices & payments matching was performed for this partner. "
+"It is set either if there's not at least an unreconciled debit and an "
+"unreconciled credit or if you click the \"Done\" button."
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_last_time_entries_checked
+msgid "Latest Invoices & Payments Matching Date"
+msgstr ""
+
+#. module: donation
+#: model:ir.model,name:donation.model_res_partner
+msgid "Partner"
+msgstr "Partner"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_debit_limit
+msgid "Payable Limit"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_payment_method_ids
+msgid "Payment Methods"
+msgstr "Zahlungsmethoden"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_sale_order_ids
+msgid "Sales Order"
+msgstr " Verkaufsauftrag"
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_res_users_customer_payment_mode_id
+msgid "Select the default payment mode for this customer."
+msgstr "Wähle die standard Zahlungsart für diesen Kunden."
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_res_users_supplier_payment_mode_id
+msgid "Select the default payment mode for this supplier."
+msgstr "Wähle die standard Zahlungsart für diesen Lieferanten."
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_supplier_payment_mode_id
+msgid "Supplier Payment Mode"
+msgstr "Zahlungsarten des Lieferanten"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_tax_receipt_option
+msgid "Tax Receipt Option"
+msgstr "Spendenbescheinigungserstellung"
+
+#. module: donation
+#: model:ir.model,name:donation.model_donation_tax_receipt
+msgid "Tax Receipt for Donations"
+msgstr "Spendenbescheinigung"
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_res_users_property_account_position_id
+msgid ""
+"The fiscal position will determine taxes and accounts used for the partner."
+msgstr ""
+"Die Steuerzuordnung bestimmt die Steuerkontenzuordnung für Steuervorgänge "
+"mit Partnern."
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_res_users_has_unreconciled_entries
+msgid ""
+"The partner has at least one unreconciled debit and credit since last time "
+"the invoices & payments matching was performed."
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_res_users_property_account_payable_id
+msgid ""
+"This account will be used instead of the default one as the payable account "
+"for the current partner"
+msgstr ""
+"Diese Konto wird als Kreditorenkonto für diesen Partner an Stelle des "
+"Standardkontos verwendet."
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_res_users_property_account_receivable_id
+msgid ""
+"This account will be used instead of the default one as the receivable "
+"account for the current partner"
+msgstr ""
+"Diese Konto wird als Debitorenkonto für diesen Partner an Stelle des "
+"Standardkontos verwendet."
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_res_users_property_supplier_payment_term_id
+msgid ""
+"This payment term will be used instead of the default one for purchase "
+"orders and vendor bills"
+msgstr ""
+"Diese Zahlungsbedingung wird an Stelle der Standardzahlungsbedingung für "
+"Bestellaufträge und Lieferantenrechnungen verwendet."
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_res_users_property_payment_term_id
+msgid ""
+"This payment term will be used instead of the default one for sale orders "
+"and customer invoices"
+msgstr ""
+"Diese Zahlungsbedingung wird an Stelle der Standardzahlungsbedingung für "
+"Verkaufsaufträge und Kundenrechnungen verwendet."
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_total_invoiced
+msgid "Total Invoiced"
+msgstr "Summe der Rechnungswerte"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_debit
+msgid "Total Payable"
+msgstr "Summe Kreditoren"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_credit
+msgid "Total Receivable"
+msgstr "Summe Debitoren"
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_res_users_credit
+msgid "Total amount this customer owes you."
+msgstr "Gesamtbetrag den der Kunde schuldig ist"
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_res_users_debit
+msgid "Total amount you have to pay to this vendor."
+msgstr "Summe fälliger Zahlungen für diesen Lieferanten."
+
+#. module: donation
+#: model:ir.model,name:donation.model_res_users
+msgid "Users"
+msgstr "Benutzer"
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_res_users_currency_id
+msgid "Utility field to express amount currency"
+msgstr ""
+
+#. module: donation
+#: model:ir.model,name:donation.model_donation_validate
+msgid "Validate Donations"
+msgstr "Bestätige Spenden"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_res_users_property_supplier_payment_term_id
+msgid "Vendor Payment Term"
+msgstr "Zahlungsbedingungen des Lieferanten"
