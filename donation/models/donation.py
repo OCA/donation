@@ -6,6 +6,7 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import UserError, ValidationError
 from openerp.tools import float_is_zero, float_compare
+from openerp.addons.account import _auto_install_l10n
 
 
 class DonationDonation(models.Model):
@@ -455,6 +456,12 @@ class DonationDonation(models.Model):
                 }
             self.tax_receipt_option = 'annual'
         return res
+
+    def auto_install_l10n(self):
+        """Helper function for calling a method that is not accessible directly
+        from XML data.
+        """
+        _auto_install_l10n(self.env.cr, self.env.registry)
 
 
 class DonationLine(models.Model):
