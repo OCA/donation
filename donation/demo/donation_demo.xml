@@ -2,6 +2,15 @@
 
 <odoo noupdate="1">
 
+    <!-- This is needed for assuring a chart template is installed -->
+
+    <record id="base.main_company" model="res.company">
+        <field name="country_id" ref="base.fr"/>
+    </record>
+
+    <function model="donation.donation" name="auto_install_l10n"/>
+
+    <!-- END -->
 
 <record id="quest_origin" model="donation.campaign">
     <field name="code">Q1</field>
