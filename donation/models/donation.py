@@ -457,6 +457,7 @@ class DonationDonation(models.Model):
             self.tax_receipt_option = 'annual'
         return res
 
+    @api.model
     def auto_install_l10n(self):
         """Helper function for calling a method that is not accessible directly
         from XML data.
