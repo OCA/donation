@@ -84,7 +84,7 @@ class DonationTaxReceipt(models.Model):
         self.ensure_one()
         action = {
             'type': 'ir.actions.report.xml',
-            'report_name': 'donation_tax_receipt.report_donationtaxreceipt',
+            'report_name': 'donation_base.report_donationtaxreceipt',
             'datas': {
                 'model': self._name,
                 'ids': self.ids,
