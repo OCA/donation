@@ -13,6 +13,9 @@ logger = logging.getLogger(__name__)
 class DonationDonation(models.Model):
     _inherit = 'donation.donation'
 
+    bank_statement_id = fields.Many2one(
+        related='bank_statement_line_id.statement_id', string='Bank Statement',
+        readonly=True, store=True)
     bank_statement_line_id = fields.Many2one(
         'account.bank.statement.line',
         string='Source Bank Statement Line', ondelete='restrict')
