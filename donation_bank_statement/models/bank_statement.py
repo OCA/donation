@@ -107,6 +107,12 @@ class AccountBankStatement(models.Model):
             stmt.create_donations()
         return super(AccountBankStatement, self).button_confirm_bank()
 
+    def show_donations(self):
+        action = self.env['ir.actions.act_window'].for_xml_id(
+            'donation', 'donation_action')
+        action['domain'] = [('bank_statement_id', 'in', self.ids)]
+        return action
+
 
 class AccountBankStatementLine(models.Model):
     _inherit = 'account.bank.statement.line'
