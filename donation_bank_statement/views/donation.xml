@@ -19,5 +19,16 @@
     </field>
 </record>
 
+<record id="donation_search" model="ir.ui.view">
+    <field name="name">donation_bank_statement.donation_search</field>
+    <field name="model">donation.donation</field>
+    <field name="inherit_id" ref="donation.donation_search"/>
+    <field name="arch"  type="xml">
+        <field name="partner_id" position="after">
+            <field name="bank_statement_id"/>
+        </field>
+    </field>
+</record>
+
 
 </odoo>
