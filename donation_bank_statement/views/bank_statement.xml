@@ -8,16 +8,25 @@
 <odoo>
 
 
+<record id="bank_statement_donation_action" model="ir.actions.act_window">
+    <field name="name">Donations</field>
+    <field name="res_model">donation.donation</field>
+    <field name="view_mode">tree,form,graph</field>
+    <field name="context">{'search_default_bank_statement_id': active_id}</field>
+</record>
+
 <record id="view_bank_statement_form" model="ir.ui.view">
     <field name="name">donation.bank.statement.bank_statement_form</field>
     <field name="model">account.bank.statement</field>
     <field name="inherit_id" ref="account.view_bank_statement_form"/>
     <field name="arch"  type="xml">
-        <button name="button_cancel" position="before">
-            <button name="create_donations" type="object"
-                string="Create Donations" class="oe_highlight"
-                states="confirm"/>
-        </button>
+        <div name="button_box" position="inside">
+            <button class="oe_stat_button"
+                name="%(donation_bank_statement.bank_statement_donation_action)d"
+                type="action" icon="fa-heart-o" states="confirm">
+                <field string="Donations" name="donation_count" widget="statinfo"/>
+            </button>
+        </div>
     </field>
 </record>
 
