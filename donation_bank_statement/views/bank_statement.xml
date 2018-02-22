@@ -13,11 +13,13 @@
     <field name="model">account.bank.statement</field>
     <field name="inherit_id" ref="account.view_bank_statement_form"/>
     <field name="arch"  type="xml">
-        <button name="button_cancel" position="before">
-            <button name="create_donations" type="object"
-                string="Create Donations" class="oe_highlight"
-                states="confirm"/>
-        </button>
+        <div name="button_box" position="inside">
+            <button class="oe_stat_button"
+                    name="show_donations" type="object"
+                    icon="fa-heart-o" states="confirm">
+                <field string="Donations" name="donation_count" widget="statinfo"/>
+            </button>
+        </div>
     </field>
 </record>
 
