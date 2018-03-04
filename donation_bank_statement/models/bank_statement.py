@@ -6,6 +6,8 @@
 from odoo import models, fields, api, _
 from odoo.tools import float_compare
 from odoo.exceptions import UserError
+import logging
+logger = logging.getLogger(__name__)
 
 
 class AccountBankStatement(models.Model):
@@ -64,10 +66,12 @@ class AccountBankStatement(models.Model):
         ddo = self.env['donation.donation']
         prec = self.currency_id.rounding
         if not self.company_id.donation_credit_transfer_journal_id:
-            raise UserError(_(
-                "You must configure the Journal for Donations via "
-                "Credit Transfer for the company %s")
-                % self.company_id.name)
+            # Don't raise an error here, because we may be in a multi-company
+            # setup where only some companies handle donations, not all
+            logger.info(
+                "No journal for donations via credit transfer for the "
+                "company %s: not creating donations" % self.company_id.name)
+            return False
         journal = self.company_id.donation_credit_transfer_journal_id
         if not journal.default_debit_account_id:
             raise UserError(_(
