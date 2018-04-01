@@ -34,7 +34,7 @@ install:
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - git clone https://github.com/aeroo/aeroo_reports.git ${HOME}/aeroo_reports
   - pip install unidecode
-  - pip install git+https://github.com/aeroo/aeroolib#egg=aeroolib
+  - pip install git+https://github.com/aeroo/aeroolib@py2.x#egg=aeroolib
   - pip install pycups
   - travis_install_nightly
 
