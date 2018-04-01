@@ -12,5 +12,5 @@
     'website': 'http://www.akretion.com',
     'depends': ['donation', 'product_analytic'],
     'auto_install': True,
-    'installable': True,
+    'installable': False,
 }
