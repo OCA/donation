@@ -14,7 +14,8 @@
     <field name="arch" type="xml">
         <field name="move_id" position="before">
             <field name="mandate_id"
-                domain="[('state', '=', 'valid'), ('partner_id', '=', commercial_partner_id)]"/>
+                domain="[('state', '=', 'valid'), ('partner_id', '=', commercial_partner_id)]"
+                options="{'no_create_edit': True}"/>
             <field name="payment_mode_id"/>
         </field>
     </field>
