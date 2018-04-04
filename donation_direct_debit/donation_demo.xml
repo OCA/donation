@@ -17,7 +17,7 @@
     <field name="partner_bank_id" ref="donor2_iban"/>
     <field name="type">recurrent</field>
     <field name="recurrent_sequence_type">first</field>
-    <field name="signature_date">2014-02-20</field>
+    <field name="signature_date" eval="time.strftime('%Y-01-01')"/>
     <field name="state">valid</field>
 </record>
 
@@ -42,7 +42,7 @@
     <field name="partner_bank_id" ref="donor4_iban"/>
     <field name="type">recurrent</field>
     <field name="recurrent_sequence_type">first</field>
-    <field name="signature_date">2015-01-12</field>
+    <field name="signature_date" eval="time.strftime('%Y-%m-01')"/>
     <field name="state">valid</field>
 </record>
 

@@ -13,7 +13,8 @@ class DonationDonation(models.Model):
     recurring_template = fields.Selection([
         ('active', 'Active'),
         ('suspended', 'Suspended'),
-        ], string='Recurring Template', copy=False, index=True)
+        ], string='Recurring Template', copy=False, index=True,
+        track_visibility='onchange')
     source_recurring_id = fields.Many2one(
         'donation.donation', string='Source Recurring Template',
         states={'done': [('readonly', True)]})
@@ -46,7 +47,7 @@ class DonationDonation(models.Model):
 
     @api.multi
     @api.depends('state', 'partner_id', 'move_id', 'recurring_template')
-    def _compute_display_name(self):
+    def _compute_display_name_field(self):
         for donation in self:
             if donation.state == 'draft':
                 if donation.recurring_template == 'active':

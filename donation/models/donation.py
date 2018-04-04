@@ -6,7 +6,7 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import UserError, ValidationError
 from openerp.tools import float_is_zero, float_compare
-import openerp.addons.decimal_precision as dp
+from openerp.addons.account import _auto_install_l10n
 
 
 class DonationDonation(models.Model):
@@ -18,33 +18,29 @@ class DonationDonation(models.Model):
 
     @api.multi
     @api.depends(
-        'line_ids', 'line_ids.unit_price', 'line_ids.quantity',
+        'line_ids.unit_price', 'line_ids.quantity',
         'line_ids.product_id', 'donation_date', 'currency_id', 'company_id')
     def _compute_total(self):
         for donation in self:
             total = tax_receipt_total = 0.0
-            company_currency = donation.company_currency_id
             donation_currency = donation.currency_id
-            # Do not consider other currencies for tax receipts
-            # because, for the moment, only very very few countries
-            # accept tax receipts from other countries, and never in another
-            # currency. If you know such cases, please tell us and we will
-            # update the code of this module
             for line in donation.line_ids:
                 line_total = line.quantity * line.unit_price
                 total += line_total
-                if (
-                        donation_currency == company_currency and
-                        line.product_id.tax_receipt_ok):
+                # products may be per company -> sudo()
+                if line.sudo().product_id.tax_receipt_ok:
                     tax_receipt_total += line_total
 
             donation.amount_total = total
             donation_currency =\
                 donation.currency_id.with_context(date=donation.donation_date)
+            company_currency = donation.company_id.currency_id
             total_company_currency = donation_currency.compute(
-                total, donation.company_id.currency_id)
+                total, company_currency)
+            tax_receipt_total_cc = donation_currency.compute(
+                tax_receipt_total, company_currency)
             donation.amount_total_company_currency = total_company_currency
-            donation.tax_receipt_total = tax_receipt_total
+            donation.tax_receipt_total = tax_receipt_total_cc
 
     # We don't want a depends on partner_id.country_id, because if the partner
     # moves to another country, we want to keep the old country for
@@ -84,17 +80,17 @@ class DonationDonation(models.Model):
         'res.country', string='Country', compute='_compute_country_id',
         store=True, readonly=True, copy=False)
     check_total = fields.Monetary(
-        string='Check Amount', digits=dp.get_precision('Account'),
+        string='Check Amount',
         states={'done': [('readonly', True)]}, currency_field='currency_id',
         track_visibility='onchange')
     amount_total = fields.Monetary(
         compute='_compute_total', string='Amount Total',
         currency_field='currency_id', store=True,
-        digits=dp.get_precision('Account'), readonly=True)
+        readonly=True, track_visibility='onchange')
     amount_total_company_currency = fields.Monetary(
         compute='_compute_total', string='Amount Total in Company Currency',
         currency_field='company_currency_id',
-        store=True, digits=dp.get_precision('Account'), readonly=True)
+        store=True, readonly=True)
     donation_date = fields.Date(
         string='Donation Date', required=True,
         states={'done': [('readonly', True)]}, index=True,
@@ -131,26 +127,27 @@ class DonationDonation(models.Model):
         index=True, track_visibility='onchange')
     company_currency_id = fields.Many2one(
         related='company_id.currency_id', string="Company Currency",
-        readonly=True)
+        readonly=True, store=True)
     campaign_id = fields.Many2one(
         'donation.campaign', string='Donation Campaign',
         track_visibility='onchange', ondelete='restrict',
         default=lambda self: self.env.user.context_donation_campaign_id)
     display_name = fields.Char(
-        string='Display Name', compute='_compute_display_name',
+        string='Display Name', compute='_compute_display_name_field',
         readonly=True)
     tax_receipt_id = fields.Many2one(
         'donation.tax.receipt', string='Tax Receipt', readonly=True,
-        copy=False)
+        copy=False, track_visibility='onchange')
     tax_receipt_option = fields.Selection([
         ('none', 'None'),
         ('each', 'For Each Donation'),
         ('annual', 'Annual Tax Receipt'),
         ], string='Tax Receipt Option', states={'done': [('readonly', True)]},
-        index=True)
+        index=True, track_visibility='onchange')
     tax_receipt_total = fields.Monetary(
-        compute='_compute_total', string='Eligible Tax Receipt Sub-total',
-        store=True, currency_field='company_currency_id')
+        compute='_compute_total', string='Tax Receipt Eligible Amount',
+        store=True, readonly=True, currency_field='company_currency_id',
+        help="Eligible Tax Receipt Sub-total in Company Currency")
 
     @api.multi
     @api.constrains('donation_date')
@@ -176,8 +173,9 @@ class DonationDonation(models.Model):
         }
         return vals
 
-    @api.model
+    @api.multi
     def _prepare_move_line_name(self):
+        self.ensure_one()
         name = _('Donation of %s') % self.partner_id.name
         return name
 
@@ -304,7 +302,6 @@ class DonationDonation(models.Model):
     def validate(self):
         check_total = self.env['res.users'].has_group(
             'donation.group_donation_check_total')
-        precision = self.env['decimal.precision'].precision_get('Account')
         for donation in self:
             if not donation.line_ids:
                 raise UserError(_(
@@ -312,7 +309,8 @@ class DonationDonation(models.Model):
                     "have any lines!") % donation.partner_id.name)
 
             if float_is_zero(
-                    donation.amount_total, precision_digits=precision):
+                    donation.amount_total,
+                    precision_rounding=donation.currency_id.rounding):
                 raise UserError(_(
                     "Cannot validate the donation of %s because the "
                     "total amount is 0 !") % donation.partner_id.name)
@@ -322,7 +320,9 @@ class DonationDonation(models.Model):
                     "Cannot validate the donation of %s because it is not "
                     "in draft state.") % donation.partner_id.name)
 
-            if check_total and donation.check_total != donation.amount_total:
+            if check_total and float_compare(
+                    donation.check_total, donation.amount_total,
+                    precision_rounding=donation.currency_id.rounding):
                 raise UserError(_(
                     "The amount of the donation of %s (%s) is different "
                     "from the sum of the donation lines (%s).") % (
@@ -331,7 +331,9 @@ class DonationDonation(models.Model):
 
             vals = {'state': 'done'}
 
-            if donation.amount_total:
+            if not float_is_zero(
+                    donation.amount_total,
+                    precision_rounding=donation.currency_id.rounding):
                 move_vals = donation._prepare_donation_move()
                 # when we have a full in-kind donation: no account move
                 if move_vals:
@@ -341,16 +343,27 @@ class DonationDonation(models.Model):
                 else:
                     donation.message_post(_(
                         'Full in-kind donation: no account move generated'))
-            if (
-                    donation.tax_receipt_option == 'each' and
-                    donation.tax_receipt_total and
-                    not donation.tax_receipt_id):
-                receipt_vals = donation._prepare_each_tax_receipt()
-                receipt = self.env['donation.tax.receipt'].create(receipt_vals)
+
+            receipt = donation.generate_each_tax_receipt()
+            if receipt:
                 vals['tax_receipt_id'] = receipt.id
 
             donation.write(vals)
         return
+
+    @api.multi
+    def generate_each_tax_receipt(self):
+        self.ensure_one()
+        receipt = False
+        if (
+                self.tax_receipt_option == 'each' and
+                not self.tax_receipt_id and
+                not float_is_zero(
+                    self.tax_receipt_total,
+                    precision_rounding=self.company_currency_id.rounding)):
+            receipt_vals = self._prepare_each_tax_receipt()
+            receipt = self.env['donation.tax.receipt'].create(receipt_vals)
+        return receipt
 
     @api.multi
     def save_default_values(self):
@@ -410,12 +423,13 @@ class DonationDonation(models.Model):
 
     @api.multi
     @api.depends('state', 'partner_id', 'move_id')
-    def _compute_display_name(self):
+    def _compute_display_name_field(self):
         for donation in self:
+            partner = donation.sudo().partner_id
             if donation.state == 'draft':
-                name = _('Draft Donation of %s') % donation.partner_id.name
+                name = _('Draft Donation of %s') % partner.name
             elif donation.state == 'cancel':
-                name = _('Cancelled Donation of %s') % donation.partner_id.name
+                name = _('Cancelled Donation of %s') % partner.name
             else:
                 name = donation.number
             donation.display_name = name
@@ -443,6 +457,13 @@ class DonationDonation(models.Model):
             self.tax_receipt_option = 'annual'
         return res
 
+    @api.model
+    def auto_install_l10n(self):
+        """Helper function for calling a method that is not accessible directly
+        from XML data.
+        """
+        _auto_install_l10n(self.env.cr, self.env.registry)
+
 
 class DonationLine(models.Model):
     _name = 'donation.line'
@@ -451,16 +472,21 @@ class DonationLine(models.Model):
 
     @api.multi
     @api.depends(
-        'unit_price', 'quantity', 'donation_id.currency_id',
+        'unit_price', 'quantity', 'product_id', 'donation_id.currency_id',
         'donation_id.donation_date', 'donation_id.company_id')
-    def _compute_amount_company_currency(self):
+    def _compute_amount(self):
         for line in self:
             amount = line.quantity * line.unit_price
             line.amount = amount
             donation_currency = line.donation_id.currency_id.with_context(
                 date=line.donation_id.donation_date)
-            line.amount_company_currency = donation_currency.compute(
+            amount_company_currency = donation_currency.compute(
                 amount, line.donation_id.company_id.currency_id)
+            tax_receipt_amount_cc = 0.0
+            if line.sudo().product_id.tax_receipt_ok:
+                tax_receipt_amount_cc = amount_company_currency
+            line.amount_company_currency = amount_company_currency
+            line.tax_receipt_amount = tax_receipt_amount_cc
 
     donation_id = fields.Many2one(
         'donation.donation', string='Donation', ondelete='cascade')
@@ -474,17 +500,18 @@ class DonationLine(models.Model):
         domain=[('donation', '=', True)], ondelete='restrict')
     quantity = fields.Integer(string='Quantity', default=1)
     unit_price = fields.Monetary(
-        string='Unit Price', digits=dp.get_precision('Account'),
-        currency_field='currency_id')
+        string='Unit Price', currency_field='currency_id')
     amount = fields.Monetary(
         compute='_compute_amount', string='Amount',
-        currency_field='currency_id', digits=dp.get_precision('Account'),
-        store=True)
+        currency_field='currency_id', store=True, readonly=True)
     amount_company_currency = fields.Monetary(
-        compute='_compute_amount_company_currency',
+        compute='_compute_amount',
         string='Amount in Company Currency',
-        currency_field='company_currency_id',
-        digits=dp.get_precision('Account'), store=True)
+        currency_field='company_currency_id', store=True, readonly=True)
+    tax_receipt_amount = fields.Monetary(
+        compute='_compute_amount',
+        string='Tax Receipt Eligible Amount',
+        currency_field='company_currency_id', store=True, readonly=True)
     analytic_account_id = fields.Many2one(
         'account.analytic.account', string='Analytic Account',
         domain=[('account_type', '!=', 'closed')], ondelete='restrict')
@@ -518,9 +545,10 @@ class DonationTaxReceipt(models.Model):
 
     @api.model
     def update_tax_receipt_annual_dict(
-            self, tax_receipt_annual_dict, start_date, end_date, precision):
+            self, tax_receipt_annual_dict, start_date, end_date,
+            precision_rounding):
         super(DonationTaxReceipt, self).update_tax_receipt_annual_dict(
-            tax_receipt_annual_dict, start_date, end_date, precision)
+            tax_receipt_annual_dict, start_date, end_date, precision_rounding)
         donations = self.env['donation.donation'].search([
             ('donation_date', '>=', start_date),
             ('donation_date', '<=', end_date),
@@ -532,7 +560,8 @@ class DonationTaxReceipt(models.Model):
             ])
         for donation in donations:
             tax_receipt_amount = donation.tax_receipt_total
-            if float_is_zero(tax_receipt_amount, precision_digits=precision):
+            if float_is_zero(
+                    tax_receipt_amount, precision_rounding=precision_rounding):
                 continue
             partner = donation.commercial_partner_id
             if partner not in tax_receipt_annual_dict:

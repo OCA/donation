@@ -6,11 +6,14 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import UserError
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class TaxReceiptAnnualCreate(models.TransientModel):
     _name = 'tax.receipt.annual.create'
-    _description = 'Generate Annual Tax Receipt'
+    _description = 'Generate Annual Tax Receipts'
 
     @api.model
     def _default_end_date(self):
@@ -43,19 +46,22 @@ class TaxReceiptAnnualCreate(models.TransientModel):
     @api.multi
     def generate_annual_receipts(self):
         self.ensure_one()
+        logger.info(
+            'Start to generate annual fiscal receipts from %s to %s',
+            self.start_date, self.end_date)
         dtro = self.env['donation.tax.receipt']
         tax_receipt_annual_dict = {}
-        precision = self.env['decimal.precision'].precision_get('Account')
+        precision_rounding = self.env.user.company_id.currency_id.rounding
         self.env['donation.tax.receipt'].update_tax_receipt_annual_dict(
             tax_receipt_annual_dict, self.start_date, self.end_date,
-            precision)
+            precision_rounding)
         # {commercial_partner: {
         #       'amount': amount,
         #       'extra_vals': {donation_ids': [donation1_id, donation2_id]}}}
         tax_receipt_ids = []
         existing_annual_receipts = dtro.search([
-            ('date', '<=', self.end_date),
-            ('date', '>=', self.start_date),
+            ('donation_date', '<=', self.end_date),
+            ('donation_date', '>=', self.start_date),
             ('company_id', '=', self.env.user.company_id.id),
             ('type', '=', 'annual'),
             ])
@@ -70,13 +76,16 @@ class TaxReceiptAnnualCreate(models.TransientModel):
                 raise UserError(_(
                     "The Donor '%s' already has an annual tax receipt "
                     "in this timeframe: %s dated %s.")
-                    % (partner.name, existing_receipt.number,
+                    % (partner.name_get()[0][1], existing_receipt.number,
                         existing_receipt.date))
             vals = self._prepare_annual_tax_receipt(partner, partner_dict)
             tax_receipt = dtro.create(vals)
             tax_receipt_ids.append(tax_receipt.id)
+            logger.info('Tax receipt %s generated', tax_receipt.number)
         if not tax_receipt_ids:
             raise UserError(_("No annual tax receipt to generate"))
+        logger.info(
+            '%d annual fiscal receipts generated', len(tax_receipt_ids))
         action = {
             'type': 'ir.actions.act_window',
             'name': 'Tax Receipts',

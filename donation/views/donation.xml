@@ -46,7 +46,13 @@
                     </group>
                     <group name="auto">
                         <field name="company_id" groups="base.group_multi_company"/>
-                        <field name="tax_receipt_option"/>
+                        <label for="tax_receipt_option"/>
+                        <div name="tax_receipt_option">
+                            <field name="tax_receipt_option" class="oe_inline"/>
+                            <button name="%(donation_tax_receipt_option_switch_action)d"
+                                string="Change" type="action" class="oe_link"
+                                attrs="{'invisible': ['|', ('state', '!=', 'done'), ('tax_receipt_id', '!=', False)]}"/>
+                        </div>
                         <field name="tax_receipt_total"/>
                         <field name="tax_receipt_id"/>
                     </group>
@@ -88,7 +94,7 @@
             <field name="partner_id" invisible="context.get('partner_view')"/>
             <field name="donation_date"/>
             <field name="amount_total"/>
-            <field name="currency_id" groups="base.group_multi_currency"/>
+            <field name="currency_id" invisible="1"/>
             <field name="journal_id"/>
             <field name="campaign_id"/>
             <field name="company_id" groups="base.group_multi_company"/>

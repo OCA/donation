@@ -27,7 +27,7 @@
     <field name="inherit_id" ref="account.invoice_tree"/>
     <field name="arch"  type="xml">
         <field name="residual_signed" position="after">
-            <field name="tax_receipt_option"/>
+            <field name="tax_receipt_id"/>
         </field>
     </field>
 </record>
@@ -54,7 +54,8 @@
 
 <menuitem id="tax_receipt_annual_create_menu" sequence="40"
     action="donation_base.tax_receipt_annual_create_action"
-    parent="account_donation_menu"/>
+    parent="account_donation_menu"
+    groups="account.group_account_invoice"/>
 
 </data>
 </odoo>

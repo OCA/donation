@@ -9,7 +9,7 @@ from openerp.exceptions import UserError
 
 class DonationTaxReceiptPrint(models.TransientModel):
     _name = 'donation.tax.receipt.print'
-    _description = 'Print Donation Tax Receipt'
+    _description = 'Print Donation Tax Receipts'
 
     @api.model
     def _get_receipts(self):
@@ -35,7 +35,7 @@ class DonationTaxReceiptPrint(models.TransientModel):
         self.receipt_ids.write({'print_date': today})
         action = {
             'type': 'ir.actions.report.xml',
-            'report_name': 'donation_tax_receipt.report_donationtaxreceipt',
+            'report_name': 'donation_base.report_donationtaxreceipt',
             'data': datas,
             'datas': datas,  # for Aeroo
         }

@@ -18,7 +18,7 @@ class AccountInvoice(models.Model):
     @api.depends(
         'invoice_line_ids.product_id', 'invoice_line_ids.price_unit',
         'invoice_line_ids.quantity')
-    def _tax_receipt_total(self):
+    def _compute_tax_receipt_total(self):
         for inv in self:
             total = 0.0
             # Do not consider other currencies for tax receipts
@@ -43,7 +43,8 @@ class AccountInvoice(models.Model):
         ], string='Tax Receipt Option', readonly=True,
         states={'draft': [('readonly', False)]}, index=True)
     tax_receipt_total = fields.Monetary(
-        compute='_tax_receipt_total', string='Eligible Tax Receipt Sub-total',
+        compute='_compute_tax_receipt_total',
+        string='Eligible Tax Receipt Sub-total',
         store=True, currency_field='company_currency_id')
 
     @api.onchange('partner_id')
@@ -56,10 +57,15 @@ class AccountInvoice(models.Model):
     @api.multi
     def _prepare_each_tax_receipt(self):
         self.ensure_one()
+        if self.payment_ids:
+            date = self.payment_ids[0].payment_date
+        else:
+            date = self.date_invoice
         vals = {
             'company_id': self.company_id.id,
             'currency_id': self.company_currency_id.id,
-            'donation_date': self.date_invoice,
+            'donation_date': date,
+            'date': date,
             'amount': self.tax_receipt_total,
             'type': 'each',
             'partner_id': self.commercial_partner_id.id,
@@ -106,12 +112,54 @@ class AccountInvoice(models.Model):
             self.tax_receipt_option = 'annual'
         return res
 
+    @api.multi
+    def action_invoice_paid(self):
+        res = super(AccountInvoice, self).action_invoice_paid()
+        dtro = self.env['donation.tax.receipt']
+        to_gen_tax_receipt_invoices = self.filtered(
+            lambda inv: inv.state == 'paid' and not inv.tax_receipt_id and
+            inv.tax_receipt_option == 'each')
+        for invoice in to_gen_tax_receipt_invoices:
+            tax_receipt_amount = invoice.tax_receipt_total
+            if float_is_zero(
+                    tax_receipt_amount,
+                    precision_rounding=invoice.currency_id.rounding):
+                continue
+            vals = invoice._prepare_each_tax_receipt()
+            tax_receipt = dtro.with_context(
+                ir_sequence_date=invoice.date_invoice).create(vals)
+            invoice.tax_receipt_id = tax_receipt.id
+            logger.debug(
+                'Tax receipt ID %d generated for invoice ID %d partner %s',
+                tax_receipt.id, invoice.id, invoice.commercial_partner_id.name)
+        return res
+
+    # TODO: remove this method and the one below
+    # if the inherit of action_invoice_paid() works well
+    @api.multi
+    def _generate_each_tax_receipt_from_invoices(self):
+        precision = self.env['decimal.precision'].precision_get('Account')
+        dtro = self.env['donation.tax.receipt']
+        for invoice in self:
+            if invoice.tax_receipt_option != 'each':
+                continue
+            tax_receipt_amount = invoice.tax_receipt_total
+            if float_is_zero(tax_receipt_amount, precision_digits=precision):
+                continue
+            partner = invoice.commercial_partner_id
+            vals = invoice._prepare_each_tax_receipt()
+            tax_receipt = dtro.with_context(
+                ir_sequence_date=invoice.date_invoice).create(vals)
+            invoice.tax_receipt_id = tax_receipt.id
+            logger.debug(
+                'Tax receipt ID %d generated for invoice ID %d partner %s',
+                tax_receipt.id, invoice.id, partner.name)
+
     @api.model
     def _generate_each_tax_receipts(self):
         logger.info(
             "START to generate donation tax receipts from invoices "
             "(type='each')")
-        precision = self.env['decimal.precision'].precision_get('Account')
         invoices = self.env['account.invoice'].search([
             ('tax_receipt_option', '=', 'each'),
             ('tax_receipt_id', '=', False),
@@ -119,18 +167,7 @@ class AccountInvoice(models.Model):
             ('company_id', '=', self.env.user.company_id.id),
             ('state', '=', 'paid'),
             ])
-        dtro = self.env['donation.tax.receipt']
-        for invoice in invoices:
-            tax_receipt_amount = invoice.tax_receipt_total
-            if float_is_zero(tax_receipt_amount, precision_digits=precision):
-                continue
-            partner = invoice.commercial_partner_id
-            vals = invoice._prepare_each_tax_receipt()
-            tax_receipt = dtro.create(vals)
-            invoice.tax_receipt_id = tax_receipt.id
-            logger.debug(
-                'Tax receipt ID %d generated for invoice ID %d partner %s',
-                tax_receipt.id, invoice.id, partner.name)
+        invoices._generate_each_tax_receipt_from_invoices()
         logger.info(
             "END of the generation of donation tax receipts from invoices "
             "(type='each')")
@@ -162,28 +199,29 @@ class SaleOrder(models.Model):
         ('annual', 'Annual Tax Receipt'),
         ], string='Tax Receipt Option', readonly=True,
         states={'draft': [('readonly', False)]})
+    company_currency_id = fields.Many2one(
+        related='company_id.currency_id', readonly=True)
     tax_receipt_total = fields.Monetary(
-        compute='_tax_receipt_total', string='Eligible Tax Receipt Sub-total',
-        store=True, currency_field='currency_id')
+        compute='_compute_tax_receipt_total',
+        string='Eligible Tax Receipt Sub-total',
+        store=True, currency_field='company_currency_id')
 
     @api.multi
     @api.depends(
         'order_line.product_id', 'order_line.price_unit',
         'order_line.product_uom_qty')
-    def _tax_receipt_total(self):
+    def _compute_tax_receipt_total(self):
         for sale in self:
             total = 0.0
-            # Do not consider other currencies for tax receipts
-            # because, for the moment, only very very few countries
-            # accept tax receipts from other countries, and never in another
-            # currency. If you know such cases, please tell us and we will
-            # update the code of this module
-            if sale.currency_id == sale.company_id.currency_id:
-                for line in sale.order_line:
-                    if line.product_id.tax_receipt_ok:
-                        # there are not sale taxes on tax receipts
-                        total += line.product_uom_qty * line.price_unit
-            sale.tax_receipt_total = total
+            for line in sale.order_line:
+                if line.product_id.tax_receipt_ok:
+                    # there are not sale taxes on tax receipts
+                    total += line.product_uom_qty * line.price_unit *\
+                        (1 - (line.discount or 0.0) / 100.0)
+            sale_currency = sale.currency_id.with_context(date=sale.date_order)
+            total_cc = sale_currency.compute(
+                total, sale.company_id.currency_id)
+            sale.tax_receipt_total = total_cc
 
     @api.onchange('partner_id')
     def donation_sale_change(self):
@@ -246,9 +284,10 @@ class DonationTaxReceipt(models.Model):
 
     @api.model
     def update_tax_receipt_annual_dict(
-            self, tax_receipt_annual_dict, start_date, end_date, precision):
+            self, tax_receipt_annual_dict, start_date, end_date,
+            precision_rounding):
         super(DonationTaxReceipt, self).update_tax_receipt_annual_dict(
-            tax_receipt_annual_dict, start_date, end_date, precision)
+            tax_receipt_annual_dict, start_date, end_date, precision_rounding)
         invoices = self.env['account.invoice'].search([
             ('date_invoice', '>=', start_date),
             ('date_invoice', '<=', end_date),
@@ -260,7 +299,8 @@ class DonationTaxReceipt(models.Model):
             ])
         for invoice in invoices:
             tax_receipt_amount = invoice.tax_receipt_total
-            if float_is_zero(tax_receipt_amount, precision_digits=precision):
+            if float_is_zero(
+                    tax_receipt_amount, precision_rounding=precision_rounding):
                 continue
             partner = invoice.commercial_partner_id
             if partner not in tax_receipt_annual_dict:

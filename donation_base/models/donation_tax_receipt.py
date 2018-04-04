@@ -3,8 +3,8 @@
 # © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
-import openerp.addons.decimal_precision as dp
+from openerp import models, fields, api, _
+from openerp.exceptions import UserError
 
 
 class DonationTaxReceipt(models.Model):
@@ -12,6 +12,7 @@ class DonationTaxReceipt(models.Model):
     _description = "Tax Receipt for Donations"
     _order = 'id desc'
     _rec_name = 'number'
+    _inherit = ['mail.thread']
 
     number = fields.Char(string='Receipt Number')
     date = fields.Date(
@@ -19,8 +20,7 @@ class DonationTaxReceipt(models.Model):
         index=True)
     donation_date = fields.Date(string='Donation Date')
     amount = fields.Monetary(
-        string='Amount', digits=dp.get_precision('Account'),
-        currency_field='currency_id')
+        string='Amount', currency_field='currency_id')
     currency_id = fields.Many2one(
         'res.currency', string='Currency', required=True, ondelete='restrict',
         default=lambda self: self.env.user.company_id.currency_id.id)
@@ -49,6 +49,39 @@ class DonationTaxReceipt(models.Model):
 
     @api.model
     def update_tax_receipt_annual_dict(
-            self, tax_receipt_annual_dict, start_date, end_date, precision):
+            self, tax_receipt_annual_dict, start_date, end_date,
+            precision_rounding):
         '''This method is inherited in donation and donation_sale
         It is called by the tax.receipt.annual.create wizard'''
+
+    def action_send_tax_receipt(self):
+        self.ensure_one()
+        if not self.partner_id.email:
+            raise UserError(_(
+                "Missing email on partner '%s'.")
+                % self.partner_id.name_get()[0][1])
+        template = self.env.ref('donation_base.tax_receipt_email_template')
+        compose_form = self.env.ref('mail.email_compose_message_wizard_form')
+        ctx = dict(
+            default_model='donation.tax.receipt',
+            default_res_id=self.id,
+            default_use_template=bool(template),
+            default_template_id=template.id,
+            default_composition_mode='comment',
+        )
+        action = {
+            'name': _('Compose Email'),
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'view_id': compose_form.id,
+            'target': 'new',
+            'context': ctx,
+            }
+        return action
+
+    def action_print(self):
+        self.ensure_one()
+        action = self.env['report'].get_action(
+            self, 'donation_base.report_donationtaxreceipt')
+        return action
