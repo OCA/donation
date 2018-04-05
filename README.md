@@ -46,5 +46,6 @@ Unported addons
 addon | version | summary
 --- | --- | ---
 [donation_thanks](donation_thanks/) | 9.0.1.0.0 (unported) | Create thanks letter for a donation
+[product_analytic_donation](product_analytic_donation/) | 9.0.1.0.0 (unported) | Glue module between donation and product_analytic
 
 [//]: # (end addons)
