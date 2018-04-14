@@ -21,14 +21,13 @@ class DonationDonation(models.Model):
         'line_ids.unit_price', 'line_ids.quantity',
         'line_ids.product_id', 'donation_date', 'currency_id', 'company_id')
     def _compute_total(self):
-        for donation in self:
+        for donation in self.sudo():
             total = tax_receipt_total = 0.0
             donation_currency = donation.currency_id
             for line in donation.line_ids:
                 line_total = line.quantity * line.unit_price
                 total += line_total
-                # products may be per company -> sudo()
-                if line.sudo().product_id.tax_receipt_ok:
+                if line.product_id.tax_receipt_ok:
                     tax_receipt_total += line_total
 
             donation.amount_total = total
