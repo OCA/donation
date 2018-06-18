@@ -34,7 +34,7 @@ class DonationDonation(models.Model):
             donation.amount_total = total
             donation_currency =\
                 donation.currency_id.with_context(date=donation.donation_date)
-            company_currency = donation.company_id.currency_id
+            company_currency = donation.sudo().company_id.currency_id
             total_company_currency = donation_currency.compute(
                 total, company_currency)
             tax_receipt_total_cc = donation_currency.compute(
