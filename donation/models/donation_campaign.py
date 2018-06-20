@@ -10,22 +10,19 @@ class DonationCampaign(models.Model):
     _name = 'donation.campaign'
     _description = 'Code attributed for a Donation Campaign'
     _order = 'code'
-    _rec_name = 'display_name'
 
-    @api.multi
     @api.depends('code', 'name')
-    def _compute_display_name_field(self):
+    def name_get(self):
+        res = []
         for camp in self:
             name = camp.name
             if camp.code:
                 name = u'[%s] %s' % (camp.code, name)
-            camp.display_name = name
+            res.append((camp.id, name))
+        return res
 
     code = fields.Char(string='Code', size=10)
     name = fields.Char(string='Name', required=True)
-    display_name = fields.Char(
-        string='Display Name', compute='_compute_display_name_field',
-        readonly=True, store=True)
     start_date = fields.Date(
         string='Start Date', default=fields.Date.context_today)
     nota = fields.Text(string='Notes')
