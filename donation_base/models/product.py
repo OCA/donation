@@ -30,7 +30,6 @@ class ProductTemplate(models.Model):
         if self.in_kind_donation:
             self.donation = True
 
-    @api.multi
     @api.constrains('donation', 'type')
     def donation_check(self):
         for product in self:
