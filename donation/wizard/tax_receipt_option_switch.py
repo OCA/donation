@@ -4,7 +4,7 @@
 # @author Alexis de Lattre <alexis.delattre@akretion.com>
 
 
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 class DonationTaxReceiptOptionSwitch(models.TransientModel):
@@ -19,7 +19,6 @@ class DonationTaxReceiptOptionSwitch(models.TransientModel):
         ('annual', 'Annual Tax Receipt'),
         ], string='Tax Receipt Option', required=True)
 
-    @api.multi
     def switch(self):
         self.ensure_one()
         assert self.donation_id, 'Missing donation'
