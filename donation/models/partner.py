@@ -9,14 +9,13 @@ from odoo import models, fields, api
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    @api.multi
     @api.depends('donation_ids.partner_id')
     def _compute_donation_count(self):
         # The current user may not have access rights for donations
         for partner in self:
             try:
                 partner.donation_count = len(partner.donation_ids)
-            except:
+            except Exception:
                 partner.donation_count = 0
 
     donation_ids = fields.One2many(
