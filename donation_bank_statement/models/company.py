@@ -16,7 +16,6 @@ class ResCompany(models.Model):
         'product.product', string='Product for Donations via Credit Transfer',
         domain=[('donation', '=', True)], ondelete='restrict')
 
-    @api.multi
     @api.constrains('donation_credit_transfer_product_id')
     def company_donation_bank_statement_check(self):
         for company in self:
