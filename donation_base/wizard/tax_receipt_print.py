@@ -21,7 +21,6 @@ class DonationTaxReceiptPrint(models.TransientModel):
         column1='print_wizard_id', column2='receipt_id',
         string='Receipts To Print', default=_get_receipts)
 
-    @api.multi
     def print_receipts(self):
         self.ensure_one()
         if not self.receipt_ids:
