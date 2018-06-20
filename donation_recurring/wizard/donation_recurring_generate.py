@@ -24,7 +24,6 @@ class DonationRecurringGenerate(models.TransientModel):
             }
         return default
 
-    @api.multi
     def generate(self):
         self.ensure_one()
         doo = self.env['donation.donation']

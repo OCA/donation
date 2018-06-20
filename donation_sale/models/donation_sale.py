@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    @api.multi
     @api.depends(
         'invoice_line_ids.product_id', 'invoice_line_ids.price_unit',
         'invoice_line_ids.quantity')
@@ -43,9 +42,9 @@ class AccountInvoice(models.Model):
         ], string='Tax Receipt Option', readonly=True,
         states={'draft': [('readonly', False)]}, index=True)
     tax_receipt_total = fields.Monetary(
-        compute='_compute_tax_receipt_total',
+        compute='_compute_tax_receipt_total', compute_sudo=True,
         string='Eligible Tax Receipt Sub-total',
-        store=True, currency_field='company_currency_id')
+        store=True, currency_field='company_currency_id', readonly=True)
 
     @api.onchange('partner_id')
     def donation_sale_change(self):
@@ -54,7 +53,6 @@ class AccountInvoice(models.Model):
         else:
             self.tax_receipt_option = False
 
-    @api.multi
     def _prepare_each_tax_receipt(self):
         self.ensure_one()
         if self.payment_ids:
@@ -72,7 +70,6 @@ class AccountInvoice(models.Model):
         }
         return vals
 
-    @api.multi
     def action_cancel(self):
         res = super(AccountInvoice, self).action_cancel()
         for inv in self:
@@ -85,7 +82,6 @@ class AccountInvoice(models.Model):
                     % inv.tax_receipt_id.number)
         return res
 
-    @api.multi
     def unlink(self):
         for inv in self:
             if inv.tax_receipt_id:
@@ -112,7 +108,6 @@ class AccountInvoice(models.Model):
             self.tax_receipt_option = 'annual'
         return res
 
-    @api.multi
     def action_invoice_paid(self):
         res = super(AccountInvoice, self).action_invoice_paid()
         dtro = self.env['donation.tax.receipt']
@@ -136,7 +131,6 @@ class AccountInvoice(models.Model):
 
     # TODO: remove this method and the one below
     # if the inherit of action_invoice_paid() works well
-    @api.multi
     def _generate_each_tax_receipt_from_invoices(self):
         precision = self.env['decimal.precision'].precision_get('Account')
         dtro = self.env['donation.tax.receipt']
@@ -178,9 +172,9 @@ class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
 
     tax_receipt_ok = fields.Boolean(
-        related='product_id.tax_receipt_ok', readonly=True, store=True)
+        related='product_id.tax_receipt_ok', readonly=True, store=True,
+        compute_sudo=True)
 
-    @api.multi
     @api.constrains('product_id', 'invoice_line_tax_ids')
     def donation_invoice_line_check(self):
         for line in self:
@@ -202,11 +196,10 @@ class SaleOrder(models.Model):
     company_currency_id = fields.Many2one(
         related='company_id.currency_id', readonly=True)
     tax_receipt_total = fields.Monetary(
-        compute='_compute_tax_receipt_total',
+        compute='_compute_tax_receipt_total', compute_sudo=True,
         string='Eligible Tax Receipt Sub-total',
-        store=True, currency_field='company_currency_id')
+        store=True, currency_field='company_currency_id', readonly=True)
 
-    @api.multi
     @api.depends(
         'order_line.product_id', 'order_line.price_unit',
         'order_line.product_uom_qty')
@@ -248,7 +241,6 @@ class SaleOrder(models.Model):
             self.tax_receipt_option = 'annual'
         return res
 
-    @api.multi
     def _prepare_invoice(self):
         vals = super(SaleOrder, self)._prepare_invoice()
         vals['tax_receipt_option'] = self.tax_receipt_option
@@ -259,13 +251,13 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     tax_receipt_ok = fields.Boolean(
-        related='product_id.tax_receipt_ok', readonly=True, store=True)
+        related='product_id.tax_receipt_ok', readonly=True, store=True,
+        compute_sudo=True)
     # We don't handle in_kind donations via donation_sale for the moment
     # in_kind = fields.Boolean(
     #    related='product_id.in_kind_donation', readonly=True, store=True,
     #    string='In Kind')
 
-    @api.multi
     @api.constrains('product_id', 'tax_id')
     def donation_sale_line_check(self):
         for line in self:

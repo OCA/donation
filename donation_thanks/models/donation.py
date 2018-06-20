@@ -3,7 +3,7 @@
 # © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from odoo import models, fields
 
 
 class DonationDonation(models.Model):
@@ -14,7 +14,6 @@ class DonationDonation(models.Model):
         help="This field automatically becomes active when "
         "the thanks letter has been printed.")
 
-    @api.multi
     def print_thanks(self):
         self.ensure_one()
         self.thanks_printed = True

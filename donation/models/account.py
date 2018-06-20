@@ -12,7 +12,6 @@ class AccountJournal(models.Model):
 
     allow_donation = fields.Boolean(string='Donation Payment Method')
 
-    @api.multi
     @api.constrains('type', 'allow_donation')
     def _check_donation(self):
         for journal in self:
