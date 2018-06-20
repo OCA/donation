@@ -3,7 +3,7 @@
 # © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api, _
+from odoo import models, fields, _
 from odoo.exceptions import UserError
 import logging
 
@@ -20,7 +20,6 @@ class DonationDonation(models.Model):
         'account.bank.statement.line',
         string='Source Bank Statement Line', ondelete='restrict')
 
-    @api.multi
     def validate(self):
         res = super(DonationDonation, self).validate()
         for donation in self:
