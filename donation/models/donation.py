@@ -13,10 +13,8 @@ class DonationDonation(models.Model):
     _name = 'donation.donation'
     _description = 'Donation'
     _order = 'id desc'
-    _rec_name = 'display_name'
     _inherit = ['mail.thread']
 
-    @api.multi
     @api.depends(
         'line_ids.unit_price', 'line_ids.quantity',
         'line_ids.product_id', 'donation_date', 'currency_id', 'company_id')
@@ -28,7 +26,7 @@ class DonationDonation(models.Model):
                 line_total = line.quantity * line.unit_price
                 total += line_total
                 # products may be per company -> sudo()
-                if line.sudo().product_id.tax_receipt_ok:
+                if line.product_id.tax_receipt_ok:
                     tax_receipt_total += line_total
 
             donation.amount_total = total
@@ -45,13 +43,10 @@ class DonationDonation(models.Model):
     # We don't want a depends on partner_id.country_id, because if the partner
     # moves to another country, we want to keep the old country for
     # past donations to have good statistics
-    @api.multi
     @api.depends('partner_id')
     def _compute_country_id(self):
-        # Use sudo() to by-pass record rules, because the same partner
-        # can have donations in several companies
         for donation in self:
-            donation.sudo().country_id = donation.partner_id.country_id
+            donation.country_id = donation.partner_id.country_id
 
     @api.model
     def _default_currency(self):
@@ -70,7 +65,8 @@ class DonationDonation(models.Model):
         track_visibility='onchange', ondelete='restrict')
     commercial_partner_id = fields.Many2one(
         related='partner_id.commercial_partner_id',
-        string='Parent Donor', readonly=True, store=True, index=True)
+        string='Parent Donor', readonly=True, store=True, index=True,
+        compute_sudo=True)
     # country_id is here to have stats per country
     # WARNING : I can't put a related field, because when someone
     # writes on the country_id of a partner, it will trigger a write
@@ -78,18 +74,18 @@ class DonationDonation(models.Model):
     # which will be blocked by the record rule
     country_id = fields.Many2one(
         'res.country', string='Country', compute='_compute_country_id',
-        store=True, readonly=True, copy=False)
+        store=True, readonly=True, compute_sudo=True)
     check_total = fields.Monetary(
         string='Check Amount',
         states={'done': [('readonly', True)]}, currency_field='currency_id',
         track_visibility='onchange')
     amount_total = fields.Monetary(
         compute='_compute_total', string='Amount Total',
-        currency_field='currency_id', store=True,
+        currency_field='currency_id', store=True, compute_sudo=True,
         readonly=True, track_visibility='onchange')
     amount_total_company_currency = fields.Monetary(
         compute='_compute_total', string='Amount Total in Company Currency',
-        currency_field='company_currency_id',
+        currency_field='company_currency_id', compute_sudo=True,
         store=True, readonly=True)
     donation_date = fields.Date(
         string='Donation Date', required=True,
@@ -132,9 +128,6 @@ class DonationDonation(models.Model):
         'donation.campaign', string='Donation Campaign',
         track_visibility='onchange', ondelete='restrict',
         default=lambda self: self.env.user.context_donation_campaign_id)
-    display_name = fields.Char(
-        string='Display Name', compute='_compute_display_name_field',
-        readonly=True)
     tax_receipt_id = fields.Many2one(
         'donation.tax.receipt', string='Tax Receipt', readonly=True,
         copy=False, track_visibility='onchange')
@@ -147,9 +140,9 @@ class DonationDonation(models.Model):
     tax_receipt_total = fields.Monetary(
         compute='_compute_total', string='Tax Receipt Eligible Amount',
         store=True, readonly=True, currency_field='company_currency_id',
+        compute_sudo=True,
         help="Eligible Tax Receipt Sub-total in Company Currency")
 
-    @api.multi
     @api.constrains('donation_date')
     def _check_donation_date(self):
         for donation in self:
@@ -160,7 +153,6 @@ class DonationDonation(models.Model):
                     'or in the past, not in the future!')
                     % donation.partner_id.name)
 
-    @api.multi
     def _prepare_each_tax_receipt(self):
         self.ensure_one()
         vals = {
@@ -173,13 +165,11 @@ class DonationDonation(models.Model):
         }
         return vals
 
-    @api.multi
     def _prepare_move_line_name(self):
         self.ensure_one()
         name = _('Donation of %s') % self.partner_id.name
         return name
 
-    @api.multi
     def _prepare_counterpart_move_line(
             self, name, amount_total_company_cur, total_amount_currency,
             currency_id):
@@ -206,7 +196,6 @@ class DonationDonation(models.Model):
             }
         return vals
 
-    @api.multi
     def _prepare_donation_move(self):
         self.ensure_one()
         if not self.journal_id.default_debit_account_id:
@@ -298,7 +287,6 @@ class DonationDonation(models.Model):
             }
         return vals
 
-    @api.multi
     def validate(self):
         check_total = self.env['res.users'].has_group(
             'donation.group_donation_check_total')
@@ -351,7 +339,6 @@ class DonationDonation(models.Model):
             donation.write(vals)
         return
 
-    @api.multi
     def generate_each_tax_receipt(self):
         self.ensure_one()
         receipt = False
@@ -365,7 +352,6 @@ class DonationDonation(models.Model):
             receipt = self.env['donation.tax.receipt'].create(receipt_vals)
         return receipt
 
-    @api.multi
     def save_default_values(self):
         self.ensure_one()
         self.env.user.write({
@@ -373,7 +359,6 @@ class DonationDonation(models.Model):
             'context_donation_campaign_id': self.campaign_id.id,
             })
 
-    @api.multi
     def done2cancel(self):
         '''from Done state to Cancel state'''
         for donation in self:
@@ -389,7 +374,6 @@ class DonationDonation(models.Model):
                 donation.move_id.unlink()
             donation.state = 'cancel'
 
-    @api.multi
     def cancel2draft(self):
         '''from Cancel state to Draft state'''
         for donation in self:
@@ -403,7 +387,6 @@ class DonationDonation(models.Model):
                     "a tax receipt"))
             donation.state = 'draft'
 
-    @api.multi
     def unlink(self):
         for donation in self:
             if donation.state == 'done':
@@ -421,9 +404,8 @@ class DonationDonation(models.Model):
                     % (donation.display_name, donation.tax_receipt_id.number))
         return super(DonationDonation, self).unlink()
 
-    @api.multi
-    @api.depends('state', 'partner_id', 'move_id')
-    def _compute_display_name_field(self):
+    def name_get(self):
+        res = []
         for donation in self:
             partner = donation.sudo().partner_id
             if donation.state == 'draft':
@@ -432,7 +414,8 @@ class DonationDonation(models.Model):
                 name = _('Cancelled Donation of %s') % partner.name
             else:
                 name = donation.number
-            donation.display_name = name
+            res.append((donation.id, name))
+        return res
 
     @api.onchange('partner_id')
     def partner_id_change(self):
@@ -470,7 +453,6 @@ class DonationLine(models.Model):
     _description = 'Donation Lines'
     _rec_name = 'product_id'
 
-    @api.multi
     @api.depends(
         'unit_price', 'quantity', 'product_id', 'donation_id.currency_id',
         'donation_id.donation_date', 'donation_id.company_id')
@@ -483,7 +465,7 @@ class DonationLine(models.Model):
             amount_company_currency = donation_currency.compute(
                 amount, line.donation_id.company_id.currency_id)
             tax_receipt_amount_cc = 0.0
-            if line.sudo().product_id.tax_receipt_ok:
+            if line.product_id.tax_receipt_ok:
                 tax_receipt_amount_cc = amount_company_currency
             line.amount_company_currency = amount_company_currency
             line.tax_receipt_amount = tax_receipt_amount_cc
@@ -502,15 +484,15 @@ class DonationLine(models.Model):
     unit_price = fields.Monetary(
         string='Unit Price', currency_field='currency_id')
     amount = fields.Monetary(
-        compute='_compute_amount', string='Amount',
+        compute='_compute_amount', string='Amount', compute_sudo=True,
         currency_field='currency_id', store=True, readonly=True)
     amount_company_currency = fields.Monetary(
         compute='_compute_amount',
-        string='Amount in Company Currency',
+        string='Amount in Company Currency', compute_sudo=True,
         currency_field='company_currency_id', store=True, readonly=True)
     tax_receipt_amount = fields.Monetary(
         compute='_compute_amount',
-        string='Tax Receipt Eligible Amount',
+        string='Tax Receipt Eligible Amount', compute_sudo=True,
         currency_field='company_currency_id', store=True, readonly=True)
     analytic_account_id = fields.Many2one(
         'account.analytic.account', string='Analytic Account',
@@ -520,10 +502,11 @@ class DonationLine(models.Model):
     # between v8 and v9: in v8, it was a reglar field set by an onchange
     # in v9, it is a related stored field
     tax_receipt_ok = fields.Boolean(
-        related='product_id.tax_receipt_ok', readonly=True, store=True)
+        related='product_id.tax_receipt_ok', readonly=True, store=True,
+        compute_sudo=True)
     in_kind = fields.Boolean(
         related='product_id.in_kind_donation', readonly=True, store=True,
-        string='In Kind')
+        string='In Kind', compute_sudo=True)
 
     @api.onchange('product_id')
     def product_id_change(self):
