@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * donation_base
-# 
+#
 # Translators:
 # enjolras <yo@miguelrevilla.com>, 2018
 msgid ""
@@ -12,10 +12,10 @@ msgstr ""
 "PO-Revision-Date: 2018-03-11 21:44+0000\n"
 "Last-Translator: enjolras <yo@miguelrevilla.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: donation_base
@@ -385,8 +385,8 @@ msgstr "Recibos de impuestos"
 #: code:addons/donation_base/wizard/tax_receipt_annual_create.py:76
 #, python-format
 msgid ""
-"The Donor '%s' already has an annual tax receipt in this timeframe: %s dated"
-" %s."
+"The Donor '%s' already has an annual tax receipt in this timeframe: %s dated "
+"%s."
 msgstr ""
 
 #. module: donation_base
@@ -401,8 +401,8 @@ msgstr ""
 #: code:addons/donation_base/models/product.py:47
 #, python-format
 msgid ""
-"The option 'Is Eligible for a Tax Receipt' is active on the product '%s', so"
-" you must also activate the option 'Is a Donation'."
+"The option 'Is Eligible for a Tax Receipt' is active on the product '%s', so "
+"you must also activate the option 'Is a Donation'."
 msgstr ""
 
 #. module: donation_base
