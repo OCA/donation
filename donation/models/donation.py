@@ -25,8 +25,7 @@ class DonationDonation(models.Model):
             for line in donation.line_ids:
                 line_total = line.quantity * line.unit_price
                 total += line_total
-                # products may be per company -> sudo()
-                if line.product_id.tax_receipt_ok:
+                if line.tax_receipt_ok:
                     tax_receipt_total += line_total
 
             donation.amount_total = total
