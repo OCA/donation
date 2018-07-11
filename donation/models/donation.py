@@ -31,7 +31,7 @@ class DonationDonation(models.Model):
             donation.amount_total = total
             donation_currency =\
                 donation.currency_id.with_context(date=donation.donation_date)
-            company_currency = donation.company_id.currency_id
+            company_currency = donation.company_currency_id
             total_company_currency = donation_currency.compute(
                 total, company_currency)
             tax_receipt_total_cc = donation_currency.compute(
@@ -122,7 +122,7 @@ class DonationDonation(models.Model):
         index=True, track_visibility='onchange')
     company_currency_id = fields.Many2one(
         related='company_id.currency_id', string="Company Currency",
-        readonly=True, store=True)
+        readonly=True, store=True, compute_sudo=True)
     campaign_id = fields.Many2one(
         'donation.campaign', string='Donation Campaign',
         track_visibility='onchange', ondelete='restrict',
@@ -472,10 +472,10 @@ class DonationLine(models.Model):
     donation_id = fields.Many2one(
         'donation.donation', string='Donation', ondelete='cascade')
     currency_id = fields.Many2one(
-        'res.currency', related='donation_id.currency_id', readonly=True)
+        'res.currency', related='donation_id.currency_id', readonly=True, compute_sudo=True)
     company_currency_id = fields.Many2one(
         'res.currency', related='donation_id.company_id.currency_id',
-        readonly=True)
+        readonly=True, compute_sudo=True)
     product_id = fields.Many2one(
         'product.product', string='Product', required=True,
         domain=[('donation', '=', True)], ondelete='restrict')
