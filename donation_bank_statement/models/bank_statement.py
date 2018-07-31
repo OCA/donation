@@ -24,7 +24,7 @@ class AccountBankStatement(models.Model):
         for stmt in self:
             try:
                 stmt.donation_count = len(stmt.donation_ids)
-            except:
+            except Exception:
                 stmt.donation_count = 0
 
     @api.model

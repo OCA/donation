@@ -22,7 +22,6 @@ class DonationDonation(models.Model):
         'donation.donation', 'source_recurring_id',
         string='Past Recurring Donations', readonly=True, copy=False)
 
-    @api.multi
     @api.constrains(
         'recurring_template', 'source_recurring_id', 'state',
         'tax_receipt_option')
@@ -45,9 +44,9 @@ class DonationDonation(models.Model):
                     "receipt option 'Each'.")
                     % donation.partner_id.name)
 
-    @api.multi
     @api.depends('state', 'partner_id', 'move_id', 'recurring_template')
-    def _compute_display_name_field(self):
+    def name_get(self):
+        res = []
         for donation in self:
             if donation.state == 'draft':
                 if donation.recurring_template == 'active':
@@ -62,7 +61,8 @@ class DonationDonation(models.Model):
                 name = _('Cancelled Donation of %s') % donation.partner_id.name
             else:
                 name = donation.number
-            donation.display_name = name
+            res.append((donation.id, name))
+        return res
 
     @api.onchange('recurring_template')
     def recurring_template_change(self):

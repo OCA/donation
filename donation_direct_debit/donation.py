@@ -35,7 +35,6 @@ class DonationDonation(models.Model):
             self.payment_mode_id = False
             self.mandate_id = False
 
-    @api.multi
     def _prepare_counterpart_move_line(
             self, name, amount_total_company_cur, total_amount_currency,
             currency_id):
@@ -47,13 +46,11 @@ class DonationDonation(models.Model):
             })
         return vals
 
-    @api.multi
     def _prepare_payment_order(self):
         self.ensure_one()
         vals = {'payment_mode_id': self.payment_mode_id.id}
         return vals
 
-    @api.multi
     def validate(self):
         '''Create Direct debit payment order on donation validation or update
         an existing draft Direct Debit pay order'''
@@ -90,7 +87,6 @@ class DonationDonation(models.Model):
                 donation.message_post(msg)
         return res
 
-    @api.multi
     def done2cancel(self):
         for donation in self:
             if donation.move_id:
