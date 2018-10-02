@@ -11,7 +11,8 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     donation_credit_transfer_journal_id = fields.Many2one(
-        'account.journal', string='Journal for Donations via Credit Transfer')
+        'account.journal', string='Journal for Donations via Credit Transfer',
+        domain=[('type', '=', 'bank')])
     donation_credit_transfer_product_id = fields.Many2one(
         'product.product', string='Product for Donations via Credit Transfer',
         domain=[('donation', '=', True)], ondelete='restrict')
