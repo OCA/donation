@@ -1,60 +1,45 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* donation_thanks
+#	* donation_thanks
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 8.0alpha1\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-21 14:39+0000\n"
-"PO-Revision-Date: 2014-07-01 15:57+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 1.5.7\n"
 
 #. module: donation_thanks
 #: model:ir.model,name:donation_thanks.model_donation_donation
-#, fuzzy
 msgid "Donation"
-msgstr "Dons"
+msgstr ""
 
 #. module: donation_thanks
 #: model:ir.ui.view,arch_db:donation_thanks.donation_form
 msgid "Print Thanks Letter"
-msgstr "Imprimer remerciements"
+msgstr ""
 
 #. module: donation_thanks
 #: model:ir.actions.report.xml,name:donation_thanks.report_thanks
 msgid "Thanks Letter"
-msgstr "Remerciements"
+msgstr ""
 
 #. module: donation_thanks
 #: model:ir.model.fields,field_description:donation_thanks.field_donation_donation_thanks_printed
 msgid "Thanks Printed"
-msgstr "Remerciements imprimés"
+msgstr ""
 
 #. module: donation_thanks
 #: model:ir.ui.view,arch_db:donation_thanks.donation_search
-#, fuzzy
 msgid "Thanks to Print"
-msgstr "Remerciements imprimés"
+msgstr ""
 
 #. module: donation_thanks
 #: model:ir.model.fields,help:donation_thanks.field_donation_donation_thanks_printed
-msgid ""
-"This field automatically becomes active when the thanks letter has been "
-"printed."
+msgid "This field automatically becomes active when the thanks letter has been printed."
 msgstr ""
-"Ce champ devient actif automatiquement lorsque les remerciements sont "
-"imprimés."
 
-#~ msgid "13 juin 2014"
-#~ msgstr "13 juin 2014"
-
-#~ msgid "Tél. : "
-#~ msgstr "Tél. :"
