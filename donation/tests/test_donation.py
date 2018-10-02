@@ -3,6 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase
+from odoo import tools
+from odoo.modules.module import get_resource_path
 import time
 
 
@@ -11,26 +13,16 @@ class TestDonation(TransactionCase):
     at_install = False
     post_install = True
 
+    def _load(self, module, *args):
+        tools.convert_file(
+            self.cr, module, get_resource_path(module, *args),
+            {}, 'init', False, 'test', self.registry._assertion_report)
+
     def setUp(self):
         super(TestDonation, self).setUp()
-        self.test_company = self.env['res.company'].create({
-            'name': 'TestCharity',
-            })
-        self.env.user.write({
-            'company_id': self.test_company.id,
-            'company_ids': [(4, self.test_company.id)],
-            })
-        generic_coa = self.env.ref(
-            'l10n_generic_coa.configurable_chart_template')
-        generic_coa.try_loading_for_current_company()
-        # Warning: loading coa chart of accounts writes
-        # USD as currency of company (even if company was created with
-        # EUR as currency. So let's work on USD for the tests
+        self._load('account', 'test', 'account_minimal_test.xml')
 
-        self.currency = self.test_company.currency_id
-        self.bank_journal = self.env['account.journal'].search([
-            ('company_id', '=', self.test_company.id),
-            ('type', '=', 'bank')], limit=1)
+        self.bank_journal = self.env.ref('account.bank_journal')
         today = time.strftime('%Y-%m-%d'),
         self.product = self.env.ref(
             'donation_base.product_product_donation')
@@ -38,13 +30,11 @@ class TestDonation(TransactionCase):
             'donation_base.product_product_inkind_donation')
         self.ddo = self.env['donation.donation']
         self.don1 = self.ddo.create({
-            'currency_id': self.currency.id,
             'check_total': 100,
             'partner_id': self.env.ref('donation_base.donor1').id,
             'donation_date': today,
             'journal_id': self.bank_journal.id,
             'tax_receipt_option': 'each',
-            'company_id': self.test_company.id,
             'line_ids': [(0, 0, {
                 'product_id': self.product.id,
                 'quantity': 1,
@@ -52,13 +42,11 @@ class TestDonation(TransactionCase):
                 })],
             })
         self.don2 = self.ddo.create({
-            'currency_id': self.currency.id,
             'check_total': 120,
             'partner_id': self.env.ref('donation_base.donor2').id,
             'donation_date': today,
             'journal_id': self.bank_journal.id,
             'tax_receipt_option': 'annual',
-            'company_id': self.test_company.id,
             'line_ids': [(0, 0, {
                 'product_id': self.product.id,
                 'quantity': 1,
@@ -66,13 +54,11 @@ class TestDonation(TransactionCase):
                 })],
             })
         self.don3 = self.ddo.create({
-            'currency_id': self.currency.id,
             'check_total': 150,
             'partner_id': self.env.ref('donation_base.donor3').id,
             'donation_date': today,
             'journal_id': self.bank_journal.id,
             'tax_receipt_option': 'none',
-            'company_id': self.test_company.id,
             'line_ids': [(0, 0, {
                 'product_id': self.product.id,
                 'quantity': 1,
@@ -80,13 +66,11 @@ class TestDonation(TransactionCase):
                 })],
             })
         self.don4 = self.ddo.create({
-            'currency_id': self.currency.id,
             'check_total': 1000,
             'partner_id': self.env.ref('donation_base.donor1').id,
             'donation_date': today,
             'journal_id': self.bank_journal.id,
             'tax_receipt_option': 'each',
-            'company_id': self.test_company.id,
             'line_ids': [(0, 0, {
                 'product_id': self.inkind_product.id,
                 'quantity': 1,
@@ -94,13 +78,11 @@ class TestDonation(TransactionCase):
                 })],
             })
         self.don5 = self.ddo.create({
-            'currency_id': self.currency.id,
             'check_total': 1200,
             'partner_id': self.env.ref('donation_base.donor1').id,
             'donation_date': today,
             'journal_id': self.bank_journal.id,
             'tax_receipt_option': 'each',
-            'company_id': self.test_company.id,
             'line_ids': [
                 (0, 0, {
                     'product_id': self.inkind_product.id,
@@ -178,7 +160,6 @@ class TestDonation(TransactionCase):
         tax_receipt = tax_receipts[0]
         self.assertEquals(tax_receipt.amount, 200)
         self.assertTrue(tax_receipt.number)
-        self.assertEquals(tax_receipt.company_id, self.test_company)
         self.assertEquals(tax_receipt.date, last_day_year)
         self.assertEquals(tax_receipt.donation_date, last_day_year)
         self.assertEquals(
@@ -190,11 +171,9 @@ class TestDonation(TransactionCase):
         donation = self.ddo.create({
             'journal_id': self.bank_journal.id,
             'partner_id': partner.id,
-            'currency_id': self.currency.id,
             'tax_receipt_option': 'annual',
             'donation_date': time.strftime('%Y-01-01'),
             'payment_ref': payment_ref,
-            'company_id': self.test_company.id,
             'line_ids': [
                 (0, 0, {
                     'product_id': self.product.id,
