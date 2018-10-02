@@ -221,15 +221,10 @@ class DonationDonation(models.Model):
             if donation_line.in_kind:
                 continue
             amount_total_company_cur += donation_line.amount_company_currency
-            account_id = donation_line.product_id.property_account_income_id.id
-            if not account_id:
-                account_id = donation_line.product_id.categ_id.\
-                    property_account_income_categ_id.id
-            if not account_id:
-                raise UserError(
-                    _("Missing income account on product '%s' or on it's "
-                        "related product category")
-                    % donation_line.product_id.name)
+            account = donation_line.with_context(
+                force_company=self.company_id.id).product_id.product_tmpl_id.\
+                _get_product_accounts()['income']
+            account_id = account.id
             analytic_account_id = donation_line.get_analytic_account_id()
             amount_currency = 0.0
             if float_compare(
@@ -472,7 +467,8 @@ class DonationLine(models.Model):
     donation_id = fields.Many2one(
         'donation.donation', string='Donation', ondelete='cascade')
     currency_id = fields.Many2one(
-        'res.currency', related='donation_id.currency_id', readonly=True, compute_sudo=True)
+        'res.currency', related='donation_id.currency_id', readonly=True,
+        compute_sudo=True)
     company_currency_id = fields.Many2one(
         'res.currency', related='donation_id.company_id.currency_id',
         readonly=True, compute_sudo=True)
