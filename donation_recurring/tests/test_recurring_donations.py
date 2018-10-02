@@ -4,6 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase
+from odoo import tools
+from odoo.modules.module import get_resource_path
 import time
 
 
@@ -12,35 +14,22 @@ class TestDonationRecurring(TransactionCase):
     at_install = False
     post_install = True
 
+    def _load(self, module, *args):
+        tools.convert_file(
+            self.cr, module, get_resource_path(module, *args),
+            {}, 'init', False, 'test', self.registry._assertion_report)
+
     def setUp(self):
         super(TestDonationRecurring, self).setUp()
-        self.test_company = self.env['res.company'].create({
-            'name': 'TestCharity',
-            })
-        self.env.user.write({
-            'company_id': self.test_company.id,
-            'company_ids': [(4, self.test_company.id)],
-            })
+        self._load('account', 'test', 'account_minimal_test.xml')
 
-        generic_coa = self.env.ref(
-            'l10n_generic_coa.configurable_chart_template')
-        generic_coa.try_loading_for_current_company()
-        # Warning: loading coa chart of accounts writes
-        # USD as currency of company (even if company was created with
-        # EUR as currency. So let's work on USD for the tests
-
-        self.currency = self.test_company.currency_id
-        self.bank_journal = self.env['account.journal'].search([
-            ('company_id', '=', self.test_company.id),
-            ('type', '=', 'bank')], limit=1)
+        self.bank_journal = self.env.ref('account.bank_journal')
         self.product = self.env.ref(
             'donation_base.product_product_donation')
         self.inkind_product = self.env.ref(
             'donation_base.product_product_inkind_donation')
         self.ddo = self.env['donation.donation']
         self.don_rec1 = self.ddo.create({
-            'company_id': self.test_company.id,
-            'currency_id': self.currency.id,
             'check_total': 30,
             'partner_id': self.env.ref('donation_recurring.donor_rec1').id,
             'donation_date': time.strftime('%Y-01-01'),
@@ -54,8 +43,6 @@ class TestDonationRecurring(TransactionCase):
                 })],
             })
         self.don_rec2 = self.ddo.create({
-            'company_id': self.test_company.id,
-            'currency_id': self.currency.id,
             'check_total': 25,
             'partner_id': self.env.ref('donation_recurring.donor_rec2').id,
             'donation_date': time.strftime('%Y-01-01'),
@@ -69,8 +56,6 @@ class TestDonationRecurring(TransactionCase):
                 })],
             })
         self.don_rec3 = self.ddo.create({
-            'company_id': self.test_company.id,
-            'currency_id': self.currency.id,
             'check_total': 35,
             'partner_id': self.env.ref('donation_recurring.donor_rec3').id,
             'donation_date': time.strftime('%Y-01-01'),
