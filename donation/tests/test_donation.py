@@ -8,13 +8,120 @@ import time
 
 class TestDonation(TransactionCase):
 
+    at_install = False
+    post_install = True
+
+    def setUp(self):
+        super(TestDonation, self).setUp()
+        self.test_company = self.env['res.company'].create({
+            'name': 'TestCharity',
+            })
+        self.env.user.write({
+            'company_id': self.test_company.id,
+            'company_ids': [(4, self.test_company.id)],
+            })
+        generic_coa = self.env.ref(
+            'l10n_generic_coa.configurable_chart_template')
+        generic_coa.try_loading_for_current_company()
+        # Warning: loading coa chart of accounts writes
+        # USD as currency of company (even if company was created with
+        # EUR as currency. So let's work on USD for the tests
+
+        self.currency = self.test_company.currency_id
+        self.bank_journal = self.env['account.journal'].search([
+            ('company_id', '=', self.test_company.id),
+            ('type', '=', 'bank')], limit=1)
+        today = time.strftime('%Y-%m-%d'),
+        self.product = self.env.ref(
+            'donation_base.product_product_donation')
+        self.inkind_product = self.env.ref(
+            'donation_base.product_product_inkind_donation')
+        self.ddo = self.env['donation.donation']
+        self.don1 = self.ddo.create({
+            'currency_id': self.currency.id,
+            'check_total': 100,
+            'partner_id': self.env.ref('donation_base.donor1').id,
+            'donation_date': today,
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'each',
+            'company_id': self.test_company.id,
+            'line_ids': [(0, 0, {
+                'product_id': self.product.id,
+                'quantity': 1,
+                'unit_price': 100,
+                })],
+            })
+        self.don2 = self.ddo.create({
+            'currency_id': self.currency.id,
+            'check_total': 120,
+            'partner_id': self.env.ref('donation_base.donor2').id,
+            'donation_date': today,
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'annual',
+            'company_id': self.test_company.id,
+            'line_ids': [(0, 0, {
+                'product_id': self.product.id,
+                'quantity': 1,
+                'unit_price': 120,
+                })],
+            })
+        self.don3 = self.ddo.create({
+            'currency_id': self.currency.id,
+            'check_total': 150,
+            'partner_id': self.env.ref('donation_base.donor3').id,
+            'donation_date': today,
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'none',
+            'company_id': self.test_company.id,
+            'line_ids': [(0, 0, {
+                'product_id': self.product.id,
+                'quantity': 1,
+                'unit_price': 150,
+                })],
+            })
+        self.don4 = self.ddo.create({
+            'currency_id': self.currency.id,
+            'check_total': 1000,
+            'partner_id': self.env.ref('donation_base.donor1').id,
+            'donation_date': today,
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'each',
+            'company_id': self.test_company.id,
+            'line_ids': [(0, 0, {
+                'product_id': self.inkind_product.id,
+                'quantity': 1,
+                'unit_price': 1000,
+                })],
+            })
+        self.don5 = self.ddo.create({
+            'currency_id': self.currency.id,
+            'check_total': 1200,
+            'partner_id': self.env.ref('donation_base.donor1').id,
+            'donation_date': today,
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'each',
+            'company_id': self.test_company.id,
+            'line_ids': [
+                (0, 0, {
+                    'product_id': self.inkind_product.id,
+                    'quantity': 1,
+                    'unit_price': 800,
+                    }),
+                (0, 0, {
+                    'product_id': self.product.id,
+                    'quantity': 1,
+                    'unit_price': 400,
+                    }),
+                ],
+            })
+
     def test_donation(self):
-        for i in range(1, 6):
-            donation = self.env.ref('donation.donation%d' % i)
+        donations = [self.don1, self.don2, self.don3, self.don4, self.don5]
+        for donation in donations:
             self.assertEquals(donation.state, 'draft')
             donation.validate()
             self.assertEquals(donation.state, 'done')
-            if i == 4:  # full in-kind donation
+            if donation == self.don4:  # full in-kind donation
                 self.assertFalse(donation.move_id)
             else:
                 self.assertEquals(donation.move_id.state, 'posted')
@@ -71,7 +178,7 @@ class TestDonation(TransactionCase):
         tax_receipt = tax_receipts[0]
         self.assertEquals(tax_receipt.amount, 200)
         self.assertTrue(tax_receipt.number)
-
+        self.assertEquals(tax_receipt.company_id, self.test_company)
         self.assertEquals(tax_receipt.date, last_day_year)
         self.assertEquals(tax_receipt.donation_date, last_day_year)
         self.assertEquals(
@@ -80,19 +187,17 @@ class TestDonation(TransactionCase):
     def create_donation_annual_receipt(
             self, partner, amount_tax_receipt, amount_no_tax_receipt,
             payment_ref):
-        journal = self.env['account.journal'].search([(
-            'type', '=', 'bank')], limit=1)
-        donation = self.env['donation.donation'].create({
-            'journal_id': journal.id,
+        donation = self.ddo.create({
+            'journal_id': self.bank_journal.id,
             'partner_id': partner.id,
-            'currency_id': self.env.ref('base.main_company').currency_id.id,
+            'currency_id': self.currency.id,
             'tax_receipt_option': 'annual',
             'donation_date': time.strftime('%Y-01-01'),
             'payment_ref': payment_ref,
+            'company_id': self.test_company.id,
             'line_ids': [
                 (0, 0, {
-                    'product_id':
-                    self.env.ref('donation_base.product_product_donation').id,
+                    'product_id': self.product.id,
                     'quantity': 1,
                     'unit_price': amount_tax_receipt,
                     }),
