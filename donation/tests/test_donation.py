@@ -3,18 +3,107 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase
+from odoo import tools
+from odoo.modules.module import get_resource_path
 import time
 
 
 class TestDonation(TransactionCase):
 
+    at_install = False
+    post_install = True
+
+    def _load(self, module, *args):
+        tools.convert_file(
+            self.cr, module, get_resource_path(module, *args),
+            {}, 'init', False, 'test', self.registry._assertion_report)
+
+    def setUp(self):
+        super(TestDonation, self).setUp()
+        self._load('account', 'test', 'account_minimal_test.xml')
+
+        self.bank_journal = self.env.ref('account.bank_journal')
+        today = time.strftime('%Y-%m-%d'),
+        self.product = self.env.ref(
+            'donation_base.product_product_donation')
+        self.inkind_product = self.env.ref(
+            'donation_base.product_product_inkind_donation')
+        self.ddo = self.env['donation.donation']
+        self.don1 = self.ddo.create({
+            'check_total': 100,
+            'partner_id': self.env.ref('donation_base.donor1').id,
+            'donation_date': today,
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'each',
+            'line_ids': [(0, 0, {
+                'product_id': self.product.id,
+                'quantity': 1,
+                'unit_price': 100,
+                })],
+            })
+        self.don2 = self.ddo.create({
+            'check_total': 120,
+            'partner_id': self.env.ref('donation_base.donor2').id,
+            'donation_date': today,
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'annual',
+            'line_ids': [(0, 0, {
+                'product_id': self.product.id,
+                'quantity': 1,
+                'unit_price': 120,
+                })],
+            })
+        self.don3 = self.ddo.create({
+            'check_total': 150,
+            'partner_id': self.env.ref('donation_base.donor3').id,
+            'donation_date': today,
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'none',
+            'line_ids': [(0, 0, {
+                'product_id': self.product.id,
+                'quantity': 1,
+                'unit_price': 150,
+                })],
+            })
+        self.don4 = self.ddo.create({
+            'check_total': 1000,
+            'partner_id': self.env.ref('donation_base.donor1').id,
+            'donation_date': today,
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'each',
+            'line_ids': [(0, 0, {
+                'product_id': self.inkind_product.id,
+                'quantity': 1,
+                'unit_price': 1000,
+                })],
+            })
+        self.don5 = self.ddo.create({
+            'check_total': 1200,
+            'partner_id': self.env.ref('donation_base.donor1').id,
+            'donation_date': today,
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'each',
+            'line_ids': [
+                (0, 0, {
+                    'product_id': self.inkind_product.id,
+                    'quantity': 1,
+                    'unit_price': 800,
+                    }),
+                (0, 0, {
+                    'product_id': self.product.id,
+                    'quantity': 1,
+                    'unit_price': 400,
+                    }),
+                ],
+            })
+
     def test_donation(self):
-        for i in range(1, 6):
-            donation = self.env.ref('donation.donation%d' % i)
+        donations = [self.don1, self.don2, self.don3, self.don4, self.don5]
+        for donation in donations:
             self.assertEquals(donation.state, 'draft')
             donation.validate()
             self.assertEquals(donation.state, 'done')
-            if i == 4:  # full in-kind donation
+            if donation == self.don4:  # full in-kind donation
                 self.assertFalse(donation.move_id)
             else:
                 self.assertEquals(donation.move_id.state, 'posted')
@@ -71,7 +160,6 @@ class TestDonation(TransactionCase):
         tax_receipt = tax_receipts[0]
         self.assertEquals(tax_receipt.amount, 200)
         self.assertTrue(tax_receipt.number)
-
         self.assertEquals(tax_receipt.date, last_day_year)
         self.assertEquals(tax_receipt.donation_date, last_day_year)
         self.assertEquals(
@@ -80,19 +168,15 @@ class TestDonation(TransactionCase):
     def create_donation_annual_receipt(
             self, partner, amount_tax_receipt, amount_no_tax_receipt,
             payment_ref):
-        journal = self.env['account.journal'].search([(
-            'type', '=', 'bank')], limit=1)
-        donation = self.env['donation.donation'].create({
-            'journal_id': journal.id,
+        donation = self.ddo.create({
+            'journal_id': self.bank_journal.id,
             'partner_id': partner.id,
-            'currency_id': self.env.ref('base.main_company').currency_id.id,
             'tax_receipt_option': 'annual',
             'donation_date': time.strftime('%Y-01-01'),
             'payment_ref': payment_ref,
             'line_ids': [
                 (0, 0, {
-                    'product_id':
-                    self.env.ref('donation_base.product_product_donation').id,
+                    'product_id': self.product.id,
                     'quantity': 1,
                     'unit_price': amount_tax_receipt,
                     }),
