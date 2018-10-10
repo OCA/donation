@@ -9,33 +9,54 @@ from odoo.exceptions import UserError
 
 class DonationTaxReceipt(models.Model):
     _name = 'donation.tax.receipt'
+    _inherit = ['mail.thread']
     _description = "Tax Receipt for Donations"
     _order = 'id desc'
     _rec_name = 'number'
-    _inherit = ['mail.thread']
 
     number = fields.Char(string='Receipt Number')
     date = fields.Date(
-        string='Date', required=True, default=fields.Date.context_today,
-        index=True)
-    donation_date = fields.Date(string='Donation Date')
+        string='Date',
+        required=True,
+        default=fields.Date.context_today,
+        index=True
+    )
+    donation_date = fields.Date(
+        string='Donation Date'
+    )
     amount = fields.Monetary(
-        string='Amount', currency_field='currency_id')
+        string='Amount',
+        currency_field='currency_id'
+    )
     currency_id = fields.Many2one(
-        'res.currency', string='Currency', required=True, ondelete='restrict',
-        default=lambda self: self.env.user.company_id.currency_id.id)
+        'res.currency',
+        string='Currency',
+        required=True,
+        ondelete='restrict',
+        default=lambda self: self.env.user.company_id.currency_id.id
+    )
     partner_id = fields.Many2one(
-        'res.partner', string='Donor', required=True, ondelete='restrict',
-        domain=[('parent_id', '=', False)], index=True)
+        'res.partner',
+        string='Donor',
+        required=True,
+        ondelete='restrict',
+        domain=[('parent_id', '=', False)],
+        index=True
+    )
     company_id = fields.Many2one(
-        'res.company', string='Company', required=True,
-        default=lambda self: self.env['res.company']._company_default_get(
-            'donation.tax.receipt'))
+        'res.company',
+        string='Company',
+        required=True,
+        default=lambda self: self.env['res.company'].
+        _company_default_get('donation.tax.receipt')
+    )
     print_date = fields.Date(string='Print Date')
     type = fields.Selection([
         ('each', 'One-Time Tax Receipt'),
-        ('annual', 'Annual Tax Receipt'),
-        ], string='Type', required=True)
+        ('annual', 'Annual Tax Receipt')],
+        string='Type',
+        required=True
+    )
 
     # Maybe we can drop that code with the new seq management on v9
     @api.model
@@ -54,6 +75,7 @@ class DonationTaxReceipt(models.Model):
         '''This method is inherited in donation and donation_sale
         It is called by the tax.receipt.annual.create wizard'''
 
+    @api.multi
     def action_send_tax_receipt(self):
         self.ensure_one()
         if not self.partner_id.email:
@@ -80,8 +102,8 @@ class DonationTaxReceipt(models.Model):
             }
         return action
 
+    @api.multi
     def action_print(self):
         self.ensure_one()
-        action = self.env['report'].get_action(
-            self, 'donation_base.report_donationtaxreceipt')
-        return action
+        return self.env.ref('donation_base.report_donation_tax_receipt'
+                            ).report_action(self)
