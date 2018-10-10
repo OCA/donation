@@ -24,9 +24,15 @@ class TaxReceiptAnnualCreate(models.TransientModel):
         return datetime(datetime.today().year - 1, 1, 1)
 
     start_date = fields.Date(
-        'Start Date', required=True, default=_default_start_date)
+        'Start Date',
+        required=True,
+        default=_default_start_date
+    )
     end_date = fields.Date(
-        'End Date', required=True, default=_default_end_date)
+        'End Date',
+        required=True,
+        default=_default_end_date
+    )
 
     @api.model
     def _prepare_annual_tax_receipt(self, partner, partner_dict):
@@ -43,6 +49,7 @@ class TaxReceiptAnnualCreate(models.TransientModel):
         vals.update(partner_dict['extra_vals'])
         return vals
 
+    @api.multi
     def generate_annual_receipts(self):
         self.ensure_one()
         logger.info(
@@ -54,9 +61,6 @@ class TaxReceiptAnnualCreate(models.TransientModel):
         self.env['donation.tax.receipt'].update_tax_receipt_annual_dict(
             tax_receipt_annual_dict, self.start_date, self.end_date,
             precision_rounding)
-        # {commercial_partner: {
-        #       'amount': amount,
-        #       'extra_vals': {donation_ids': [donation1_id, donation2_id]}}}
         tax_receipt_ids = []
         existing_annual_receipts = dtro.search([
             ('donation_date', '<=', self.end_date),
@@ -68,7 +72,7 @@ class TaxReceiptAnnualCreate(models.TransientModel):
         for receipt in existing_annual_receipts:
             existing_annual_receipts_dict[receipt.partner_id] = receipt
 
-        for partner, partner_dict in tax_receipt_annual_dict.iteritems():
+        for partner, partner_dict in tax_receipt_annual_dict.items():
             # Block if the partner already has an annual tax receipt
             if partner in existing_annual_receipts_dict:
                 existing_receipt = existing_annual_receipts_dict[partner]
