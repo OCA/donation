@@ -11,24 +11,34 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     donation = fields.Boolean(
-        string='Is a Donation', track_visibility='onchange')
+        string='Is a Donation',
+        track_visibility='onchange'
+    )
     in_kind_donation = fields.Boolean(
-        string="In-Kind Donation", track_visibility='onchange')
+        string="In-Kind Donation",
+        track_visibility='onchange'
+    )
     tax_receipt_ok = fields.Boolean(
-        string='Is Eligible for a Tax Receipt', track_visibility='onchange',
-        help="Specify if the product is eligible for a tax receipt")
+        string='Is Eligible for a Tax Receipt',
+        track_visibility='onchange',
+        help="Specify if the product is eligible for a tax receipt"
+    )
 
+    @api.multi
     @api.onchange('donation')
     def _donation_change(self):
-        if self.donation:
-            self.type = 'service'
-            self.taxes_id = False
-            self.supplier_taxes_id = False
+        for product in self:
+            if product.donation:
+                product.type = 'service'
+                product.taxes_id = False
+                product.supplier_taxes_id = False
 
+    @api.multi
     @api.onchange('in_kind_donation')
     def _in_kind_donation_change(self):
-        if self.in_kind_donation:
-            self.donation = True
+        for product in self:
+            if product.in_kind_donation:
+                product.donation = True
 
     @api.constrains('donation', 'type')
     def donation_check(self):
@@ -61,12 +71,16 @@ class ProductTemplate(models.Model):
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
+    @api.multi
     @api.onchange('donation')
     def _donation_change(self):
-        if self.donation:
-            self.type = 'service'
+        for product in self:
+            if product.donation:
+                product.type = 'service'
 
+    @api.multi
     @api.onchange('in_kind_donation')
     def _in_kind_donation_change(self):
-        if self.in_kind_donation:
-            self.donation = True
+        for product in self:
+            if product.in_kind_donation:
+                product.donation = True
