@@ -12,14 +12,21 @@ class ResPartner(models.Model):
     tax_receipt_option = fields.Selection([
         ('none', 'None'),
         ('each', 'For Each Donation'),
-        ('annual', 'Annual Tax Receipt'),
-        ], string='Tax Receipt Option', default='each',
-        track_visibility='onchange')
+        ('annual', 'Annual Tax Receipt')],
+        string='Tax Receipt Option',
+        default='each',
+        track_visibility='onchange'
+    )
     tax_receipt_ids = fields.One2many(
-        'donation.tax.receipt', 'partner_id', string='Tax Receipts')
+        'donation.tax.receipt',
+        'partner_id',
+        string='Tax Receipts'
+    )
     tax_receipt_count = fields.Integer(
-        compute='_compute_tax_receipt_count', string="# of Tax Receipts",
-        readonly=True)
+        compute='_compute_tax_receipt_count',
+        string="# of Tax Receipts",
+        readonly=True
+    )
 
     @api.model
     def _commercial_fields(self):
