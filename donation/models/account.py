@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# © 2014-2016 Barroux Abbey (http://www.barroux.org)
-# © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+# Copyright 2014-2016 Barroux Abbey (http://www.barroux.org)
+# Copyright 2014-2016 Akretion France
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api, _
@@ -10,7 +10,7 @@ from odoo.exceptions import ValidationError
 class AccountJournal(models.Model):
     _inherit = 'account.journal'
 
-    allow_donation = fields.Boolean(string='Donation Payment Method')
+    allow_donation = fields.Boolean('Donation Payment Method')
 
     @api.constrains('type', 'allow_donation')
     def _check_donation(self):
@@ -23,5 +23,6 @@ class AccountJournal(models.Model):
 
     @api.onchange('type')
     def donation_journal_type_change(self):
-        if self.type in ('cash', 'bank'):
-            self.allow_donation = True
+        for journal in self:
+            if journal.type in ('cash', 'bank'):
+                journal.allow_donation = True

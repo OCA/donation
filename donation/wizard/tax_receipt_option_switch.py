@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# © 2017 Barroux Abbey (www.barroux.org)
-# © 2017 Akretion France (www.akretion.com)
+# Copyright 2017 Barroux Abbey (www.barroux.org)
+# Copyright 2017 Akretion France (www.akretion.com)
 # @author Alexis de Lattre <alexis.delattre@akretion.com>
 
 
@@ -12,12 +12,16 @@ class DonationTaxReceiptOptionSwitch(models.TransientModel):
     _description = 'Switch Donation Tax Receipt Option'
 
     donation_id = fields.Many2one(
-        'donation.donation', string='Donation',
-        default=lambda self: self._context.get('active_id'))
+        'donation.donation',
+        'Donation',
+        default=lambda self: self._context.get('active_id')
+    )
     new_tax_receipt_option = fields.Selection([
         ('each', 'For Each Donation'),
-        ('annual', 'Annual Tax Receipt'),
-        ], string='Tax Receipt Option', required=True)
+        ('annual', 'Annual Tax Receipt')],
+        'Tax Receipt Option',
+        required=True
+    )
 
     def switch(self):
         self.ensure_one()
