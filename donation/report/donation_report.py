@@ -14,27 +14,57 @@ class DonationReport(models.Model):
     _rec_name = 'donation_date'
     _order = "donation_date desc"
 
-    donation_date = fields.Date(string='Donation Date', readonly=True)
+    donation_date = fields.Date(
+        'Donation Date',
+        readonly=True
+    )
     product_id = fields.Many2one(
-        'product.product', string='Product', readonly=True)
-    partner_id = fields.Many2one('res.partner', string='Donor', readonly=True)
+        'product.product',
+        'Product',
+        readonly=True
+    )
+    partner_id = fields.Many2one(
+        'res.partner',
+        'Donor',
+        readonly=True
+    )
     country_id = fields.Many2one(
-        'res.country', string='Partner Country', readonly=True)
+        'res.country',
+        'Partner Country',
+        readonly=True
+    )
     company_id = fields.Many2one(
-        'res.company', string='Company', readonly=True)
+        'res.company',
+        'Company',
+        readonly=True
+    )
     product_categ_id = fields.Many2one(
-        'product.category', string='Category of Product', readonly=True)
+        'product.category',
+        'Category of Product',
+        readonly=True
+    )
     campaign_id = fields.Many2one(
-        'donation.campaign', string='Donation Campaign', readonly=True)
-    in_kind = fields.Boolean(string='In Kind')
-    tax_receipt_ok = fields.Boolean(string='Eligible for a Tax Receipt')
+        'donation.campaign',
+        'Donation Campaign',
+        readonly=True
+    )
+    in_kind = fields.Boolean('In Kind')
+    tax_receipt_ok = fields.Boolean('Eligible for a Tax Receipt')
     company_currency_id = fields.Many2one(
-        'res.currency', string='Company Currency', readonly=True)
+        'res.currency',
+        string='Company Currency',
+        readonly=True
+    )
     amount_company_currency = fields.Monetary(
-        'Amount', readonly=True, currency_field='company_currency_id')
+        'Amount',
+        readonly=True,
+        currency_field='company_currency_id'
+    )
     tax_receipt_amount = fields.Monetary(
-        'Tax Receipt Eligible Amount', readonly=True,
-        currency_field='company_currency_id')
+        'Tax Receipt Eligible Amount',
+        readonly=True,
+        currency_field='company_currency_id'
+    )
 
     def _select(self):
         select = """
