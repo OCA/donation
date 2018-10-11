@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# © 2014-2016 Barroux Abbey (http://www.barroux.org)
-# © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+# Copyright 2014-2016 Barroux Abbey (http://www.barroux.org)
+# Copyright 2014-2016 Akretion France
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api, _
@@ -11,9 +11,9 @@ from odoo.addons.account import _auto_install_l10n
 
 class DonationDonation(models.Model):
     _name = 'donation.donation'
+    _inherit = ['mail.thread']
     _description = 'Donation'
     _order = 'id desc'
-    _inherit = ['mail.thread']
 
     @api.depends(
         'line_ids.unit_price', 'line_ids.quantity',
@@ -54,93 +54,164 @@ class DonationDonation(models.Model):
         return company.currency_id
 
     currency_id = fields.Many2one(
-        'res.currency', string='Currency', required=True,
+        'res.currency',
+        string='Currency',
+        required=True,
         states={'done': [('readonly', True)]},
-        track_visibility='onchange', ondelete='restrict',
-        default=_default_currency)
+        track_visibility='onchange',
+        ondelete='restrict',
+        default=_default_currency
+    )
     partner_id = fields.Many2one(
-        'res.partner', string='Donor', required=True, index=True,
+        'res.partner',
+        string='Donor',
+        required=True,
+        index=True,
         states={'done': [('readonly', True)]},
-        track_visibility='onchange', ondelete='restrict')
+        track_visibility='onchange',
+        ondelete='restrict'
+    )
     commercial_partner_id = fields.Many2one(
         related='partner_id.commercial_partner_id',
-        string='Parent Donor', readonly=True, store=True, index=True,
-        compute_sudo=True)
+        string='Parent Donor',
+        readonly=True,
+        store=True,
+        index=True,
+        compute_sudo=True
+    )
     # country_id is here to have stats per country
     # WARNING : I can't put a related field, because when someone
     # writes on the country_id of a partner, it will trigger a write
     # on all it's donations, including donations in other companies
     # which will be blocked by the record rule
     country_id = fields.Many2one(
-        'res.country', string='Country', compute='_compute_country_id',
-        store=True, readonly=True, compute_sudo=True)
+        'res.country',
+        string='Country',
+        compute='_compute_country_id',
+        store=True,
+        readonly=True,
+        compute_sudo=True
+    )
     check_total = fields.Monetary(
         string='Check Amount',
-        states={'done': [('readonly', True)]}, currency_field='currency_id',
-        track_visibility='onchange')
+        states={'done': [('readonly', True)]},
+        currency_field='currency_id',
+        track_visibility='onchange'
+    )
     amount_total = fields.Monetary(
-        compute='_compute_total', string='Amount Total',
-        currency_field='currency_id', store=True, compute_sudo=True,
-        readonly=True, track_visibility='onchange')
+        compute='_compute_total',
+        string='Amount Total',
+        currency_field='currency_id',
+        store=True,
+        compute_sudo=True,
+        readonly=True,
+        track_visibility='onchange'
+    )
     amount_total_company_currency = fields.Monetary(
-        compute='_compute_total', string='Amount Total in Company Currency',
-        currency_field='company_currency_id', compute_sudo=True,
-        store=True, readonly=True)
+        compute='_compute_total',
+        string='Amount Total in Company Currency',
+        currency_field='company_currency_id',
+        compute_sudo=True,
+        store=True,
+        readonly=True
+    )
     donation_date = fields.Date(
-        string='Donation Date', required=True,
-        states={'done': [('readonly', True)]}, index=True,
-        track_visibility='onchange')
+        string='Donation Date',
+        required=True,
+        states={'done': [('readonly', True)]},
+        index=True,
+        track_visibility='onchange'
+    )
     company_id = fields.Many2one(
-        'res.company', string='Company', required=True,
+        'res.company',
+        string='Company',
+        required=True,
         states={'done': [('readonly', True)]},
         default=lambda self: self.env['res.company']._company_default_get(
             'donation.donation'))
     line_ids = fields.One2many(
-        'donation.line', 'donation_id', string='Donation Lines',
-        states={'done': [('readonly', True)]}, copy=True)
+        'donation.line',
+        'donation_id',
+        string='Donation Lines',
+        states={'done': [('readonly', True)]},
+    )
     move_id = fields.Many2one(
-        'account.move', string='Account Move', readonly=True, copy=False)
+        'account.move',
+        string='Account Move',
+        readonly=True,
+        copy=False
+    )
     number = fields.Char(
-        related='move_id.name', readonly=True, size=64,
-        store=True, string='Donation Number')
+        related='move_id.name',
+        readonly=True,
+        store=True,
+        string='Donation Number'
+    )
     journal_id = fields.Many2one(
-        'account.journal', string='Payment Method', required=True,
+        'account.journal',
+        string='Payment Method',
+        required=True,
         domain=[
             ('type', 'in', ('bank', 'cash')),
             ('allow_donation', '=', True)],
         states={'done': [('readonly', True)]},
         track_visibility='onchange',
-        default=lambda self: self.env.user.context_donation_journal_id)
+        default=lambda self: self.env.user.context_donation_journal_id
+    )
     payment_ref = fields.Char(
-        string='Payment Reference', size=32,
-        states={'done': [('readonly', True)]})
+        string='Payment Reference',
+        states={'done': [('readonly', True)]}
+    )
     state = fields.Selection([
         ('draft', 'Draft'),
         ('done', 'Done'),
-        ('cancel', 'Cancelled'),
-        ], string='State', readonly=True, copy=False, default='draft',
-        index=True, track_visibility='onchange')
+        ('cancel', 'Cancelled')],
+        string='State',
+        readonly=True,
+        copy=False,
+        default='draft',
+        index=True,
+        track_visibility='onchange'
+    )
     company_currency_id = fields.Many2one(
-        related='company_id.currency_id', string="Company Currency",
-        readonly=True, store=True, compute_sudo=True)
+        related='company_id.currency_id',
+        string="Company Currency",
+        readonly=True,
+        store=True,
+        compute_sudo=True
+    )
     campaign_id = fields.Many2one(
-        'donation.campaign', string='Donation Campaign',
-        track_visibility='onchange', ondelete='restrict',
-        default=lambda self: self.env.user.context_donation_campaign_id)
+        'donation.campaign',
+        string='Donation Campaign',
+        track_visibility='onchange',
+        ondelete='restrict',
+        default=lambda self: self.env.user.context_donation_campaign_id
+    )
     tax_receipt_id = fields.Many2one(
-        'donation.tax.receipt', string='Tax Receipt', readonly=True,
-        copy=False, track_visibility='onchange')
+        'donation.tax.receipt',
+        string='Tax Receipt',
+        readonly=True,
+        copy=False,
+        track_visibility='onchange'
+    )
     tax_receipt_option = fields.Selection([
         ('none', 'None'),
         ('each', 'For Each Donation'),
-        ('annual', 'Annual Tax Receipt'),
-        ], string='Tax Receipt Option', states={'done': [('readonly', True)]},
-        index=True, track_visibility='onchange')
+        ('annual', 'Annual Tax Receipt')],
+        string='Tax Receipt Option',
+        states={'done': [('readonly', True)]},
+        index=True,
+        track_visibility='onchange'
+    )
     tax_receipt_total = fields.Monetary(
-        compute='_compute_total', string='Tax Receipt Eligible Amount',
-        store=True, readonly=True, currency_field='company_currency_id',
+        compute='_compute_total',
+        string='Tax Receipt Eligible Amount',
+        store=True,
+        readonly=True,
+        currency_field='company_currency_id',
         compute_sudo=True,
-        help="Eligible Tax Receipt Sub-total in Company Currency")
+        help="Eligible Tax Receipt Sub-total in Company Currency"
+    )
 
     @api.constrains('donation_date')
     def _check_donation_date(self):
@@ -192,7 +263,7 @@ class DonationDonation(models.Model):
             'currency_id': currency_id,
             'amount_currency': (
                 currency_id and total_amount_currency or 0.0),
-            }
+        }
         return vals
 
     def _prepare_donation_move(self):
@@ -254,7 +325,7 @@ class DonationDonation(models.Model):
         if not aml:  # for full in-kind donation
             return False
 
-        for (account_id, analytic_account_id), content in aml.iteritems():
+        for (account_id, analytic_account_id), content in aml.items():
             movelines.append((0, 0, {
                 'name': name,
                 'credit': content['credit'],
@@ -465,50 +536,87 @@ class DonationLine(models.Model):
             line.tax_receipt_amount = tax_receipt_amount_cc
 
     donation_id = fields.Many2one(
-        'donation.donation', string='Donation', ondelete='cascade')
+        'donation.donation',
+        'Donation',
+        ondelete='cascade'
+    )
     currency_id = fields.Many2one(
-        'res.currency', related='donation_id.currency_id', readonly=True,
-        compute_sudo=True)
+        'res.currency',
+        related='donation_id.currency_id',
+        readonly=True,
+        compute_sudo=True
+    )
     company_currency_id = fields.Many2one(
-        'res.currency', related='donation_id.company_id.currency_id',
-        readonly=True, compute_sudo=True)
+        'res.currency',
+        related='donation_id.company_id.currency_id',
+        readonly=True,
+        compute_sudo=True
+    )
     product_id = fields.Many2one(
-        'product.product', string='Product', required=True,
-        domain=[('donation', '=', True)], ondelete='restrict')
-    quantity = fields.Integer(string='Quantity', default=1)
+        'product.product',
+        'Product',
+        required=True,
+        domain=[('donation', '=', True)],
+        ondelete='restrict'
+    )
+    quantity = fields.Integer('Quantity')
     unit_price = fields.Monetary(
-        string='Unit Price', currency_field='currency_id')
+        string='Unit Price',
+        currency_field='currency_id'
+    )
     amount = fields.Monetary(
-        compute='_compute_amount', string='Amount', compute_sudo=True,
-        currency_field='currency_id', store=True, readonly=True)
+        compute='_compute_amount',
+        string='Amount',
+        compute_sudo=True,
+        currency_field='currency_id',
+        store=True,
+        readonly=True
+    )
     amount_company_currency = fields.Monetary(
         compute='_compute_amount',
-        string='Amount in Company Currency', compute_sudo=True,
-        currency_field='company_currency_id', store=True, readonly=True)
+        string='Amount in Company Currency',
+        compute_sudo=True,
+        currency_field='company_currency_id',
+        store=True,
+        readonly=True
+    )
     tax_receipt_amount = fields.Monetary(
         compute='_compute_amount',
-        string='Tax Receipt Eligible Amount', compute_sudo=True,
-        currency_field='company_currency_id', store=True, readonly=True)
+        string='Tax Receipt Eligible Amount',
+        compute_sudo=True,
+        currency_field='company_currency_id',
+        store=True,
+        readonly=True
+    )
     analytic_account_id = fields.Many2one(
-        'account.analytic.account', string='Analytic Account',
-        ondelete='restrict')
+        'account.analytic.account',
+        'Analytic Account',
+        ondelete='restrict'
+    )
     sequence = fields.Integer('Sequence')
     # for the fields tax_receipt_ok and in_kind, we made an important change
     # between v8 and v9: in v8, it was a reglar field set by an onchange
     # in v9, it is a related stored field
     tax_receipt_ok = fields.Boolean(
-        related='product_id.tax_receipt_ok', readonly=True, store=True,
-        compute_sudo=True)
+        related='product_id.tax_receipt_ok',
+        readonly=True,
+        store=True,
+        compute_sudo=True
+    )
     in_kind = fields.Boolean(
-        related='product_id.in_kind_donation', readonly=True, store=True,
-        string='In Kind', compute_sudo=True)
+        related='product_id.in_kind_donation',
+        readonly=True,
+        store=True,
+        string='In Kind',
+        compute_sudo=True
+    )
 
     @api.onchange('product_id')
     def product_id_change(self):
-        if self.product_id:
-            # We should change that one day...
-            if self.product_id.list_price:
-                self.unit_price = self.product_id.list_price
+        for line in self:
+            if line.product_id and line.product_id.list_price:
+                # We should change that one day...
+                    line.unit_price = line.product_id.list_price
 
     @api.model
     def get_analytic_account_id(self):
@@ -519,7 +627,10 @@ class DonationTaxReceipt(models.Model):
     _inherit = 'donation.tax.receipt'
 
     donation_ids = fields.One2many(
-        'donation.donation', 'tax_receipt_id', string='Related Donations')
+        'donation.donation',
+        'tax_receipt_id',
+        string='Related Donations'
+    )
 
     @api.model
     def update_tax_receipt_annual_dict(
