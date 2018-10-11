@@ -2,10 +2,11 @@
 # © 2015-2016 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import time
 from odoo.tests.common import TransactionCase
 from odoo import tools
 from odoo.modules.module import get_resource_path
-import time
+from odoo.exceptions import ValidationError
 
 
 class TestDonation(TransactionCase):
@@ -29,9 +30,13 @@ class TestDonation(TransactionCase):
         self.inkind_product = self.env.ref(
             'donation_base.product_product_inkind_donation')
         self.ddo = self.env['donation.donation']
+        self.donor1 = self.env.ref('donation_base.donor1')
+        self.donor2 = self.env.ref('donation_base.donor2')
+        self.donor3 = self.env.ref('donation_base.donor3')
+
         self.don1 = self.ddo.create({
             'check_total': 100,
-            'partner_id': self.env.ref('donation_base.donor1').id,
+            'partner_id': self.donor1.id,
             'donation_date': today,
             'journal_id': self.bank_journal.id,
             'tax_receipt_option': 'each',
@@ -43,7 +48,7 @@ class TestDonation(TransactionCase):
             })
         self.don2 = self.ddo.create({
             'check_total': 120,
-            'partner_id': self.env.ref('donation_base.donor2').id,
+            'partner_id': self.donor2.id,
             'donation_date': today,
             'journal_id': self.bank_journal.id,
             'tax_receipt_option': 'annual',
@@ -55,7 +60,7 @@ class TestDonation(TransactionCase):
             })
         self.don3 = self.ddo.create({
             'check_total': 150,
-            'partner_id': self.env.ref('donation_base.donor3').id,
+            'partner_id': self.donor3.id,
             'donation_date': today,
             'journal_id': self.bank_journal.id,
             'tax_receipt_option': 'none',
@@ -67,7 +72,7 @@ class TestDonation(TransactionCase):
             })
         self.don4 = self.ddo.create({
             'check_total': 1000,
-            'partner_id': self.env.ref('donation_base.donor1').id,
+            'partner_id': self.donor1.id,
             'donation_date': today,
             'journal_id': self.bank_journal.id,
             'tax_receipt_option': 'each',
@@ -79,7 +84,7 @@ class TestDonation(TransactionCase):
             })
         self.don5 = self.ddo.create({
             'check_total': 1200,
-            'partner_id': self.env.ref('donation_base.donor1').id,
+            'partner_id': self.donor1.id,
             'donation_date': today,
             'journal_id': self.bank_journal.id,
             'tax_receipt_option': 'each',
@@ -126,17 +131,20 @@ class TestDonation(TransactionCase):
                     donation.tax_receipt_total, tax_receipt.amount)
 
     def test_annual_tax_receipt(self):
-        partner_familly = self.env['res.partner'].create({
+        self.res_partner = self.env['res.partner']
+
+        partner_familly = self.res_partner.create({
             'name': u'Famille Joly',
             'tax_receipt_option': 'annual',
             })
-        partner_husband = self.env['res.partner'].create({
+        partner_husband = self.res_partner.create({
             'parent_id': partner_familly.id,
             'name': u'Xavier Joly'})
-        partner_wife = self.env['res.partner'].create({
+        partner_wife = self.res_partner.create({
             'parent_id': partner_familly.id,
             'name': u'Stéphanie Joly'})
 
+        partner_husband._compute_donation_count()
         dons = self.create_donation_annual_receipt(
             partner_husband, 40, 10, 'CHQ FB 93283290')
         dons += self.create_donation_annual_receipt(
@@ -164,6 +172,71 @@ class TestDonation(TransactionCase):
         self.assertEquals(tax_receipt.donation_date, last_day_year)
         self.assertEquals(
             tax_receipt.currency_id, dons[0].company_id.currency_id)
+
+    def test_account(self):
+        self.bank_journal.donation_journal_type_change()
+        self.donor1._compute_donation_count()
+        with self.assertRaises(ValidationError):
+            self.bank_journal.type = 'sale'
+
+    def test_donation_campaign(self):
+        self.campaign_id = self.env.ref('donation.quest_origin')
+        self.campaign_id.name_get()
+
+        self.don8 = self.ddo.create({
+            'check_total': 1000,
+            'partner_id': self.donor1.id,
+            'donation_date': time.strftime('%Y-%m-%d'),
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'each',
+            'line_ids': [(0, 0, {
+                'product_id': self.inkind_product.id,
+                'quantity': 1,
+                'unit_price': 1000,
+                })],
+            })
+
+        self.validate = self.env['donation.validate']
+        wizard = self.validate.with_context({
+            'active_ids': self.don8.ids,
+            'active_model': 'donation.donation',
+            'picking_type': 'outgoing',
+            'active_id': 1
+        }).create({})
+        wizard.run()
+
+        self.option_switch = self.env['donation.tax.receipt.option.switch']
+        wizard = self.option_switch.create({
+            'donation_id': self.don8.id,
+            'new_tax_receipt_option': 'annual'
+        })
+        self.don8.tax_receipt_id = False
+        wizard.switch()
+
+    def test_donation(self):
+        self.donation_id = self.ddo.create({
+            'check_total': 1000,
+            'partner_id': self.donor1.id,
+            'donation_date': time.strftime('%Y-%m-%d'),
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'each',
+            'line_ids': [(0, 0, {
+                'product_id': self.inkind_product.id,
+                'quantity': 1,
+                'unit_price': 1000,
+                })],
+            })
+        self.donation_id.name_get()
+        self.donation_id.save_default_values()
+        self.donation_id.partner_id_change()
+        self.donation_id.tax_receipt_option_change()
+        self.donation_id.validate()
+        self.donation_id.line_ids[0]._compute_amount()
+        self.donation_id.line_ids[0].product_id_change()
+        self.donation_id.tax_receipt_id = False
+        self.donation_id.done2cancel()
+        self.donation_id.cancel2draft()
+        self.donation_id.unlink()
 
     def create_donation_annual_receipt(
             self, partner, amount_tax_receipt, amount_no_tax_receipt,
