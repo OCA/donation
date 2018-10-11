@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# © 2014-2016 Barroux Abbey (http://www.barroux.org)
-# © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+# Copyright 2014-2016 Barroux Abbey (http://www.barroux.org)
+# Copyright 2014-2016 Akretion France
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api
@@ -21,8 +21,13 @@ class DonationCampaign(models.Model):
             res.append((camp.id, name))
         return res
 
-    code = fields.Char(string='Code', size=10)
-    name = fields.Char(string='Name', required=True)
+    code = fields.Char('Code')
+    name = fields.Char(
+        'Name',
+        required=True
+    )
     start_date = fields.Date(
-        string='Start Date', default=fields.Date.context_today)
-    nota = fields.Text(string='Notes')
+        'Start Date',
+        default=fields.Date.context_today
+    )
+    nota = fields.Text('Notes')

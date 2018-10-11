@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# © 2014-2016 Barroux Abbey (http://www.barroux.org)
-# © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+# Copyright 2014-2016 Barroux Abbey (http://www.barroux.org)
+# Copyright 2014-2016 Akretion France
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api
@@ -19,8 +19,13 @@ class ResPartner(models.Model):
                 partner.donation_count = 0
 
     donation_ids = fields.One2many(
-        'donation.donation', 'partner_id', string='Donations',
-        readonly=True)
+        'donation.donation',
+        'partner_id',
+        string='Donations',
+        readonly=True
+    )
     donation_count = fields.Integer(
-        compute='_compute_donation_count', string="# of Donations",
-        readonly=True)
+        compute='_compute_donation_count',
+        string="# of Donations",
+        readonly=True
+    )
