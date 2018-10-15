@@ -20,6 +20,6 @@
         'views/account_invoice.xml',
         'views/sale_order.xml',
         'views/donation_tax.xml',
-        ],
+    ],
     'installable': True,
 }
