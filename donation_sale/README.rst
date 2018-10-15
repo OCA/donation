@@ -7,7 +7,9 @@ Donation Sale
 =============
 
 
-To get some real features, you should install the *donation* or the *donation_sale* module. To understand the difference between these 2 modules, read `this post <https://github.com/OCA/donation/issues/22>`_.
+To get some real features, you should install the *donation* or the *donation_sale* module.
+To understand the difference between these 2 modules,
+read `this post <https://github.com/OCA/donation/issues/22>`_.
 
 Configuration
 =============
@@ -21,7 +23,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/180/10.0
+   :target: https://runbot.odoo-community.org/runbot/180/11.0
 
 Bug Tracker
 ===========
@@ -38,6 +40,8 @@ Contributors
 ------------
 
 * Alexis de Lattre <alexis.delattre@akretion.com>
+* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
+* Nikul Chaudhary <nikul.chaudhary.serpentcs@gmail.com>
 
 Maintainer
 ----------
