@@ -5,18 +5,21 @@
 
 {
     'name': 'Donation Sale',
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Manage donations in sale orders',
     'author': 'La Cimade, Akretion, Odoo Community Association (OCA)',
-    'website': 'http://www.lacimade.org',
-    'depends': ['donation_base', 'sale'],
+    'website': 'https://github.com/OCA/donation',
+    'depends': [
+        'donation_base',
+        'sale_management'
+    ],
     'data': [
+        'data/cron.xml',
         'views/account_invoice.xml',
         'views/sale_order.xml',
         'views/donation_tax.xml',
-        'data/cron.xml',
         ],
     'installable': True,
 }

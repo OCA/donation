@@ -7,55 +7,53 @@
 
 <odoo>
 
-
-<record id="invoice_form" model="ir.ui.view">
-    <field name="name">donation_sale.customer.invoice.form</field>
-    <field name="model">account.invoice</field>
-    <field name="inherit_id" ref="account.invoice_form"/>
-    <field name="arch" type="xml">
-        <field name="fiscal_position_id" position="after">
-            <field name="tax_receipt_option"/>
-            <field name="tax_receipt_total"/>
-            <field name="tax_receipt_id"/>
+    <record id="invoice_form" model="ir.ui.view">
+        <field name="name">donation_sale.customer.invoice.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <field name="fiscal_position_id" position="after">
+                <field name="tax_receipt_option"/>
+                <field name="tax_receipt_total"/>
+                <field name="tax_receipt_id"/>
+            </field>
         </field>
-    </field>
-</record>
+    </record>
 
-<record id="invoice_tree" model="ir.ui.view">
-    <field name="name">donation_sale.customer.invoice.tree</field>
-    <field name="model">account.invoice</field>
-    <field name="inherit_id" ref="account.invoice_tree"/>
-    <field name="arch"  type="xml">
-        <field name="residual_signed" position="after">
-            <field name="tax_receipt_id"/>
+    <record id="invoice_tree" model="ir.ui.view">
+        <field name="name">donation_sale.customer.invoice.tree</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_tree"/>
+        <field name="arch"  type="xml">
+            <field name="residual_signed" position="after">
+                <field name="tax_receipt_id"/>
+            </field>
         </field>
-    </field>
-</record>
+    </record>
 
-<record id="view_account_invoice_filter" model="ir.ui.view">
-    <field name="name">donation_sale.customer.invoice.search</field>
-    <field name="model">account.invoice</field>
-    <field name="inherit_id" ref="account.view_account_invoice_filter"/>
-    <field name="arch"  type="xml">
-        <group expand="0" position="inside">
-            <filter name="tax_receipt_option_groupby" string="Tax Receipt Option"
-                context="{'group_by': 'tax_receipt_option'}"/>
-        </group>
-    </field>
-</record>
+    <record id="view_account_invoice_filter" model="ir.ui.view">
+        <field name="name">donation_sale.customer.invoice.search</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch"  type="xml">
+            <group expand="0" position="inside">
+                <filter name="tax_receipt_option_groupby" string="Tax Receipt Option"
+                    context="{'group_by': 'tax_receipt_option'}"/>
+            </group>
+        </field>
+    </record>
 
-<menuitem id="account_donation_menu" name="Donations"
-    parent="account.menu_finance" sequence="3"/>
+    <menuitem id="account_donation_menu" name="Donations"
+        parent="account.menu_finance" sequence="3"/>
 
-<menuitem id="donation_tax_receipt_menu"
-    action="donation_base.donation_tax_receipt_action"
-    parent="account_donation_menu"
-    sequence="20"/>
+    <menuitem id="donation_tax_receipt_menu"
+        action="donation_base.donation_tax_receipt_action"
+        parent="account_donation_menu"
+        sequence="20"/>
 
-<menuitem id="tax_receipt_annual_create_menu" sequence="40"
-    action="donation_base.tax_receipt_annual_create_action"
-    parent="account_donation_menu"
-    groups="account.group_account_invoice"/>
-
+    <menuitem id="tax_receipt_annual_create_menu" sequence="40"
+        action="donation_base.tax_receipt_annual_create_action"
+        parent="account_donation_menu"
+        groups="account.group_account_invoice"/>
 
 </odoo>
