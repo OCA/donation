@@ -7,56 +7,53 @@
 
 <odoo>
 
-
-<record id="view_order_form" model="ir.ui.view">
-    <field name="name">donation_sale.sale.order.form</field>
-    <field name="model">sale.order</field>
-    <field name="inherit_id" ref="sale.view_order_form"/>
-    <field name="arch" type="xml">
-        <field name="payment_term_id" position="after">
-            <field name="tax_receipt_option"/>
-            <field name="tax_receipt_total"/>
-            <field name="company_currency_id" invisible="1"/>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">donation_sale.sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_term_id" position="after">
+                <field name="tax_receipt_option"/>
+                <field name="tax_receipt_total"/>
+                <field name="company_currency_id" invisible="1"/>
+            </field>
         </field>
-    </field>
-</record>
+    </record>
 
-<record id="view_order_tree" model="ir.ui.view">
-    <field name="name">donation_sale.sale.order.tree</field>
-    <field name="model">sale.order</field>
-    <field name="inherit_id" ref="sale.view_order_tree"/>
-    <field name="arch"  type="xml">
-        <field name="amount_total" position="after">
-            <field name="tax_receipt_total"/>
-            <field name="company_currency_id" invisible="1"/>
+    <record id="view_order_tree" model="ir.ui.view">
+        <field name="name">donation_sale.sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch"  type="xml">
+            <field name="amount_total" position="after">
+                <field name="tax_receipt_total"/>
+                <field name="company_currency_id" invisible="1"/>
+            </field>
         </field>
-    </field>
-</record>
+    </record>
 
-<record id="view_quotation_tree" model="ir.ui.view">
-    <field name="name">donation_sale.quotation.sale.order.tree</field>
-    <field name="model">sale.order</field>
-    <field name="inherit_id" ref="sale.view_quotation_tree"/>
-    <field name="arch"  type="xml">
-        <field name="amount_total" position="after">
-            <field name="tax_receipt_total"/>
-            <field name="company_currency_id" invisible="1"/>
+    <record id="view_quotation_tree" model="ir.ui.view">
+        <field name="name">donation_sale.quotation.sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch"  type="xml">
+            <field name="amount_total" position="after">
+                <field name="tax_receipt_total"/>
+                <field name="company_currency_id" invisible="1"/>
+            </field>
         </field>
-    </field>
-</record>
+    </record>
 
-
-<record id="view_sales_order_filter" model="ir.ui.view">
-    <field name="name">donation_sale.sale.order.search</field>
-    <field name="model">sale.order</field>
-    <field name="inherit_id" ref="sale.view_sales_order_filter"/>
-    <field name="arch"  type="xml">
-        <group expand="0" position="inside">
-            <filter name="tax_receipt_option_groupby" string="Tax Receipt Option"
-                context="{'group_by': 'tax_receipt_option'}"/>
-        </group>
-    </field>
-</record>
-
+    <record id="view_sales_order_filter" model="ir.ui.view">
+        <field name="name">donation_sale.sale.order.search</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch"  type="xml">
+            <group expand="0" position="inside">
+                <filter name="tax_receipt_option_groupby" string="Tax Receipt Option"
+                    context="{'group_by': 'tax_receipt_option'}"/>
+            </group>
+        </field>
+    </record>
 
 </odoo>
