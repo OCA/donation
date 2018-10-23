@@ -29,7 +29,7 @@ validate them.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/180/10.0
+   :target: https://runbot.odoo-community.org/runbot/180/11.0
 
 Bug Tracker
 ===========
@@ -48,6 +48,8 @@ Contributors
 * Brother Bernard <informatique - at - barroux.org>
 * Brother Irénée (Barroux Abbey)
 * Alexis de Lattre <alexis.delattre@akretion.com>
+* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
+* Nikul Chaudhary <nikul.chaudhary.serpentcs@gmail.com>
 
 Maintainer
 ----------

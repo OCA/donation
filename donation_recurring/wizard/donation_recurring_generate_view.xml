@@ -7,35 +7,33 @@
 
 <odoo>
 
+    <record id="donation_recurring_generate_form" model="ir.ui.view">
+        <field name="name">donation_recurring_generate.form</field>
+        <field name="model">donation.recurring.generate</field>
+        <field name="arch"  type="xml">
+            <form string="Generate Recurring Donations">
+                <group name="main">
+                    <field name="date"/>
+                    <field name="payment_ref"/>
+                </group>
+                <footer>
+                    <button type="object" name="generate" string="Generate" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
 
-<record id="donation_recurring_generate_form" model="ir.ui.view">
-    <field name="name">donation_recurring_generate.form</field>
-    <field name="model">donation.recurring.generate</field>
-    <field name="arch"  type="xml">
-        <form string="Generate Recurring Donations">
-            <group name="main">
-                <field name="date"/>
-                <field name="payment_ref"/>
-            </group>
-            <footer>
-                <button type="object" name="generate" string="Generate" class="oe_highlight"/>
-                <button special="cancel" string="Cancel" class="oe_link"/>
-            </footer>
-        </form>
-    </field>
-</record>
+    <record id="donation_recurring_generate_action" model="ir.actions.act_window">
+        <field name="name">Generate Recurring Donations</field>
+        <field name="res_model">donation.recurring.generate</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
 
-<record id="donation_recurring_generate_action" model="ir.actions.act_window">
-    <field name="name">Generate Recurring Donations</field>
-    <field name="res_model">donation.recurring.generate</field>
-    <field name="view_mode">form</field>
-    <field name="target">new</field>
-</record>
-
-<menuitem id="donation_recurring_generate_menu" sequence="30"
-    action="donation_recurring_generate_action"
-    parent="donation.donation_title_menu"
-    groups="donation.group_donation_user"/>
-
+    <menuitem id="donation_recurring_generate_menu" sequence="30"
+        action="donation_recurring_generate_action"
+        parent="donation.donation_title_menu"
+        groups="donation.group_donation_user"/>
 
 </odoo>
