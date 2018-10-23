@@ -5,17 +5,21 @@
 
 {
     'name': 'Donation Recurring',
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Manage recurring donations',
     'author': 'Barroux Abbey, Akretion, Odoo Community Association (OCA)',
-    'website': 'http://www.barroux.org',
-    'depends': ['donation'],
+    'website': 'https://github.com/OCA/donation',
+    'depends': [
+        'donation',
+    ],
     'data': [
         'views/donation.xml',
         'wizard/donation_recurring_generate_view.xml',
-        ],
-    'demo': ['demo/donation_recurring_demo.xml'],
+    ],
+    'demo': [
+        'demo/donation_recurring_demo.xml'
+    ],
     'installable': True,
 }

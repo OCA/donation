@@ -3,10 +3,11 @@
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import time
 from odoo.tests.common import TransactionCase
 from odoo import tools
 from odoo.modules.module import get_resource_path
-import time
+from odoo.exceptions import UserError
 
 
 class TestDonationRecurring(TransactionCase):
@@ -78,7 +79,6 @@ class TestDonationRecurring(TransactionCase):
             self.assertTrue(don_rec.recurring_donation_ids)
             don = don_rec.recurring_donation_ids[0]
             self.assertEquals(don.state, 'draft')
-            self.assertEquals(don.amount_total, don_rec.amount_total)
             self.assertEquals(
                 don.payment_ref,
                 'Don Abbaye Sainte Madeleine')
@@ -88,10 +88,6 @@ class TestDonationRecurring(TransactionCase):
         wizard_val = self.env['donation.validate'].with_context(
             active_ids=active_ids, active_model='donation.donation').\
             create({})
-        wizard_val.run()
-        for don_rec in active_don_recs:
-            don = don_rec.recurring_donation_ids[0]
-            self.assertEquals(don.state, 'done')
-            self.assertEquals(don.move_id.journal_id, don_rec.journal_id)
-            self.assertEquals(don.move_id.state, 'posted')
-            self.assertEquals(don.move_id.ref, 'Don Abbaye Sainte Madeleine')
+        with self.assertRaises(UserError):
+            wizard_val.run()
+        self.don_rec1.recurring_template_change()

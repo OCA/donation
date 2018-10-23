@@ -12,8 +12,11 @@ class DonationRecurringGenerate(models.TransientModel):
     _description = 'Generate Recurring Donations'
     _rec_name = 'date'
 
-    date = fields.Date(required=True, default=fields.Date.context_today)
-    payment_ref = fields.Char(string='Payment Reference', size=32)
+    date = fields.Date(
+        required=True,
+        default=fields.Date.context_today
+    )
+    payment_ref = fields.Char(string='Payment Reference')
 
     @api.model
     def _prepare_donation_default(self, donation):
@@ -21,7 +24,7 @@ class DonationRecurringGenerate(models.TransientModel):
             'donation_date': self.date,
             'source_recurring_id': donation.id,
             'payment_ref': self.payment_ref,
-            }
+        }
         return default
 
     def generate(self):
@@ -49,5 +52,5 @@ class DonationRecurringGenerate(models.TransientModel):
             'domain': [('id', 'in', new_donation_ids)],
             'target': 'current',
             'limit': 500,
-            })
+        })
         return action
