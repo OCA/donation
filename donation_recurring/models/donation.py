@@ -12,15 +12,24 @@ class DonationDonation(models.Model):
 
     recurring_template = fields.Selection([
         ('active', 'Active'),
-        ('suspended', 'Suspended'),
-        ], string='Recurring Template', copy=False, index=True,
-        track_visibility='onchange')
+        ('suspended', 'Suspended')],
+        string='Recurring Template',
+        copy=False,
+        index=True,
+        track_visibility='onchange'
+    )
     source_recurring_id = fields.Many2one(
-        'donation.donation', string='Source Recurring Template',
-        states={'done': [('readonly', True)]})
+        'donation.donation',
+        string='Source Recurring Template',
+        states={'done': [('readonly', True)]}
+    )
     recurring_donation_ids = fields.One2many(
-        'donation.donation', 'source_recurring_id',
-        string='Past Recurring Donations', readonly=True, copy=False)
+        'donation.donation',
+        'source_recurring_id',
+        string='Past Recurring Donations',
+        readonly=True,
+        copy=False
+    )
 
     @api.constrains(
         'recurring_template', 'source_recurring_id', 'state',
