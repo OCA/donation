@@ -11,16 +11,12 @@ class ResPartner(models.Model):
 
     @api.depends('donation_ids.partner_id')
     def _compute_donation_count(self):
-        # The current user may not have access rights for donations
-        try:
-            res = self.env['donation.donation'].read_group(
-                [('partner_id', 'in', self.ids)],
-                ['partner_id'], ['partner_id'])
-            for re in res:
-                partner = self.browse(re['partner_id'][0])
-                partner.donation_count = re['partner_id_count']
-        except Exception:
-            pass
+        res = self.env['donation.donation'].read_group(
+            [('partner_id', 'in', self.ids)],
+            ['partner_id'], ['partner_id'])
+        for re in res:
+            partner = self.browse(re['partner_id'][0])
+            partner.donation_count = re['partner_id_count']
 
     donation_ids = fields.One2many(
         'donation.donation', 'partner_id', string='Donations',
