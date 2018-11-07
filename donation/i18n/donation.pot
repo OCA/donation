@@ -298,7 +298,6 @@ msgstr ""
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_action
-#: model:ir.actions.act_window,name:donation.partner_donation_action
 #: model:ir.model.fields,field_description:donation.field_res_partner_donation_ids
 #: model:ir.model.fields,field_description:donation.field_res_users_donation_ids
 #: model:ir.ui.menu,name:donation.donation_menu
