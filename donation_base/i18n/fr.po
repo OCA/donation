@@ -268,7 +268,7 @@ msgid "Missing email on partner '%s'."
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:86
+#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:85
 #, python-format
 msgid "No annual tax receipt to generate"
 msgstr "Aucun reçu fiscal à générer"
@@ -383,7 +383,7 @@ msgid "Tax Receipts"
 msgstr "Reçus fiscaux"
 
 #. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:76
+#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:75
 #, python-format
 msgid ""
 "The Donor '%s' already has an annual tax receipt in this timeframe: %s dated "
@@ -393,7 +393,7 @@ msgstr ""
 "%s daté du %s."
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:42
+#: code:addons/donation_base/models/product.py:41
 #, python-format
 msgid ""
 "The option 'In-Kind Donation' is active on the product '%s', so you must "
@@ -403,7 +403,7 @@ msgstr ""
 "également activer l'option 'Est un don'."
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:47
+#: code:addons/donation_base/models/product.py:46
 #, python-format
 msgid ""
 "The option 'Is Eligible for a Tax Receipt' is active on the product '%s', so "
@@ -413,19 +413,19 @@ msgstr ""
 "devez également activer l'option 'Est un don'."
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:38
+#: code:addons/donation_base/models/product.py:37
 #, python-format
 msgid "The product '%s' is a donation, so you must configure it as a Service"
 msgstr "L'article '%s' est un don, donc il doit être de type 'service'"
 
 #. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_print.py:29
+#: code:addons/donation_base/wizard/tax_receipt_print.py:28
 #, python-format
 msgid "There are no tax receipts to print."
 msgstr "Il n'y a aucun reçu fiscal à imprimer."
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:57
+#: code:addons/donation_base/models/product.py:56
 #, python-format
 msgid "There shouldn't have any Customer Taxes on the donation product '%s'."
 msgstr ""
