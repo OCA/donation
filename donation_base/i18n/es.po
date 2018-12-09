@@ -162,7 +162,6 @@ msgstr ""
 
 #. module: donation_base
 #: model:ir.actions.act_window,name:donation_base.donation_tax_receipt_action
-#: model:ir.actions.act_window,name:donation_base.partner_tax_receipt_action
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_graph
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_pivot
 msgid "Donation Tax Receipts"
@@ -377,7 +376,7 @@ msgstr ""
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_res_partner_tax_receipt_ids
 #: model:ir.model.fields,field_description:donation_base.field_res_users_tax_receipt_ids
-#: model:ir.ui.view,arch_db:donation_base.view_partner_property_form
+#: model:ir.ui.view,arch_db:donation_base.view_partner_form
 msgid "Tax Receipts"
 msgstr "Recibos de impuestos"
 
