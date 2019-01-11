@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-05 00:42+0000\n"
-"PO-Revision-Date: 2018-04-05 00:42+0000\n"
-"Last-Translator: neben, 2017\n"
+"PO-Revision-Date: 2019-01-11 17:41+0000\n"
+"Last-Translator: kempleton <kimdoelling@gmail.com>\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.3\n"
 
 #. module: donation_base
 #: model:mail.template,body_html:donation_base.tax_receipt_email_template
@@ -72,7 +73,7 @@ msgstr "Gesamtbetrag:"
 #: selection:donation.tax.receipt,type:0
 #: selection:res.partner,tax_receipt_option:0
 msgid "Annual Tax Receipt"
-msgstr "Jährliche Erstellung"
+msgstr "Sammelspendenbescheinigung"
 
 #. module: donation_base
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
@@ -83,7 +84,7 @@ msgstr "Jährliche Spendenbescheinigungen"
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_print_form
 #: model:ir.ui.view,arch_db:donation_base.tax_receipt_annual_create_form
 msgid "Cancel"
-msgstr "Kündigung"
+msgstr "Abbrechen"
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_company_id
@@ -99,7 +100,7 @@ msgstr ""
 #. module: donation_base
 #: model:ir.actions.act_window,name:donation_base.tax_receipt_annual_create_action
 msgid "Create Annual Receipts"
-msgstr "Erzeuge jährliche Bescheinigungen"
+msgstr "Erzeuge Sammelspendenbescheinigung"
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_create_uid
