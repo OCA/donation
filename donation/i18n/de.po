@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2019-01-11 15:41+0000\n"
+"PO-Revision-Date: 2019-01-25 18:41+0000\n"
 "Last-Translator: kempleton <kimdoelling@gmail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -27,12 +27,15 @@ msgstr ""
 #, python-format
 msgid "A cancelled donation should not be linked to a tax receipt"
 msgstr ""
+"Eine abgebrochene Spende sollte nicht mit einer Spendenbescheinigung "
+"verknüpft sein"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:375
 #, python-format
 msgid "A cancelled donation should not be linked to an account move"
 msgstr ""
+"Abgebrochene Spenden sollten nicht mit einer Kontobewegung verknüpft sein"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation_move_id
@@ -63,7 +66,7 @@ msgstr "Betrag in Unternehmenswährung"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line_analytic_account_id
 msgid "Analytic Account"
-msgstr ""
+msgstr "Kostenstelle"
 
 #. module: donation
 #: selection:donation.donation,tax_receipt_option:0
@@ -104,19 +107,22 @@ msgstr ""
 #: code:addons/donation/models/donation.py:289
 #, python-format
 msgid "Cannot validate the donation of %s because it doesn't have any lines!"
-msgstr "Spende kann nicht bestätigt werden, da keine Zeilen vorhanden sind!"
+msgstr ""
+"Spende  %s1 kann nicht bestätigt werden, da keine Zeilen vorhanden sind!"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:301
 #, python-format
 msgid "Cannot validate the donation of %s because it is not in draft state."
 msgstr ""
+"Die Spende %s1 kann nicht bestätigt werden, da sie sich im Entwurf-Status "
+"befindet."
 
 #. module: donation
 #: code:addons/donation/models/donation.py:296
 #, python-format
 msgid "Cannot validate the donation of %s because the total amount is 0 !"
-msgstr "Spende kann nicht bestätigt werden, da der Gesamtbetrag 0 ist!"
+msgstr "Die Spende %s1 kann nicht bestätigt werden, da der Gesamtbetrag 0 ist!"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_report_product_categ_id
@@ -126,28 +132,28 @@ msgstr "Produktkategorie"
 #. module: donation
 #: model:ir.ui.view,arch_db:donation.donation_form
 msgid "Change"
-msgstr ""
+msgstr "Ändern"
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_tax_receipt_option_switch_action
 #: model:ir.ui.view,arch_db:donation.donation_tax_receipt_option_switch_form
 msgid "Change Tax Receipt Option"
-msgstr ""
+msgstr "Ändere Spendenbescheinigung"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation_check_total
 msgid "Check Amount"
-msgstr ""
+msgstr "Überprüfe Betrag"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign_code
 msgid "Code"
-msgstr ""
+msgstr "Code"
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_campaign
 msgid "Code attributed for a Donation Campaign"
-msgstr ""
+msgstr "Code für eine Spendenkampagne"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation_company_id
@@ -175,7 +181,7 @@ msgstr "Land"
 #. module: donation
 #: model:ir.ui.menu,name:donation.tax_receipt_annual_create_menu
 msgid "Create Annual Receipts"
-msgstr "Erstelle Sammelspendenbescheinugung"
+msgstr "Erstelle Sammelspendenbescheinigungen"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign_create_uid
@@ -211,7 +217,7 @@ msgstr "Aktuelle Spendenkampagne"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_res_users_context_donation_journal_id
 msgid "Current Donation Payment Method"
-msgstr "Aktuelle Spendenzahlungsmethode"
+msgstr "Aktuelle Zahlungsmethode"
 
 #. module: donation
 #: model:ir.ui.view,arch_db:donation.donation_report_search
@@ -286,7 +292,7 @@ msgstr "Spendennummer"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_account_journal_allow_donation
 msgid "Donation Payment Method"
-msgstr "Spendenzahlungsmethode"
+msgstr "Zahlungsmethode"
 
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_tax_receipt_menu
@@ -297,7 +303,7 @@ msgstr "Spendenbescheinigung"
 #: code:addons/donation/models/donation.py:169
 #, python-format
 msgid "Donation of %s"
-msgstr ""
+msgstr "Spende von %s"
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_action
@@ -366,7 +372,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:donation.field_donation_report_tax_receipt_ok
 #: model:ir.ui.view,arch_db:donation.donation_report_search
 msgid "Eligible for a Tax Receipt"
-msgstr ""
+msgstr "Geeignet für Spendenbescheinigung"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:428
@@ -384,13 +390,13 @@ msgstr "Für jede Spende"
 #: code:addons/donation/models/donation.py:326
 #, python-format
 msgid "Full in-kind donation: no account move generated"
-msgstr ""
+msgstr "komplette Sachspende: keine Kontobewegung generiert"
 
 #. module: donation
 #: model:ir.ui.view,arch_db:donation.donation_report_search
 #: model:ir.ui.view,arch_db:donation.donation_search
 msgid "Group By"
-msgstr ""
+msgstr "Gruppieren nach"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign_id
@@ -407,17 +413,17 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:donation.field_donation_report_in_kind
 #: model:ir.ui.view,arch_db:donation.donation_report_search
 msgid "In Kind"
-msgstr ""
+msgstr "Sachspende"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line_tax_receipt_ok
 msgid "Is Eligible for a Tax Receipt"
-msgstr ""
+msgstr "Ist geeignet für Spendenbescheinigung"
 
 #. module: donation
 #: model:ir.model,name:donation.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Jurnal"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign___last_update
@@ -455,7 +461,7 @@ msgstr "Verwalte Spenden"
 #. module: donation
 #: model:res.groups,name:donation.group_donation_manager
 msgid "Manager"
-msgstr ""
+msgstr "Manager"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:202
@@ -476,7 +482,7 @@ msgstr "Keine"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign_nota
 msgid "Notes"
-msgstr ""
+msgstr "Notizen"
 
 #. module: donation
 #: model:ir.ui.view,arch_db:donation.donation_form
@@ -498,14 +504,14 @@ msgstr ""
 #: model:ir.ui.view,arch_db:donation.donation_report_search
 #: model:ir.ui.view,arch_db:donation.donation_search
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_report_country_id
 #: model:ir.ui.view,arch_db:donation.donation_report_search
 #: model:ir.ui.view,arch_db:donation.donation_search
 msgid "Partner Country"
-msgstr ""
+msgstr "Partner Land"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation_journal_id
@@ -555,12 +561,12 @@ msgstr ""
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_report_title_menu
 msgid "Reports"
-msgstr "Bericht"
+msgstr "Berichte"
 
 #. module: donation
 #: model:ir.ui.view,arch_db:donation.donation_form
 msgid "Save Default Values"
-msgstr ""
+msgstr "Speicher Default Werte"
 
 #. module: donation
 #: model:ir.ui.view,arch_db:donation.donation_search
@@ -570,12 +576,14 @@ msgstr "Suche Spenden"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line_sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Reihenfolge"
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_line_tax_receipt_ok
 msgid "Specify if the product is eligible for a tax receipt"
 msgstr ""
+"Spezifizieren Sie hier, ob dieses Produkt für die Erstellung einer "
+"Spendenbescheinigung geeignet ist"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign_start_date
@@ -586,7 +594,7 @@ msgstr "Anfangsdatum"
 #: model:ir.model.fields,field_description:donation.field_donation_donation_state
 #: model:ir.ui.view,arch_db:donation.donation_search
 msgid "State"
-msgstr ""
+msgstr "Status"
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_tax_receipt_option_switch
@@ -597,7 +605,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:donation.field_donation_donation_tax_receipt_id
 #: model:ir.ui.view,arch_db:donation.donation_line_tree
 msgid "Tax Receipt"
-msgstr ""
+msgstr "Steuerbeleg"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation_tax_receipt_total
@@ -616,12 +624,12 @@ msgstr ""
 #. module: donation
 #: model:ir.model,name:donation.model_donation_tax_receipt
 msgid "Tax Receipt for Donations"
-msgstr ""
+msgstr "Steuerbeleg für Spenden"
 
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_tax_title_menu
 msgid "Tax Receipts"
-msgstr ""
+msgstr "Steuerbelege"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:308
@@ -633,25 +641,31 @@ msgstr ""
 #: code:addons/donation/models/donation.py:150
 #, python-format
 msgid "The date of the donation of %s should be today or in the past, not in the future!"
-msgstr ""
+msgstr "Das Datum der Spende von %s darf nicht in der Zukunft liegen!"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:387
 #, python-format
 msgid "The donation '%s' is in Done state, so you cannot delete it."
 msgstr ""
+"Die Spende '%s1 ist im Status 'Erledigt' und kann daher nicht gelöscht "
+"werden."
 
 #. module: donation
 #: code:addons/donation/models/donation.py:391
 #, python-format
 msgid "The donation '%s' is linked to an account move, so you cannot delete it."
 msgstr ""
+"Die Spende '%s1 ist mit einer Kontobewegung verknüpft und kann daher nicht "
+"gelöscht werden."
 
 #. module: donation
 #: code:addons/donation/models/donation.py:395
 #, python-format
 msgid "The donation '%s' is linked to the tax receipt %s, so you cannot delete it."
 msgstr ""
+"Die Spende '%s1' ist mit dem Steuerbeleg %s2 und kann daher nicht gelöscht "
+"werden."
 
 #. module: donation
 #: code:addons/donation/models/account.py:19
@@ -682,7 +696,7 @@ msgstr "Preis je Mengeneinheit"
 #. module: donation
 #: model:ir.ui.view,arch_db:donation.donation_tax_receipt_option_switch_form
 msgid "Update"
-msgstr ""
+msgstr "Aktualisieren"
 
 #. module: donation
 #: model:res.groups,name:donation.group_donation_user
@@ -708,21 +722,25 @@ msgstr "Bestätige Spenden"
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_validate_action
 msgid "Validate Draft Donations"
-msgstr "Bestätige Spenden Entwurf"
+msgstr "Bestätige Spenden Entwürfe"
 
 #. module: donation
 #: model:res.groups,name:donation.group_donation_viewer
 msgid "Viewer"
-msgstr ""
+msgstr "Betrachter"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:360
 #, python-format
 msgid "You cannot cancel this donation because it is linked to the tax receipt %s. You should first delete this tax receipt (but it may not be legally allowed)."
 msgstr ""
+"Sie können die Spende nicht abbrechen, weil sie mit dem Steuerbeleg  %s1 "
+"verbunden ist. Sie müssen zuerst diesen Steuerbeleg löschen (aber dies mag "
+"rechtlich nicht erlaubt sein)."
 
 #. module: donation
 #: code:addons/donation/models/donation.py:430
 #, python-format
 msgid "You cannot change the Tax Receipt Option when it is Annual."
 msgstr ""
+"Sie können nicht die Steuerbeleg Option ändern, wenn diese jährlich ist."
