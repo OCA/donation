@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2019-01-25 18:41+0000\n"
+"PO-Revision-Date: 2019-01-26 15:41+0000\n"
 "Last-Translator: kempleton <kimdoelling@gmail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:donation.field_res_partner_donation_count
 #: model:ir.model.fields,field_description:donation.field_res_users_donation_count
 msgid "# of Donations"
-msgstr ""
+msgstr "# an Spenden"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:379
@@ -101,7 +101,7 @@ msgstr "Abgebrochen"
 #: code:addons/donation/models/donation.py:408
 #, python-format
 msgid "Cancelled Donation of %s"
-msgstr ""
+msgstr "Abgebrochene Spende von %s1"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:289
@@ -361,12 +361,12 @@ msgstr "Entwurf"
 #: code:addons/donation/models/donation.py:406
 #, python-format
 msgid "Draft Donation of %s"
-msgstr ""
+msgstr "Spendenentwurf von %s1"
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation_tax_receipt_total
 msgid "Eligible Tax Receipt Sub-total in Company Currency"
-msgstr ""
+msgstr "berechtigte Zwischensumme Spendenbescheinigung"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_report_tax_receipt_ok
@@ -467,7 +467,7 @@ msgstr "Manager"
 #: code:addons/donation/models/donation.py:202
 #, python-format
 msgid "Missing Default Debit Account on journal '%s'."
-msgstr ""
+msgstr "Fehlender Default Passivsaldo im '%s1'-Jurnal."
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign_name
@@ -556,7 +556,7 @@ msgstr "Menge"
 #: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_donation_ids
 #: model:ir.ui.view,arch_db:donation.donation_tax_receipt_form
 msgid "Related Donations"
-msgstr ""
+msgstr "Verbundene Spenden"
 
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_report_title_menu
@@ -599,7 +599,7 @@ msgstr "Status"
 #. module: donation
 #: model:ir.model,name:donation.model_donation_tax_receipt_option_switch
 msgid "Switch Donation Tax Receipt Option"
-msgstr ""
+msgstr "Ändere Spendenbescheinigung"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation_tax_receipt_id
@@ -612,14 +612,14 @@ msgstr "Steuerbeleg"
 #: model:ir.model.fields,field_description:donation.field_donation_line_tax_receipt_amount
 #: model:ir.model.fields,field_description:donation.field_donation_report_tax_receipt_amount
 msgid "Tax Receipt Eligible Amount"
-msgstr ""
+msgstr "Berechtigter Spendenbescheinigungsbetrag"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation_tax_receipt_option
 #: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch_new_tax_receipt_option
 #: model:ir.ui.view,arch_db:donation.donation_search
 msgid "Tax Receipt Option"
-msgstr ""
+msgstr "Spendenbescheinigung"
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_tax_receipt
@@ -636,6 +636,8 @@ msgstr "Steuerbelege"
 #, python-format
 msgid "The amount of the donation of %s (%s) is different from the sum of the donation lines (%s)."
 msgstr ""
+"Der Betrag der Spende von %s1 (%s2) weicht von der Summe der Spendenzeilen "
+"(%s3) ab."
 
 #. module: donation
 #: code:addons/donation/models/donation.py:150
@@ -676,7 +678,7 @@ msgstr ""
 #. module: donation
 #: model:ir.ui.view,arch_db:donation.donation_validate_form
 msgid "This wizard will validate all the draft donations selected."
-msgstr ""
+msgstr "Dieser Assistent bestätigt alle ausgewählten Spendenentwürfe."
 
 #. module: donation
 #: model:ir.ui.view,arch_db:donation.donation_form
