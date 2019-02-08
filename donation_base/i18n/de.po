@@ -1,46 +1,53 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* donation_base
+# 	* donation_base
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2019-02-08 16:50+0000\n"
+"Last-Translator: kempleton <kimdoelling@gmail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.4\n"
 
 #. module: donation_base
 #: model:mail.template,body_html:donation_base.tax_receipt_email_template
-msgid "\n"
-"<p>Dear ${object.partner_id.name}\n"
-"% if object.partner_id.parent_id:\n"
-"    (<i>${object.partner_id.parent_id.name}</i>)\n"
-"% endif\n"
-",</p>\n"
+msgid ""
 "\n"
-"<p>Please find enclosed your tax receipt <strong>${object.number}</strong>\n"
-"amounting in <strong>${object.amount} ${object.currency_id.name}</strong>\n"
-"from ${object.company_id.name}.\n"
-"</p>\n"
-"\n"
-"<p>Thank you very much for your donation.</p>\n"
-""
+"    <p>Dear ${object.partner_id.name}\n"
+"    % if object.partner_id.parent_id:\n"
+"        (<i>${object.partner_id.parent_id.name}</i>)\n"
+"    % endif\n"
+"    ,</p>\n"
+"    \n"
+"    <p>Please find enclosed your tax receipt <strong>${object.number}</"
+"strong>\n"
+"    amounting in <strong>${object.amount} ${object.currency_id.name}</"
+"strong>\n"
+"    from ${object.company_id.name}.\n"
+"    </p>\n"
+"    \n"
+"    <p>Thank you very much for your donation.</p>\n"
+"    "
 msgstr ""
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_res_partner_tax_receipt_count
 #: model:ir.model.fields,field_description:donation_base.field_res_users_tax_receipt_count
 msgid "# of Tax Receipts"
-msgstr ""
+msgstr "# an Spendenbescheinigungen"
 
 #. module: donation_base
 #: model:mail.template,report_name:donation_base.tax_receipt_email_template
-msgid "${object.company_id.name.replace(' ', '_')}-Tax_Receipt_${(object.number or '').replace('/','_')}"
+msgid ""
+"${object.company_id.name.replace(' ', '_')}-Tax_Receipt_${(object.number or "
+"'').replace('/','_')}"
 msgstr ""
 
 #. module: donation_base
@@ -51,39 +58,44 @@ msgstr ""
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_amount
 msgid "Amount"
-msgstr ""
+msgstr "Betrag"
 
 #. module: donation_base
 #: model:ir.ui.view,arch_db:donation_base.report_donationtaxreceipt_document
 msgid "Amount Total:"
-msgstr ""
+msgstr "Gesamtbetrag:"
 
 #. module: donation_base
 #: selection:donation.tax.receipt,type:0
 #: selection:res.partner,tax_receipt_option:0
 msgid "Annual Tax Receipt"
-msgstr ""
+msgstr "Sammelspendenbescheinigung"
 
 #. module: donation_base
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
 msgid "Annual Tax Receipts"
-msgstr ""
+msgstr "Sammelspendenbescheinigungen"
 
 #. module: donation_base
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_print_form
 #: model:ir.ui.view,arch_db:donation_base.tax_receipt_annual_create_form
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_company_id
 msgid "Company"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: donation_base
-#: code:addons/donation_base/models/donation_tax_receipt.py:73
+#: code:addons/donation_base/models/donation_tax_receipt.py:95
 #, python-format
 msgid "Compose Email"
+msgstr "Verfasse E-Mail"
+
+#. module: donation_base
+#: model:ir.model,name:donation_base.model_res_partner
+msgid "Contact"
 msgstr ""
 
 #. module: donation_base
@@ -147,7 +159,7 @@ msgid "Donation Date"
 msgstr ""
 
 #. module: donation_base
-#: model:ir.actions.report.xml,name:donation_base.report_donation_tax_receipt
+#: model:ir.actions.report,name:donation_base.report_donation_tax_receipt
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_form
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_tree
 #: model:ir.ui.view,arch_db:donation_base.report_donationtaxreceipt_document
@@ -258,13 +270,13 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/models/donation_tax_receipt.py:60
+#: code:addons/donation_base/models/donation_tax_receipt.py:82
 #, python-format
 msgid "Missing email on partner '%s'."
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:85
+#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:89
 #, python-format
 msgid "No annual tax receipt to generate"
 msgstr ""
@@ -285,7 +297,6 @@ msgid "One-Time Tax Receipts"
 msgstr ""
 
 #. module: donation_base
-#: model:ir.model,name:donation_base.model_res_partner
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
 msgid "Partner"
 msgstr ""
@@ -376,37 +387,43 @@ msgid "Tax Receipts"
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:75
+#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:79
 #, python-format
-msgid "The Donor '%s' already has an annual tax receipt in this timeframe: %s dated %s."
+msgid ""
+"The Donor '%s' already has an annual tax receipt in this timeframe: %s dated "
+"%s."
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:41
+#: code:addons/donation_base/models/product.py:51
 #, python-format
-msgid "The option 'In-Kind Donation' is active on the product '%s', so you must also activate the option 'Is a Donation'."
+msgid ""
+"The option 'In-Kind Donation' is active on the product '%s', so you must "
+"also activate the option 'Is a Donation'."
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:46
+#: code:addons/donation_base/models/product.py:56
 #, python-format
-msgid "The option 'Is Eligible for a Tax Receipt' is active on the product '%s', so you must also activate the option 'Is a Donation'."
+msgid ""
+"The option 'Is Eligible for a Tax Receipt' is active on the product '%s', so "
+"you must also activate the option 'Is a Donation'."
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:37
+#: code:addons/donation_base/models/product.py:47
 #, python-format
 msgid "The product '%s' is a donation, so you must configure it as a Service"
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_print.py:28
+#: code:addons/donation_base/wizard/tax_receipt_print.py:32
 #, python-format
 msgid "There are no tax receipts to print."
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:56
+#: code:addons/donation_base/models/product.py:66
 #, python-format
 msgid "There shouldn't have any Customer Taxes on the donation product '%s'."
 msgstr ""
