@@ -1,0 +1,45 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* donation_thanks
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: donation_thanks
+#: model:ir.model,name:donation_thanks.model_donation_donation
+msgid "Donation"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.ui.view,arch_db:donation_thanks.donation_form
+msgid "Print Thanks Letter"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.actions.report.xml,name:donation_thanks.report_thanks
+msgid "Thanks Letter"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_donation_thanks_printed
+msgid "Thanks Printed"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.ui.view,arch_db:donation_thanks.donation_search
+msgid "Thanks to Print"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,help:donation_thanks.field_donation_donation_thanks_printed
+msgid "This field automatically becomes active when the thanks letter has been printed."
+msgstr ""
