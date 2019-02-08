@@ -6,39 +6,41 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2019-02-08 16:50+0000\n"
+"Last-Translator: kempleton <kimdoelling@gmail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.4\n"
 
 #. module: donation_sale
 #: selection:account.invoice,tax_receipt_option:0
 #: selection:sale.order,tax_receipt_option:0
 msgid "Annual Tax Receipt"
-msgstr ""
+msgstr "Sammelspendenbescheinigung"
 
 #. module: donation_sale
 #: model:ir.ui.menu,name:donation_sale.tax_receipt_annual_create_menu
 msgid "Create Annual Receipts"
-msgstr ""
+msgstr "Erstelle Sammelspendenbescheinigung"
 
 #. module: donation_sale
 #: model:ir.model.fields,field_description:donation_sale.field_sale_order_company_currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Währung"
 
 #. module: donation_sale
 #: model:ir.ui.menu,name:donation_sale.donation_tax_receipt_menu
 msgid "Donation Tax Receipts"
-msgstr ""
+msgstr "Spendenbescheinigungen"
 
 #. module: donation_sale
 #: model:ir.ui.menu,name:donation_sale.account_donation_menu
 msgid "Donations"
-msgstr ""
+msgstr "Spenden"
 
 #. module: donation_sale
 #: model:ir.model.fields,field_description:donation_sale.field_account_invoice_tax_receipt_total
