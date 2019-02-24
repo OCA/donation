@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_donation_thanks_template_manager,Full access on donation.thanks.template to Donation Manager,model_donation_thanks_template,donation.group_donation_manager,1,1,1,1
+access_donation_thanks_template_viewer,Read access on donation.thanks.template to Donation Viewer,model_donation_thanks_template,donation.group_donation_viewer,1,0,0,0

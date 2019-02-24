@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  © 2014-2016 Barroux Abbey (http://www.barroux.org)
-  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  Copyright 2014-2019 Barroux Abbey (http://www.barroux.org)
+  Copyright 2014-2019 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 
@@ -13,6 +13,9 @@
     <field name="model">donation.donation</field>
     <field name="inherit_id" ref="donation.donation_form"/>
     <field name="arch" type="xml">
+        <group name="manual" position="inside">
+            <field name="thanks_template_id" widget="selection"/>
+        </group>
         <group name="auto" position="inside">
             <field name="thanks_printed"/>
         </group>
@@ -22,6 +25,17 @@
                 attrs="{'invisible': ['|', ('thanks_printed', '=', True), ('state', '!=', 'done')]}"
                 class="oe_highlight"/>
         </button>
+    </field>
+</record>
+
+<record id="donation_tree" model="ir.ui.view">
+    <field name="name">add.donation.thanks.template.donation.tree</field>
+    <field name="model">donation.donation</field>
+    <field name="inherit_id" ref="donation.donation_tree"/>
+    <field name="arch" type="xml">
+        <field name="journal_id" position="after">
+            <field name="thanks_template_id"/>
+        </field>
     </field>
 </record>
 

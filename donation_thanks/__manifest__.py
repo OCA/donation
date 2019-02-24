@@ -13,8 +13,11 @@
     'website': 'http://www.barroux.org',
     'depends': ['donation', 'report_py3o'],
     'data': [
+        'security/donation_security.xml',
+        'security/ir.model.access.csv',
         'report/report_thanks.xml',
         'views/donation.xml',
+        'views/donation_thanks_template.xml',
         ],
     'installable': True,
 }
