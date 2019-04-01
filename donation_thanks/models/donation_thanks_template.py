@@ -11,7 +11,7 @@ class DonationThanksTemplate(models.Model):
     _description = 'Donation Thanks Letter Template'
 
     name = fields.Char(required=True)
-    active = fields.Boolean()
+    active = fields.Boolean(default=True)
     company_id = fields.Many2one(
         'res.company', string='Company', ondelete='cascade',
         default=lambda self: self.env['res.company']._company_default_get())
