@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* donation_direct_debit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: donation_direct_debit
+#: code:addons/donation_direct_debit/donation.py:75
+#, python-format
+msgid "A new draft direct debit order %s has been automatically created"
+msgstr ""
+
+#. module: donation_direct_debit
+#: code:addons/donation_direct_debit/donation.py:84
+#, python-format
+msgid "A new payment line has been automatically added to the existing draft direct debit order %s"
+msgstr ""
+
+#. module: donation_direct_debit
+#: model:ir.model,name:donation_direct_debit.model_donation_donation
+msgid "Donation"
+msgstr ""
+
+#. module: donation_direct_debit
+#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation_mandate_id
+msgid "Mandate"
+msgstr ""
+
+#. module: donation_direct_debit
+#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation_payment_mode_id
+msgid "Payment Mode"
+msgstr ""
+
+#. module: donation_direct_debit
+#: code:addons/donation_direct_debit/donation.py:101
+#, python-format
+msgid "You cannot cancel a donation which is linked to a payment line in a direct debit order. Remove it from the following direct debit order: %s."
+msgstr ""
+
