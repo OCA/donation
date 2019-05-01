@@ -1,0 +1,151 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* donation_thanks
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2019-02-08 16:50+0000\n"
+"Last-Translator: kempleton <kimdoelling@gmail.com>\n"
+"Language-Team: none\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.4\n"
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template_active
+msgid "Active"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.ui.view,arch_db:donation_thanks.donation_thanks_template_search
+msgid "Archived"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template_company_id
+msgid "Company"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model,name:donation_thanks.model_donation_donation
+msgid "Donation"
+msgstr "Spende"
+
+#. module: donation_thanks
+#: model:ir.model,name:donation_thanks.model_donation_thanks_template
+#, fuzzy
+msgid "Donation Thanks Letter Template"
+msgstr "Drucke Dankesschreiben"
+
+#. module: donation_thanks
+#: model:ir.ui.view,arch_db:donation_thanks.donation_thanks_template_form
+#, fuzzy
+msgid "Donation Thanks Template"
+msgstr "Drucke Dankesschreiben"
+
+#. module: donation_thanks
+#: model:ir.ui.view,arch_db:donation_thanks.donation_thanks_template_tree
+msgid "Donation Thanks Templates"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template_id
+msgid "ID"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template_image
+msgid "Image"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template_name
+msgid "Name"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.ui.view,arch_db:donation_thanks.donation_form
+msgid "Print Thanks Letter"
+msgstr "Drucke Dankesschreiben"
+
+#. module: donation_thanks
+#: model:ir.ui.view,arch_db:donation_thanks.donation_thanks_template_search
+msgid "Search Donation Thanks Templates"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_thanks_template_text
+msgid "Text"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.actions.report,name:donation_thanks.report_thanks
+msgid "Thanks Letter"
+msgstr "Dankesschreiben"
+
+#. module: donation_thanks
+#: model:ir.actions.act_window,name:donation_thanks.donation_thanks_template_action
+#: model:ir.ui.menu,name:donation_thanks.donation_thanks_template_menu
+#, fuzzy
+msgid "Thanks Letter Templates"
+msgstr "Dankesschreiben"
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_donation_thanks_printed
+msgid "Thanks Printed"
+msgstr "Dank gedruckt"
+
+#. module: donation_thanks
+#: model:ir.model.fields,field_description:donation_thanks.field_donation_donation_thanks_template_id
+#, fuzzy
+msgid "Thanks Template"
+msgstr "Dankesschreiben"
+
+#. module: donation_thanks
+#: model:ir.ui.view,arch_db:donation_thanks.donation_search
+msgid "Thanks to Print"
+msgstr ""
+
+#. module: donation_thanks
+#: model:ir.model.fields,help:donation_thanks.field_donation_donation_thanks_printed
+msgid ""
+"This field automatically becomes active when the thanks letter has been "
+"printed."
+msgstr ""
+"Dieses Feld wird automatisch aktiviert, wenn das Dankesschreiben gedruckt "
+"wird."
