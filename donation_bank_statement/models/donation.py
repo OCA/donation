@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2014-2016 Barroux Abbey (http://www.barroux.org)
 # © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -42,7 +41,7 @@ class DonationDonation(models.Model):
                         break
                 for statement_amline in\
                         donation.bank_statement_line_id.journal_entry_ids:
-                    for statement_mline in statement_amline.line_ids:
+                    for statement_mline in statement_amline:
                         if (
                                 statement_mline.account_id ==
                                 transit_account and

@@ -121,7 +121,7 @@ msgstr "Missing Default Debit Account on the Journal '%s'."
 
 #. module: donation_bank_statement
 #: model:ir.model,name:donation_bank_statement.model_account_config_settings
-msgid "account.config.settings"
+msgid "res.config.settings"
 msgstr ""
 
 #~ msgid "No new donation to generate for this bank statement."

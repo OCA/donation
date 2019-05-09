@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2014-2016 Barroux Abbey (http://www.barroux.org)
 # © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -85,7 +84,7 @@ class AccountBankStatement(models.Model):
                         stline.amount, 0, precision_rounding=prec) == 1 and
                     not stline.donation_ids):
                 for amline in stline.journal_entry_ids:
-                    for mline in amline.line_ids:
+                    for mline in amline:
                         if (
                                 float_compare(
                                     mline.credit, 0,
@@ -106,8 +105,7 @@ class AccountBankStatement(models.Model):
 
     @api.multi
     def button_confirm_bank(self):
-        statements = self.filtered(lambda st: st.state == 'open')
-        for stmt in statements:
+        for stmt in self.filtered(lambda st: st.state == 'open'):
             stmt.create_donations()
         return super(AccountBankStatement, self).button_confirm_bank()
 
