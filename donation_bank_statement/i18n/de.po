@@ -108,5 +108,5 @@ msgstr ""
 
 #. module: donation_bank_statement
 #: model:ir.model,name:donation_bank_statement.model_account_config_settings
-msgid "account.config.settings"
+msgid "res.config.settings"
 msgstr ""
