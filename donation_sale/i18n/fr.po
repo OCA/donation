@@ -49,8 +49,8 @@ msgid "Eligible Tax Receipt Sub-total"
 msgstr "Sous-total éligible au reçu fiscal"
 
 #. module: donation_sale
-#: code:addons/donation_sale/models/donation_sale.py:102
-#: code:addons/donation_sale/models/donation_sale.py:235
+#: code:addons/donation_sale/models/account_invoice.py:114
+#: code:addons/donation_sale/models/sale.py:69
 #, python-format
 msgid "Error:"
 msgstr "Erreur :"
@@ -60,6 +60,13 @@ msgstr "Erreur :"
 #: selection:sale.order,tax_receipt_option:0
 msgid "For Each Donation"
 msgstr "Reçu fiscal ponctuel"
+
+#. module: donation_sale
+#: model:ir.actions.server,name:donation_sale.donation_tax_receipt_invoice_cron_ir_actions_server
+#: model:ir.cron,cron_name:donation_sale.donation_tax_receipt_invoice_cron
+#: model:ir.cron,name:donation_sale.donation_tax_receipt_invoice_cron
+msgid "Generation donation tax receipts from invoices"
+msgstr ""
 
 #. module: donation_sale
 #: model:ir.model,name:donation_sale.model_account_invoice
@@ -84,7 +91,7 @@ msgid "None"
 msgstr "Aucun"
 
 #. module: donation_sale
-#: code:addons/donation_sale/models/donation_sale.py:265
+#: code:addons/donation_sale/models/sale.py:103
 #, python-format
 msgid ""
 "On the sale order '%s', the sale order line '%s' has a donation product, so "
@@ -94,15 +101,17 @@ msgstr ""
 "donc il ne devrait pas avoir de taxes"
 
 #. module: donation_sale
+#: model:ir.model,name:donation_sale.model_sale_order
+#, fuzzy
+#| msgid "Donations"
+msgid "Quotation"
+msgstr "Dons"
+
+#. module: donation_sale
 #: model:ir.model.fields,field_description:donation_sale.field_donation_tax_receipt_invoice_ids
 #: model:ir.ui.view,arch_db:donation_sale.donation_tax_receipt_form
 msgid "Related Invoices"
 msgstr "Factures associées"
-
-#. module: donation_sale
-#: model:ir.model,name:donation_sale.model_sale_order
-msgid "Sales Order"
-msgstr "Bon de commande"
 
 #. module: donation_sale
 #: model:ir.model,name:donation_sale.model_sale_order_line
@@ -134,7 +143,7 @@ msgid "Tax Receipt for Donations"
 msgstr "Reçu fiscal pour les dons"
 
 #. module: donation_sale
-#: code:addons/donation_sale/models/donation_sale.py:182
+#: code:addons/donation_sale/models/account_invoice.py:198
 #, python-format
 msgid ""
 "The invoice line '%s' has a donation product, so it should not have taxes"
@@ -143,7 +152,7 @@ msgstr ""
 "de taxes"
 
 #. module: donation_sale
-#: code:addons/donation_sale/models/donation_sale.py:77
+#: code:addons/donation_sale/models/account_invoice.py:88
 #, python-format
 msgid ""
 "You cannot cancel this invoice because it is linked to the tax receipt %s. "
@@ -154,18 +163,21 @@ msgstr ""
 "probablement pas permis d'un point de vue légal)."
 
 #. module: donation_sale
-#: code:addons/donation_sale/models/donation_sale.py:104
-#: code:addons/donation_sale/models/donation_sale.py:237
+#: code:addons/donation_sale/models/account_invoice.py:116
+#: code:addons/donation_sale/models/sale.py:71
 #, python-format
 msgid "You cannot change the Tax Receipt Option when it is Annual."
 msgstr ""
 "Vous ne pouvez pas changer l'option pour le reçu fiscal quand il est annuel."
 
 #. module: donation_sale
-#: code:addons/donation_sale/models/donation_sale.py:88
+#: code:addons/donation_sale/models/account_invoice.py:100
 #, python-format
 msgid ""
 "You cannot delete this invoice because it is linked to the tax receipt %s"
 msgstr ""
 "Vous ne pouvez pas supprimer cette facture car elle est liée au reçu fiscal "
 "%s"
+
+#~ msgid "Sales Order"
+#~ msgstr "Bon de commande"
