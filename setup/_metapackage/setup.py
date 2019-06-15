@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo11-addon-donation',
         'odoo11-addon-donation_base',
+        'odoo11-addon-donation_direct_debit',
         'odoo11-addon-donation_recurring',
         'odoo11-addon-donation_sale',
     ],
