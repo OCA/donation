@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2019-02-08 16:50+0000\n"
-"Last-Translator: kempleton <kimdoelling@gmail.com>\n"
+"PO-Revision-Date: 2019-06-28 14:42+0000\n"
+"Last-Translator: Ben Brich <b.brich@humanilog.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.4\n"
+"X-Generator: Weblate 3.6.1\n"
 
 #. module: donation_base
 #: model:mail.template,body_html:donation_base.tax_receipt_email_template
@@ -33,22 +33,40 @@ msgid "\n"
 "<p>Thank you very much for your donation.</p>\n"
 ""
 msgstr ""
+"\n"
+"<p>Sehr geehrte/r ${object.partner_id.name}\n"
+"% if object.partner_id.parent_id:\n"
+"    (<i>${object.partner_id.parent_id.name}</i>)\n"
+"% endif\n"
+",</p>\n"
+"\n"
+"<p>Im Anhnag erhalten Sie Ihre Spendenbescheinigung "
+"<strong>${object.number}</strong>\n"
+"über den Betrag von <strong>${object.amount} "
+"${object.currency_id.name}</strong>\n"
+"von ${object.company_id.name}.\n"
+"</p>\n"
+"\n"
+"<p>Vielen Dank für Ihre Spende.</p>\n"
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_res_partner_tax_receipt_count
 #: model:ir.model.fields,field_description:donation_base.field_res_users_tax_receipt_count
 msgid "# of Tax Receipts"
-msgstr "# an Spendenbescheinigungen"
+msgstr "# Spendenbescheinigungen"
 
 #. module: donation_base
 #: model:mail.template,report_name:donation_base.tax_receipt_email_template
 msgid "${object.company_id.name.replace(' ', '_')}-Tax_Receipt_${(object.number or '').replace('/','_')}"
 msgstr ""
+"${object.company_id.name.replace(' ', '_')}-Spendenbescheinigung_${("
+"object.number or '').replace('/','_')}"
 
 #. module: donation_base
 #: model:mail.template,subject:donation_base.tax_receipt_email_template
 msgid "${object.company_id.name} - Tax Receipt ${object.number or 'n/a'}"
 msgstr ""
+"${object.company_id.name} - Spendenbescheinigung ${object.number or 'n/a'}"
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_amount
@@ -91,7 +109,7 @@ msgstr "Verfasse E-Mail"
 #. module: donation_base
 #: model:ir.actions.act_window,name:donation_base.tax_receipt_annual_create_action
 msgid "Create Annual Receipts"
-msgstr "Erstelle Sammelspendenbescheinigungen"
+msgstr "Erstelle Sammelbescheinigungen"
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_create_uid
@@ -191,7 +209,7 @@ msgstr "Für jede Spende"
 #. module: donation_base
 #: model:ir.ui.view,arch_db:donation_base.tax_receipt_annual_create_form
 msgid "Generate"
-msgstr "Erzeuge"
+msgstr "Erzeugen"
 
 #. module: donation_base
 #: model:ir.model,name:donation_base.model_tax_receipt_annual_create
@@ -262,7 +280,7 @@ msgstr "Zuletzt aktualisiert am"
 #: code:addons/donation_base/models/donation_tax_receipt.py:60
 #, python-format
 msgid "Missing email on partner '%s'."
-msgstr ""
+msgstr "Fehlende Email bei Partner '%s'."
 
 #. module: donation_base
 #: code:addons/donation_base/wizard/tax_receipt_annual_create.py:85
@@ -289,7 +307,7 @@ msgstr "Einmalige Spendenbescheinigungen"
 #: model:ir.model,name:donation_base.model_res_partner
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
 msgid "Partner"
-msgstr "Partner"
+msgstr ""
 
 #. module: donation_base
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_form
@@ -310,7 +328,7 @@ msgstr "Drucke Spendenbescheinigungen"
 #: model:ir.actions.act_window,name:donation_base.donation_tax_receipt_print_action
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_print_form
 msgid "Print Receipts"
-msgstr "Drucke Belege"
+msgstr "Drucke Bescheinigungen"
 
 #. module: donation_base
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_print_form
@@ -335,7 +353,7 @@ msgstr "Bescheinigungsnummer"
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print_receipt_ids
 msgid "Receipts To Print"
-msgstr ""
+msgstr "Bescheinigungen zum drucken"
 
 #. module: donation_base
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
@@ -376,7 +394,7 @@ msgstr "Steuerbescheinigung für Spenden"
 #: model:ir.model.fields,field_description:donation_base.field_res_users_tax_receipt_ids
 #: model:ir.ui.view,arch_db:donation_base.view_partner_form
 msgid "Tax Receipts"
-msgstr "Steuerbescheinigung"
+msgstr "Steuerbescheinigungen"
 
 #. module: donation_base
 #: code:addons/donation_base/wizard/tax_receipt_annual_create.py:75
@@ -391,12 +409,16 @@ msgstr ""
 #, python-format
 msgid "The option 'In-Kind Donation' is active on the product '%s', so you must also activate the option 'Is a Donation'."
 msgstr ""
+"Die Option 'Sachspende' ist im Produkt '%s' ausgewählt, deswegen muss auch "
+"die Option 'Ist eine Spende' ausgewählt sein."
 
 #. module: donation_base
 #: code:addons/donation_base/models/product.py:46
 #, python-format
 msgid "The option 'Is Eligible for a Tax Receipt' is active on the product '%s', so you must also activate the option 'Is a Donation'."
 msgstr ""
+"The Option 'Geeignet für Spendenbescheinigung' ist im Product '%s' "
+"ausgewählt, deswegen muss auch die Option 'Ist eine Spende' ausgewählt sein."
 
 #. module: donation_base
 #: code:addons/donation_base/models/product.py:37
@@ -417,6 +439,8 @@ msgstr "Es gibt keine Spendenbescheinigungen zum Drucken."
 #, python-format
 msgid "There shouldn't have any Customer Taxes on the donation product '%s'."
 msgstr ""
+"Im Produkt '%s' sind Steuern (Verkauf) ausgewählt. In Spendenprodukten "
+"dürfen keine Steuern definiert werden."
 
 #. module: donation_base
 #: model:product.product,description:donation_base.product_product_donation
@@ -432,7 +456,7 @@ msgstr "Dieser Spendenartikel ist geeignet für eine Spendenbescheinigung."
 #: model:product.template,description:donation_base.product_product_donation_notaxreceipt_product_template
 #: model:product.template,description:donation_base.product_product_inkind_donation_notaxreceipt_product_template
 msgid "This donation item is not eligible for a tax receipt."
-msgstr "Dieser Spendenartikel ist ungeeignet für eine Spendenbescheinigung."
+msgstr "Dieses Spendenprodukt ist ungeeignet für eine Spendenbescheinigung."
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_type
