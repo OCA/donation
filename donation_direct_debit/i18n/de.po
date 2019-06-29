@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* donation_direct_debit
+# 	* donation_direct_debit
 #
 msgid ""
 msgstr ""
@@ -15,15 +15,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. module: donation_direct_debit
-#: code:addons/donation_direct_debit/donation.py:75
+#: code:addons/donation_direct_debit/models/donation.py:82
 #, python-format
 msgid "A new draft direct debit order %s has been automatically created"
 msgstr ""
 
 #. module: donation_direct_debit
-#: code:addons/donation_direct_debit/donation.py:84
+#: code:addons/donation_direct_debit/models/donation.py:91
 #, python-format
-msgid "A new payment line has been automatically added to the existing draft direct debit order %s"
+msgid ""
+"A new payment line has been automatically added to the existing draft direct "
+"debit order %s"
+msgstr ""
+
+#. module: donation_direct_debit
+#: model:account.payment.method,name:donation_direct_debit.bank_direct_debit
+msgid "Bank Direct Debit for customers"
+msgstr ""
+
+#. module: donation_direct_debit
+#: model:account.payment.mode,name:donation_direct_debit.payment_mode_inbound_bank_dd1
+msgid "Bank Direct Debit of customers"
 msgstr ""
 
 #. module: donation_direct_debit
@@ -42,7 +54,9 @@ msgid "Payment Mode"
 msgstr ""
 
 #. module: donation_direct_debit
-#: code:addons/donation_direct_debit/donation.py:101
+#: code:addons/donation_direct_debit/models/donation.py:108
 #, python-format
-msgid "You cannot cancel a donation which is linked to a payment line in a direct debit order. Remove it from the following direct debit order: %s."
+msgid ""
+"You cannot cancel a donation which is linked to a payment line in a direct "
+"debit order. Remove it from the following direct debit order: %s."
 msgstr ""

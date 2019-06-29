@@ -17,13 +17,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: donation_direct_debit
-#: code:addons/donation_direct_debit/donation.py:75
+#: code:addons/donation_direct_debit/models/donation.py:82
 #, python-format
 msgid "A new draft direct debit order %s has been automatically created"
 msgstr "Un nouvel ordre de prélèvement brouillon %s a été créé automatiquement"
 
 #. module: donation_direct_debit
-#: code:addons/donation_direct_debit/donation.py:84
+#: code:addons/donation_direct_debit/models/donation.py:91
 #, python-format
 msgid ""
 "A new payment line has been automatically added to the existing draft direct "
@@ -31,6 +31,16 @@ msgid ""
 msgstr ""
 "Une nouvelle ligne de paiement a été automatiquement ajoutée à l'ordre de "
 "prélèvement brouillon existant %s"
+
+#. module: donation_direct_debit
+#: model:account.payment.method,name:donation_direct_debit.bank_direct_debit
+msgid "Bank Direct Debit for customers"
+msgstr ""
+
+#. module: donation_direct_debit
+#: model:account.payment.mode,name:donation_direct_debit.payment_mode_inbound_bank_dd1
+msgid "Bank Direct Debit of customers"
+msgstr ""
 
 #. module: donation_direct_debit
 #: model:ir.model,name:donation_direct_debit.model_donation_donation
@@ -48,7 +58,7 @@ msgid "Payment Mode"
 msgstr ""
 
 #. module: donation_direct_debit
-#: code:addons/donation_direct_debit/donation.py:101
+#: code:addons/donation_direct_debit/models/donation.py:108
 #, python-format
 msgid ""
 "You cannot cancel a donation which is linked to a payment line in a direct "
