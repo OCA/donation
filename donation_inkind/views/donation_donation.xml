@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- donation.donation inherit form view -->
+    <record id="donation_form" model="ir.ui.view">
+        <field name="name">donation.donation.inherit.view.form</field>
+        <field name="model">donation.donation</field>
+        <field name="inherit_id" ref="donation.donation_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group[@name='main']" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button type="object" name="action_view_picking" class="oe_stat_button" icon="fa-truck" attrs="{'invisible':[('state', '=', 'draft'),('picking_ids','=',[])]}">
+                        <field name="picking_count" widget="statinfo" string="Shipment" help="Incoming Shipments"/>
+                        <field name="picking_ids" invisible="1"/>
+                    </button>
+                </div>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Inventory" name="inventory">
+                    <group>
+                        <field name="picking_type_id"/>
+                        <field name="group_id"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
