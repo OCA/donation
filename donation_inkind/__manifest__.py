@@ -17,6 +17,9 @@
     'data': [
         'views/donation_donation.xml',
     ],
+    'demo': [
+        'demo/donation_inkind_demo.xml',
+    ],
     'installable': True,
     'auto_install': False,
     'application': False,
