@@ -28,7 +28,7 @@ class ProductTemplate(models.Model):
     @api.onchange('donation')
     def _donation_change(self):
         for product in self:
-            if product.donation:
+            if product.donation and not product.in_kind_donation:
                 product.type = 'service'
                 product.taxes_id = False
                 product.supplier_taxes_id = False
@@ -43,10 +43,6 @@ class ProductTemplate(models.Model):
     @api.constrains('donation', 'type')
     def donation_check(self):
         for product in self:
-            if product.donation and product.type != 'service':
-                raise ValidationError(_(
-                    "The product '%s' is a donation, so you must "
-                    "configure it as a Service") % product.name)
             if product.in_kind_donation and not product.donation:
                 raise ValidationError(_(
                     "The option 'In-Kind Donation' is active on "
