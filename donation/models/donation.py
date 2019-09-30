@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 from odoo.tools import float_is_zero, float_compare
 from odoo.addons.account import _auto_install_l10n
 
@@ -213,16 +213,6 @@ class DonationDonation(models.Model):
         help="Eligible Tax Receipt Sub-total in Company Currency"
     )
 
-    @api.constrains('donation_date')
-    def _check_donation_date(self):
-        for donation in self:
-            if donation.donation_date > fields.Date.context_today(self):
-                # TODO No error pop-up to user : Odoo 9 BUG ?
-                raise ValidationError(_(
-                    'The date of the donation of %s should be today '
-                    'or in the past, not in the future!')
-                    % donation.partner_id.name)
-
     def _prepare_each_tax_receipt(self):
         self.ensure_one()
         vals = {
@@ -356,6 +346,11 @@ class DonationDonation(models.Model):
         check_total = self.env['res.users'].has_group(
             'donation.group_donation_check_total')
         for donation in self:
+            if donation.donation_date > fields.Date.context_today(self):
+                raise UserError(_(
+                    'The date of the donation of %s should be today '
+                    'or in the past, not in the future!')
+                    % donation.partner_id.name)            
             if not donation.line_ids:
                 raise UserError(_(
                     "Cannot validate the donation of %s because it doesn't "
