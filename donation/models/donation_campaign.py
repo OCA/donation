@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014-2016 Barroux Abbey (http://www.barroux.org)
 # Copyright 2014-2016 Akretion France
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -30,4 +29,4 @@ class DonationCampaign(models.Model):
         'Start Date',
         default=fields.Date.context_today
     )
-    nota = fields.Text('Notes')
+    note = fields.Text('Notes')
