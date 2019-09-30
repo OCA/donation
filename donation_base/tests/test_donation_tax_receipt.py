@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2018-Today Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import time
@@ -49,10 +48,6 @@ class TestDonationTaxReceipt(TransactionCase):
         self.assertEqual(self.product_id.product_tmpl_id.type, 'service')
         self.product_id.product_tmpl_id._in_kind_donation_change()
         self.assertTrue(self.product_id.product_tmpl_id.donation)
-
-    def test_donation_check_type(self):
-        with self.assertRaises(ValidationError):
-            self.product_id.product_tmpl_id.type = 'consu'
 
     def test_donation_check_donation(self):
         with self.assertRaises(ValidationError):
