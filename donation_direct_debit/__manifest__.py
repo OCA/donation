@@ -3,12 +3,12 @@
 
 {
     'name': 'Donation Direct Debit',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Auto-generate direct debit order on donation validation',
     'author': 'Akretion, Odoo Community Association (OCA)',
-    'website': 'http://www.akretion.com',
+    'website': 'https://github.com/OCA/donation',
     'depends': [
         'account_banking_sepa_direct_debit',
         'donation'
