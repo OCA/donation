@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # © 2014-2016 Barroux Abbey (http://www.barroux.org)
 # © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
-from datetime import datetime
+import datetime
 import logging
 
 logger = logging.getLogger(__name__)
@@ -17,11 +16,11 @@ class TaxReceiptAnnualCreate(models.TransientModel):
 
     @api.model
     def _default_end_date(self):
-        return datetime(datetime.today().year - 1, 12, 31)
+        return datetime.date(datetime.date.today().year - 1, 12, 31)
 
     @api.model
     def _default_start_date(self):
-        return datetime(datetime.today().year - 1, 1, 1)
+        return datetime.date(datetime.date.today().year - 1, 1, 1)
 
     start_date = fields.Date(
         'Start Date',
