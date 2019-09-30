@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Barroux Abbey (www.barroux.org)
 # Copyright 2017 Akretion France (www.akretion.com)
 # @author Alexis de Lattre <alexis.delattre@akretion.com>
-
 
 from odoo import models, fields
 
