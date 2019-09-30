@@ -10,7 +10,7 @@
     <record id="donation_report_search" model="ir.ui.view">
         <field name="name">donation.report.search</field>
         <field name="model">donation.report</field>
-        <field name="arch"  type="xml">
+        <field name="arch" type="xml">
             <search string="Donations Analysis">
                 <group string="Group By" name="groupby">
                     <filter name="date_groupby" string="Date"
@@ -39,7 +39,7 @@
     <record id="donation_report_graph" model="ir.ui.view">
         <field name="name">donation.report.graph</field>
         <field name="model">donation.report</field>
-        <field name="arch"  type="xml">
+        <field name="arch" type="xml">
             <graph string="Donations Analysis">
                 <field name="donation_date"/>
                 <field name="amount_company_currency" type="measure"/>
@@ -50,7 +50,7 @@
     <record id="donation_report_pivot" model="ir.ui.view">
         <field name="name">donation.report.pivot</field>
         <field name="model">donation.report</field>
-        <field name="arch"  type="xml">
+        <field name="arch" type="xml">
             <pivot string="Donations Analysis">
                 <field name="donation_date" type="row" interval="month"/>
                 <field name="product_id" type="col"/>
@@ -63,7 +63,7 @@
     <record id="donation_report_tree" model="ir.ui.view">
         <field name="name">donation.report.tree</field>
         <field name="model">donation.report</field>
-        <field name="arch"  type="xml">
+        <field name="arch" type="xml">
             <tree string="Donations">
                 <field name="partner_id"/>
                 <field name="donation_date"/>
