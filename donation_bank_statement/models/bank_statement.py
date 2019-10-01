@@ -45,6 +45,7 @@ class AccountBankStatement(models.Model):
             'product_id': product.id,
             'quantity': 1,
             'unit_price': amount,
+            'analytic_account_id': move_line.analytic_account_id.id or False,
             }
         vals = {
             'company_id': company.id,
