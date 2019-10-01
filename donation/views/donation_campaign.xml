@@ -16,6 +16,8 @@
                     <field name="name"/>
                     <field name="code"/>
                     <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="analytic_account_id"/>
                     <field name="nota"/>
                 </group>
             </form>

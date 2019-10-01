@@ -30,4 +30,15 @@ class DonationCampaign(models.Model):
         'Start Date',
         default=fields.Date.context_today
     )
+
+    end_date = fields.Date(
+        'End Date',
+    )
+
     nota = fields.Text('Notes')
+
+    analytic_account_id = fields.Many2one(
+        'account.analytic.account',
+        'Analytic Account',
+        ondelete='restrict'
+    )

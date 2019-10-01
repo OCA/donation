@@ -512,6 +512,17 @@ class DonationDonation(models.Model):
         """
         _auto_install_l10n(self.env.cr, None)
 
+    @api.onchange('campaign_id')
+    def campaign_id_change(self):
+        campaign = self.campaign_id
+        if (
+                campaign.analytic_account_id and
+                self.donation_date and
+                campaign.start_date and
+                self.donation_date >= campaign.start_date):
+                for line in self.line_ids:
+                    line.analytic_account_id = campaign.analytic_account_id
+
 
 class DonationLine(models.Model):
     _name = 'donation.line'
@@ -617,6 +628,15 @@ class DonationLine(models.Model):
             if line.product_id and line.product_id.list_price:
                 # We should change that one day...
                     line.unit_price = line.product_id.list_price
+            campaign = line.donation_id.campaign_id
+            if (
+                    campaign and
+                    campaign.analytic_account_id and
+                    line.donation_id.donation_date and
+                    campaign.start_date and
+                    line.donation_id.donation_date >= campaign.start_date and
+                    line.donation_id.donation_date <= campaign.end_date):
+                line.analytic_account_id = campaign.analytic_account_id
 
     @api.model
     def get_analytic_account_id(self):
