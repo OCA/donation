@@ -25,6 +25,7 @@
         'views/partner.xml',
         'report/donation_report_view.xml',
         'wizard/donation_validate_view.xml',
+        'views/res_config_seetings.xml',
         ],
     'post_init_hook': 'update_account_journal',
     'demo': [
