@@ -6,3 +6,4 @@ from . import donation_campaign
 from . import account
 from . import partner
 from . import users
+from . import res_config_settings

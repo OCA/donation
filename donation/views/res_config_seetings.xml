@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  © 2019 initOS (Amjad Enaya <amjad.enaya@initos.com>)
+  © 2019 initOS GmbH (Amjad Enaya <amjad.enaya@initos.com>)
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-  attrs="[('installable_module_ids.technical_name','in','donation_sale')]"
 -->
 
 <odoo>
@@ -15,7 +14,6 @@
             <xpath expr="//div[hasclass('settings')]" position="inside">
                 <div class="app_settings_block" data-string="Donation" string="Donation" data-key="donation" groups="donation.group_donation_manager">
                     <div id="donation_module">
-                        <field name="installable_module_ids"/>
                         <h2>Donation Modules</h2>
                         <div class="row mt16 o_settings_container">
                             <div class="col-xs-12 col-md-6 o_setting_box" title="This default value is applied to any new product created. This can be changed in the product detail form.">
@@ -89,6 +87,5 @@
         sequence="0"
         action="action_donation_config_settings"
         groups="base.group_system"/>
-
 </odoo>
 

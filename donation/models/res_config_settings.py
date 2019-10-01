@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# 2019 initOS (Amjad Enaya <amjad.enaya@initos.com>)
+# 2019 initOS GmbH (Amjad Enaya <amjad.enaya@initos.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api, _
@@ -11,4 +11,5 @@ class ResConfigSettings(models.TransientModel):
     module_donation_bank_statement = fields.Boolean('Donation Bank Statement')
     module_donation_direct_debit = fields.Boolean('Donation Direct Debit')
     module_donation_recurring = fields.Boolean('Donation Recurring')
+
 
