@@ -2,7 +2,6 @@
 <!--
   © 2019 initOS (Amjad Enaya <amjad.enaya@initos.com>)
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-  attrs="[('installable_module_ids.technical_name','in','donation_sale')]"
 -->
 
 <odoo>
