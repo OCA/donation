@@ -12,7 +12,3 @@ class ResConfigSettings(models.TransientModel):
     module_donation_bank_statement = fields.Boolean('Donation Bank Statement')
     module_donation_direct_debit = fields.Boolean('Donation Direct Debit')
     module_donation_recurring = fields.Boolean('Donation Recurring')
-
-
-
-
