@@ -26,5 +26,3 @@ The main developpers of the project are:
 
 Please refer to the README of each module to have more information about
 how to configure and use the modules.
-
-
