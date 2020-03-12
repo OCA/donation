@@ -202,8 +202,9 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="donation_top_menu" sequence="15"
-        name="Donations" groups="group_donation_viewer"/>
+    <menuitem id="donation_top_menu" sequence="15" web_icon="donation,static/description/icon.png"
+        name="Donation" groups="group_donation_viewer"
+    />
 
     <menuitem id="donation_title_menu" parent="donation_top_menu"
         sequence="15" name="Donations"/>
