@@ -29,4 +29,4 @@ class DonationCampaign(models.Model):
         'Start Date',
         default=fields.Date.context_today
     )
-    note = fields.Text('Notes')
+    note = fields.Text('Notes', oldname='nota')
