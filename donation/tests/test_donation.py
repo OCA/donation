@@ -3,7 +3,7 @@
 
 import time
 from odoo.tests.common import TransactionCase
-from odoo import tools
+from odoo import fields, tools
 from odoo.modules.module import get_resource_path
 from odoo.exceptions import ValidationError
 
@@ -101,7 +101,7 @@ class TestDonation(TransactionCase):
                 ],
             })
 
-    def test_donation(self):
+    def test_donation_1(self):
         donations = [self.don1, self.don2, self.don3, self.don4, self.don5]
         for donation in donations:
             self.assertEquals(donation.state, 'draft')
@@ -128,6 +128,31 @@ class TestDonation(TransactionCase):
                     donation.donation_date, tax_receipt.donation_date)
                 self.assertEquals(
                     donation.tax_receipt_total, tax_receipt.amount)
+
+    def test_donation_2(self):
+        self.donation_id = self.ddo.create({
+            'check_total': 1000,
+            'partner_id': self.donor1.id,
+            'donation_date': time.strftime('%Y-%m-%d'),
+            'journal_id': self.bank_journal.id,
+            'tax_receipt_option': 'each',
+            'line_ids': [(0, 0, {
+                'product_id': self.inkind_product.id,
+                'quantity': 1,
+                'unit_price': 1000,
+                })],
+            })
+        self.donation_id.name_get()
+        self.donation_id.save_default_values()
+        self.donation_id.partner_id_change()
+        self.donation_id.tax_receipt_option_change()
+        self.donation_id.validate()
+        self.donation_id.line_ids[0]._compute_amount()
+        self.donation_id.line_ids[0].product_id_change()
+        self.donation_id.tax_receipt_id = False
+        self.donation_id.done2cancel()
+        self.donation_id.cancel2draft()
+        self.donation_id.unlink()
 
     def test_annual_tax_receipt(self):
         self.res_partner = self.env['res.partner']
@@ -167,8 +192,12 @@ class TestDonation(TransactionCase):
         tax_receipt = tax_receipts[0]
         self.assertEquals(tax_receipt.amount, 200)
         self.assertTrue(tax_receipt.number)
-        self.assertEquals(tax_receipt.date, last_day_year)
-        self.assertEquals(tax_receipt.donation_date, last_day_year)
+        self.assertEquals(
+            tax_receipt.date, fields.Date.from_string(last_day_year)
+        )
+        self.assertEquals(
+            tax_receipt.donation_date, fields.Date.from_string(last_day_year)
+        )
         self.assertEquals(
             tax_receipt.currency_id, dons[0].company_id.currency_id)
 
@@ -211,31 +240,6 @@ class TestDonation(TransactionCase):
         })
         self.don8.tax_receipt_id = False
         wizard.switch()
-
-    def test_donation(self):
-        self.donation_id = self.ddo.create({
-            'check_total': 1000,
-            'partner_id': self.donor1.id,
-            'donation_date': time.strftime('%Y-%m-%d'),
-            'journal_id': self.bank_journal.id,
-            'tax_receipt_option': 'each',
-            'line_ids': [(0, 0, {
-                'product_id': self.inkind_product.id,
-                'quantity': 1,
-                'unit_price': 1000,
-                })],
-            })
-        self.donation_id.name_get()
-        self.donation_id.save_default_values()
-        self.donation_id.partner_id_change()
-        self.donation_id.tax_receipt_option_change()
-        self.donation_id.validate()
-        self.donation_id.line_ids[0]._compute_amount()
-        self.donation_id.line_ids[0].product_id_change()
-        self.donation_id.tax_receipt_id = False
-        self.donation_id.done2cancel()
-        self.donation_id.cancel2draft()
-        self.donation_id.unlink()
 
     def create_donation_annual_receipt(
             self, partner, amount_tax_receipt, amount_no_tax_receipt,

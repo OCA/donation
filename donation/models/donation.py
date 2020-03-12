@@ -20,7 +20,6 @@ class DonationDonation(models.Model):
     def _compute_total(self):
         for donation in self:
             total = tax_receipt_total = 0.0
-            donation_currency = donation.currency_id
             for line in donation.line_ids:
                 line_total = line.quantity * line.unit_price
                 total += line_total
@@ -31,10 +30,18 @@ class DonationDonation(models.Model):
             donation_currency =\
                 donation.currency_id.with_context(date=donation.donation_date)
             company_currency = donation.company_currency_id
-            total_company_currency = donation_currency.compute(
-                total, company_currency)
-            tax_receipt_total_cc = donation_currency.compute(
-                tax_receipt_total, company_currency)
+            total_company_currency = donation_currency._convert(
+                total,
+                company_currency,
+                donation.company_id,
+                donation.donation_date
+            )
+            tax_receipt_total_cc = donation_currency._convert(
+                tax_receipt_total,
+                company_currency,
+                donation.company_id,
+                donation.donation_date
+            )
             donation.amount_total_company_currency = total_company_currency
             donation.tax_receipt_total = tax_receipt_total_cc
 
@@ -349,7 +356,7 @@ class DonationDonation(models.Model):
                 raise UserError(_(
                     'The date of the donation of %s should be today '
                     'or in the past, not in the future!')
-                    % donation.partner_id.name)            
+                    % donation.partner_id.name)
             if not donation.line_ids:
                 raise UserError(_(
                     "Cannot validate the donation of %s because it doesn't "
@@ -521,8 +528,12 @@ class DonationLine(models.Model):
             line.amount = amount
             donation_currency = line.donation_id.currency_id.with_context(
                 date=line.donation_id.donation_date)
-            amount_company_currency = donation_currency.compute(
-                amount, line.donation_id.company_id.currency_id)
+            amount_company_currency = donation_currency._convert(
+                amount,
+                line.donation_id.company_id.currency_id,
+                line.donation_id.company_id,
+                line.donation_id.donation_date
+            )
             tax_receipt_amount_cc = 0.0
             if line.product_id.tax_receipt_ok:
                 tax_receipt_amount_cc = amount_company_currency
@@ -544,7 +555,8 @@ class DonationLine(models.Model):
         'res.currency',
         related='donation_id.company_id.currency_id',
         readonly=True,
-        compute_sudo=True
+        compute_sudo=True,
+        string="Company Currency"
     )
     product_id = fields.Many2one(
         'product.product',
