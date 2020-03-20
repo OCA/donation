@@ -59,3 +59,9 @@ class DonationDonation(models.Model):
                         'Successfull reconcilation between donation and '
                         'bank statement.')
         return res
+
+    def _prepare_donation_move(self):
+        vals =  super(DonationDonation, self)._prepare_donation_move()
+        for moveline in vals:
+            moveline[2]['statement_id'] = self.bank_statement_id.id
+        return vals
