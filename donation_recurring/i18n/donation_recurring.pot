@@ -24,7 +24,7 @@ msgid "Active Recurring Template"
 msgstr ""
 
 #. module: donation_recurring
-#: code:addons/donation_recurring/models/donation.py:82
+#: code:addons/donation_recurring/models/donation.py:81
 #, python-format
 msgid "As it is a recurring donation, the Tax Receipt Option has been changed from Each to Annual. You may want to change it also on the Donor form."
 msgstr ""
@@ -35,7 +35,7 @@ msgid "Cancel"
 msgstr ""
 
 #. module: donation_recurring
-#: code:addons/donation_recurring/models/donation.py:70
+#: code:addons/donation_recurring/models/donation.py:69
 #, python-format
 msgid "Cancelled Donation of %s"
 msgstr ""
@@ -66,7 +66,7 @@ msgid "Donation"
 msgstr ""
 
 #. module: donation_recurring
-#: code:addons/donation_recurring/models/donation.py:68
+#: code:addons/donation_recurring/models/donation.py:67
 #, python-format
 msgid "Draft Donation of %s"
 msgstr ""
@@ -125,7 +125,7 @@ msgid "Payment Reference"
 msgstr ""
 
 #. module: donation_recurring
-#: code:addons/donation_recurring/models/donation.py:62
+#: code:addons/donation_recurring/models/donation.py:61
 #, python-format
 msgid "Recurring Donation of %s"
 msgstr ""
@@ -142,7 +142,7 @@ msgid "Recurring Template"
 msgstr ""
 
 #. module: donation_recurring
-#: code:addons/donation_recurring/wizard/donation_recurring_generate.py:43
+#: code:addons/donation_recurring/wizard/donation_recurring_generate.py:42
 #, python-format
 msgid "Recurring donations have already been generated for %s."
 msgstr ""
@@ -158,7 +158,7 @@ msgid "Suspended"
 msgstr ""
 
 #. module: donation_recurring
-#: code:addons/donation_recurring/models/donation.py:65
+#: code:addons/donation_recurring/models/donation.py:64
 #, python-format
 msgid "Suspended Recurring Donation of %s"
 msgstr ""
@@ -169,25 +169,25 @@ msgid "Suspended Recurring Template"
 msgstr ""
 
 #. module: donation_recurring
-#: code:addons/donation_recurring/models/donation.py:51
+#: code:addons/donation_recurring/models/donation.py:50
 #, python-format
 msgid "The recurring donation of %s cannot have a tax receipt option 'Each'."
 msgstr ""
 
 #. module: donation_recurring
-#: code:addons/donation_recurring/models/donation.py:44
+#: code:addons/donation_recurring/models/donation.py:43
 #, python-format
 msgid "The recurring donation template of '%s' cannot have a Source Recurring Template"
 msgstr ""
 
 #. module: donation_recurring
-#: code:addons/donation_recurring/models/donation.py:40
+#: code:addons/donation_recurring/models/donation.py:39
 #, python-format
 msgid "The recurring donation template of '%s' must stay in draft state."
 msgstr ""
 
 #. module: donation_recurring
-#: code:addons/donation_recurring/models/donation.py:81
+#: code:addons/donation_recurring/models/donation.py:80
 #, python-format
 msgid "Update of Tax Receipt Option"
 msgstr ""
