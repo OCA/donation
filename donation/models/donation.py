@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014-2016 Barroux Abbey (http://www.barroux.org)
 # Copyright 2014-2016 Akretion France
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -350,7 +349,7 @@ class DonationDonation(models.Model):
                 raise UserError(_(
                     'The date of the donation of %s should be today '
                     'or in the past, not in the future!')
-                    % donation.partner_id.name)            
+                    % donation.partner_id.name)
             if not donation.line_ids:
                 raise UserError(_(
                     "Cannot validate the donation of %s because it doesn't "

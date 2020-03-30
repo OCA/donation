@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 # © 2014-2016 Barroux Abbey (http://www.barroux.org)
 # © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import tools
 from odoo import models, fields
+from psycopg2 import sql
 
 
 class DonationReport(models.Model):
@@ -67,7 +67,7 @@ class DonationReport(models.Model):
     )
 
     def _select(self):
-        select = """
+        return sql.SQL("""
             SELECT min(l.id) AS id,
                 d.donation_date AS donation_date,
                 l.product_id AS product_id,
@@ -81,26 +81,23 @@ class DonationReport(models.Model):
                 d.company_currency_id AS company_currency_id,
                 sum(l.amount_company_currency) AS amount_company_currency,
                 sum(l.tax_receipt_amount) AS tax_receipt_amount
-                """
-        return select
+                """)
 
     def _from(self):
-        from_sql = """
+        return sql.SQL("""
             donation_line l
                 LEFT JOIN donation_donation d ON (d.id=l.donation_id)
                 LEFT JOIN product_product pp ON (l.product_id=pp.id)
                 LEFT JOIN product_template pt ON (pp.product_tmpl_id=pt.id)
-            """
-        return from_sql
+            """)
 
     def _where(self):
-        where = """
+        return sql.SQL("""
             WHERE d.state='done'
-            """
-        return where
+            """)
 
     def _group_by(self):
-        group_by = """
+        return sql.SQL("""
             GROUP BY l.product_id,
                 l.in_kind,
                 l.tax_receipt_ok,
@@ -111,12 +108,17 @@ class DonationReport(models.Model):
                 d.campaign_id,
                 d.company_id,
                 d.company_currency_id
-            """
-        return group_by
+            """)
 
     def init(self):
         tools.drop_view_if_exists(self._cr, self._table)
-        sql = "CREATE OR REPLACE VIEW %s AS (%s FROM %s %s %s)" % (
-            self._table, self._select(), self._from(),
-            self._where(), self._group_by())
-        self._cr.execute(sql)
+        query = sql.SQL(  # pylint: disable=sql-injection
+            "CREATE OR REPLACE VIEW {0} AS ({1} FROM {2} {3} {4})"
+        ).format(
+            sql.Identifier(self._table),
+            self._select(),
+            self._from(),
+            self._where(),
+            self._group_by(),
+        )
+        self._cr.execute(query)
