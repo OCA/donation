@@ -23,7 +23,7 @@ msgid "# of Donations"
 msgstr "# an Spenden"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:450
+#: code:addons/donation/models/donation.py:444
 #, python-format
 msgid "A cancelled donation should not be linked to a tax receipt"
 msgstr ""
@@ -31,7 +31,7 @@ msgstr ""
 "verknüpft sein"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:446
+#: code:addons/donation/models/donation.py:440
 #, python-format
 msgid "A cancelled donation should not be linked to an account move"
 msgstr ""
@@ -98,20 +98,20 @@ msgid "Cancelled"
 msgstr "Abgebrochen"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:479
+#: code:addons/donation/models/donation.py:473
 #, python-format
 msgid "Cancelled Donation of %s"
 msgstr "Abgebrochene Spende von %s1"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:360
+#: code:addons/donation/models/donation.py:354
 #, python-format
 msgid "Cannot validate the donation of %s because it doesn't have any lines!"
 msgstr ""
 "Spende %s1 kann nicht bestätigt werden, da keine Zeilen vorhanden sind!"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:372
+#: code:addons/donation/models/donation.py:366
 #, python-format
 msgid "Cannot validate the donation of %s because it is not in draft state."
 msgstr ""
@@ -119,7 +119,7 @@ msgstr ""
 "befindet."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:367
+#: code:addons/donation/models/donation.py:361
 #, python-format
 msgid "Cannot validate the donation of %s because the total amount is 0 !"
 msgstr "Die Spende %s1 kann nicht bestätigt werden, da der Gesamtbetrag 0 ist!"
@@ -305,7 +305,7 @@ msgid "Donation Tax Receipts"
 msgstr "Spendenbescheinigung"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:240
+#: code:addons/donation/models/donation.py:229
 #, python-format
 msgid "Donation of %s"
 msgstr "Spende von %s"
@@ -364,7 +364,7 @@ msgid "Draft"
 msgstr "Entwurf"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:477
+#: code:addons/donation/models/donation.py:471
 #, python-format
 msgid "Draft Donation of %s"
 msgstr "Spendenentwurf von %s1"
@@ -381,7 +381,7 @@ msgid "Eligible for a Tax Receipt"
 msgstr "Geeignet für Spendenbescheinigung"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:499
+#: code:addons/donation/models/donation.py:493
 #, python-format
 msgid "Error:"
 msgstr "Fehler:"
@@ -393,7 +393,7 @@ msgid "For Each Donation"
 msgstr "Für jede Spende"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:397
+#: code:addons/donation/models/donation.py:391
 #, python-format
 msgid "Full in-kind donation: no account move generated"
 msgstr "komplette Sachspende: keine Kontobewegung generiert"
@@ -470,7 +470,7 @@ msgid "Manager"
 msgstr "Manager"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:273
+#: code:addons/donation/models/donation.py:262
 #, python-format
 msgid "Missing Default Debit Account on journal '%s'."
 msgstr "Fehlender Default Passivsaldo im '%s1'-Jurnal."
@@ -637,7 +637,7 @@ msgid "Tax Receipts"
 msgstr "Spendenbescheinigungen"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:379
+#: code:addons/donation/models/donation.py:373
 #, python-format
 msgid ""
 "The amount of the donation of %s (%s) is different from the sum of the "
@@ -647,7 +647,7 @@ msgstr ""
 "(%s3) ab."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:221
+#: code:addons/donation/models/donation.py:349
 #, python-format
 msgid ""
 "The date of the donation of %s should be today or in the past, not in the "
@@ -655,7 +655,7 @@ msgid ""
 msgstr "Das Datum der Spende von %s darf nicht in der Zukunft liegen!"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:458
+#: code:addons/donation/models/donation.py:452
 #, python-format
 msgid "The donation '%s' is in Done state, so you cannot delete it."
 msgstr ""
@@ -663,7 +663,7 @@ msgstr ""
 "werden."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:462
+#: code:addons/donation/models/donation.py:456
 #, python-format
 msgid ""
 "The donation '%s' is linked to an account move, so you cannot delete it."
@@ -672,7 +672,7 @@ msgstr ""
 "gelöscht werden."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:466
+#: code:addons/donation/models/donation.py:460
 #, python-format
 msgid ""
 "The donation '%s' is linked to the tax receipt %s, so you cannot delete it."
@@ -681,7 +681,7 @@ msgstr ""
 "werden."
 
 #. module: donation
-#: code:addons/donation/models/account.py:19
+#: code:addons/donation/models/account.py:18
 #, python-format
 msgid ""
 "The journal '%s' has the option 'Donation Payment Method', so it's type "
@@ -745,7 +745,7 @@ msgid "Viewer"
 msgstr "Betrachter"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:431
+#: code:addons/donation/models/donation.py:425
 #, python-format
 msgid ""
 "You cannot cancel this donation because it is linked to the tax receipt %s. "
@@ -756,7 +756,7 @@ msgstr ""
 "rechtlich nicht erlaubt sein)."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:501
+#: code:addons/donation/models/donation.py:495
 #, python-format
 msgid "You cannot change the Tax Receipt Option when it is Annual."
 msgstr ""

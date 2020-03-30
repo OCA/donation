@@ -24,13 +24,13 @@ msgid "# of Donations"
 msgstr "Dons"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:450
+#: code:addons/donation/models/donation.py:444
 #, fuzzy, python-format
 msgid "A cancelled donation should not be linked to a tax receipt"
 msgstr "Un don annulé ne devrait pas être lié à une écriture comptable"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:446
+#: code:addons/donation/models/donation.py:440
 #, python-format
 msgid "A cancelled donation should not be linked to an account move"
 msgstr "Un don annulé ne devrait pas être lié à une écriture comptable"
@@ -96,27 +96,27 @@ msgid "Cancelled"
 msgstr "Annulé"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:479
+#: code:addons/donation/models/donation.py:473
 #, python-format
 msgid "Cancelled Donation of %s"
 msgstr "Don annulé de %s"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:360
+#: code:addons/donation/models/donation.py:354
 #, python-format
 msgid "Cannot validate the donation of %s because it doesn't have any lines!"
 msgstr ""
 "Impossible de valider le don de %s parce qu'il ne contient aucune ligne !"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:372
+#: code:addons/donation/models/donation.py:366
 #, python-format
 msgid "Cannot validate the donation of %s because it is not in draft state."
 msgstr ""
 "Impossible de valider le don de %s parce qu'il n'est pas à l'état brouillon."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:367
+#: code:addons/donation/models/donation.py:361
 #, fuzzy, python-format
 msgid "Cannot validate the donation of %s because the total amount is 0 !"
 msgstr ""
@@ -306,7 +306,7 @@ msgid "Donation Tax Receipts"
 msgstr "Date du don"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:240
+#: code:addons/donation/models/donation.py:229
 #, python-format
 msgid "Donation of %s"
 msgstr "Don de %s"
@@ -365,7 +365,7 @@ msgid "Draft"
 msgstr "Brouillon"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:477
+#: code:addons/donation/models/donation.py:471
 #, python-format
 msgid "Draft Donation of %s"
 msgstr "Don brouillon de %s"
@@ -383,7 +383,7 @@ msgid "Eligible for a Tax Receipt"
 msgstr ""
 
 #. module: donation
-#: code:addons/donation/models/donation.py:499
+#: code:addons/donation/models/donation.py:493
 #, python-format
 msgid "Error:"
 msgstr ""
@@ -396,7 +396,7 @@ msgid "For Each Donation"
 msgstr "Don"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:397
+#: code:addons/donation/models/donation.py:391
 #, python-format
 msgid "Full in-kind donation: no account move generated"
 msgstr "Don en nature: aucune écriture comptable générée"
@@ -474,7 +474,7 @@ msgid "Manager"
 msgstr "Responsable"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:273
+#: code:addons/donation/models/donation.py:262
 #, python-format
 msgid "Missing Default Debit Account on journal '%s'."
 msgstr "Compte de débit par défaut manquant sur le journal '%s'."
@@ -643,7 +643,7 @@ msgid "Tax Receipts"
 msgstr ""
 
 #. module: donation
-#: code:addons/donation/models/donation.py:379
+#: code:addons/donation/models/donation.py:373
 #, python-format
 msgid ""
 "The amount of the donation of %s (%s) is different from the sum of the "
@@ -653,7 +653,7 @@ msgstr ""
 "(%s)."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:221
+#: code:addons/donation/models/donation.py:349
 #, python-format
 msgid ""
 "The date of the donation of %s should be today or in the past, not in the "
@@ -663,13 +663,13 @@ msgstr ""
 "futur !"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:458
+#: code:addons/donation/models/donation.py:452
 #, python-format
 msgid "The donation '%s' is in Done state, so you cannot delete it."
 msgstr "Le don '%s' est à l'état validé, donc vous ne pouvez pas le supprimer."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:462
+#: code:addons/donation/models/donation.py:456
 #, python-format
 msgid ""
 "The donation '%s' is linked to an account move, so you cannot delete it."
@@ -678,7 +678,7 @@ msgstr ""
 "supprimer."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:466
+#: code:addons/donation/models/donation.py:460
 #, fuzzy, python-format
 msgid ""
 "The donation '%s' is linked to the tax receipt %s, so you cannot delete it."
@@ -687,7 +687,7 @@ msgstr ""
 "supprimer."
 
 #. module: donation
-#: code:addons/donation/models/account.py:19
+#: code:addons/donation/models/account.py:18
 #, python-format
 msgid ""
 "The journal '%s' has the option 'Donation Payment Method', so it's type "
@@ -753,7 +753,7 @@ msgid "Viewer"
 msgstr ""
 
 #. module: donation
-#: code:addons/donation/models/donation.py:431
+#: code:addons/donation/models/donation.py:425
 #, python-format
 msgid ""
 "You cannot cancel this donation because it is linked to the tax receipt %s. "
@@ -761,7 +761,7 @@ msgid ""
 msgstr ""
 
 #. module: donation
-#: code:addons/donation/models/donation.py:501
+#: code:addons/donation/models/donation.py:495
 #, python-format
 msgid "You cannot change the Tax Receipt Option when it is Annual."
 msgstr ""
