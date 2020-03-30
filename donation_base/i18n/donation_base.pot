@@ -80,7 +80,7 @@ msgid "Company"
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/models/donation_tax_receipt.py:95
+#: code:addons/donation_base/models/donation_tax_receipt.py:94
 #, python-format
 msgid "Compose Email"
 msgstr ""
@@ -262,13 +262,13 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/models/donation_tax_receipt.py:82
+#: code:addons/donation_base/models/donation_tax_receipt.py:81
 #, python-format
 msgid "Missing email on partner '%s'."
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:89
+#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:88
 #, python-format
 msgid "No annual tax receipt to generate"
 msgstr ""
@@ -379,37 +379,31 @@ msgid "Tax Receipts"
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:79
+#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:78
 #, python-format
 msgid "The Donor '%s' already has an annual tax receipt in this timeframe: %s dated %s."
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:51
+#: code:addons/donation_base/models/product.py:46
 #, python-format
 msgid "The option 'In-Kind Donation' is active on the product '%s', so you must also activate the option 'Is a Donation'."
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:56
+#: code:addons/donation_base/models/product.py:51
 #, python-format
 msgid "The option 'Is Eligible for a Tax Receipt' is active on the product '%s', so you must also activate the option 'Is a Donation'."
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:47
-#, python-format
-msgid "The product '%s' is a donation, so you must configure it as a Service"
-msgstr ""
-
-#. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_print.py:32
+#: code:addons/donation_base/wizard/tax_receipt_print.py:31
 #, python-format
 msgid "There are no tax receipts to print."
 msgstr ""
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:66
+#: code:addons/donation_base/models/product.py:61
 #, python-format
 msgid "There shouldn't have any Customer Taxes on the donation product '%s'."
 msgstr ""
