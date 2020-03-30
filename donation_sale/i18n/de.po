@@ -47,8 +47,8 @@ msgid "Eligible Tax Receipt Sub-total"
 msgstr ""
 
 #. module: donation_sale
-#: code:addons/donation_sale/models/account_invoice.py:114
-#: code:addons/donation_sale/models/sale.py:69
+#: code:addons/donation_sale/models/account_invoice.py:113
+#: code:addons/donation_sale/models/sale.py:68
 #, python-format
 msgid "Error:"
 msgstr ""
@@ -89,7 +89,7 @@ msgid "None"
 msgstr ""
 
 #. module: donation_sale
-#: code:addons/donation_sale/models/sale.py:103
+#: code:addons/donation_sale/models/sale.py:102
 #, python-format
 msgid ""
 "On the sale order '%s', the sale order line '%s' has a donation product, so "
@@ -137,14 +137,14 @@ msgid "Tax Receipt for Donations"
 msgstr ""
 
 #. module: donation_sale
-#: code:addons/donation_sale/models/account_invoice.py:198
+#: code:addons/donation_sale/models/account_invoice.py:197
 #, python-format
 msgid ""
 "The invoice line '%s' has a donation product, so it should not have taxes"
 msgstr ""
 
 #. module: donation_sale
-#: code:addons/donation_sale/models/account_invoice.py:88
+#: code:addons/donation_sale/models/account_invoice.py:87
 #, python-format
 msgid ""
 "You cannot cancel this invoice because it is linked to the tax receipt %s. "
@@ -152,14 +152,14 @@ msgid ""
 msgstr ""
 
 #. module: donation_sale
-#: code:addons/donation_sale/models/account_invoice.py:116
-#: code:addons/donation_sale/models/sale.py:71
+#: code:addons/donation_sale/models/account_invoice.py:115
+#: code:addons/donation_sale/models/sale.py:70
 #, python-format
 msgid "You cannot change the Tax Receipt Option when it is Annual."
 msgstr ""
 
 #. module: donation_sale
-#: code:addons/donation_sale/models/account_invoice.py:100
+#: code:addons/donation_sale/models/account_invoice.py:99
 #, python-format
 msgid ""
 "You cannot delete this invoice because it is linked to the tax receipt %s"
