@@ -43,10 +43,10 @@ msgstr ""
 "    % endif\n"
 "    ,</p>\n"
 "    \n"
-"    <p>Im Anhnag erhalten Sie Ihre Spendenbescheinigung "
-"<strong>${object.number}</strong>\n"
-"    über den Betrag von <strong>${object.amount} "
-"${object.currency_id.name}</strong>\n"
+"    <p>Im Anhnag erhalten Sie Ihre Spendenbescheinigung <strong>${object."
+"number}</strong>\n"
+"    über den Betrag von <strong>${object.amount} ${object.currency_id.name}</"
+"strong>\n"
 "    von ${object.company_id.name}.\n"
 "    </p>\n"
 "    \n"
@@ -65,8 +65,8 @@ msgid ""
 "${object.company_id.name.replace(' ', '_')}-Tax_Receipt_${(object.number or "
 "'').replace('/','_')}"
 msgstr ""
-"${object.company_id.name.replace(' ', '_')}-Spendenbescheinigung_${("
-"object.number or '').replace('/','_')}"
+"${object.company_id.name.replace(' ', '_')}-Spendenbescheinigung_${(object."
+"number or '').replace('/','_')}"
 
 #. module: donation_base
 #: model:mail.template,subject:donation_base.tax_receipt_email_template
@@ -107,7 +107,7 @@ msgid "Company"
 msgstr "Unternehmen"
 
 #. module: donation_base
-#: code:addons/donation_base/models/donation_tax_receipt.py:95
+#: code:addons/donation_base/models/donation_tax_receipt.py:94
 #, python-format
 msgid "Compose Email"
 msgstr "Verfasse E-Mail"
@@ -289,13 +289,13 @@ msgid "Last Updated on"
 msgstr "Zuletzt aktualisiert am"
 
 #. module: donation_base
-#: code:addons/donation_base/models/donation_tax_receipt.py:82
+#: code:addons/donation_base/models/donation_tax_receipt.py:81
 #, python-format
 msgid "Missing email on partner '%s'."
 msgstr "Fehlende Email bei Partner '%s'."
 
 #. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:89
+#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:88
 #, python-format
 msgid "No annual tax receipt to generate"
 msgstr "Keine Sammelspendenbescheinigung zu erzeugen"
@@ -408,7 +408,7 @@ msgid "Tax Receipts"
 msgstr "Steuerbescheinigungen"
 
 #. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:79
+#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:78
 #, python-format
 msgid ""
 "The Donor '%s' already has an annual tax receipt in this timeframe: %s dated "
@@ -418,7 +418,7 @@ msgstr ""
 "Zeitraum vom %s bis %s."
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:51
+#: code:addons/donation_base/models/product.py:46
 #, python-format
 msgid ""
 "The option 'In-Kind Donation' is active on the product '%s', so you must "
@@ -428,7 +428,7 @@ msgstr ""
 "die Option 'Ist eine Spende' ausgewählt sein."
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:56
+#: code:addons/donation_base/models/product.py:51
 #, python-format
 msgid ""
 "The option 'Is Eligible for a Tax Receipt' is active on the product '%s', so "
@@ -438,21 +438,13 @@ msgstr ""
 "ausgewählt, deswegen muss auch die Option 'Ist eine Spende' ausgewählt sein."
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:47
-#, python-format
-msgid "The product '%s' is a donation, so you must configure it as a Service"
-msgstr ""
-"Das Produkt '%s' ist eine Spende, also muss es als Service konfiguriert "
-"werden"
-
-#. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_print.py:32
+#: code:addons/donation_base/wizard/tax_receipt_print.py:31
 #, python-format
 msgid "There are no tax receipts to print."
 msgstr "Es gibt keine Spendenbescheinigungen zum Drucken."
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:66
+#: code:addons/donation_base/models/product.py:61
 #, python-format
 msgid "There shouldn't have any Customer Taxes on the donation product '%s'."
 msgstr ""
@@ -480,3 +472,9 @@ msgstr "Dieses Spendenprodukt ist ungeeignet für eine Spendenbescheinigung."
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
 msgid "Type"
 msgstr "Typ"
+
+#~ msgid ""
+#~ "The product '%s' is a donation, so you must configure it as a Service"
+#~ msgstr ""
+#~ "Das Produkt '%s' ist eine Spende, also muss es als Service konfiguriert "
+#~ "werden"

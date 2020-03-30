@@ -47,8 +47,8 @@ msgstr ""
 "    ,</p>\n"
 "    \n"
 "    <p>Adjuntamos el recibo de impuestos <strong>${object.number}</strong>\n"
-"    con importe <strong>${object.amount} ${object.currency_id.name}</strong>"
-"\n"
+"    con importe <strong>${object.amount} ${object.currency_id.name}</"
+"strong>\n"
 "    de ${object.company_id.name}.\n"
 "    </p>\n"
 "    \n"
@@ -108,7 +108,7 @@ msgid "Company"
 msgstr "Compañía"
 
 #. module: donation_base
-#: code:addons/donation_base/models/donation_tax_receipt.py:95
+#: code:addons/donation_base/models/donation_tax_receipt.py:94
 #, python-format
 msgid "Compose Email"
 msgstr "Crear email"
@@ -290,13 +290,13 @@ msgid "Last Updated on"
 msgstr "Última actualización el"
 
 #. module: donation_base
-#: code:addons/donation_base/models/donation_tax_receipt.py:82
+#: code:addons/donation_base/models/donation_tax_receipt.py:81
 #, python-format
 msgid "Missing email on partner '%s'."
 msgstr "Falta email para la empresa '%s'."
 
 #. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:89
+#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:88
 #, python-format
 msgid "No annual tax receipt to generate"
 msgstr "No hay recibos de impuestos anuales a generar"
@@ -407,7 +407,7 @@ msgid "Tax Receipts"
 msgstr "Recibos de impuestos"
 
 #. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:79
+#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:78
 #, python-format
 msgid ""
 "The Donor '%s' already has an annual tax receipt in this timeframe: %s dated "
@@ -417,7 +417,7 @@ msgstr ""
 "%s."
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:51
+#: code:addons/donation_base/models/product.py:46
 #, python-format
 msgid ""
 "The option 'In-Kind Donation' is active on the product '%s', so you must "
@@ -427,7 +427,7 @@ msgstr ""
 "se debe activar la opción 'Es Donación'."
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:56
+#: code:addons/donation_base/models/product.py:51
 #, python-format
 msgid ""
 "The option 'Is Eligible for a Tax Receipt' is active on the product '%s', so "
@@ -437,23 +437,17 @@ msgstr ""
 "'%s', así que también se debe activar la opción 'Es donación'."
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:47
-#, python-format
-msgid "The product '%s' is a donation, so you must configure it as a Service"
-msgstr ""
-"El producto '%s' es una donación, así que se debe configurar como un servicio"
-
-#. module: donation_base
-#: code:addons/donation_base/wizard/tax_receipt_print.py:32
+#: code:addons/donation_base/wizard/tax_receipt_print.py:31
 #, python-format
 msgid "There are no tax receipts to print."
 msgstr "No hay recibos de impuestos para imprimir."
 
 #. module: donation_base
-#: code:addons/donation_base/models/product.py:66
+#: code:addons/donation_base/models/product.py:61
 #, python-format
 msgid "There shouldn't have any Customer Taxes on the donation product '%s'."
-msgstr "No pueden existir impuestos de cliente en el producto de donación '%s'."
+msgstr ""
+"No pueden existir impuestos de cliente en el producto de donación '%s'."
 
 #. module: donation_base
 #: model:product.product,description:donation_base.product_product_donation
@@ -476,3 +470,9 @@ msgstr "La línea de donación no es elegible para un recibo de impuestos."
 #: model:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
 msgid "Type"
 msgstr "Tipo"
+
+#~ msgid ""
+#~ "The product '%s' is a donation, so you must configure it as a Service"
+#~ msgstr ""
+#~ "El producto '%s' es una donación, así que se debe configurar como un "
+#~ "servicio"
