@@ -57,14 +57,14 @@ class DonationTaxReceipt(models.Model):
         required=True
     )
 
-    # Maybe we can drop that code with the new seq management on v9
     @api.model
-    def create(self, vals=None):
-        if vals is None:
-            vals = {}
+    def create(self, vals):
         date = vals.get('donation_date')
-        vals['number'] = self.env['ir.sequence'].with_context(
-            date=date).next_by_code('donation.tax.receipt')
+        if vals.get('name', '/') == '/':
+            seq = self.env['ir.sequence']
+            vals['name'] = seq.with_context(
+                date=date
+            ).next_by_code('donation.tax.receipt') or '/'
         return super(DonationTaxReceipt, self).create(vals)
 
     @api.model
