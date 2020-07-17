@@ -37,7 +37,4 @@ class ResPartner(models.Model):
     @api.depends('tax_receipt_ids')
     def _compute_tax_receipt_count(self):
         for partner in self:
-            try:
-                partner.tax_receipt_count = len(partner.tax_receipt_ids)
-            except Exception:
-                partner.tax_receipt_count = 0
+            partner.tax_receipt_count = len(partner.tax_receipt_ids.ids)
