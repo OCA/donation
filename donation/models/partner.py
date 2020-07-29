@@ -10,12 +10,8 @@ class ResPartner(models.Model):
 
     @api.depends('donation_ids.partner_id')
     def _compute_donation_count(self):
-        # The current user may not have access rights for donations
         for partner in self:
-            try:
-                partner.donation_count = len(partner.donation_ids)
-            except Exception:
-                partner.donation_count = 0
+            partner.donation_count = len(partner.donation_ids.ids)
 
     donation_ids = fields.One2many(
         'donation.donation',
