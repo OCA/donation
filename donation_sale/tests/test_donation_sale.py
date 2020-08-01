@@ -14,7 +14,7 @@ class TestDonationSale(TransactionCase):
         self.AccountAccount = self.env['account.account']
         self.partner_18 = self.env.ref('base.res_partner_18')
         self.product_4 = self.env.ref('product.product_product_4')
-        self.product_uom_unit = self.env.ref('product.product_uom_unit')
+        self.product_uom_unit = self.env.ref('uom.product_uom_unit')
         self.type_revenue = self.env.ref('account.data_account_type_revenue')
         self.dt_receipt = self.env['donation.tax.receipt']
         self.company = self.env.ref('base.main_company')
