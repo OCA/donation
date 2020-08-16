@@ -103,7 +103,6 @@ msgstr ""
 #. module: donation_sale
 #: model:ir.model,name:donation_sale.model_sale_order
 #, fuzzy
-#| msgid "Donations"
 msgid "Quotation"
 msgstr "Dons"
 
