@@ -6,14 +6,17 @@
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <report
-        id="report_donation_tax_receipt"
-        model="donation.tax.receipt"
-        string="Donation Tax Receipt"
-        report_type="qweb-pdf"
-        name="donation_base.report_donationtaxreceipt"
-        file="donation_base.report_donationtaxreceipt"
-        attachment_use="True"
-        attachment="'Fiscal_receipt-'+(object.number or '').replace('/','')+'.pdf'"
-    />
+    <record id="report_donation_tax_receipt" model="ir.actions.report">
+        <field name="name">Donation Tax Receipt</field>
+        <field name="model">donation.tax.receipt</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">donation_base.report_donationtaxreceipt</field>
+        <field name="report_file">donation_base.report_donationtaxreceipt</field>
+        <field
+            name="print_report_name"
+        >'Fiscal_receipt-'+(object.number or '').replace('/','')+'.pdf'</field>
+        <field name="binding_model_id" ref="model_donation_tax_receipt" />
+        <field name="attachment_use" eval="True" />
+        <field name="binding_type">report</field>
+    </record>
 </odoo>
