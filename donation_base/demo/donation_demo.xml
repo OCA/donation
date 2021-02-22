@@ -62,7 +62,7 @@
     <!-- PARTNERS -->
     <record id="donor1" model="res.partner">
         <field name="name">Rémi Duplat</field>
-        <field name="customer" eval="1" />
+        <field name="customer_rank" eval="1" />
         <field name="street">12 rue de l'espérance</field>
         <field name="zip">69100</field>
         <field name="city">Villeurbanne</field>
@@ -72,7 +72,7 @@
     </record>
     <record id="donor2" model="res.partner">
         <field name="name">Lucie Dubois</field>
-        <field name="customer" eval="1" />
+        <field name="customer_rank" eval="1" />
         <field name="street">34 rue Pierre Dupont</field>
         <field name="zip">69001</field>
         <field name="city">Lyon</field>
@@ -82,7 +82,7 @@
     </record>
     <record id="donor3" model="res.partner">
         <field name="name">Joe Smith</field>
-        <field name="customer" eval="1" />
+        <field name="customer_rank" eval="1" />
         <field name="street">Craig Pond Trail</field>
         <field name="zip">04431</field>
         <field name="city">East Orland</field>

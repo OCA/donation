@@ -81,7 +81,7 @@ class TestTaxReceiptAnnualCreate(TransactionCase):
             }
         )
         self.tax_receipt_print_rec = self.tax_receipt_print.create(
-            {"receipt_ids": [(6, 0, [self.dt_receipt_rec.id])],}
+            {"receipt_ids": [(6, 0, [self.dt_receipt_rec.id])]}
         )
 
     def test_wizard_methods(self):
