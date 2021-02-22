@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!--
   © 2014-2016 Barroux Abbey (www.barroux.org)
   © 2014-2016 Akretion France (www.akretion.com)
   @author: Alexis de Lattre <alexis.delattre@akretion.com>
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
-
 <odoo>
-
-    <report id="report_donation_tax_receipt"
+    <report
+        id="report_donation_tax_receipt"
         model="donation.tax.receipt"
         string="Donation Tax Receipt"
         report_type="qweb-pdf"
@@ -16,6 +15,5 @@
         file="donation_base.report_donationtaxreceipt"
         attachment_use="True"
         attachment="'Fiscal_receipt-'+(object.number or '').replace('/','')+'.pdf'"
-        />
-
+    />
 </odoo>
