@@ -24,7 +24,7 @@ class DonationTaxReceipt(models.Model):
         string="Currency",
         required=True,
         ondelete="restrict",
-        default=lambda self: self.env.user.company_id.currency_id.id,
+        default=lambda self: self.env.company.currency_id.id,
     )
     partner_id = fields.Many2one(
         "res.partner",
@@ -52,9 +52,9 @@ class DonationTaxReceipt(models.Model):
     @api.model
     def create(self, vals):
         date = vals.get("donation_date")
-        if vals.get("name", "/") == "/":
+        if vals.get("number", "/") == "/":
             seq = self.env["ir.sequence"]
-            vals["name"] = (
+            vals["number"] = (
                 seq.with_context(date=date).next_by_code("donation.tax.receipt") or "/"
             )
         return super(DonationTaxReceipt, self).create(vals)
@@ -66,7 +66,6 @@ class DonationTaxReceipt(models.Model):
         """This method is inherited in donation and donation_sale
         It is called by the tax.receipt.annual.create wizard"""
 
-    @api.multi
     def action_send_tax_receipt(self):
         self.ensure_one()
         if not self.partner_id.email:
@@ -93,7 +92,6 @@ class DonationTaxReceipt(models.Model):
         }
         return action
 
-    @api.multi
     def action_print(self):
         self.ensure_one()
         return self.env.ref("donation_base.report_donation_tax_receipt").report_action(
