@@ -10,7 +10,7 @@
     "summary": "Base module for donations",
     "author": "Barroux Abbey, Akretion, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/donation",
-    "depends": ["account",],
+    "depends": ["account"],
     "data": [
         "security/ir.model.access.csv",
         "security/tax_receipt_security.xml",
@@ -24,6 +24,6 @@
         "data/donation_tax_seq.xml",
         "data/donation_mail_template.xml",
     ],
-    "demo": ["demo/donation_demo.xml",],
+    "demo": ["demo/donation_demo.xml"],
     "installable": True,
 }

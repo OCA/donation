@@ -16,7 +16,7 @@ class ResPartner(models.Model):
         ],
         string="Tax Receipt Option",
         default="each",
-        track_visibility="onchange",
+        tracking=True,
     )
     tax_receipt_ids = fields.One2many(
         "donation.tax.receipt", "partner_id", string="Tax Receipts"
