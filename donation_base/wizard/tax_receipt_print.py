@@ -22,24 +22,10 @@ class DonationTaxReceiptPrint(models.TransientModel):
         default=_get_receipts,
     )
 
-    @api.multi
     def print_receipts(self):
         self.ensure_one()
         if not self.receipt_ids:
             raise UserError(_("There are no tax receipts to print."))
-        # for Aeroo
-        # datas = {
-        #    'model': 'donation.tax.receipt',
-        #    'ids': self.receipt_ids.ids,
-        # }
-        # today = fields.Date.context_today(self)
-        # self.receipt_ids.write({'print_date': today})
-
-        # action = {
-        #    'type': 'ir.actions.report.xml',
-        #    'report_name': 'donation_base.report_donation_tax_receipt',
-        #    'data': datas,
-        #    'datas': datas}
         return self.env.ref("donation_base.report_donation_tax_receipt").report_action(
             self.receipt_ids
         )
