@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+
+    <record id="donation_form" model="ir.ui.view">
+        <field name="name">donation.form</field>
+        <field name="model">donation.donation</field>
+        <field name="arch"  type="xml">
+            <form string="Donation">
+                <header>
+                    <button type="object" name="validate" string="Validate"
+                        class="oe_highlight" states="draft"
+                        groups="donation.group_donation_user"
+                        invisible="context.get('recurring_view')"/>
+                    <button type="object" name="cancel2draft"
+                        string="Back to Draft" states="cancel"
+                        groups="donation.group_donation_user"/>
+                    <button type="object" name="done2cancel" string="Cancel"
+                        groups="donation.group_donation_user"
+                        states="done" invisible="context.get('recurring_view')"/>
+                    <button type="object" name="save_default_values"
+                        string="Save Default Values"/>
+                    <field name="state" widget="statusbar"
+                        invisible="context.get('recurring_view')"
+                        statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <group name="main">
+                        <group name="manual">
+                            <field name="partner_id"
+                                domain="[('customer', '=', True)]"/>
+                            <field name="commercial_partner_id" invisible="1"/>
+                            <field name="journal_id" widget="selection"/>
+                            <field name="currency_id"
+                                groups="base.group_multi_currency"/>
+                            <field name="check_total"
+                                groups="donation.group_donation_check_total"/>
+                            <field name="payment_ref"/>
+                            <field name="campaign_id"/>
+                            <field name="donation_date"/>
+                        </group>
+                        <group name="auto">
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <label for="tax_receipt_option"/>
+                            <div name="tax_receipt_option">
+                                <field name="tax_receipt_option" class="oe_inline"/>
+                                <button name="%(donation_tax_receipt_option_switch_action)d"
+                                    string="Change" type="action" class="oe_link"
+                                    attrs="{'invisible': ['|', ('state', '!=', 'done'), ('tax_receipt_id', '!=', False)]}"/>
+                            </div>
+                            <field name="tax_receipt_total"/>
+                            <field name="tax_receipt_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Donation Lines" name="lines">
+                            <field name="line_ids" nolabel="1"/>
+                            <group name="subtotal" class="oe_subtotal_footer oe_right">
+                                <field name="amount_total" string="Total"
+                                    class="oe_subtotal_footer_separator"/>
+                            </group>
+                            <group name="layout_fix">
+                                <field name="company_currency_id" invisible="1"/>
+                            </group>
+                        </page>
+                        <page string="Other Information" name="other">
+                            <group name="other">
+                                <field name="move_id"/>
+                                <field name="amount_total_company_currency"
+                                    groups="base.group_multi_currency"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="donation_tree" model="ir.ui.view">
+        <field name="name">donation.tree</field>
+        <field name="model">donation.donation</field>
+        <field name="arch"  type="xml">
+            <tree string="Donation" colors="blue:state=='draft';purple:state=='cancel'">
+                <field name="number" invisible="context.get('recurring_view')"/>
+                <field name="partner_id" invisible="context.get('partner_view')"/>
+                <field name="donation_date"/>
+                <field name="amount_total"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="journal_id"/>
+                <field name="campaign_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state" invisible="context.get('recurring_view')"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="donation_search" model="ir.ui.view">
+        <field name="name">donation.search</field>
+        <field name="model">donation.donation</field>
+        <field name="arch"  type="xml">
+            <search string="Search Donations">
+                <field name="number"/>
+                <field name="partner_id"/>
+                <separator/>
+                <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]" />
+                <filter name="done" string="Done" domain="[('state', '=', 'done')]" />
+                <filter name="cancel" string="Cancelled" domain="[('state', '=', 'cancel')]" />
+                <group string="Group By" name="groupby">
+                    <filter name="date_groupby" string="Date" context="{'group_by': 'donation_date'}"/>
+                    <filter name="partner_groupby" string="Partner" context="{'group_by': 'partner_id'}"/>
+                    <filter name="commercial_partner_groupby" string="Parent Partner" context="{'group_by': 'commercial_partner_id'}"/>
+                    <filter name="partner_country_groupby" string="Partner Country" context="{'group_by': 'country_id'}"/>
+                    <filter name="state_groupby" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="campaign_groupby" string="Campaign" context="{'group_by': 'campaign_id'}"/>
+                    <filter name="currency_groupby" string="Currency" context="{'group_by': 'currency_id'}"/>
+                    <filter name="journal_groupby" string="Payment Method" context="{'group_by': 'journal_id'}"/>
+                    <filter name="tax_receipt_option_groupby" string="Tax Receipt Option" context="{'group_by': 'tax_receipt_option'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="donation_graph" model="ir.ui.view">
+        <field name="name">donation.graph</field>
+        <field name="model">donation.donation</field>
+        <field name="arch"  type="xml">
+            <graph string="Donations">
+                <field name="donation_date" type="row"/>
+                <field name="amount_total_company_currency" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="donation_pivot" model="ir.ui.view">
+        <field name="name">donation.pivot</field>
+        <field name="model">donation.donation</field>
+        <field name="arch" type="xml">
+            <pivot string="Donations" disable_linking="True">
+                <field name="donation_date" type="row"/>
+                <field name="amount_total_company_currency" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="donation_line_tree" model="ir.ui.view">
+        <field name="name">donation.line.tree</field>
+        <field name="model">donation.line</field>
+        <field name="arch"  type="xml">
+            <tree string="Donation Line" editable="bottom">
+                <field name="donation_id" invisible="not context.get('donation_line_main_view')"/>
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="unit_price"/>
+                <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                <field name="amount"/>
+                <field name="tax_receipt_ok" string="Tax Receipt"/>
+                <field name="in_kind"/>
+                <field name="sequence" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="donation_line_form" model="ir.ui.view">
+        <field name="name">donation.line.form</field>
+        <field name="model">donation.line</field>
+        <field name="arch"  type="xml">
+            <form string="Donation Line">
+                <group name="main">
+                    <field name="donation_id" invisible="not context.get('donation_line_main_view')"/>
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="unit_price"/>
+                    <field name="analytic_account_id"/>
+                    <field name="amount"/>
+                    <field name="tax_receipt_ok"/>
+                    <field name="amount_company_currency"/>
+                    <field name="in_kind"/>
+                    <field name="sequence"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="donation_action" model="ir.actions.act_window">
+        <field name="name">Donations</field>
+        <field name="res_model">donation.donation</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+    </record>
+
+    <record id="donation_line_action" model="ir.actions.act_window">
+        <field name="name">Donations Lines</field>
+        <field name="res_model">donation.line</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="donation_top_menu" sequence="15" web_icon="donation,static/description/icon.png"
+        name="Donation" groups="group_donation_viewer"
+    />
+
+    <menuitem id="donation_title_menu" parent="donation_top_menu"
+        sequence="15" name="Donations"/>
+
+    <menuitem id="donation_menu" action="donation_action"
+        parent="donation_title_menu" sequence="10"/>
+
+    <menuitem id="donation_config_menu" parent="donation_top_menu"
+        name="Configuration" sequence="30"
+        groups="donation.group_donation_manager"/>
+
+    <menuitem id="donor" action="base.action_partner_form"
+        parent="donation_title_menu" sequence="50" name="Donors" />
+
+    <record id="donation_product_action" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_filter_donation': 1, 'default_donation': 1}</field>
+    </record>
+
+    <menuitem id="donation_products" action="donation_product_action"
+        parent="donation_config_menu"/>
+
+    <record id="donation_tax_receipt_form" model="ir.ui.view">
+        <field name="name">donation.donation.tax.receipt.form</field>
+        <field name="model">donation.tax.receipt</field>
+        <field name="inherit_id" ref="donation_base.donation_tax_receipt_form"/>
+        <field name="arch"  type="xml">
+            <group name="main" position="after">
+                <group name="donations" string="Related Donations">
+                    <field name="donation_ids" nolabel="1"/>
+                </group>
+            </group>
+        </field>
+    </record>
+
+    <menuitem id="donation_tax_title_menu" parent="donation.donation_top_menu"
+        sequence="20" name="Tax Receipts"/>
+
+    <menuitem id="donation_tax_receipt_menu"
+        action="donation_base.donation_tax_receipt_action"
+        parent="donation_tax_title_menu"
+        sequence="20"/>
+
+    <menuitem id="tax_receipt_annual_create_menu" sequence="45"
+        action="donation_base.tax_receipt_annual_create_action"
+        parent="donation_tax_title_menu"
+        groups="donation.group_donation_user"/>
+
+    <menuitem id="donation_tax_receipt_print_menu" sequence="40"
+        action="donation_base.donation_tax_receipt_print_action"
+        parent="donation_tax_title_menu"
+        groups="donation.group_donation_user"/>
+
+</odoo>

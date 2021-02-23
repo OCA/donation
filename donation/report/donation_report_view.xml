@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2014-2016 Barroux Abbey (http://www.barroux.org)
+  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+
+<odoo>
+
+    <record id="donation_report_search" model="ir.ui.view">
+        <field name="name">donation.report.search</field>
+        <field name="model">donation.report</field>
+        <field name="arch" type="xml">
+            <search string="Donations Analysis">
+                <group string="Group By" name="groupby">
+                    <filter name="date_groupby" string="Date"
+                        context="{'group_by': 'donation_date'}"/>
+                    <filter name="partner_groupby" string="Partner"
+                        context="{'group_by': 'partner_id'}"/>
+                    <filter name="partner_country_groupby" string="Partner Country"
+                        context="{'group_by': 'country_id'}"/>
+                    <filter name="company_groupby" string="Company"
+                        context="{'group_by': 'company_id'}"/>
+                    <filter name="product_groupby" string="Product"
+                        context="{'group_by': 'product_id'}"/>
+                    <filter name="tax_receipt_ok_groupby" string="Eligible for a Tax Receipt"
+                        context="{'group_by': 'tax_receipt_ok'}"/>
+                    <filter name="in_kind_groupby" string="In Kind"
+                        context="{'group_by': 'in_kind'}"/>
+                    <filter name="product_categ_groupby" string="Product Category"
+                        context="{'group_by': 'product_categ_id'}"/>
+                    <filter name="campaign_groupby" string="Donation Campaign"
+                        context="{'group_by': 'campaign_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="donation_report_graph" model="ir.ui.view">
+        <field name="name">donation.report.graph</field>
+        <field name="model">donation.report</field>
+        <field name="arch" type="xml">
+            <graph string="Donations Analysis">
+                <field name="donation_date"/>
+                <field name="amount_company_currency" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="donation_report_pivot" model="ir.ui.view">
+        <field name="name">donation.report.pivot</field>
+        <field name="model">donation.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Donations Analysis">
+                <field name="donation_date" type="row" interval="month"/>
+                <field name="product_id" type="col"/>
+                <field name="amount_company_currency" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- tree view used for drill-through -->
+    <record id="donation_report_tree" model="ir.ui.view">
+        <field name="name">donation.report.tree</field>
+        <field name="model">donation.report</field>
+        <field name="arch" type="xml">
+            <tree string="Donations">
+                <field name="partner_id"/>
+                <field name="donation_date"/>
+                <field name="country_id"/>
+                <field name="campaign_id"/>
+                <field name="product_id"/>
+                <field name="tax_receipt_ok"/>
+                <field name="in_kind"/>
+                <field name="tax_receipt_amount" sum="True"/>
+                <field name="amount_company_currency" sum="True"/>
+                <field name="company_currency_id" invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="donation_report_action" model="ir.actions.act_window">
+        <field name="name">Donations Analysis</field>
+        <field name="res_model">donation.report</field>
+        <field name="view_mode">pivot,graph,tree</field>
+    </record>
+
+    <menuitem id="donation_report_title_menu" parent="donation_top_menu"
+        name="Reports" sequence="25"/>
+
+    <menuitem id="donation_report_menu" action="donation_report_action"
+        parent="donation_report_title_menu" sequence="10"/>
+
+</odoo>

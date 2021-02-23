@@ -60,9 +60,9 @@ class DonationTaxReceipt(models.Model):
     @api.model
     def create(self, vals):
         date = vals.get('donation_date')
-        if vals.get('name', '/') == '/':
+        if vals.get('number', '/') == '/':
             seq = self.env['ir.sequence']
-            vals['name'] = seq.with_context(
+            vals['number'] = seq.with_context(
                 date=date
             ).next_by_code('donation.tax.receipt') or '/'
         return super(DonationTaxReceipt, self).create(vals)
