@@ -39,16 +39,15 @@
         <record id="donation_company_rule" model="ir.rule">
             <field name="name">Donation Multi-company</field>
             <field name="model_id" ref="model_donation_donation" />
-            <field
-                name="domain_force"
-            >['|', ('company_id', '=', False), ('company_id', 'child_of', [user.company_id.id])]</field>
+            <field name="domain_force">
+                ['|',('company_id','=',False),('company_id','in',company_ids)]</field>
         </record>
         <record id="donation_report_company_rule" model="ir.rule">
             <field name="name">Donation Report Multi-company</field>
             <field name="model_id" ref="model_donation_report" />
             <field
                 name="domain_force"
-            >['|', ('company_id', '=', False), ('company_id', 'child_of', [user.company_id.id])]</field>
+            >['|',('company_id','=',False),('company_id','in',company_ids)]</field>
         </record>
     </data>
 </odoo>
