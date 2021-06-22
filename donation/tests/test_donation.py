@@ -31,7 +31,7 @@ class TestDonation(TransactionCase):
         self._load("account", "test", "account_minimal_test.xml")
 
         self.bank_journal = self.env.ref("account.bank_journal")
-        today = (time.strftime("%Y-%m-%d"),)
+        today = time.strftime("%Y-%m-%d")
         self.product = self.env.ref("donation_base.product_product_donation")
         self.inkind_product = self.env.ref(
             "donation_base.product_product_inkind_donation"
