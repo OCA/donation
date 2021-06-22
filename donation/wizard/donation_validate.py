@@ -6,15 +6,17 @@ from odoo import models
 
 
 class DonationValidate(models.TransientModel):
-    _name = 'donation.validate'
-    _description = 'Validate Donations'
+    _name = "donation.validate"
+    _description = "Validate Donations"
 
     def run(self):
         self.ensure_one()
-        assert self.env.context.get('active_model') == 'donation.donation',\
-            'Source model must be donations'
-        assert self.env.context.get('active_ids'), 'No donations selected'
-        donations = self.env['donation.donation'].browse(
-            self.env.context.get('active_ids'))
+        assert (
+            self.env.context.get("active_model") == "donation.donation"
+        ), "Source model must be donations"
+        assert self.env.context.get("active_ids"), "No donations selected"
+        donations = self.env["donation.donation"].browse(
+            self.env.context.get("active_ids")
+        )
         donations.validate()
         return
