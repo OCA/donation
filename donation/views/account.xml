@@ -10,7 +10,7 @@
         <field name="model">account.journal</field>
         <field name="inherit_id" ref="account.view_account_journal_form" />
         <field name="arch" type="xml">
-            <field name="group_invoice_lines" position="after">
+            <field name="loss_account_id" position="after">
                 <field
                     name="allow_donation"
                     attrs="{'invisible': [('type', 'not in', ('bank', 'cash'))]}"
