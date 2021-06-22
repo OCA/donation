@@ -25,29 +25,34 @@ class DonationDonation(models.Model):
     )
     def _compute_total(self):
         for donation in self:
-            total = tax_receipt_total = 0.0
-            for line in donation.line_ids:
-                line_total = line.quantity * line.unit_price
-                total += line_total
-                if line.tax_receipt_ok:
-                    tax_receipt_total += line_total
+            if donation.donation_date:
+                total = tax_receipt_total = 0.0
+                for line in donation.line_ids:
+                    line_total = line.quantity * line.unit_price
+                    total += line_total
+                    if line.tax_receipt_ok:
+                        tax_receipt_total += line_total
 
-            donation.amount_total = total
-            donation_currency = donation.currency_id.with_context(
-                date=donation.donation_date
-            )
-            company_currency = donation.company_currency_id
-            total_company_currency = donation_currency._convert(
-                total, company_currency, donation.company_id, donation.donation_date
-            )
-            tax_receipt_total_cc = donation_currency._convert(
-                tax_receipt_total,
-                company_currency,
-                donation.company_id,
-                donation.donation_date,
-            )
-            donation.amount_total_company_currency = total_company_currency
-            donation.tax_receipt_total = tax_receipt_total_cc
+                donation.amount_total = total
+                donation_currency = donation.currency_id.with_context(
+                    date=donation.donation_date
+                )
+                company_currency = donation.company_currency_id
+                total_company_currency = donation_currency._convert(
+                    total, company_currency, donation.company_id, donation.donation_date
+                )
+                tax_receipt_total_cc = donation_currency._convert(
+                    tax_receipt_total,
+                    company_currency,
+                    donation.company_id,
+                    donation.donation_date,
+                )
+                donation.amount_total_company_currency = total_company_currency
+                donation.tax_receipt_total = tax_receipt_total_cc
+            else:
+                donation.amount_total = False
+                donation.amount_total_company_currency = False
+                donation.tax_receipt_total = False
 
     # We don't want a depends on partner_id.country_id, because if the partner
     # moves to another country, we want to keep the old country for
@@ -59,7 +64,7 @@ class DonationDonation(models.Model):
 
     @api.model
     def _default_currency(self):
-        company = self.env["res.company"]._company_default_get("donation.donation")
+        company = self.env.company
         return company.currency_id
 
     currency_id = fields.Many2one(
@@ -67,7 +72,7 @@ class DonationDonation(models.Model):
         string="Currency",
         required=True,
         states={"done": [("readonly", True)]},
-        track_visibility="onchange",
+        tracking=True,
         ondelete="restrict",
         default=_default_currency,
     )
@@ -77,7 +82,7 @@ class DonationDonation(models.Model):
         required=True,
         index=True,
         states={"done": [("readonly", True)]},
-        track_visibility="onchange",
+        tracking=True,
         ondelete="restrict",
     )
     commercial_partner_id = fields.Many2one(
@@ -105,7 +110,7 @@ class DonationDonation(models.Model):
         string="Check Amount",
         states={"done": [("readonly", True)]},
         currency_field="currency_id",
-        track_visibility="onchange",
+        tracking=True,
     )
     amount_total = fields.Monetary(
         compute="_compute_total",
@@ -114,7 +119,7 @@ class DonationDonation(models.Model):
         store=True,
         compute_sudo=True,
         readonly=True,
-        track_visibility="onchange",
+        tracking=True,
     )
     amount_total_company_currency = fields.Monetary(
         compute="_compute_total",
@@ -129,22 +134,21 @@ class DonationDonation(models.Model):
         required=True,
         states={"done": [("readonly", True)]},
         index=True,
-        track_visibility="onchange",
+        tracking=True,
     )
     company_id = fields.Many2one(
         "res.company",
         string="Company",
         required=True,
         states={"done": [("readonly", True)]},
-        default=lambda self: self.env["res.company"]._company_default_get(
-            "donation.donation"
-        ),
+        default=lambda self: self.env.company,
     )
     line_ids = fields.One2many(
         "donation.line",
         "donation_id",
         string="Donation Lines",
         states={"done": [("readonly", True)]},
+        copy=True,
     )
     move_id = fields.Many2one(
         "account.move", string="Account Move", readonly=True, copy=False
@@ -158,7 +162,7 @@ class DonationDonation(models.Model):
         required=True,
         domain=[("type", "in", ("bank", "cash")), ("allow_donation", "=", True)],
         states={"done": [("readonly", True)]},
-        track_visibility="onchange",
+        tracking=True,
         default=lambda self: self.env.user.context_donation_journal_id,
     )
     payment_ref = fields.Char(
@@ -171,7 +175,7 @@ class DonationDonation(models.Model):
         copy=False,
         default="draft",
         index=True,
-        track_visibility="onchange",
+        tracking=True,
     )
     company_currency_id = fields.Many2one(
         related="company_id.currency_id",
@@ -183,8 +187,9 @@ class DonationDonation(models.Model):
     campaign_id = fields.Many2one(
         "donation.campaign",
         string="Donation Campaign",
-        track_visibility="onchange",
+        tracking=True,
         ondelete="restrict",
+        states={"done": [("readonly", True)]},
         default=lambda self: self.env.user.context_donation_campaign_id,
     )
     tax_receipt_id = fields.Many2one(
@@ -192,7 +197,7 @@ class DonationDonation(models.Model):
         string="Tax Receipt",
         readonly=True,
         copy=False,
-        track_visibility="onchange",
+        tracking=True,
     )
     tax_receipt_option = fields.Selection(
         [
@@ -203,7 +208,7 @@ class DonationDonation(models.Model):
         string="Tax Receipt Option",
         states={"done": [("readonly", True)]},
         index=True,
-        track_visibility="onchange",
+        tracking=True,
     )
     tax_receipt_total = fields.Monetary(
         compute="_compute_total",
@@ -426,7 +431,7 @@ class DonationDonation(models.Model):
                     vals["move_id"] = move.id
                 else:
                     donation.message_post(
-                        _("Full in-kind donation: no account move generated")
+                        body=_("Full in-kind donation: no account move generated")
                     )
 
             receipt = donation.generate_each_tax_receipt()
@@ -694,7 +699,7 @@ class DonationTaxReceipt(models.Model):
                 ("tax_receipt_option", "=", "annual"),
                 ("tax_receipt_id", "=", False),
                 ("tax_receipt_total", "!=", 0),
-                ("company_id", "=", self.env.user.company_id.id),
+                ("company_id", "=", self.env.company.id),
                 ("state", "=", "done"),
             ]
         )
