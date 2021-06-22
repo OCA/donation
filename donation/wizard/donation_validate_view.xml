@@ -26,14 +26,9 @@
             </form>
         </field>
     </record>
-    <act_window
-        id="donation_validate_action"
-        multi="True"
-        key2="client_action_multi"
-        name="Validate Draft Donations"
-        res_model="donation.validate"
-        src_model="donation.donation"
-        view_mode="form"
-        target="new"
-    />
+    <record id="donation_validate_action" model="ir.actions.act_window">
+        <field name="name">Validate Draft Donations</field>
+        <field name="res_model">donation.validate</field>
+        <field name="view_mode">form</field>
+    </record>
 </odoo>
