@@ -23,4 +23,4 @@ class DonationCampaign(models.Model):
     code = fields.Char("Code")
     name = fields.Char("Name", required=True)
     start_date = fields.Date("Start Date", default=fields.Date.context_today)
-    note = fields.Text("Notes", oldname="nota")
+    note = fields.Text("Notes")

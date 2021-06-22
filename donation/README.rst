@@ -23,7 +23,7 @@ Donation
     :target: https://runbot.odoo-community.org/runbot/180/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module handles donations, including in-kind donations. When you validate a donation,
 it will create the corresponding accounting entries.
@@ -83,7 +83,7 @@ Contributors
 * Alexis de Lattre <alexis.delattre@akretion.com>
 * Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 * Nikul Chaudhary <nikul.chaudhary.serpentcs@gmail.com>
-
+* Alba Riera <alba.riera@creublanca.es>
 
 Maintainers
 ~~~~~~~~~~~
