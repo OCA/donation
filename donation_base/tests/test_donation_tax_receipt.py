@@ -1,4 +1,4 @@
-# © 2018-Today Serpent Consulting Services Pvt. Ltd.
+# Copyright 2018-Today Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import time
 
@@ -9,7 +9,7 @@ from odoo.tests.common import TransactionCase
 
 class TestDonationTaxReceipt(TransactionCase):
     def setUp(self):
-        super(TestDonationTaxReceipt, self).setUp()
+        super().setUp()
         self.dt_receipt = self.env["donation.tax.receipt"]
         self.partner = self.env.ref("base.res_partner_1")
         self.company = self.env.ref("base.main_company")
@@ -28,9 +28,6 @@ class TestDonationTaxReceipt(TransactionCase):
         )
 
     def test_donation(self):
-        rec = self.partner._commercial_fields()
-        self.assertIn("tax_receipt_option", rec)
-
         self.partner._compute_tax_receipt_count()
         self.assertTrue(self.partner.tax_receipt_count)
 
@@ -43,12 +40,10 @@ class TestDonationTaxReceipt(TransactionCase):
     def test_donation_change(self):
         self.product_id._donation_change()
         self.assertEqual(self.product_id.type, "service")
-        self.product_id._in_kind_donation_change()
         self.assertTrue(self.product_id.donation)
 
         self.product_id.product_tmpl_id._donation_change()
         self.assertEqual(self.product_id.product_tmpl_id.type, "service")
-        self.product_id.product_tmpl_id._in_kind_donation_change()
         self.assertTrue(self.product_id.product_tmpl_id.donation)
 
     def test_donation_check_donation(self):
@@ -63,7 +58,7 @@ class TestDonationTaxReceipt(TransactionCase):
 
 class TestTaxReceiptAnnualCreate(TransactionCase):
     def setUp(self):
-        super(TestTaxReceiptAnnualCreate, self).setUp()
+        super().setUp()
         self.dt_receipt = self.env["donation.tax.receipt"]
         self.tax_receipt_print = self.env["donation.tax.receipt.print"]
         self.partner = self.env.ref("base.res_partner_1")

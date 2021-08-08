@@ -1,5 +1,6 @@
-# © 2014-2016 Barroux Abbey (http://www.barroux.org)
-# © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+# Copyright 2014-2021 Barroux Abbey (http://www.barroux.org)
+# Copyright 2014-2021 Akretion France (http://www.akretion.com/)
+# @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
@@ -8,7 +9,7 @@ from odoo.exceptions import UserError
 
 class DonationTaxReceipt(models.Model):
     _name = "donation.tax.receipt"
-    _inherit = ["mail.thread"]
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Tax Receipt for Donations"
     _order = "id desc"
     _rec_name = "number"
@@ -38,9 +39,7 @@ class DonationTaxReceipt(models.Model):
         "res.company",
         string="Company",
         required=True,
-        default=lambda self: self.env["res.company"]._company_default_get(
-            "donation.tax.receipt"
-        ),
+        default=lambda self: self.env.company,
     )
     print_date = fields.Date(string="Print Date")
     type = fields.Selection(
@@ -57,11 +56,11 @@ class DonationTaxReceipt(models.Model):
             vals["number"] = (
                 seq.with_context(date=date).next_by_code("donation.tax.receipt") or "/"
             )
-        return super(DonationTaxReceipt, self).create(vals)
+        return super().create(vals)
 
     @api.model
     def update_tax_receipt_annual_dict(
-        self, tax_receipt_annual_dict, start_date, end_date, precision_rounding
+        self, tax_receipt_annual_dict, start_date, end_date, company
     ):
         """This method is inherited in donation and donation_sale
         It is called by the tax.receipt.annual.create wizard"""
@@ -70,7 +69,7 @@ class DonationTaxReceipt(models.Model):
         self.ensure_one()
         if not self.partner_id.email:
             raise UserError(
-                _("Missing email on partner '%s'.") % self.partner_id.name_get()[0][1]
+                _("Missing email on partner '%s'.") % self.partner_id.display_name
             )
         template = self.env.ref("donation_base.tax_receipt_email_template")
         compose_form = self.env.ref("mail.email_compose_message_wizard_form")
