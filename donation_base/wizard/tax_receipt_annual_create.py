@@ -1,5 +1,6 @@
-# © 2014-2016 Barroux Abbey (http://www.barroux.org)
-# © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+# Copyright 2014-2021 Barroux Abbey (http://www.barroux.org)
+# Copyright 2014-2021 Akretion France (http://www.akretion.com/)
+# @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import datetime
@@ -7,6 +8,7 @@ import logging
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.misc import format_date
 
 logger = logging.getLogger(__name__)
 
@@ -17,20 +19,30 @@ class TaxReceiptAnnualCreate(models.TransientModel):
 
     @api.model
     def _default_end_date(self):
-        return datetime.date(datetime.date.today().year - 1, 12, 31)
+        return datetime.date(fields.Date.context_today(self).year - 1, 12, 31)
 
     @api.model
     def _default_start_date(self):
-        return datetime.date(datetime.date.today().year - 1, 1, 1)
+        return datetime.date(fields.Date.context_today(self).year - 1, 1, 1)
 
-    start_date = fields.Date("Start Date", required=True, default=_default_start_date)
-    end_date = fields.Date("End Date", required=True, default=_default_end_date)
+    start_date = fields.Date(
+        "Start Date", required=True, default=lambda self: self._default_start_date()
+    )
+    end_date = fields.Date(
+        "End Date", required=True, default=lambda self: self._default_end_date()
+    )
+    company_id = fields.Many2one(
+        "res.company",
+        string="Company",
+        required=True,
+        default=lambda self: self.env.company,
+    )
 
     @api.model
     def _prepare_annual_tax_receipt(self, partner, partner_dict):
         vals = {
-            "company_id": self.env.user.company_id.id,
-            "currency_id": self.env.user.company_id.currency_id.id,
+            "company_id": self.company_id.id,
+            "currency_id": self.company_id.currency_id.id,
             "amount": partner_dict["amount"],
             "type": "annual",
             "partner_id": partner.id,
@@ -50,16 +62,15 @@ class TaxReceiptAnnualCreate(models.TransientModel):
         )
         dtro = self.env["donation.tax.receipt"]
         tax_receipt_annual_dict = {}
-        precision_rounding = self.env.user.company_id.currency_id.rounding
         self.env["donation.tax.receipt"].update_tax_receipt_annual_dict(
-            tax_receipt_annual_dict, self.start_date, self.end_date, precision_rounding
+            tax_receipt_annual_dict, self.start_date, self.end_date, self.company_id
         )
         tax_receipt_ids = []
         existing_annual_receipts = dtro.search(
             [
                 ("donation_date", "<=", self.end_date),
                 ("donation_date", ">=", self.start_date),
-                ("company_id", "=", self.env.user.company_id.id),
+                ("company_id", "=", self.company_id.id),
                 ("type", "=", "annual"),
             ]
         )
@@ -77,9 +88,9 @@ class TaxReceiptAnnualCreate(models.TransientModel):
                         "in this timeframe: %s dated %s."
                     )
                     % (
-                        partner.name_get()[0][1],
+                        partner.display_name,
                         existing_receipt.number,
-                        existing_receipt.date,
+                        format_date(self.env, existing_receipt.date),
                     )
                 )
             vals = self._prepare_annual_tax_receipt(partner, partner_dict)
@@ -89,13 +100,8 @@ class TaxReceiptAnnualCreate(models.TransientModel):
         if not tax_receipt_ids:
             raise UserError(_("No annual tax receipt to generate"))
         logger.info("%d annual fiscal receipts generated", len(tax_receipt_ids))
-        action = {
-            "type": "ir.actions.act_window",
-            "name": "Tax Receipts",
-            "res_model": "donation.tax.receipt",
-            "view_mode": "tree,form,graph",
-            "nodestroy": False,
-            "target": "current",
-            "domain": [("id", "in", tax_receipt_ids)],
-        }
+        action = (
+            self.env.ref("donation_base.donation_tax_receipt_action").sudo().read([])[0]
+        )
+        action["domain"] = [("id", "in", tax_receipt_ids)]
         return action
