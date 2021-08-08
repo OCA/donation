@@ -1,21 +1,22 @@
-# © 2014-2016 Barroux Abbey (http://www.barroux.org)
-# © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+# © 2014-2021 Barroux Abbey (http://www.barroux.org)
+# © 2014-2021 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     "name": "Donation Base",
-    "version": "13.0.1.0.0",
-    "category": "Accounting & Finance",
+    "version": "14.0.1.0.0",
+    "category": "Accounting",
     "license": "AGPL-3",
     "summary": "Base module for donations",
     "author": "Barroux Abbey, Akretion, Odoo Community Association (OCA)",
+    "maintainers": ["alexis-via"],
     "website": "https://github.com/OCA/donation",
     "depends": ["account"],
     "data": [
         "security/ir.model.access.csv",
         "security/tax_receipt_security.xml",
         "views/product.xml",
-        "views/partner.xml",
+        "views/res_partner.xml",
         "views/donation_tax_receipt.xml",
         "wizard/tax_receipt_annual_create_view.xml",
         "wizard/tax_receipt_print_view.xml",
