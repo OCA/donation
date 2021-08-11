@@ -11,17 +11,17 @@
         <field name="model">donation.validate</field>
         <field name="arch" type="xml">
             <form string="Validate Donations">
-                <p class="oe_grey">
+                <p>
                     This wizard will validate all the draft donations selected.
                 </p>
                 <footer>
                     <button
                         type="object"
                         name="run"
-                        string="Validate Donations"
-                        class="oe_highlight"
+                        string="Validate"
+                        class="btn-primary"
                     />
-                    <button special="cancel" string="Cancel" class="oe_link" />
+                    <button special="cancel" string="Cancel" />
                 </footer>
             </form>
         </field>
@@ -30,5 +30,6 @@
         <field name="name">Validate Draft Donations</field>
         <field name="res_model">donation.validate</field>
         <field name="view_mode">form</field>
+        <field name="target">new</field>
     </record>
 </odoo>
