@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2014-2021 Barroux Abbey (http://www.barroux.org)
+  Copyright 2014-2021 Akretion France (http://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="donation_tax_receipt_form" model="ir.ui.view">
+        <field name="name">donation.donation.tax.receipt.form</field>
+        <field name="model">donation.tax.receipt</field>
+        <field name="inherit_id" ref="donation_base.donation_tax_receipt_form" />
+        <field name="arch" type="xml">
+            <group name="main" position="after">
+                <group name="donations" string="Related Donations">
+                    <field name="donation_ids" nolabel="1" />
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>
