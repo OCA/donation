@@ -11,12 +11,13 @@ class DonationTaxReceiptOptionSwitch(models.TransientModel):
 
     donation_id = fields.Many2one(
         "donation.donation",
-        "Donation",
+        string="Donation",
+        required=True,
         default=lambda self: self._context.get("active_id"),
     )
     new_tax_receipt_option = fields.Selection(
         [("each", "For Each Donation"), ("annual", "Annual Tax Receipt")],
-        "Tax Receipt Option",
+        string="Tax Receipt Option",
         required=True,
     )
 
@@ -24,8 +25,8 @@ class DonationTaxReceiptOptionSwitch(models.TransientModel):
         self.ensure_one()
         assert self.donation_id, "Missing donation"
         assert not self.donation_id.tax_receipt_id, "Already linked to a tax receipt"
-        self.donation_id.tax_receipt_option = self.new_tax_receipt_option
+        self.donation_id.write({"tax_receipt_option": self.new_tax_receipt_option})
         receipt = self.donation_id.generate_each_tax_receipt()
         if receipt:
-            self.donation_id.tax_receipt_id = receipt.id
-        return True
+            self.donation_id.write({"tax_receipt_id": receipt.id})
+        return

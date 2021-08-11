@@ -18,5 +18,5 @@ class DonationValidate(models.TransientModel):
         donations = self.env["donation.donation"].browse(
             self.env.context.get("active_ids")
         )
-        donations.validate()
+        donations.filtered(lambda x: x.state == "draft").validate()
         return
