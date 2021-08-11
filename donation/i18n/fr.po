@@ -19,15 +19,14 @@ msgstr ""
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_res_partner_donation_count
 #: model:ir.model.fields,field_description:donation.field_res_users_donation_count
-#, fuzzy
 msgid "# of Donations"
-msgstr "Dons"
+msgstr "Nombre de dons"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:450
-#, fuzzy, python-format
+#, python-format
 msgid "A cancelled donation should not be linked to a tax receipt"
-msgstr "Un don annulé ne devrait pas être lié à une écriture comptable"
+msgstr "Un don annulé ne devrait pas être lié à un reçu fiscal"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:446
@@ -54,12 +53,12 @@ msgstr "Montant total"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation_amount_total_company_currency
 msgid "Amount Total in Company Currency"
-msgstr "Montant total dans la devise de la Sté"
+msgstr "Montant total dans la devise de la société"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line_amount_company_currency
 msgid "Amount in Company Currency"
-msgstr "Montant dans la devise de la Sté"
+msgstr "Montant dans la devise de la société"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line_analytic_account_id
@@ -163,9 +162,8 @@ msgstr "Société"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation_company_currency_id
 #: model:ir.model.fields,field_description:donation.field_donation_report_company_currency_id
-#, fuzzy
 msgid "Company Currency"
-msgstr "Montant dans la devise de la Sté"
+msgstr "Devise de la société"
 
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_config_menu
@@ -266,9 +264,8 @@ msgstr "Campagnes de don"
 
 #. module: donation
 #: model:res.groups,name:donation.group_donation_check_total
-#, fuzzy
 msgid "Donation Check Total"
-msgstr "Date du don"
+msgstr "Don : saisie du total"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation_donation_date
@@ -301,9 +298,8 @@ msgstr "Méthode de paiement de don"
 
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_tax_receipt_menu
-#, fuzzy
 msgid "Donation Tax Receipts"
-msgstr "Date du don"
+msgstr "Reçus fiscaux"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:240
@@ -372,9 +368,8 @@ msgstr "Don brouillon de %s"
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation_tax_receipt_total
-#, fuzzy
 msgid "Eligible Tax Receipt Sub-total in Company Currency"
-msgstr "Montant total dans la devise de la Sté"
+msgstr "Montant éligible au reçu fiscal dans la monnaie de la société"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_report_tax_receipt_ok
@@ -391,9 +386,8 @@ msgstr ""
 #. module: donation
 #: selection:donation.donation,tax_receipt_option:0
 #: selection:donation.tax.receipt.option.switch,new_tax_receipt_option:0
-#, fuzzy
 msgid "For Each Donation"
-msgstr "Don"
+msgstr "Pour chaque don"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:397
@@ -441,7 +435,6 @@ msgstr "Journal"
 #: model:ir.model.fields,field_description:donation.field_donation_report___last_update
 #: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch___last_update
 #: model:ir.model.fields,field_description:donation.field_donation_validate___last_update
-#, fuzzy
 msgid "Last Modified on"
 msgstr "Dernière mise à jour le"
 
@@ -502,13 +495,7 @@ msgstr "Autres informations"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation_commercial_partner_id
 msgid "Parent Donor"
-msgstr ""
-
-#. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_search
-#, fuzzy
-msgid "Parent Partner"
-msgstr "Partenaire"
+msgstr "Donateur parent"
 
 #. module: donation
 #: model:ir.ui.view,arch_db:donation.donation_report_search
@@ -565,9 +552,8 @@ msgstr "Quantité"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_donation_ids
 #: model:ir.ui.view,arch_db:donation.donation_tax_receipt_form
-#, fuzzy
 msgid "Related Donations"
-msgstr "Valider les dons"
+msgstr "Dons associés"
 
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_report_title_menu
@@ -591,9 +577,8 @@ msgstr "Séquence"
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_line_tax_receipt_ok
-#, fuzzy
 msgid "Specify if the product is eligible for a tax receipt"
-msgstr "Spécifier si le produit peut être sélectionné dans une ligne de don."
+msgstr "Spécifie si le produit est éligible au reçu fiscal."
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign_start_date
@@ -615,7 +600,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:donation.field_donation_donation_tax_receipt_id
 #: model:ir.ui.view,arch_db:donation.donation_line_tree
 msgid "Tax Receipt"
-msgstr ""
+msgstr "Reçu fiscal"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation_tax_receipt_total
@@ -632,15 +617,9 @@ msgid "Tax Receipt Option"
 msgstr ""
 
 #. module: donation
-#: model:ir.model,name:donation.model_donation_tax_receipt
-#, fuzzy
-msgid "Tax Receipt for Donations"
-msgstr "Valider les dons brouillons"
-
-#. module: donation
 #: model:ir.ui.menu,name:donation.donation_tax_title_menu
 msgid "Tax Receipts"
-msgstr ""
+msgstr "Reçus fiscaux"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:379
@@ -679,11 +658,11 @@ msgstr ""
 
 #. module: donation
 #: code:addons/donation/models/donation.py:466
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The donation '%s' is linked to the tax receipt %s, so you cannot delete it."
 msgstr ""
-"Le don '%s' est lié à une écriture comptable, donc vous ne pouvez pas le "
+"Le don '%s' est lié au reçu fiscal %s, donc vous ne pouvez pas le "
 "supprimer."
 
 #. module: donation

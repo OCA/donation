@@ -15,4 +15,11 @@
     <record id="base.user_demo" model="res.users">
         <field name="groups_id" eval="[(4, ref('group_donation_user'))]" />
     </record>
+    <record id="base.main_company" model="res.company">
+        <field
+            name="donation_credit_transfer_product_id"
+            ref="donation_base.product_product_donation"
+        />
+    </record>
+
 </odoo>
