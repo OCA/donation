@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
-  © 2014-2016 Barroux Abbey (http://www.barroux.org)
-  © 2014-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+  Copyright 2014-2021 Barroux Abbey (http://www.barroux.org)
+  Copyright 2014-2021 Akretion France (http://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
@@ -19,6 +20,14 @@
                         states="draft"
                         groups="donation.group_donation_user"
                         invisible="context.get('recurring_view')"
+                    />
+                    <button
+                        name="print_thanks"
+                        string="Print Thanks Letter"
+                        type="object"
+                        groups="donation.group_donation_user"
+                        attrs="{'invisible': ['|', ('thanks_printed', '=', True), ('state', '!=', 'done')]}"
+                        class="oe_highlight"
                     />
                     <button
                         type="object"
@@ -39,6 +48,8 @@
                         type="object"
                         name="save_default_values"
                         string="Save Default Values"
+                        groups="donation.group_donation_user"
+                        invisible="context.get('recurring_view')"
                     />
                     <field
                         name="state"
@@ -48,25 +59,32 @@
                     />
                 </header>
                 <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="number" readonly="1" />
+                        </h1>
+                    </div>
                     <group name="main">
                         <group name="manual">
-                            <field
-                                name="partner_id"
-                                domain="[('customer_rank', '=', 1)]"
-                            />
+                            <field name="partner_id" />
                             <field name="commercial_partner_id" invisible="1" />
-                            <field name="journal_id" widget="selection" />
+                            <field name="payment_mode_id" widget="selection" />
                             <field
                                 name="currency_id"
                                 groups="base.group_multi_currency"
                             />
+                                <field name="company_currency_id" invisible="1" />
                             <field
                                 name="check_total"
                                 groups="donation.group_donation_check_total"
                             />
                             <field name="payment_ref" />
+                            <field
+                                name="donation_date"
+                                options="{'datepicker': {'warn_future': true}}"
+                            />
                             <field name="campaign_id" />
-                            <field name="donation_date" />
+                            <field name="thanks_template_id" widget="selection" />
                         </group>
                         <group name="auto">
                             <field
@@ -86,6 +104,7 @@
                             </div>
                             <field name="tax_receipt_total" />
                             <field name="tax_receipt_id" />
+                            <field name="thanks_printed" />
                         </group>
                     </group>
                     <notebook>
@@ -98,23 +117,26 @@
                                     class="oe_subtotal_footer_separator"
                                 />
                             </group>
-                            <group name="layout_fix">
-                                <field name="company_currency_id" invisible="1" />
-                            </group>
                         </page>
                         <page string="Other Information" name="other">
                             <group name="other">
+                            <group name="other-left">
                                 <field name="move_id" />
+                                <field name="bank_statement_line_id" />
                                 <field
-                                    name="amount_total_company_currency"
-                                    groups="base.group_multi_currency"
-                                />
+                                        name="amount_total_company_currency"
+                                        groups="base.group_multi_currency"
+                                    />
+                            </group>
+                            <group name="other-right">
+                            </group>
                             </group>
                         </page>
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="activity_ids" widget="mail_activity" />
                     <field name="message_ids" widget="mail_thread" />
                 </div>
             </form>
@@ -124,20 +146,47 @@
         <field name="name">donation.tree</field>
         <field name="model">donation.donation</field>
         <field name="arch" type="xml">
-            <tree
-                string="Donation"
-                decoration-info="state == 'draft'"
-                decoration-primary="state == 'cancel'"
-            >
+            <tree string="Donation">
+                <header>
+                        <button
+                        name="%(donation_validate_action)d"
+                        type="action"
+                        string="Validate"
+                        groups="donation.group_donation_user"
+                        invisible="context.get('recurring_view')"
+                    />
+                    </header>
                 <field name="number" invisible="context.get('recurring_view')" />
                 <field name="partner_id" invisible="context.get('partner_view')" />
                 <field name="donation_date" />
-                <field name="amount_total" />
+                <field name="amount_total_company_currency" sum="1" />
+                <field name="amount_total" optional="hide" />
                 <field name="currency_id" invisible="1" />
-                <field name="journal_id" />
-                <field name="campaign_id" />
-                <field name="company_id" groups="base.group_multi_company" />
-                <field name="state" invisible="context.get('recurring_view')" />
+                <field name="company_currency_id" invisible="1" />
+                <field name="payment_mode_id" />
+                <field
+                    name="tax_receipt_option"
+                    optional="hide"
+                    widget="badge"
+                    decoration-success="tax_receipt_option == 'each'"
+                    decoration-info="tax_receipt_option == 'annual'"
+                />
+                <field name="campaign_id" optional="show" />
+                <field name="thanks_template_id" optional="hide" />
+                <field name="payment_ref" optional="hide" />
+                <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    optional="show"
+                />
+                <field
+                    name="state"
+                    invisible="context.get('recurring_view')"
+                    widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-muted="state == 'cancel'"
+                    decoration-success="state == 'done'"
+                />
             </tree>
         </field>
     </record>
@@ -160,6 +209,12 @@
                     string="Cancelled"
                     domain="[('state', '=', 'cancel')]"
                 />
+                <separator />
+            <filter
+                    name="thanks_to_print"
+                    string="Thanks to Print"
+                    domain="[('thanks_printed', '=', False)]"
+                />
                 <group string="Group By" name="groupby">
                     <filter
                         name="date_groupby"
@@ -168,12 +223,12 @@
                     />
                     <filter
                         name="partner_groupby"
-                        string="Partner"
+                        string="Donor"
                         context="{'group_by': 'partner_id'}"
                     />
                     <filter
                         name="commercial_partner_groupby"
-                        string="Parent Partner"
+                        string="Parent Donor"
                         context="{'group_by': 'commercial_partner_id'}"
                     />
                     <filter
@@ -197,9 +252,9 @@
                         context="{'group_by': 'currency_id'}"
                     />
                     <filter
-                        name="journal_groupby"
-                        string="Payment Method"
-                        context="{'group_by': 'journal_id'}"
+                        name="payment_mode_groupby"
+                        string="Payment Mode"
+                        context="{'group_by': 'payment_mode_id'}"
                     />
                     <filter
                         name="tax_receipt_option_groupby"
@@ -224,7 +279,7 @@
         <field name="name">donation.pivot</field>
         <field name="model">donation.donation</field>
         <field name="arch" type="xml">
-            <pivot string="Donations" disable_linking="True">
+            <pivot string="Donations">
                 <field name="donation_date" type="row" />
                 <field name="amount_total_company_currency" type="measure" />
             </pivot>
@@ -235,6 +290,7 @@
         <field name="model">donation.line</field>
         <field name="arch" type="xml">
             <tree string="Donation Line" editable="bottom">
+                <field name="sequence" widget="handle" />
                 <field
                     name="donation_id"
                     invisible="not context.get('donation_line_main_view')"
@@ -247,9 +303,9 @@
                     groups="analytic.group_analytic_accounting"
                 />
                 <field name="amount" />
-                <field name="tax_receipt_ok" string="Tax Receipt" />
-                <field name="in_kind" />
-                <field name="sequence" invisible="1" />
+                <field name="tax_receipt_ok" string="Tax Receipt" optional="show" />
+                <field name="in_kind" optional="hide" />
+                <field name="currency_id" invisible="1" />
             </tree>
         </field>
     </record>
@@ -266,12 +322,16 @@
                     <field name="product_id" />
                     <field name="quantity" />
                     <field name="unit_price" />
-                    <field name="analytic_account_id" />
+                    <field
+                        name="analytic_account_id"
+                        groups="analytic.group_analytic_accounting"
+                    />
                     <field name="amount" />
                     <field name="tax_receipt_ok" />
                     <field name="amount_company_currency" />
                     <field name="in_kind" />
-                    <field name="sequence" />
+                    <field name="currency_id" invisible="1" />
+                    <field name="company_currency_id" invisible="1" />
                 </group>
             </form>
         </field>
@@ -288,7 +348,7 @@
     </record>
     <menuitem
         id="donation_top_menu"
-        sequence="15"
+        sequence="38"
         web_icon="donation,static/description/icon.png"
         name="Donation"
         groups="group_donation_viewer"
@@ -314,7 +374,7 @@
     />
     <menuitem
         id="donor"
-        action="base.action_partner_form"
+        action="donation_base.res_partner_action_donor"
         parent="donation_title_menu"
         sequence="50"
         name="Donors"
@@ -332,18 +392,6 @@
         action="donation_product_action"
         parent="donation_config_menu"
     />
-    <record id="donation_tax_receipt_form" model="ir.ui.view">
-        <field name="name">donation.donation.tax.receipt.form</field>
-        <field name="model">donation.tax.receipt</field>
-        <field name="inherit_id" ref="donation_base.donation_tax_receipt_form" />
-        <field name="arch" type="xml">
-            <group name="main" position="after">
-                <group name="donations" string="Related Donations">
-                    <field name="donation_ids" nolabel="1" />
-                </group>
-            </group>
-        </field>
-    </record>
     <menuitem
         id="donation_tax_title_menu"
         parent="donation.donation_top_menu"

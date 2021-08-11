@@ -15,3 +15,7 @@ access_donation_report,Full access on donation.report to Donation Viewer,model_d
 access_donation_tax_receipt_viewer,Read access on donation.tax.receipt to Donation Viewer grp,model_donation_tax_receipt,donation.group_donation_viewer,1,0,0,0
 access_donation_tax_receipt,Create access on donation.tax.receipt to Donation User,model_donation_tax_receipt,donation.group_donation_user,1,0,1,0
 access_donation_tax_receipt_full,Full access on donation.tax.receipt to Donation Manager,model_donation_tax_receipt,donation.group_donation_manager,1,1,1,1
+access_donation_thanks_template_manager,Full access on donation.thanks.template to Donation Manager,model_donation_thanks_template,group_donation_manager,1,1,1,1
+access_donation_thanks_template_viewer,Read access on donation.thanks.template to Donation Viewer,model_donation_thanks_template,group_donation_viewer,1,0,0,0
+access_donation_validate,Full access on donation validate wizard,model_donation_validate,donation.group_donation_user,1,1,1,1
+access_donation_tax_receipt_option_switch,Full access on donation_tax_receipt_option_switch wizard,model_donation_tax_receipt_option_switch,donation.group_donation_user,1,1,1,1
