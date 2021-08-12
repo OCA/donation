@@ -1,57 +1,40 @@
-# -*- coding: utf-8 -*-
-# © 2016-2018 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
+# Copyright 2016-2021 Akretion France (http://www.akretion.com/)
+# @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests.common import TransactionCase
-from odoo.tools import float_compare
 
 
 class TestDirectDebit(TransactionCase):
 
     def test_direct_debit(self):
-        precision = self.env['decimal.precision'].precision_get('Account')
         donation = self.env.ref('donation_direct_debit.donation6')
-        # It is important to have
-        # journal_id.default_debit_account_id.reconcile = True
-        # to get a value on move_line.amount_residual
-        # By pass a constraint because we can't change to reconcile=True
-        # when there are already some moves in the account
-        dd_account = self.env['account.account'].create({
-            'code': '511DDTEST',
-            'name': 'Donations via direct debit',
-            'reconcile': True,
-            'user_type_id':
-            self.env.ref('account.data_account_type_current_assets').id,
-            })
-        dd_journal = self.env['account.journal'].create({
-            'name': 'Donations via Direct debit',
-            'code': 'DONDD',
+        dd_payment_mode = self.env.ref('account_banking_sepa_direct_debit.payment_mode_inbound_sepa_dd1')
+        bank_journal = self.env['account.journal'].create({
             'type': 'bank',
-            'default_credit_account_id': dd_account.id,
-            'default_debit_account_id': dd_account.id,
+            'name': 'Bank account test',
             })
-        donation.journal_id = dd_journal.id
+        dd_payment_mode.write({
+            'donation': True,
+            'bank_account_link': 'fixed',
+            'fixed_journal_id': bank_journal.id,
+            })
         donation.validate()
-        self.assertEquals(donation.state, 'done')
+        self.assertEqual(donation.state, 'done')
         self.assertTrue(donation.move_id)
-        mline = False
-        for line in donation.move_id.line_ids:
-            if line.account_id == donation.journal_id.default_debit_account_id:
-                self.assertEquals(donation.mandate_id, line.mandate_id)
-                self.assertEquals(
-                    donation.payment_mode_id, line.payment_mode_id)
-                mline = line
-                break
+        self.assertEqual(donation.mandate_id, donation.move_id.mandate_id)
+        self.assertEqual(
+                    donation.payment_mode_id, donation.move_id.payment_mode_id)
         paylines = self.env['account.payment.line'].search(
-            [('move_line_id', '=', mline.id)])
-        self.assertEquals(len(paylines), 1)
+            [('communication', '=', donation.payment_ref),
+                ('partner_id', '=', donation.commercial_partner_id.id)])
+        self.assertEqual(len(paylines), 1)
         payline = paylines[0]
-        self.assertEquals(payline.partner_id, donation.commercial_partner_id)
-        self.assertFalse(float_compare(
-            payline.amount_currency, 150, precision_digits=precision))
-        self.assertEquals(payline.currency_id, donation.currency_id)
-        self.assertEquals(payline.communication, 'Don prelev SEPA')
-        self.assertEquals(
+        self.assertFalse(donation.currency_id.compare_amounts(
+            payline.amount_currency, donation.check_total))
+        self.assertEqual(payline.currency_id, donation.currency_id)
+        self.assertTrue(payline.move_line_id in donation.move_id.line_ids)
+        self.assertEqual(
             payline.partner_bank_id, donation.mandate_id.partner_bank_id)
-        self.assertEquals(payline.mandate_id, donation.mandate_id)
-        self.assertEquals(payline.order_id.state, 'draft')
+        self.assertEqual(payline.mandate_id, donation.mandate_id)
+        self.assertEqual(payline.order_id.state, 'draft')
