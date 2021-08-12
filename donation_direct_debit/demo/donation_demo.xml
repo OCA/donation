@@ -23,13 +23,13 @@
 
 <record id="donor4" model="res.partner">
     <field name="name">Bella Andalouse</field>
-    <field name="customer" eval="1"/>
+    <field name="donor_rank" eval="1"/>
     <field name="street">42 avenue de la République</field>
     <field name="zip">50550</field>
     <field name="city">Saint-Vaast la Hougue</field>
     <field name="country_id" ref="base.fr"/>
     <field name="email">bella.andalouse@yahoo.example.com</field>
-    <field name="customer_payment_mode_id" ref="account_banking_sepa_direct_debit.payment_mode_inbound_sepa_dd1"/>
+    <field name="tax_receipt_option">annual</field>
 </record>
 
 <record id="donor4_iban" model="res.partner.bank">
@@ -51,12 +51,12 @@
     <field name="check_total">150</field>
     <field name="partner_id" ref="donor4"/>
     <field name="donation_date" eval="time.strftime('%Y-%m-01')"/>
-    <field name="journal_id" model="account.journal"
-        search="[('type', '=', 'bank')]"/>
+    <field name="payment_mode_id" ref="account_banking_sepa_direct_debit.payment_mode_inbound_sepa_dd1"/>
     <field name="payment_ref">Don prelev SEPA</field>
     <field name="campaign_id" ref="donation.prospecting_origin"/>
     <field name="mandate_id" ref="donor4_mandate"/>
     <field name="payment_mode_id" ref="account_banking_sepa_direct_debit.payment_mode_inbound_sepa_dd1"/>
+    <field name="tax_receipt_option">annual</field>
 </record>
 
 <record id="donation6_l1" model="donation.line">

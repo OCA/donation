@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-# © 2015-2016 Akretion France (Alexis de Lattre <alexis.delattre@akretion.com>)
+# Copyright 2015-2021 Akretion France (http://www.akretion.com/)
+# @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api, _
@@ -11,35 +11,27 @@ class DonationDonation(models.Model):
 
     mandate_id = fields.Many2one(
         'account.banking.mandate', string='Mandate',
-        states={'done': [('readonly', True)]}, track_visibility='onchange',
-        ondelete='restrict')  # domain is in the view
-    payment_mode_id = fields.Many2one(
-        'account.payment.mode', string="Payment Mode",
-        ondelete='restrict', domain=[('payment_type', '=', 'inbound')],
-        readonly=True, states={'draft': [('readonly', False)]})
+        states={'done': [('readonly', True)]}, tracking=True,
+        check_company=True, ondelete='restrict',
+        domain="[('state', '=', 'valid'), "
+        "('partner_id', '=', commercial_partner_id), "
+        "('company_id', '=', company_id)]")
+    mandate_required = fields.Boolean(
+        related="payment_mode_id.payment_method_id.mandate_required", readonly=True
+    )
 
-    @api.onchange('partner_id')
+    @api.onchange('payment_mode_id')
     def donation_partner_direct_debit_change(self):
-        if self.partner_id:
-            self.payment_mode_id = self.partner_id.customer_payment_mode_id
-            if (
-                    self.partner_id.customer_payment_mode_id.
-                    payment_method_id.mandate_required):
-                mandates = self.env['account.banking.mandate'].search([
-                    ('state', '=', 'valid'),
-                    ('partner_id', '=', self.commercial_partner_id.id),
-                    ])
-                if mandates:
-                    self.mandate_id = mandates[0]
-        else:
-            self.payment_mode_id = False
-            self.mandate_id = False
+        if self.partner_id and self.payment_mode_id and self.payment_mode_id.payment_method_id.mandate_required and not self.mandate_id:
+            mandate = self.env['account.banking.mandate'].search([
+                ('state', '=', 'valid'),
+                ('partner_id', '=', self.commercial_partner_id.id),
+                ], limit=1)
+            if mandate:
+                self.mandate_id = mandate
 
-    def _prepare_counterpart_move_line(
-            self, name, amount_total_company_cur, total_amount_currency,
-            currency_id):
-        vals = super(DonationDonation, self)._prepare_counterpart_move_line(
-            name, amount_total_company_cur, total_amount_currency, currency_id)
+    def _prepare_donation_move(self):
+        vals = super()._prepare_donation_move()
         vals.update({
             'mandate_id': self.mandate_id.id or False,
             'payment_mode_id': self.payment_mode_id.id,
@@ -54,8 +46,8 @@ class DonationDonation(models.Model):
     def validate(self):
         '''Create Direct debit payment order on donation validation or update
         an existing draft Direct Debit pay order'''
-        res = super(DonationDonation, self).validate()
-        apoo = self.env['account.payment.order']
+        res = super().validate()
+        apoo = self.env['account.payment.order'].sudo()
         for donation in self:
             if (
                     donation.payment_mode_id and
@@ -64,6 +56,7 @@ class DonationDonation(models.Model):
                     donation.move_id):
                 payorders = apoo.search([
                     ('state', '=', 'draft'),
+                    ('company_id', '=', donation.company_id.id),
                     ('payment_mode_id', '=', donation.payment_mode_id.id),
                     ])
                 msg = False
@@ -73,28 +66,30 @@ class DonationDonation(models.Model):
                     payorder_vals = donation._prepare_payment_order()
                     payorder = apoo.create(payorder_vals)
                     msg = _(
-                        "A new draft direct debit order %s has been "
-                        "automatically created") % payorder.name
+                        "A new draft direct debit order <a href=# data-oe-model=account.payment.order data-oe-id=%d>%s</a> has been "
+                        "automatically created") % (payorder.id, payorder.name)
                 # add payment line
-                bank_account = donation.journal_id.default_debit_account_id
+                payment_account_id = donation.payment_mode_id.fixed_journal_id.payment_debit_account_id.id
                 for mline in donation.move_id.line_ids:
-                    if mline.account_id == bank_account:
-                        mline.create_payment_line_from_move_line(payorder)
+                    if mline.account_id.id == payment_account_id:
+                        mline.sudo().create_payment_line_from_move_line(payorder)
+                        break
                 if not msg:
                     msg = _("A new payment line has been automatically added "
                             "to the existing draft direct debit order "
-                            "%s") % payorder.name
-                donation.message_post(msg)
+                            "<a href=# data-oe-model=account.payment.order data-oe-id=%d>%s</a>.") % (payorder.id, payorder.name)
+                donation.message_post(body=msg)
         return res
 
     def done2cancel(self):
         for donation in self:
             if donation.move_id:
                 donation_mv_line_ids = [
-                    l.id for l in donation.move_id.line_ids]
+                    line.id for line in donation.move_id.line_ids]
                 if donation_mv_line_ids:
                     plines = self.env['account.payment.line'].search([
                         ('move_line_id', 'in', donation_mv_line_ids),
+                        ('company_id', '=', donation.company_id.id),
                         ('state', 'in', ('draft', 'open')),
                         ])
                     if plines:
@@ -103,5 +98,5 @@ class DonationDonation(models.Model):
                             "which is linked to a payment line in a "
                             "direct debit order. Remove it from the "
                             "following direct debit order: %s.")
-                            % plines[0].order_id.name)
-        return super(DonationDonation, self).done2cancel()
+                            % plines[0].order_id.display_name)
+        return super().done2cancel()
