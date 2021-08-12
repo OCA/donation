@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_donation_recurring_generate,Full access on donation.recurring.generate wizard,model_donation_recurring_generate,donation.group_donation_user,1,1,1,1
