@@ -1,22 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!--
   Copyright 2016-2021 La Cimade (http://www.lacimade.org/)
   Copyright 2021 Akretion France (http://www.akretion.com/)
   @author: Alexis de Lattre <alexis.delattre@akretion.com>
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
-
 <odoo>
 
     <record id="view_move_form" model="ir.ui.view">
         <field name="model">account.move</field>
-        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="inherit_id" ref="account.view_move_form" />
         <field name="arch" type="xml">
                 <group name="accounting_info_group" position="after">
-                        <group name="donation" string="Tax Receipt" attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}">
-                <field name="tax_receipt_option"/>
-                <field name="tax_receipt_total"/>
-                <field name="tax_receipt_id"/>
+                        <group
+                    name="donation"
+                    string="Tax Receipt"
+                    attrs="{'invisible': [('move_type', '!=', 'out_invoice')]}"
+                >
+                <field name="tax_receipt_option" />
+                <field name="tax_receipt_total" />
+                <field name="tax_receipt_id" />
             </group>
             </group>
         </field>
@@ -24,37 +27,49 @@
 
     <record id="view_invoice_tree" model="ir.ui.view">
         <field name="model">account.move</field>
-        <field name="inherit_id" ref="account.view_invoice_tree"/>
-        <field name="arch"  type="xml">
+        <field name="inherit_id" ref="account.view_invoice_tree" />
+        <field name="arch" type="xml">
             <field name="state" position="before">
-                <field name="tax_receipt_option" optional="hide" widget="badge"
+                <field
+                    name="tax_receipt_option"
+                    optional="hide"
+                    widget="badge"
                     decoration-success="tax_receipt_option == 'each'"
-                        decoration-info="tax_receipt_option == 'annual'"/>
-                <field name="tax_receipt_total" optional="hide"/>
-                <field name="tax_receipt_id" optional="hide"/>
+                    decoration-info="tax_receipt_option == 'annual'"
+                />
+                <field name="tax_receipt_total" optional="hide" />
+                <field name="tax_receipt_id" optional="hide" />
             </field>
         </field>
     </record>
 
     <record id="view_account_invoice_filter" model="ir.ui.view">
         <field name="model">account.move</field>
-        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
-        <field name="arch"  type="xml">
+        <field name="inherit_id" ref="account.view_account_invoice_filter" />
+        <field name="arch" type="xml">
             <group expand="0" position="inside">
-                <filter name="tax_receipt_option_groupby" string="Tax Receipt Option"
-                    context="{'group_by': 'tax_receipt_option'}"/>
+                <filter
+                    name="tax_receipt_option_groupby"
+                    string="Tax Receipt Option"
+                    context="{'group_by': 'tax_receipt_option'}"
+                />
             </group>
         </field>
     </record>
 
-    <menuitem id="donation_tax_receipt_menu"
+    <menuitem
+        id="donation_tax_receipt_menu"
         action="donation_base.donation_tax_receipt_action"
         parent="account.menu_finance_receivables"
-        sequence="60"/>
+        sequence="60"
+    />
 
-    <menuitem id="tax_receipt_annual_create_menu" sequence="100"
+    <menuitem
+        id="tax_receipt_annual_create_menu"
+        sequence="100"
         action="donation_base.tax_receipt_annual_create_action"
         parent="account.menu_finance_entries_actions"
-        groups="account.group_account_invoice"/>
+        groups="account.group_account_invoice"
+    />
 
 </odoo>
