@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 
 class DonationDonation(models.Model):
@@ -79,3 +79,12 @@ class DonationDonation(models.Model):
             if self.partner_id.tax_receipt_option != self.tax_receipt_option:
                 self.tax_receipt_option = self.partner_id.tax_receipt_option
         return res
+
+    def unlink(self):
+        for donation in self:
+            # To avoid accidents !
+            if donation.state == 'draft' and donation.recurring_template == 'active':
+                raise UserError(_(
+                    "You cannot delete an active recurring donation. "
+                    "You must suspend it first."))
+        return super(DonationDonation, self).unlink()
