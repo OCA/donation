@@ -4,18 +4,18 @@
 
 
 {
-    'name': 'Donation Direct Debit',
-    'version': '14.0.1.0.0',
-    'category': 'Accounting',
-    'license': 'AGPL-3',
-    'summary': 'Auto-generate direct debit order on donation validation',
-    'author': 'Akretion, Odoo Community Association (OCA)',
-    'maintainers': ['alexis-via'],
-    'website': 'https://github.com/OCA/donation',
-    'depends': ['account_banking_sepa_direct_debit', 'donation'],
-    'data': [
-        'views/donation.xml',
-        ],
-    'demo': ['demo/donation_demo.xml'],
-    'installable': True,
+    "name": "Donation Direct Debit",
+    "version": "14.0.1.0.0",
+    "category": "Accounting",
+    "license": "AGPL-3",
+    "summary": "Auto-generate direct debit order on donation validation",
+    "author": "Akretion, Odoo Community Association (OCA)",
+    "maintainers": ["alexis-via"],
+    "website": "https://github.com/OCA/donation",
+    "depends": ["account_banking_sepa_direct_debit", "donation"],
+    "data": [
+        "views/donation.xml",
+    ],
+    "demo": ["demo/donation_demo.xml"],
+    "installable": True,
 }
