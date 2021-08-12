@@ -10,6 +10,7 @@
     "license": "AGPL-3",
     "summary": "Manage recurring donations",
     "author": "Barroux Abbey, Akretion, Odoo Community Association (OCA)",
+    "maintainers": ["alexis-via"],
     "website": "https://github.com/OCA/donation",
     "depends": [
         "donation",
