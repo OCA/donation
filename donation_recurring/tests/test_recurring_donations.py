@@ -24,6 +24,7 @@ class TestDonationRecurring(TransactionCase):
         self.payment_mode = self.env["account.payment.mode"].create(
             {
                 "name": "test_payment_mode",
+                "donation": True,
                 "bank_account_link": "fixed",
                 "fixed_journal_id": self.bank_journal.id,
                 "payment_method_id": self.env.ref(
