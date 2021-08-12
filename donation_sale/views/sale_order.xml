@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  © 2016 La Cimade (http://www.lacimade.org/)
+  Copyright 2016-2021 La Cimade (http://www.lacimade.org/)
+  Copyright 2021 Akretion France (http://www.akretion.com/)
   @author: Alexis de Lattre <alexis.delattre@akretion.com>
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
@@ -26,7 +27,10 @@
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch"  type="xml">
             <field name="amount_total" position="after">
-                <field name="tax_receipt_total"/>
+                <field name="tax_receipt_option" optional="hide" widget="badge"
+                    decoration-success="tax_receipt_option == 'each'"
+                    decoration-info="tax_receipt_option == 'annual'"/>
+                <field name="tax_receipt_total" optional="hide"/>
                 <field name="company_currency_id" invisible="1"/>
             </field>
         </field>
@@ -38,7 +42,10 @@
         <field name="inherit_id" ref="sale.view_quotation_tree"/>
         <field name="arch"  type="xml">
             <field name="amount_total" position="after">
-                <field name="tax_receipt_total"/>
+                <field name="tax_receipt_option" optional="hide" widget="badge"
+                    decoration-success="tax_receipt_option == 'each'"
+                    decoration-info="tax_receipt_option == 'annual'"/>
+                <field name="tax_receipt_total" optional="hide"/>
                 <field name="company_currency_id" invisible="1"/>
             </field>
         </field>

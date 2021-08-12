@@ -1,12 +1,10 @@
-# © 2016 La Cimade (http://www.lacimade.org/)
+# Copyright 2016-2021 La Cimade (http://www.lacimade.org/)
+# Copyright 2021 Akretion France (http://www.akretion.com/)
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-import logging
-
-logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -22,37 +20,34 @@ class SaleOrder(models.Model):
     )
     company_currency_id = fields.Many2one(
         related='company_id.currency_id',
+        string='Company Currency',
         readonly=True
     )
     tax_receipt_total = fields.Monetary(
         compute='_compute_tax_receipt_total',
-        compute_sudo=True,
         string='Eligible Tax Receipt Sub-total',
         store=True,
         currency_field='company_currency_id',
-        readonly=True
     )
 
     @api.depends(
-        'order_line.product_id', 'order_line.price_unit',
-        'order_line.product_uom_qty')
+        'pricelist_id.currency_id', 'order_line.product_id', 'order_line.price_subtotal')
     def _compute_tax_receipt_total(self):
         for sale in self:
             total = 0.0
             for line in sale.order_line:
-                if line.product_id.tax_receipt_ok:
+                if line.product_id and line.product_id.tax_receipt_ok:
                     # there are not sale taxes on tax receipts
                     total += line.product_uom_qty * line.price_unit *\
                         (1 - (line.discount or 0.0) / 100.0)
-            sale_currency = sale.currency_id.with_context(date=sale.date_order)
-            total_cc = sale_currency.compute(
-                total, sale.company_id.currency_id)
+            total_cc = sale.currency_id._convert(
+                total, sale.company_id.currency_id, sale.company_id, sale.date_order or fields.Date.context_today(self))
             sale.tax_receipt_total = total_cc
 
     @api.onchange('partner_id')
     def donation_sale_change(self):
         if self.partner_id:
-            self.tax_receipt_option = self.partner_id.tax_receipt_option
+            self.tax_receipt_option = self.partner_id.commercial_partner_id.tax_receipt_option
         else:
             self.tax_receipt_option = False
 
@@ -61,7 +56,7 @@ class SaleOrder(models.Model):
         res = {}
         if (
                 self.partner_id and
-                self.partner_id.tax_receipt_option == 'annual' and
+                self.partner_id.commercial_partner_id.tax_receipt_option == 'annual' and
                 self.tax_receipt_option != 'annual'):
             res = {
                 'warning': {
@@ -74,9 +69,8 @@ class SaleOrder(models.Model):
             self.tax_receipt_option = 'annual'
         return res
 
-    @api.multi
     def _prepare_invoice(self):
-        vals = super(SaleOrder, self)._prepare_invoice()
+        vals = super()._prepare_invoice()
         vals['tax_receipt_option'] = self.tax_receipt_option
         return vals
 
@@ -86,9 +80,7 @@ class SaleOrderLine(models.Model):
 
     tax_receipt_ok = fields.Boolean(
         related='product_id.tax_receipt_ok',
-        readonly=True,
         store=True,
-        compute_sudo=True
     )
     # We don't handle in_kind donations via donation_sale for the moment
     # in_kind = fields.Boolean(
@@ -98,8 +90,8 @@ class SaleOrderLine(models.Model):
     @api.constrains('product_id', 'tax_id')
     def donation_sale_line_check(self):
         for line in self:
-            if line.product_id.tax_receipt_ok and line.tax_id:
+            if line.product_id and line.product_id.tax_receipt_ok and line.tax_id:
                 raise ValidationError(_(
                     "On the sale order '%s', the sale order line '%s' "
-                    "has a donation product, so it should not have taxes")
+                    "has a donation product, so it should not have taxes.")
                     % (line.order_id.name, line.name))
