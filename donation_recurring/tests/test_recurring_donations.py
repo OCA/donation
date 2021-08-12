@@ -1,4 +1,4 @@
-# Copyright 2016-2018 Akretion France
+# Copyright 2016-2021 Akretion France (http://www.akretion.com/)
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
@@ -14,26 +14,26 @@ class TestDonationRecurring(TransactionCase):
     at_install = False
     post_install = True
 
-    def _load(self, module, *args):
-        tools.convert_file(
-            self.cr, module, get_resource_path(module, *args),
-            {}, 'init', False, 'test', self.registry._assertion_report)
-
     def setUp(self):
-        super(TestDonationRecurring, self).setUp()
-        self._load('account', 'test', 'account_minimal_test.xml')
-
-        self.bank_journal = self.env.ref('account.bank_journal')
+        super().setUp()
+        self.bank_journal = self.env['account.journal'].create({
+            'type': 'bank',
+            'name': 'test bank journal',
+            })
+        self.payment_mode = self.env['account.payment.mode'].create({
+            'name': 'test_payment_mode',
+            'bank_account_link': 'fixed',
+            'fixed_journal_id': self.bank_journal.id,
+            'payment_method_id': self.env.ref('account.account_payment_method_manual_in').id,
+            })
         self.product = self.env.ref(
             'donation_base.product_product_donation')
-        self.inkind_product = self.env.ref(
-            'donation_base.product_product_inkind_donation')
         self.ddo = self.env['donation.donation']
         self.don_rec1 = self.ddo.create({
             'check_total': 30,
             'partner_id': self.env.ref('donation_recurring.donor_rec1').id,
             'donation_date': time.strftime('%Y-01-01'),
-            'journal_id': self.bank_journal.id,
+            'payment_mode_id': self.payment_mode.id,
             'tax_receipt_option': 'annual',
             'recurring_template': 'active',
             'line_ids': [(0, 0, {
@@ -46,7 +46,7 @@ class TestDonationRecurring(TransactionCase):
             'check_total': 25,
             'partner_id': self.env.ref('donation_recurring.donor_rec2').id,
             'donation_date': time.strftime('%Y-01-01'),
-            'journal_id': self.bank_journal.id,
+            'payment_mode_id': self.payment_mode.id,
             'tax_receipt_option': 'annual',
             'recurring_template': 'active',
             'line_ids': [(0, 0, {
@@ -59,7 +59,7 @@ class TestDonationRecurring(TransactionCase):
             'check_total': 35,
             'partner_id': self.env.ref('donation_recurring.donor_rec3').id,
             'donation_date': time.strftime('%Y-01-01'),
-            'journal_id': self.bank_journal.id,
+            'payment_mode_id': self.payment_mode.id,
             'tax_receipt_option': 'annual',
             'recurring_template': 'suspended',
             'line_ids': [(0, 0, {
@@ -77,11 +77,11 @@ class TestDonationRecurring(TransactionCase):
         for don_rec in active_don_recs:
             self.assertTrue(don_rec.recurring_donation_ids)
             don = don_rec.recurring_donation_ids[0]
-            self.assertEquals(don.state, 'draft')
-            self.assertEquals(
+            self.assertEqual(don.state, 'draft')
+            self.assertEqual(
                 don.payment_ref,
                 'Don Abbaye Sainte Madeleine')
-            self.assertEquals(don.campaign_id, don_rec.campaign_id)
+            self.assertEqual(don.campaign_id, don_rec.campaign_id)
         self.assertFalse(self.don_rec3.recurring_donation_ids)
         active_ids = action['domain'][0][2]
         wizard_val = self.env['donation.validate'].with_context(
