@@ -299,10 +299,10 @@ class DonationTaxReceipt(models.Model):
                 tax_receipt_annual_dict[partner] = {
                     'amount': tax_receipt_amount,
                     'extra_vals': {
-                        'donation_ids': [(6, 0, [invoice.id])]},
+                        'invoice_ids': [(6, 0, [invoice.id])]},
                     }
             else:
                 tax_receipt_annual_dict[partner]['amount'] +=\
                     tax_receipt_amount
                 tax_receipt_annual_dict[partner]['extra_vals'][
-                    'donation_ids'][0][2].append(invoice.id)
+                    'invoice_ids'][0][2].append(invoice.id)
