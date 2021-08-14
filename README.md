@@ -31,21 +31,21 @@ how to configure and use the modules.
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[donation](donation/) | 9.0.1.0.0 | Manage donations
-[donation_bank_statement](donation_bank_statement/) | 9.0.1.0.0 | Creates donation from unreconciled bank statement lines
-[donation_base](donation_base/) | 9.0.1.0.0 | Base module for donations
-[donation_direct_debit](donation_direct_debit/) | 9.0.1.0.0 | Auto-generate direct debit order on donation validation
-[donation_recurring](donation_recurring/) | 9.0.1.0.0 | Manage recurring donations
-[donation_sale](donation_sale/) | 9.0.1.0.0 | Manage donations in sale orders
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[donation](donation/) | 9.0.1.0.0 |  | Manage donations
+[donation_bank_statement](donation_bank_statement/) | 9.0.1.0.0 |  | Creates donation from unreconciled bank statement lines
+[donation_base](donation_base/) | 9.0.1.0.0 |  | Base module for donations
+[donation_direct_debit](donation_direct_debit/) | 9.0.1.0.0 |  | Auto-generate direct debit order on donation validation
+[donation_recurring](donation_recurring/) | 9.0.1.0.0 |  | Manage recurring donations
+[donation_sale](donation_sale/) | 9.0.1.0.0 |  | Manage donations in sale orders
 
 
 Unported addons
 ---------------
-addon | version | summary
---- | --- | ---
-[donation_thanks](donation_thanks/) | 9.0.1.0.0 (unported) | Create thanks letter for a donation
-[product_analytic_donation](product_analytic_donation/) | 9.0.1.0.0 (unported) | Glue module between donation and product_analytic
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[donation_thanks](donation_thanks/) | 9.0.1.0.0 (unported) |  | Create thanks letter for a donation
+[product_analytic_donation](product_analytic_donation/) | 9.0.1.0.0 (unported) |  | Glue module between donation and product_analytic
 
 [//]: # (end addons)
