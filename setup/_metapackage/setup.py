@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-donation Odoo addons",
     version=version,
     install_requires=[
+        'odoo13-addon-donation',
         'odoo13-addon-donation_base',
     ],
     classifiers=[
