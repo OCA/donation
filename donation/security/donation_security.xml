@@ -47,6 +47,13 @@
             <field name="domain_force">
                 [('company_id', 'in', company_ids)]</field>
         </record>
+        <record id="donation_line_company_rule" model="ir.rule">
+            <field name="name">Donation Line Multi-company</field>
+            <field name="model_id" ref="model_donation_line" />
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]</field>
+        </record>
+
         <record id="donation_report_company_rule" model="ir.rule">
             <field name="name">Donation Report Multi-company</field>
             <field name="model_id" ref="model_donation_report" />

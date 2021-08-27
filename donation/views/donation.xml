@@ -59,6 +59,7 @@
                     />
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box" />
                     <div class="oe_title">
                         <h1>
                             <field name="number" readonly="1" />
@@ -295,7 +296,7 @@
                     name="donation_id"
                     invisible="not context.get('donation_line_main_view')"
                 />
-                <field name="product_id" />
+                <field name="product_id" context="{'default_donation': True}"/>
                 <field name="quantity" />
                 <field name="unit_price" />
                 <field
@@ -306,6 +307,7 @@
                 <field name="tax_receipt_ok" string="Tax Receipt" optional="show" />
                 <field name="in_kind" optional="hide" />
                 <field name="currency_id" invisible="1" />
+                <field name="company_id" invisible="1" />
             </tree>
         </field>
     </record>
@@ -332,6 +334,7 @@
                     <field name="in_kind" />
                     <field name="currency_id" invisible="1" />
                     <field name="company_currency_id" invisible="1" />
+                    <field name="company_id" invisible="1" />
                 </group>
             </form>
         </field>
