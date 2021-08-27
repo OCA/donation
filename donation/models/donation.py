@@ -322,11 +322,13 @@ class DonationDonation(models.Model):
                 continue
             if self.currency_id.is_zero(line.amount):
                 continue
-            account = line.with_company(
-                self.company_id.id
-            ).product_id._get_product_accounts()["income"]
-            account_id = account.id
-            analytic_account_id = line.get_analytic_account_id()
+            account_id = line._get_account_id()
+            if not account_id:
+                raise UserError(
+                    _("Failed to get account for donation line with product '%s'.")
+                    % line.product_id.display_name
+                )
+            analytic_account_id = line._get_analytic_account_id()
             aml[(account_id, analytic_account_id)] += line.amount
 
         if not aml:
@@ -672,6 +674,7 @@ class DonationLine(models.Model):
     _name = "donation.line"
     _description = "Donation Lines"
     _rec_name = "product_id"
+    _check_company_auto = True
 
     @api.depends(
         "unit_price",
@@ -704,6 +707,7 @@ class DonationLine(models.Model):
         "res.currency",
         related="donation_id.currency_id",
     )
+    company_id = fields.Many2one(related="donation_id.company_id", store=True)
     company_currency_id = fields.Many2one(
         "res.currency",
         related="donation_id.company_id.currency_id",
@@ -715,6 +719,7 @@ class DonationLine(models.Model):
         required=True,
         domain=[("donation", "=", True)],
         ondelete="restrict",
+        check_company=True,
     )
     quantity = fields.Integer("Quantity", default=1)
     unit_price = fields.Monetary(string="Unit Price", currency_field="currency_id")
@@ -737,7 +742,10 @@ class DonationLine(models.Model):
         store=True,
     )
     analytic_account_id = fields.Many2one(
-        "account.analytic.account", "Analytic Account", ondelete="restrict"
+        "account.analytic.account",
+        "Analytic Account",
+        ondelete="restrict",
+        check_company=True,
     )
     sequence = fields.Integer("Sequence")
     # for the fields tax_receipt_ok and in_kind, we made an important change
@@ -760,6 +768,15 @@ class DonationLine(models.Model):
                 # We should change that one day...
                 line.unit_price = line.product_id.list_price
 
-    @api.model
-    def get_analytic_account_id(self):
+    def _get_analytic_account_id(self):
+        # Method designed to be inherited in custom module
+        self.ensure_one()
         return self.analytic_account_id.id or False
+
+    def _get_account_id(self):
+        # Method designed to be inherited (in donation_mass for example)
+        self.ensure_one()
+        account = self.with_company(
+            self.company_id.id
+        ).product_id._get_product_accounts()["income"]
+        return account.id
