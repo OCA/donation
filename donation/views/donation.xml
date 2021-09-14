@@ -296,7 +296,7 @@
                     name="donation_id"
                     invisible="not context.get('donation_line_main_view')"
                 />
-                <field name="product_id" context="{'default_donation': True}"/>
+                <field name="product_id" context="{'default_donation': True}" />
                 <field name="quantity" />
                 <field name="unit_price" />
                 <field
