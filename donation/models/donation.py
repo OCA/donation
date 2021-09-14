@@ -244,6 +244,14 @@ class DonationDonation(models.Model):
         copy=False,
     )
 
+    _sql_constraints = [
+        (
+            "bank_statement_line_uniq",
+            "unique(bank_statement_line_id)",
+            "A donation already exists for this bank statement line.",
+        )
+    ]
+
     @api.model
     def create(self, vals):
         if "company_id" in vals:
