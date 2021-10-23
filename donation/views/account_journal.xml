@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+
+<record id="view_account_journal_form" model="ir.ui.view">
+    <field name="name">donation.account.journal.form</field>
+    <field name="model">account.journal</field>
+    <field name="inherit_id" ref="account.view_account_journal_form" />
+    <field name="arch" type="xml">
+        <field name="payment_debit_account_id" position="after">
+            <field
+                    name="donation_account_id"
+                    attrs="{'invisible': [('type', '!=', 'bank')]}"
+                />
+        </field>
+    </field>
+</record>
+
+
+</odoo>
