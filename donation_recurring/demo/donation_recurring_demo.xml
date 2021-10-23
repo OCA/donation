@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2014-2021 Barroux Abbey (http://www.barroux.org)
+  Copyright 2014-2021 Akretion France (http://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo noupdate="1">
+
+    <record id="donor_rec1" model="res.partner">
+        <field name="name">Emilie Legrand</field>
+        <field name="donor_rank" eval="1" />
+        <field name="street">24 chemin des oliviers</field>
+        <field name="zip">74210</field>
+        <field name="city">Seythenex</field>
+        <field name="country_id" ref="base.fr" />
+        <field name="email">emilie.legrand@laposte.example.com</field>
+        <field name="tax_receipt_option">annual</field>
+    </record>
+
+    <record id="donor_rec2" model="res.partner">
+        <field name="name">Marie Durand</field>
+        <field name="donor_rank" eval="1" />
+        <field name="street">9 avenue du Général de Lattre</field>
+        <field name="zip">75017</field>
+        <field name="city">Paris</field>
+        <field name="country_id" ref="base.fr" />
+        <field name="email">marie.durand@free.example.com</field>
+        <field name="tax_receipt_option">annual</field>
+    </record>
+
+    <record id="donor_rec3" model="res.partner">
+        <field name="name">Olivier Dumesnil</field>
+        <field name="donor_rank" eval="1" />
+        <field name="street">9 avenue Foch</field>
+        <field name="zip">92400</field>
+        <field name="city">Courbevoie</field>
+        <field name="country_id" ref="base.fr" />
+        <field name="email">olivier.dumesnil@free.example.com</field>
+        <field name="tax_receipt_option">annual</field>
+    </record>
+
+</odoo>
