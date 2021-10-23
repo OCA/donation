@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo14-addon-donation',
         'odoo14-addon-donation_base',
         'odoo14-addon-donation_recurring',
+        'odoo14-addon-donation_sale',
     ],
     classifiers=[
         'Programming Language :: Python',
