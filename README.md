@@ -22,6 +22,7 @@ addon | version | maintainers | summary
 [donation](donation/) | 14.0.1.0.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Manage donations
 [donation_base](donation_base/) | 14.0.1.0.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Base module for donations
 [donation_recurring](donation_recurring/) | 14.0.1.0.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Manage recurring donations
+[donation_sale](donation_sale/) | 14.0.1.0.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Manage donations in sale orders
 
 [//]: # (end addons)
 
