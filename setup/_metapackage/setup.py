@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo14-addon-donation',
         'odoo14-addon-donation_base',
+        'odoo14-addon-donation_recurring',
     ],
     classifiers=[
         'Programming Language :: Python',
