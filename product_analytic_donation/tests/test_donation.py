@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Tecnativa - Luis Martínez
+# Copyright 2017-2021 Tecnativa - Luis Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase
@@ -25,17 +24,21 @@ class TestDonationLine(TransactionCase):
             'name': 'Test journal',
             'code': 'TEST',
             'type': 'bank'})
-        self.account_type = self.env['account.account.type'].create({
-            'name': 'Test account type',
-            'type': 'other'})
-        self.account = self.env['account.account'].create({
-            'name': 'Test account',
-            'code': 'TEST',
-            'user_type_id': self.account_type.id})
+        self.payment_mode = self.env["account.payment.mode"].create(
+            {
+                "name": "test_payment_mode",
+                "donation": True,
+                "bank_account_link": "fixed",
+                "fixed_journal_id": self.journal.id,
+                "payment_method_id": self.env.ref(
+                    "account.account_payment_method_manual_in"
+                ).id,
+            }
+        )
         self.donation = self.env['donation.donation'].create({
             'partner_id': self.env.ref('donation_base.donor1').id,
-            'donation_date': '2017-07-21',
-            'journal_id': self.journal.id,
+            'donation_date': '2021-07-21',
+            'payment_mode_id': self.payment_mode.id,
             'line_ids': [
                 (0, 0, {
                     'quantity': 1,
@@ -57,7 +60,7 @@ class TestDonationLine(TransactionCase):
         donation2 = self.env['donation.donation'].create({
             'partner_id': self.env.ref('donation_base.donor1').id,
             'donation_date': '2017-07-20',
-            'journal_id': self.journal.id,
+            'payment_mode_id': self.payment_mode.id,
             'line_ids': [
                 (0, 0, {
                     'quantity': 1,
