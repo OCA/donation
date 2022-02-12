@@ -20,6 +20,11 @@ class DonationDonation(models.Model):
         'account.bank.statement.line',
         string='Source Bank Statement Line', ondelete='restrict')
 
+    _sql_constraints = [(
+        'bank_statement_line_uniq',
+        'unique(bank_statement_line_id)',
+        'A donation already exists for this bank statement line.')]
+
     def validate(self):
         res = super(DonationDonation, self).validate()
         for donation in self:
