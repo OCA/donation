@@ -25,22 +25,22 @@ class DonationDonation(models.Model):
                 total += line_total
                 if line.tax_receipt_ok:
                     tax_receipt_total += line_total
-
+            date = donation.donation_date or fields.Date.context_today(self)
             donation.amount_total = total
             donation_currency =\
-                donation.currency_id.with_context(date=donation.donation_date)
+                donation.currency_id.with_context(date=date)
             company_currency = donation.company_currency_id
             total_company_currency = donation_currency._convert(
                 total,
                 company_currency,
                 donation.company_id,
-                donation.donation_date
+                date,
             )
             tax_receipt_total_cc = donation_currency._convert(
                 tax_receipt_total,
                 company_currency,
                 donation.company_id,
-                donation.donation_date
+                date,
             )
             donation.amount_total_company_currency = total_company_currency
             donation.tax_receipt_total = tax_receipt_total_cc
