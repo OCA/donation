@@ -664,7 +664,7 @@ class DonationDonation(models.Model):
         self.ensure_one()
         self.write({"thanks_printed": True})
         action = (
-            self.env.ref("donation.report_thanks")
+            self.env.ref("donation.report_donation_thanks")
             .with_context({"discard_logo_check": True})
             .report_action(self)
         )

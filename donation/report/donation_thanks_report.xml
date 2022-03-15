@@ -8,7 +8,7 @@
 <odoo>
 
 
-<record id="report_thanks" model="ir.actions.report">
+<record id="report_donation_thanks" model="ir.actions.report">
     <field name="name">Thanks Letter</field>
     <field name="model">donation.donation</field>
     <field name="report_name">donation.report_thanks</field>
