@@ -52,7 +52,7 @@ msgstr ""
 
 #. module: donation_base
 #: model:ir.actions.report,print_report_name:donation_base.report_donation_tax_receipt
-msgid "'Fiscal_receipt-'+(object.number or '').replace('/','')+'.pdf'"
+msgid "'Fiscal_receipt-'+(object.number or '').replace('/','')"
 msgstr ""
 
 #. module: donation_base
