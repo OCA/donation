@@ -14,7 +14,7 @@
         <field name="report_file">donation_base.report_donationtaxreceipt</field>
         <field
             name="print_report_name"
-        >'Fiscal_receipt-'+(object.number or '').replace('/','')+'.pdf'</field>
+        >'Fiscal_receipt-'+(object.number or '').replace('/','')</field>
         <field name="binding_model_id" ref="model_donation_tax_receipt" />
         <field name="attachment_use" eval="True" />
         <field name="binding_type">report</field>
