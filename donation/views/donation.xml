@@ -156,6 +156,16 @@
                         groups="donation.group_donation_user"
                         invisible="context.get('recurring_view')"
                     />
+                        <button
+                        name="thanks_printed_button"
+                        type="object"
+                        string="Mark as Thanks Printed"
+                        groups="donation.group_donation_user"
+                        invisible="context.get('recurring_view')"
+                        confirm="Mark all selected donation as Thanks Printed?"
+                    />
+                        <!-- Unfortunately, confirm="" doesn't work for
+                            buttons in tree view... at least not in v14 -->
                     </header>
                 <field name="number" invisible="context.get('recurring_view')" />
                 <field name="partner_id" invisible="context.get('partner_view')" />
@@ -174,6 +184,7 @@
                 />
                 <field name="campaign_id" optional="show" />
                 <field name="thanks_template_id" optional="hide" />
+                <field name="thanks_printed" optional="hide" />
                 <field name="payment_ref" optional="hide" />
                 <field
                     name="company_id"
@@ -394,6 +405,7 @@
         id="donation_products"
         action="donation_product_action"
         parent="donation_config_menu"
+        sequence="20"
     />
     <menuitem
         id="donation_tax_title_menu"
