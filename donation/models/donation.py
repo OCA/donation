@@ -306,7 +306,7 @@ class DonationDonation(models.Model):
 
     def _prepare_donation_move(self):
         self.ensure_one()
-        if not self.payment_mode_id.donation:
+        if not self.bank_statement_line_id and not self.payment_mode_id.donation:
             raise UserError(
                 _(
                     "The payment mode '%s' selected on donation %s "
