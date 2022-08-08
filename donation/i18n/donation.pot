@@ -702,6 +702,16 @@ msgid "Manager"
 msgstr ""
 
 #. module: donation
+#: model_terms:ir.ui.view,arch_db:donation.donation_tree
+msgid "Mark all selected donation as Thanks Printed?"
+msgstr ""
+
+#. module: donation
+#: model_terms:ir.ui.view,arch_db:donation.donation_tree
+msgid "Mark as Thanks Printed"
+msgstr ""
+
+#. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_has_error
 msgid "Message Delivery error"
 msgstr ""
@@ -950,6 +960,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:donation.field_donation_line__sequence
 #: model:ir.model.fields,field_description:donation.field_donation_thanks_template__sequence
 msgid "Sequence"
+msgstr ""
+
+#. module: donation
+#: model:ir.actions.act_window,name:donation.donation_settings_action
+#: model:ir.ui.menu,name:donation.donation_settings_menu
+msgid "Settings"
 msgstr ""
 
 #. module: donation
