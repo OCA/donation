@@ -161,14 +161,15 @@ class DonationDonation(models.Model):
         "account.payment.mode",
         string="Payment Mode",
         domain="[('company_id', '=', company_id), ('donation', '=', True)]",
-        copy=False,
         tracking=True,
         check_company=True,
         states={"done": [("readonly", True)]},
         default=lambda self: self.env.user.context_donation_payment_mode_id,
     )
     payment_ref = fields.Char(
-        string="Payment Reference", states={"done": [("readonly", True)]}
+        string="Payment Reference",
+        states={"done": [("readonly", True)]},
+        copy=False,
     )
     state = fields.Selection(
         [("draft", "Draft"), ("done", "Done"), ("cancel", "Cancelled")],
@@ -305,7 +306,7 @@ class DonationDonation(models.Model):
 
     def _prepare_donation_move(self):
         self.ensure_one()
-        if not self.payment_mode_id.donation:
+        if not self.bank_statement_line_id and not self.payment_mode_id.donation:
             raise UserError(
                 _(
                     "The payment mode '%s' selected on donation %s "
@@ -669,6 +670,9 @@ class DonationDonation(models.Model):
             .report_action(self)
         )
         return action
+
+    def thanks_printed_button(self):
+        self.write({"thanks_printed": True})
 
     @api.model
     def auto_install_l10n(self):

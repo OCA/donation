@@ -4,7 +4,7 @@
 
 import time
 
-from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
 from odoo.tests.common import TransactionCase
 
 
@@ -104,6 +104,7 @@ class TestDonationRecurring(TransactionCase):
         )
         action = wizard.generate()
         active_don_recs = self.don_rec1 + self.don_rec2
+        regular_donation_ids = action["domain"][0][2]
         for don_rec in active_don_recs:
             self.assertTrue(don_rec.recurring_donation_ids)
             don = don_rec.recurring_donation_ids[0]
@@ -111,12 +112,28 @@ class TestDonationRecurring(TransactionCase):
             self.assertEqual(don.payment_ref, "Don Abbaye Sainte Madeleine")
             self.assertEqual(don.campaign_id, don_rec.campaign_id)
         self.assertFalse(self.don_rec3.recurring_donation_ids)
-        active_ids = action["domain"][0][2]
-        wizard_val = (
+        # Validate the donations generated from the recurring donations templates
+        validate_wizard = (
             self.env["donation.validate"]
-            .with_context(active_ids=active_ids, active_model="donation.donation")
+            .with_context(
+                active_ids=regular_donation_ids, active_model="donation.donation"
+            )
             .create({})
         )
-        with self.assertRaises(UserError):
-            wizard_val.run()
+        validate_wizard.run()
+        for don_rec in active_don_recs:
+            self.assertTrue(don_rec.recurring_donation_ids)
+            don = don_rec.recurring_donation_ids[0]
+            self.assertEqual(don.state, "done")
+        # Check that recurring donation templates cannot be validated
+        donation_template_ids = (self.don_rec1 + self.don_rec2 + self.don_rec3).ids
+        validate_wizard_donation_template = (
+            self.env["donation.validate"]
+            .with_context(
+                active_ids=donation_template_ids, active_model="donation.donation"
+            )
+            .create({})
+        )
+        with self.assertRaises(ValidationError):
+            validate_wizard_donation_template.run()
         self.don_rec1.recurring_template_change()

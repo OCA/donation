@@ -37,7 +37,7 @@ class DonationDonation(models.Model):
         for donation in self:
             if donation.recurring_template and donation.state != "draft":
                 raise ValidationError(
-                    _("The recurring donation template %s must stay in " "draft state.")
+                    _("The recurring donation template %s must stay in draft state.")
                     % donation.number
                 )
             if donation.source_recurring_id and donation.recurring_template:
@@ -79,8 +79,7 @@ class DonationDonation(models.Model):
             res["warning"]["message"] = _(
                 "As it is a recurring donation, "
                 "the Tax Receipt Option has been changed from Each to "
-                "Annual. You may want to change it also on the Donor "
-                "form."
+                "Annual. You may want to change it also on the Donor form."
             )
         if not self.recurring_template and self.commercial_partner_id:
             if self.commercial_partner_id.tax_receipt_option != self.tax_receipt_option:
