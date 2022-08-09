@@ -301,6 +301,7 @@ class DonationDonation(models.Model):
             "partner_id": self.commercial_partner_id.id,
             "currency_id": self.currency_id.id,
             "amount_currency": total_currency,
+            "name": self.number,
         }
         return vals
 
@@ -347,7 +348,7 @@ class DonationDonation(models.Model):
             "company_id": self.company_id.id,
             "journal_id": journal.id,
             "date": self.donation_date,
-            "ref": self.payment_ref or self.number,
+            "ref": self.payment_ref,
             "line_ids": [],
         }
 
@@ -375,6 +376,7 @@ class DonationDonation(models.Model):
                         "partner_id": self.commercial_partner_id.id,
                         "currency_id": self.currency_id.id,
                         "amount_currency": -amount,
+                        "name": self.number,
                     },
                 )
             )
@@ -580,7 +582,7 @@ class DonationDonation(models.Model):
                 )
             if donation.move_id:
                 donation.move_id.button_cancel()
-                donation.move_id.unlink()
+                donation.with_context(force_delete=True).move_id.unlink()
             donation.write({"state": "cancel"})
             donation.partner_id._update_donor_rank()
 
