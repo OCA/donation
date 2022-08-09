@@ -162,9 +162,8 @@ class TestDonation(TransactionCase):
                 self.assertFalse(donation.move_id)
             else:
                 self.assertEqual(donation.move_id.state, "posted")
-                self.assertEqual(
-                    donation.payment_ref or donation.number, donation.move_id.ref
-                )
+                self.assertEqual(donation.payment_ref, donation.move_id.ref)
+                self.assertEqual(donation.number, donation.move_id.line_ids[0].name)
                 self.assertEqual(
                     donation.payment_mode_id.fixed_journal_id,
                     donation.move_id.journal_id,
