@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_pos_config_form" model="ir.ui.view">
+        <field name="name">pos.config.form (in donation_pos)</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <h2>Donation</h2>
+                <div class="row mt16 o_settings_container" id="donation">
+                    <div class="col-12 col-lg-6 o_setting_box" id="auto_donation">
+                        <div class="o_setting_left_pane">
+                            <field name="use_auto_contribution" />
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="use_auto_contribution" />
+                            <div class="text-muted">
+                                Automatically add donation to order.
+                            </div>
+
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label string="Default Donation Product" for="default_donation_product_id" class="col-lg-3 o_light_label" />
+                                    <field name="default_donation_product_id" domain="[('donation', '=', True)]" options="{'no_create_edit': True}" />
+                                </div>
+                            </div>
+
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label string="Auto Contribution Mode" for="auto_contribution_mode" class="col-lg-3 o_light_label" widget="selection" />
+                                    <field name="auto_contribution_mode" />
+                                </div>
+                            </div>
+
+                            <div class="content-group" attrs="{'invisible' : [('use_auto_contribution', '=', False)]}">
+                                <div class="row mt16">
+                                    <label string="Add contribution to order total" for="suggested_contribution_add_to_total" class="col-lg-3 o_light_label" />
+                                    <field name="suggested_contribution_add_to_total" />
+                                </div>
+                            </div>
+
+                            <div class="content-group" attrs="{'invisible' : ['|', ('use_auto_contribution', '=', False), ('suggested_contribution_add_to_total', '=', False)]}">
+                                <div class="row mt16">
+                                    <label string="Display subtotal without donation?" for="display_subtotal_without_donation" class="col-lg-3 o_light_label" />
+                                    <field name="display_subtotal_without_donation" />
+                                </div>
+                            </div>
+
+                            <div class="content-group" attrs="{'invisible' : ['|', ('use_auto_contribution', '=', False), ('auto_contribution_mode', '=', False)]}">
+                                <div class="row mt16" attrs="{'invisible' : [('auto_contribution_mode', '!=', 'fixed')]}">
+                                    <label class="col-lg-3 o_light_label" for="contribution_default_fixed_value" />
+                                    <field name="contribution_default_fixed_value" />
+                                </div>
+                            </div>
+
+                            <div class="content-group" attrs="{'invisible' : ['|', ('use_auto_contribution', '=', False), ('auto_contribution_mode', '=', False)]}">
+                                <div class="row mt16" attrs="{'invisible' : [('auto_contribution_mode', '!=', 'percentage')]}">
+                                    <label class="col-lg-3 o_light_label" for="contribution_default_percentage_value" />
+                                    <field name="contribution_default_percentage_value" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

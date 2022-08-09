@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates id="template" inherit_id="point_of_sale.template">
+
+  <t t-extend="OrderWidget">
+    <t t-jquery=".subentry" t-operation="after">
+      <t t-if='widget.pos.config.display_subtotal_without_donation and widget.pos.config.use_auto_contribution'>
+        <div class='donation_subtotal subentry'>Subtotal w.o. Donation: <span class="value">0.00€</span></div>
+      </t>
+      <div class='donation subentry'>Donation: <span class="value">0.00€</span></div>
+    </t>
+  </t>
+
+  <t t-extend="PaymentScreenWidget">
+    <t t-jquery=".payment-buttons" t-operation="append">
+      <t t-if='widget.pos.config.default_donation_product_id'>
+        <div class='button js_donation'>
+          <i class='fa fa-heart' /> Donation
+        </div>
+      </t>
+    </t>
+  </t>
+
+</templates>
