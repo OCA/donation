@@ -15,11 +15,9 @@ class DonationTaxReceipt(models.Model):
     _rec_name = "number"
 
     number = fields.Char(string="Receipt Number")
-    date = fields.Date(
-        string="Date", required=True, default=fields.Date.context_today, index=True
-    )
-    donation_date = fields.Date(string="Donation Date")
-    amount = fields.Monetary(string="Amount", currency_field="currency_id")
+    date = fields.Date(required=True, default=fields.Date.context_today, index=True)
+    donation_date = fields.Date()
+    amount = fields.Monetary(currency_field="currency_id")
     currency_id = fields.Many2one(
         "res.currency",
         string="Currency",
@@ -41,10 +39,9 @@ class DonationTaxReceipt(models.Model):
         required=True,
         default=lambda self: self.env.company,
     )
-    print_date = fields.Date(string="Print Date")
+    print_date = fields.Date()
     type = fields.Selection(
         [("each", "One-Time Tax Receipt"), ("annual", "Annual Tax Receipt")],
-        string="Type",
         required=True,
     )
 
