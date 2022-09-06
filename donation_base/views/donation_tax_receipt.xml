@@ -51,7 +51,7 @@
         <field name="name">donation.tax.receipt.tree</field>
         <field name="model">donation.tax.receipt</field>
         <field name="arch" type="xml">
-            <tree string="Donation Tax Receipt">
+            <tree>
                 <field name="number" />
                 <field name="partner_id" />
                 <field name="date" />
