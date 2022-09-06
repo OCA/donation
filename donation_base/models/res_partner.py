@@ -15,7 +15,6 @@ class ResPartner(models.Model):
             ("each", "For Each Donation"),
             ("annual", "Annual Tax Receipt"),
         ],
-        string="Tax Receipt Option",
         default="each",
         tracking=True,
     )

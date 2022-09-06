@@ -26,11 +26,9 @@ class TaxReceiptAnnualCreate(models.TransientModel):
         return datetime.date(fields.Date.context_today(self).year - 1, 1, 1)
 
     start_date = fields.Date(
-        "Start Date", required=True, default=lambda self: self._default_start_date()
+        required=True, default=lambda self: self._default_start_date()
     )
-    end_date = fields.Date(
-        "End Date", required=True, default=lambda self: self._default_end_date()
-    )
+    end_date = fields.Date(required=True, default=lambda self: self._default_end_date())
     company_id = fields.Many2one(
         "res.company",
         string="Company",
@@ -84,13 +82,11 @@ class TaxReceiptAnnualCreate(models.TransientModel):
                 existing_receipt = existing_annual_receipts_dict[partner]
                 raise UserError(
                     _(
-                        "The Donor '%s' already has an annual tax receipt "
-                        "in this timeframe: %s dated %s."
-                    )
-                    % (
-                        partner.display_name,
-                        existing_receipt.number,
-                        format_date(self.env, existing_receipt.date),
+                        "The Donor '%(partner)s' already has an annual tax receipt "
+                        "in this timeframe: %(receipt)s dated %(number)s.",
+                        partner=partner.display_name,
+                        receipt=existing_receipt.number,
+                        date=format_date(self.env, existing_receipt.date),
                     )
                 )
             vals = self._prepare_annual_tax_receipt(partner, partner_dict)
