@@ -22,7 +22,7 @@ class ProductTemplate(models.Model):
     def _donation_change(self):
         for product in self:
             if product.donation and not product.in_kind_donation:
-                product.type = "service"
+                product.detailed_type = "service"
                 product.taxes_id = False
                 product.supplier_taxes_id = False
                 product.purchase_ok = False
@@ -73,7 +73,7 @@ class ProductProduct(models.Model):
     def _donation_change(self):
         for product in self:
             if product.donation and not product.in_kind_donation:
-                product.type = "service"
+                product.detailed_type = "service"
                 product.taxes_id = False
                 product.supplier_taxes_id = False
                 product.purchase_ok = False

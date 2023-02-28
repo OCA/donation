@@ -10,7 +10,7 @@
         <field name="name">donation.tax.receipt.form</field>
         <field name="model">donation.tax.receipt</field>
         <field name="arch" type="xml">
-            <form string="Donation Tax Receipt">
+            <form>
                 <header>
                     <button
                         name="action_send_tax_receipt"
@@ -18,7 +18,11 @@
                         string="Send by Email"
                         class="btn-primary"
                     />
-                    <button name="action_print" type="object" string="Print" />
+                    <button
+                        name="%(report_donation_tax_receipt)d"
+                        type="action"
+                        string="Print"
+                    />
                 </header>
                 <sheet>
                     <group name="main">
@@ -52,7 +56,7 @@
         <field name="model">donation.tax.receipt</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="number" />
+                <field name="number" decoration-bf="1" />
                 <field name="partner_id" />
                 <field name="date" />
                 <field name="donation_date" optional="hide" />
@@ -78,9 +82,18 @@
         <field name="name">donation.tax.receipt.search</field>
         <field name="model">donation.tax.receipt</field>
         <field name="arch" type="xml">
-            <search string="Search Donation Tax Receipts">
+            <search>
                 <field name="number" />
                 <field name="partner_id" />
+                <separator />
+                <filter string="Date" name="date" date="date" />
+                <separator />
+                <filter
+                    string="Donation Date"
+                    name="donation_date"
+                    date="donation_date"
+                />
+                <separator />
                 <filter
                     name="each"
                     string="One-Time Tax Receipts"
@@ -92,6 +105,11 @@
                     domain="[('type', '=', 'annual')]"
                 />
                 <group string="Group By" name="groupby">
+                    <filter
+                        name="date_groupby"
+                        string="Date"
+                        context="{'group_by': 'date'}"
+                    />
                     <filter
                         name="donation_date_groupby"
                         string="Donation Date"
@@ -115,7 +133,7 @@
         <field name="name">donation.tax.receipt.graph</field>
         <field name="model">donation.tax.receipt</field>
         <field name="arch" type="xml">
-            <graph string="Donation Tax Receipts">
+            <graph>
                 <field name="date" />
                 <field name="amount" type="measure" />
             </graph>
@@ -125,7 +143,7 @@
         <field name="name">donation.tax.receipt.pivot</field>
         <field name="model">donation.tax.receipt</field>
         <field name="arch" type="xml">
-            <pivot string="Donation Tax Receipts">
+            <pivot>
                 <field name="date" type="row" />
                 <field name="type" type="col" />
                 <field name="amount" type="measure" />
