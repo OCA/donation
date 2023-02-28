@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_donation_tax_receipt_full,Full access on donation.tax.receipt to Config grp,model_donation_tax_receipt,base.group_system,1,1,1,1
+access_donation_tax_receipt_account_full,Full access on donation.tax.receipt to Accounting Manager,model_donation_tax_receipt,account.group_account_manager,1,1,1,1
+access_donation_tax_receipt_account_invoice,Create access on donation.tax.receipt to Billing group,model_donation_tax_receipt,account.group_account_invoice,1,0,1,0
+access_donation_tax_receipt_account_readonly,Readonly access on donation.tax.receipt to Auditor group,model_donation_tax_receipt,account.group_account_readonly,1,0,0,0
+access_donation_tax_receipt_print,Donation tax receipt print wizard,model_donation_tax_receipt_print,account.group_account_invoice,1,1,1,1
+access_tax_receipt_annual_create,Donation tax receipt annual create wizard,model_tax_receipt_annual_create,account.group_account_invoice,1,1,1,1
