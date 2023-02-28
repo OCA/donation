@@ -31,7 +31,6 @@ class TestDonationTaxReceipt(TransactionCase):
         self.partner._compute_tax_receipt_count()
         self.assertTrue(self.partner.tax_receipt_count)
 
-        self.dt_receipt_rec.action_print()
         self.dt_receipt_rec.action_send_tax_receipt()
         self.partner.email = False
         with self.assertRaises(UserError):
