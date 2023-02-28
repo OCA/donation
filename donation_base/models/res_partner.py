@@ -22,7 +22,8 @@ class ResPartner(models.Model):
         "donation.tax.receipt", "partner_id", string="Tax Receipts"
     )
     tax_receipt_count = fields.Integer(
-        compute="_compute_tax_receipt_count", string="# of Tax Receipts", readonly=True
+        compute="_compute_tax_receipt_count",
+        string="# of Tax Receipts",
     )
     donor_rank = fields.Integer(default=0)
 
