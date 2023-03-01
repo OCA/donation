@@ -173,9 +173,6 @@ msgstr "Fecha:"
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__display_name
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print__display_name
-#: model:ir.model.fields,field_description:donation_base.field_product_product__display_name
-#: model:ir.model.fields,field_description:donation_base.field_product_template__display_name
-#: model:ir.model.fields,field_description:donation_base.field_res_partner__display_name
 #: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
@@ -202,9 +199,13 @@ msgstr "Fecha del donativo"
 #. module: donation_base
 #: model:ir.actions.report,name:donation_base.report_donation_tax_receipt
 #: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_form
-#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_tree
 #: model_terms:ir.ui.view,arch_db:donation_base.report_donationtaxreceipt_document
 msgid "Donation Tax Receipt"
+msgstr ""
+
+#. module: donation_base
+#: model:mail.template,name:donation_base.tax_receipt_email_template
+msgid "Donation Tax Receipt - Send by Email"
 msgstr ""
 
 #. module: donation_base
@@ -253,11 +254,6 @@ msgid "Followers"
 msgstr ""
 
 #. module: donation_base
-#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_channel_ids
-msgid "Followers (Channels)"
-msgstr ""
-
-#. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_partner_ids
 msgid "Followers (Partners)"
 msgstr ""
@@ -289,11 +285,13 @@ msgid "Group By"
 msgstr "Agrupar por"
 
 #. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__id
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print__id
-#: model:ir.model.fields,field_description:donation_base.field_product_product__id
-#: model:ir.model.fields,field_description:donation_base.field_product_template__id
-#: model:ir.model.fields,field_description:donation_base.field_res_partner__id
 #: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create__id
 msgid "ID"
 msgstr "ID"
@@ -354,9 +352,6 @@ msgstr "Es un donativo"
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt____last_update
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print____last_update
-#: model:ir.model.fields,field_description:donation_base.field_product_product____last_update
-#: model:ir.model.fields,field_description:donation_base.field_product_template____last_update
-#: model:ir.model.fields,field_description:donation_base.field_res_partner____last_update
 #: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create____last_update
 msgid "Last Modified on"
 msgstr "Última modificación el"
@@ -576,8 +571,8 @@ msgstr "Recibos de impuestos"
 #: code:addons/donation_base/wizard/tax_receipt_annual_create.py:0
 #, python-format
 msgid ""
-"The Donor '%s' already has an annual tax receipt in this timeframe: %s dated "
-"%s."
+"The Donor '%(partner)s' already has an annual tax receipt in this timeframe: "
+"%(receipt)s dated %(number)s."
 msgstr ""
 
 #. module: donation_base
@@ -609,18 +604,18 @@ msgid "There shouldn't have any Customer Taxes on the donation product '%s'."
 msgstr ""
 
 #. module: donation_base
-#: model:product.product,description:donation_base.product_product_donation
-#: model:product.product,description:donation_base.product_product_inkind_donation
-#: model:product.template,description:donation_base.product_product_donation_product_template
-#: model:product.template,description:donation_base.product_product_inkind_donation_product_template
+#: model_terms:product.product,description:donation_base.product_product_donation
+#: model_terms:product.product,description:donation_base.product_product_inkind_donation
+#: model_terms:product.template,description:donation_base.product_product_donation_product_template
+#: model_terms:product.template,description:donation_base.product_product_inkind_donation_product_template
 msgid "This donation item is eligible for a tax receipt."
 msgstr ""
 
 #. module: donation_base
-#: model:product.product,description:donation_base.product_product_donation_notaxreceipt
-#: model:product.product,description:donation_base.product_product_inkind_donation_notaxreceipt
-#: model:product.template,description:donation_base.product_product_donation_notaxreceipt_product_template
-#: model:product.template,description:donation_base.product_product_inkind_donation_notaxreceipt_product_template
+#: model_terms:product.product,description:donation_base.product_product_donation_notaxreceipt
+#: model_terms:product.product,description:donation_base.product_product_inkind_donation_notaxreceipt
+#: model_terms:product.template,description:donation_base.product_product_donation_notaxreceipt_product_template
+#: model_terms:product.template,description:donation_base.product_product_inkind_donation_notaxreceipt_product_template
 msgid "This donation item is not eligible for a tax receipt."
 msgstr ""
 
