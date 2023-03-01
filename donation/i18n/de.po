@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2019-01-26 15:41+0000\n"
-"Last-Translator: kempleton <kimdoelling@gmail.com>\n"
+"PO-Revision-Date: 2023-03-01 09:51+0000\n"
+"Last-Translator: Ben Brich <b.brich@humanilog.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.3\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_account_bank_statement__donation_count
@@ -33,7 +33,7 @@ msgstr ""
 #. module: donation
 #: model:ir.model.constraint,message:donation.constraint_donation_campaign_code_company_uniq
 msgid "A campaign with the same code already exists!"
-msgstr ""
+msgstr "Es existiert bereits eine Kampagne mit dem gleichen Code!"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:0
@@ -53,7 +53,7 @@ msgstr ""
 #. module: donation
 #: model:ir.model.constraint,message:donation.constraint_donation_donation_bank_statement_line_uniq
 msgid "A donation already exists for this bank statement line."
-msgstr ""
+msgstr "Es gibt bereits eine Spende für diese Bankauszugszeile."
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__move_id
@@ -74,7 +74,7 @@ msgstr ""
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Aktivitäten"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_exception_decoration
@@ -84,7 +84,7 @@ msgstr ""
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Status Aktivität"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_type_icon
@@ -129,7 +129,7 @@ msgstr "Sammelspendenbescheinigung"
 #: model_terms:ir.ui.view,arch_db:donation.donation_thanks_template_form
 #: model_terms:ir.ui.view,arch_db:donation.donation_thanks_template_search
 msgid "Archived"
-msgstr ""
+msgstr "Archiviert"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_attachment_count
@@ -175,19 +175,21 @@ msgstr "Abgebrochen"
 #: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Cannot validate donation %s because it doesn't have any lines!"
-msgstr ""
+msgstr "Spende %s kann nicht bestätigt werden, da sie keine Zielen enthält!"
 
 #. module: donation
 #: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Cannot validate donation %s because it is not in draft state."
 msgstr ""
+"Spende %s kann nicht bestätigt werden da sie sich nicht im Entwurfsstatus "
+"befindet."
 
 #. module: donation
 #: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Cannot validate donation %s because the total amount is 0!"
-msgstr ""
+msgstr "Spende %s kann nicht bestätigt werden, da der Betrag 0 ist!"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_report__product_categ_id
@@ -223,7 +225,7 @@ msgstr "Code für eine Spendenkampagne"
 #. module: donation
 #: model:ir.model,name:donation.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__company_id
@@ -256,7 +258,7 @@ msgstr "Konfiguration"
 #. module: donation
 #: model:ir.model,name:donation.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__country_id
@@ -430,22 +432,22 @@ msgstr "Spendenbescheinigung"
 #. module: donation
 #: model:ir.model,name:donation.model_donation_thanks_template
 msgid "Donation Thanks Letter Template"
-msgstr ""
+msgstr "Vorlage Dankesbrief"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_thanks_template_form
 msgid "Donation Thanks Template"
-msgstr ""
+msgstr "Vorlage Dankesbrief"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_thanks_template_tree
 msgid "Donation Thanks Templates"
-msgstr ""
+msgstr "Vorlagen Dankesbriefe"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_account_journal__donation_account_id
 msgid "Donation by Credit Transfer Account"
-msgstr ""
+msgstr "Spenden per Überweisung"
 
 #. module: donation
 #: code:addons/donation/models/account_payment_mode.py:0
