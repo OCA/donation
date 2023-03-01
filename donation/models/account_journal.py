@@ -15,8 +15,7 @@ class AccountJournal(models.Model):
         ondelete="restrict",
         domain="[('reconcile', '=', True), ('deprecated', '=', False), "
         "('company_id', '=', company_id), "
-        "('id', 'not in', (default_account_id, suspense_account_id, "
-        "payment_credit_account_id, payment_debit_account_id))]",
+        "('id', 'not in', (default_account_id, suspense_account_id))]",
         string="Donation by Credit Transfer Account",
         help="Transfer account for donations received by credit transfer. "
         "Leave empty if you don't receive donations on this bank account.",

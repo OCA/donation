@@ -7,7 +7,7 @@ import logging
 
 from odoo import _, fields, models
 from odoo.exceptions import UserError
-from odoo.tools.misc import format_date
+from odoo.tools.misc import format_amount, format_date
 
 logger = logging.getLogger(__name__)
 
@@ -115,32 +115,37 @@ class AccountBankStatement(models.Model):
                             raise UserError(
                                 _(
                                     "Missing partner on bank statement line "
-                                    "'%s' dated %s with amount %s."
+                                    "'%(payment_ref)s' dated %(date)s with "
+                                    "amount %(amount)s.",
+                                    payment_ref=stline.payment_ref,
+                                    date=format_date(self.env, stline.date),
+                                    amount=format_amount(
+                                        self.env, stline.amount, stline.currency_id
+                                    ),
                                 )
-                                % (stline.payment_ref, stline.date, stline.amount)
                             )
                         vals = self._prepare_donation_vals(stline, mline, payment_mode)
                         donation = ddo.create(vals)
                         self.message_post(
                             body=_(
                                 "Donation <a href=# data-oe-model=donation.donation "
-                                "data-oe-id=%d>%s</a> dated %s created for partner "
+                                "data-oe-id=%(donation_id)d>%(donation)s</a> "
+                                "dated %(date)s created for partner "
                                 "<a href=# data-oe-model=res.partner "
-                                "data-oe-id=%d>%s</a>."
-                            )
-                            % (
-                                donation.id,
-                                donation.number,
-                                format_date(self.env, donation.donation_date),
-                                donation.partner_id.id,
-                                donation.partner_id.display_name,
+                                "data-oe-id=%(partner_id)d>%(partner_name)s</a>.",
+                                donation_id=donation.id,
+                                donation=donation.display_name,
+                                date=format_date(self.env, donation.donation_date),
+                                partner_id=donation.partner_id.id,
+                                partner_name=donation.partner_id.display_name,
                             )
                         )
 
     def button_validate(self):
-        super().button_validate()
+        res = super().button_validate()
         for stmt in self:
             stmt.create_donations()
+        return res
 
     def show_donations(self):
         action = self.env.ref("donation.donation_action").sudo().read([])[0]
