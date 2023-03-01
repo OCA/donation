@@ -12,7 +12,6 @@ class DonationDonation(models.Model):
 
     recurring_template = fields.Selection(
         [("active", "Active"), ("suspended", "Suspended")],
-        string="Recurring Template",
         copy=False,
         index=True,
         tracking=True,
