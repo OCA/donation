@@ -17,17 +17,17 @@ class DonationCampaign(models.Model):
         for camp in self:
             name = camp.name
             if camp.code:
-                name = "[{}] {}".format(camp.code, name)
+                name = "[%s] %s" % (camp.code, name)
             res.append((camp.id, name))
         return res
 
     active = fields.Boolean(default=True)
     sequence = fields.Integer(default=10)
-    code = fields.Char("Code")
-    name = fields.Char("Name", required=True)
-    start_date = fields.Date("Start Date", default=fields.Date.context_today)
+    code = fields.Char()
+    name = fields.Char(required=True)
+    start_date = fields.Date(default=fields.Date.context_today)
     # company_id is NOT required, it is empty by default
-    company_id = fields.Many2one("res.company", string="Company", ondelete="cascade")
+    company_id = fields.Many2one("res.company", ondelete="cascade")
     note = fields.Text("Notes")
 
     _sql_constraints = [

@@ -10,7 +10,6 @@ class AccountPaymentMode(models.Model):
     _inherit = "account.payment.mode"
 
     donation = fields.Boolean(
-        string="Donation",
         help="If enabled, this payment mode will be available on donations",
     )
 
