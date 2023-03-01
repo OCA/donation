@@ -14,29 +14,25 @@ class DonationReport(models.Model):
     _rec_name = "donation_date"
     _order = "donation_date desc"
 
-    donation_date = fields.Date("Donation Date", readonly=True)
-    product_id = fields.Many2one("product.product", "Product", readonly=True)
+    donation_date = fields.Date(readonly=True)
+    product_id = fields.Many2one("product.product", readonly=True)
     partner_id = fields.Many2one("res.partner", "Donor", readonly=True)
     country_id = fields.Many2one("res.country", "Partner Country", readonly=True)
-    company_id = fields.Many2one("res.company", "Company", readonly=True)
+    company_id = fields.Many2one("res.company", readonly=True)
     product_categ_id = fields.Many2one(
         "product.category", "Category of Product", readonly=True
     )
     campaign_id = fields.Many2one(
         "donation.campaign", "Donation Campaign", readonly=True
     )
-    payment_mode_id = fields.Many2one(
-        "account.payment.mode", string="Payment Mode", readonly=True
-    )
-    thanks_printed = fields.Boolean(string="Thanks Printed", readonly=True)
+    payment_mode_id = fields.Many2one("account.payment.mode", readonly=True)
+    thanks_printed = fields.Boolean(readonly=True)
     thanks_template_id = fields.Many2one(
         "donation.thanks.template", string="Thanks Template", readonly=True
     )
-    in_kind = fields.Boolean("In Kind")
+    in_kind = fields.Boolean()
     tax_receipt_ok = fields.Boolean("Eligible for a Tax Receipt")
-    company_currency_id = fields.Many2one(
-        "res.currency", string="Company Currency", readonly=True
-    )
+    company_currency_id = fields.Many2one("res.currency", readonly=True)
     amount_company_currency = fields.Monetary(
         "Amount", readonly=True, currency_field="company_currency_id"
     )

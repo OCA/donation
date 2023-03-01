@@ -10,7 +10,7 @@
         <field name="name">donation.form</field>
         <field name="model">donation.donation</field>
         <field name="arch" type="xml">
-            <form string="Donation">
+            <form>
                 <header>
                     <button
                         type="object"
@@ -88,6 +88,7 @@
                             <field name="thanks_template_id" widget="selection" />
                         </group>
                         <group name="auto">
+                            <field name="company_id" invisible="1" />
                             <field
                                 name="company_id"
                                 groups="base.group_multi_company"
@@ -147,7 +148,7 @@
         <field name="name">donation.tree</field>
         <field name="model">donation.donation</field>
         <field name="arch" type="xml">
-            <tree string="Donation">
+            <tree>
                 <header>
                         <button
                         name="%(donation_validate_action)d"
@@ -167,7 +168,11 @@
                         <!-- Unfortunately, confirm="" doesn't work for
                             buttons in tree view... at least not in v14 -->
                     </header>
-                <field name="number" invisible="context.get('recurring_view')" />
+                <field
+                    name="number"
+                    invisible="context.get('recurring_view')"
+                    decoration-bf="1"
+                />
                 <field name="partner_id" invisible="context.get('partner_view')" />
                 <field name="donation_date" />
                 <field name="amount_total_company_currency" sum="1" />
@@ -206,9 +211,11 @@
         <field name="name">donation.search</field>
         <field name="model">donation.donation</field>
         <field name="arch" type="xml">
-            <search string="Search Donations">
+            <search>
                 <field name="number" />
                 <field name="partner_id" />
+                <separator />
+                <filter string="Date" name="donation_date" date="donation_date" />
                 <separator />
                 <filter
                     name="draft"
@@ -281,7 +288,7 @@
         <field name="name">donation.graph</field>
         <field name="model">donation.donation</field>
         <field name="arch" type="xml">
-            <graph string="Donations">
+            <graph>
                 <field name="donation_date" type="row" />
                 <field name="amount_total_company_currency" type="measure" />
             </graph>
@@ -291,7 +298,7 @@
         <field name="name">donation.pivot</field>
         <field name="model">donation.donation</field>
         <field name="arch" type="xml">
-            <pivot string="Donations">
+            <pivot>
                 <field name="donation_date" type="row" />
                 <field name="amount_total_company_currency" type="measure" />
             </pivot>
@@ -301,7 +308,7 @@
         <field name="name">donation.line.tree</field>
         <field name="model">donation.line</field>
         <field name="arch" type="xml">
-            <tree string="Donation Line" editable="bottom">
+            <tree editable="bottom">
                 <field name="sequence" widget="handle" />
                 <field
                     name="donation_id"
@@ -311,7 +318,8 @@
                 <field name="quantity" />
                 <field name="unit_price" />
                 <field
-                    name="analytic_account_id"
+                    name="analytic_distribution"
+                    widget="analytic_distribution"
                     groups="analytic.group_analytic_accounting"
                 />
                 <field name="amount" />
@@ -326,7 +334,7 @@
         <field name="name">donation.line.form</field>
         <field name="model">donation.line</field>
         <field name="arch" type="xml">
-            <form string="Donation Line">
+            <form>
                 <group name="main">
                     <field
                         name="donation_id"
@@ -336,7 +344,8 @@
                     <field name="quantity" />
                     <field name="unit_price" />
                     <field
-                        name="analytic_account_id"
+                        name="analytic_distribution"
+                        widget="analytic_distribution"
                         groups="analytic.group_analytic_accounting"
                     />
                     <field name="amount" />

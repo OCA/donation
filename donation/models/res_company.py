@@ -24,8 +24,9 @@ class ResCompany(models.Model):
             if product and not product.donation:
                 raise ValidationError(
                     _(
-                        "On the company %s, the Product for Donations "
-                        "via Credit Transfer (%s) is not a donation product !"
+                        "On the company %(company)s, the Product for Donations "
+                        "via Credit Transfer (%(product)s) is not a donation product !",
+                        company=company.display_name,
+                        product=product.display_name,
                     )
-                    % (company.display_name, product.display_name)
                 )

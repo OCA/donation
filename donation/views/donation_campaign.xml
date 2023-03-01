@@ -10,14 +10,15 @@
         <field name="name">donation.campaign.form</field>
         <field name="model">donation.campaign</field>
         <field name="arch" type="xml">
-            <form string="Donation Campaign">
-                    <widget
-                    name="web_ribbon"
-                    title="Archived"
-                    bg_color="bg-danger"
-                    attrs="{'invisible': [('active', '=', True)]}"
-                />
+            <form>
                     <sheet>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+
                 <group name="main">
                     <field name="name" />
                     <field name="code" />
@@ -25,6 +26,7 @@
                     <field name="start_date" />
                     <field name="note" />
                     <field name="active" invisible="1" />
+                    <field name="company_id" invisible="1" />
                 </group>
         </sheet>
             </form>
@@ -34,7 +36,7 @@
         <field name="name">donation.campaign.tree</field>
         <field name="model">donation.campaign</field>
         <field name="arch" type="xml">
-            <tree string="Donation Campaigns">
+            <tree>
                 <field name="sequence" widget="handle" />
                 <field name="code" optional="show" />
                 <field name="name" />
