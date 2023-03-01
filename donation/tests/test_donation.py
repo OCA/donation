@@ -163,7 +163,6 @@ class TestDonation(TransactionCase):
             else:
                 self.assertEqual(donation.move_id.state, "posted")
                 self.assertEqual(donation.payment_ref, donation.move_id.ref)
-                self.assertEqual(donation.number, donation.move_id.line_ids[0].name)
                 self.assertEqual(
                     donation.payment_mode_id.fixed_journal_id,
                     donation.move_id.journal_id,
@@ -284,11 +283,9 @@ class TestDonation(TransactionCase):
 
         self.validate = self.env["donation.validate"]
         wizard = self.validate.with_context(
-            {
-                "active_ids": self.don8.ids,
-                "active_model": "donation.donation",
-                "active_id": self.don8.id,
-            }
+            active_ids=self.don8.ids,
+            active_model="donation.donation",
+            active_id=self.don8.id,
         ).create({})
         wizard.run()
 

@@ -13,7 +13,7 @@
         <field name="arch" type="xml">
             <group name="main" position="after">
                 <group name="donations" string="Related Donations">
-                    <field name="donation_ids" nolabel="1" />
+                    <field name="donation_ids" nolabel="1" colspan="2" />
                 </group>
             </group>
         </field>
