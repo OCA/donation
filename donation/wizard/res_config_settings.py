@@ -11,3 +11,7 @@ class ResConfigSettings(models.TransientModel):
     donation_credit_transfer_product_id = fields.Many2one(
         related="company_id.donation_credit_transfer_product_id", readonly=False
     )
+    group_donation_check_total = fields.Boolean(
+        string="Check Total on Donations",
+        implied_group="donation.group_donation_check_total",
+    )
