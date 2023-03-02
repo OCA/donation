@@ -9,8 +9,6 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.misc import format_amount
 
-from odoo.addons.account import _auto_install_l10n
-
 logger = logging.getLogger(__name__)
 
 
@@ -20,47 +18,6 @@ class DonationDonation(models.Model):
     _description = "Donation"
     _order = "id desc"
     _check_company_auto = True
-
-    @api.depends(
-        "line_ids.unit_price",
-        "line_ids.quantity",
-        "line_ids.product_id",
-        "donation_date",
-        "currency_id",
-        "company_id",
-    )
-    def _compute_total(self):
-        for donation in self:
-            total = tax_receipt_total = 0.0
-            for line in donation.line_ids:
-                line_total = line.quantity * line.unit_price
-                total += line_total
-                if line.tax_receipt_ok:
-                    tax_receipt_total += line_total
-
-            date = donation.donation_date or fields.Date.context_today(self)
-            donation.amount_total = total
-            donation_currency = donation.currency_id
-            company_currency = donation.company_id.currency_id
-            total_company_currency = donation_currency._convert(
-                total, company_currency, donation.company_id, date
-            )
-            tax_receipt_total_cc = donation_currency._convert(
-                tax_receipt_total,
-                company_currency,
-                donation.company_id,
-                date,
-            )
-            donation.amount_total_company_currency = total_company_currency
-            donation.tax_receipt_total = tax_receipt_total_cc
-
-    # We don't want a depends on partner_id.country_id, because if the partner
-    # moves to another country, we want to keep the old country for
-    # past donations to have good statistics
-    @api.depends("partner_id")
-    def _compute_country_id(self):
-        for donation in self:
-            donation.country_id = donation.partner_id.country_id
 
     currency_id = fields.Many2one(
         "res.currency",
@@ -86,15 +43,10 @@ class DonationDonation(models.Model):
         index=True,
     )
     # country_id is here to have stats per country
-    # WARNING : I can't put a related field, because when someone
-    # writes on the country_id of a partner, it will trigger a write
-    # on all it's donations, including donations in other companies
-    # which will be blocked by the record rule
     country_id = fields.Many2one(
         "res.country",
         compute="_compute_country_id",
         store=True,
-        readonly=True,
     )
     check_total = fields.Monetary(
         string="Check Amount",
@@ -106,7 +58,6 @@ class DonationDonation(models.Model):
         compute="_compute_total",
         currency_field="currency_id",
         store=True,
-        readonly=True,
         tracking=True,
     )
     amount_total_company_currency = fields.Monetary(
@@ -114,7 +65,6 @@ class DonationDonation(models.Model):
         string="Amount Total in Company Currency",
         currency_field="company_currency_id",
         store=True,
-        readonly=True,
     )
     donation_date = fields.Date(
         required=True,
@@ -198,9 +148,13 @@ class DonationDonation(models.Model):
             ("each", "For Each Donation"),
             ("annual", "Annual Tax Receipt"),
         ],
+        compute="_compute_tax_receipt_option",
         states={"done": [("readonly", True)]},
         index=True,
         tracking=True,
+        precompute=True,
+        store=True,
+        readonly=False,
     )
     tax_receipt_total = fields.Monetary(
         compute="_compute_total",
@@ -240,6 +194,47 @@ class DonationDonation(models.Model):
             "A donation already exists for this bank statement line.",
         )
     ]
+
+    @api.depends(
+        "line_ids.unit_price",
+        "line_ids.quantity",
+        "line_ids.product_id",
+        "donation_date",
+        "currency_id",
+        "company_id",
+    )
+    def _compute_total(self):
+        for donation in self:
+            total = tax_receipt_total = 0.0
+            for line in donation.line_ids:
+                line_total = line.quantity * line.unit_price
+                total += line_total
+                if line.tax_receipt_ok:
+                    tax_receipt_total += line_total
+
+            date = donation.donation_date or fields.Date.context_today(self)
+            donation.amount_total = total
+            donation_currency = donation.currency_id
+            company_currency = donation.company_id.currency_id
+            total_company_currency = donation_currency._convert(
+                total, company_currency, donation.company_id, date
+            )
+            tax_receipt_total_cc = donation_currency._convert(
+                tax_receipt_total,
+                company_currency,
+                donation.company_id,
+                date,
+            )
+            donation.amount_total_company_currency = total_company_currency
+            donation.tax_receipt_total = tax_receipt_total_cc
+
+    # We don't want a depends on partner_id.country_id, because if the partner
+    # moves to another country, we want to keep the old country for
+    # past donations to have good statistics
+    @api.depends("partner_id")
+    def _compute_country_id(self):
+        for donation in self:
+            donation.country_id = donation.partner_id.country_id
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -634,11 +629,13 @@ class DonationDonation(models.Model):
             res.append((donation.id, name))
         return res
 
-    @api.onchange("partner_id")
-    def partner_id_change(self):
-        if self.partner_id:
-            self.tax_receipt_option = (
-                self.partner_id.commercial_partner_id.tax_receipt_option
+    @api.depends("partner_id")
+    def _compute_tax_receipt_option(self):
+        for donation in self:
+            donation.tax_receipt_option = (
+                donation.partner_id
+                and donation.partner_id.commercial_partner_id.tax_receipt_option
+                or False
             )
 
     @api.onchange("tax_receipt_option")
@@ -658,7 +655,7 @@ class DonationDonation(models.Model):
                 },
             }
             self.tax_receipt_option = "annual"
-        return res
+            return res
 
     def print_thanks(self):
         self.ensure_one()
@@ -673,13 +670,6 @@ class DonationDonation(models.Model):
     def thanks_printed_button(self):
         self.write({"thanks_printed": True})
 
-    @api.model
-    def auto_install_l10n(self):
-        """Helper function for calling a method that is not accessible directly
-        from XML data.
-        """
-        _auto_install_l10n(self.env.cr, None)
-
 
 class DonationLine(models.Model):
     _name = "donation.line"
@@ -688,42 +678,16 @@ class DonationLine(models.Model):
     _inherit = "analytic.mixin"
     _check_company_auto = True
 
-    @api.depends(
-        "unit_price",
-        "quantity",
-        "product_id",
-        "donation_id.currency_id",
-        "donation_id.donation_date",
-        "donation_id.company_id",
-    )
-    def _compute_amount(self):
-        for line in self:
-            amount = line.quantity * line.unit_price
-            line.amount = amount
-            donation_currency = line.donation_id.currency_id
-            date = line.donation_id.donation_date or fields.Date.context_today(self)
-            amount_company_currency = donation_currency._convert(
-                amount,
-                line.donation_id.company_id.currency_id,
-                line.donation_id.company_id,
-                date,
-            )
-            tax_receipt_amount_cc = 0.0
-            if line.product_id.tax_receipt_ok:
-                tax_receipt_amount_cc = amount_company_currency
-            line.amount_company_currency = amount_company_currency
-            line.tax_receipt_amount = tax_receipt_amount_cc
-
     donation_id = fields.Many2one("donation.donation", ondelete="cascade")
     currency_id = fields.Many2one(
-        "res.currency",
         related="donation_id.currency_id",
+        store=True,
     )
     company_id = fields.Many2one(related="donation_id.company_id", store=True)
     company_currency_id = fields.Many2one(
-        "res.currency",
         related="donation_id.company_id.currency_id",
         string="Company Currency",
+        store=True,
     )
     product_id = fields.Many2one(
         "product.product",
@@ -764,6 +728,32 @@ class DonationLine(models.Model):
         store=True,
         string="In Kind",
     )
+
+    @api.depends(
+        "unit_price",
+        "quantity",
+        "product_id",
+        "donation_id.currency_id",
+        "donation_id.donation_date",
+        "donation_id.company_id",
+    )
+    def _compute_amount(self):
+        for line in self:
+            amount = line.quantity * line.unit_price
+            line.amount = amount
+            donation_currency = line.donation_id.currency_id
+            date = line.donation_id.donation_date or fields.Date.context_today(self)
+            amount_company_currency = donation_currency._convert(
+                amount,
+                line.donation_id.company_id.currency_id,
+                line.donation_id.company_id,
+                date,
+            )
+            tax_receipt_amount_cc = 0.0
+            if line.product_id.tax_receipt_ok:
+                tax_receipt_amount_cc = amount_company_currency
+            line.amount_company_currency = amount_company_currency
+            line.tax_receipt_amount = tax_receipt_amount_cc
 
     @api.onchange("product_id")
     def product_id_change(self):
