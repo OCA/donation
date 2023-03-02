@@ -36,6 +36,11 @@
                         context="{'group_by': 'company_id'}"
                     />
                     <filter
+                        name="product_categ_groupby"
+                        string="Product Category"
+                        context="{'group_by': 'product_categ_id'}"
+                    />
+                    <filter
                         name="product_groupby"
                         string="Product"
                         context="{'group_by': 'product_id'}"
@@ -49,11 +54,6 @@
                         name="in_kind_groupby"
                         string="In Kind"
                         context="{'group_by': 'in_kind'}"
-                    />
-                    <filter
-                        name="product_categ_groupby"
-                        string="Product Category"
-                        context="{'group_by': 'product_categ_id'}"
                     />
                     <filter
                         name="campaign_groupby"
@@ -97,18 +97,25 @@
         <field name="model">donation.report</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="partner_id" />
-                <field name="donation_date" />
-                <field name="country_id" />
-                <field name="payment_mode_id" />
-                <field name="campaign_id" />
-                <field name="product_id" />
-                <field name="tax_receipt_ok" />
-                <field name="in_kind" />
-                <field name="tax_receipt_amount" sum="True" />
-                <field name="amount_company_currency" sum="True" />
+                <field name="partner_id" optional="show" />
+                <field name="donation_date" optional="show" />
+                <field name="country_id" optional="hide" />
+                <field name="payment_mode_id" optional="show" />
+                <field name="campaign_id" optional="hide" />
+                <field name="product_categ_id" optional="hide" />
+                <field name="product_id" optional="show" />
+                <field name="tax_receipt_ok" optional="show" />
+                <field name="in_kind" optional="show" />
+                <field name="thanks_printed" optional="hide" />
+                <field name="thanks_template_id" optional="hide" />
+                <field name="tax_receipt_amount" sum="1" optional="show" />
+                <field name="amount_company_currency" sum="1" />
                 <field name="company_currency_id" invisible="1" />
-                <field name="company_id" groups="base.group_multi_company" />
+                <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    optional="show"
+                />
             </tree>
         </field>
     </record>
