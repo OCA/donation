@@ -85,6 +85,6 @@
         id="donation_campaign_menu"
         action="donation_campaign_action"
         parent="donation_config_menu"
-        sequence="30"
+        sequence="40"
     />
 </odoo>
