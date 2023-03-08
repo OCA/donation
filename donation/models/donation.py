@@ -293,6 +293,7 @@ class DonationDonation(models.Model):
             "currency_id": self.currency_id.id,
             "amount_currency": total_currency,
             "name": self.number,
+            "display_type": "payment_term",
         }
         return vals
 
@@ -451,7 +452,7 @@ class DonationDonation(models.Model):
                 # when we have a full in-kind donation: no account move
                 if move_vals:
                     move = self.env["account.move"].create(move_vals)
-                    move.action_post()
+                    move.with_context(validate_analytic=True)._post(soft=False)
                     vals["move_id"] = move.id
             else:
                 donation.message_post(
