@@ -47,6 +47,16 @@ class DonationTaxReceipt(models.Model):
         string="Type",
         required=True,
     )
+    state = fields.Selection(
+        selection=[
+            ("draft", "Draft"),
+            ("printed", "Printed"),
+            ("sent", "Sent"),
+        ],
+        string="State",
+        default="draft",
+        track_visibility="onchange",
+    )
 
     @api.model
     def create(self, vals):
@@ -67,6 +77,7 @@ class DonationTaxReceipt(models.Model):
 
     def action_send_tax_receipt(self):
         self.ensure_one()
+        self.state = "sent"
         if not self.partner_id.email:
             raise UserError(
                 _("Missing email on partner '%s'.") % self.partner_id.display_name
@@ -93,6 +104,11 @@ class DonationTaxReceipt(models.Model):
 
     def action_print(self):
         self.ensure_one()
+        self.state = "printed"
         return self.env.ref("donation_base.report_donation_tax_receipt").report_action(
             self
         )
+
+    def button_draft(self):
+        self.ensure_one()
+        self.state = "draft"

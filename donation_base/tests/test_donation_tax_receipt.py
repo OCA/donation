@@ -55,6 +55,15 @@ class TestDonationTaxReceipt(TransactionCase):
             self.product_id.product_tmpl_id.in_kind_donation = True
             self.product_id.product_tmpl_id.donation = False
 
+    def test_donation_check_state(self):
+        self.assertEqual(self.dt_receipt_rec.state, "draft")
+        self.dt_receipt_rec.action_print()
+        self.assertEqual(self.dt_receipt_rec.state, "printed")
+        self.dt_receipt_rec.action_send_tax_receipt()
+        self.assertEqual(self.dt_receipt_rec.state, "sent")
+        self.dt_receipt_rec.button_draft()
+        self.assertEqual(self.dt_receipt_rec.state, "draft")
+
 
 class TestTaxReceiptAnnualCreate(TransactionCase):
     def setUp(self):

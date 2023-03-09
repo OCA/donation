@@ -17,8 +17,25 @@
                         type="object"
                         string="Send by Email"
                         class="btn-primary"
+                        states="draft,printed"
                     />
-                    <button name="action_print" type="object" string="Print" />
+                    <button
+                        name="action_print"
+                        type="object"
+                        string="Print"
+                        states="draft"
+                    />
+                    <button
+                        name="button_draft"
+                        type="object"
+                        string="Reset"
+                        states="printed,sent"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,printed,sent"
+                    />
                 </header>
                 <sheet>
                     <group name="main">
