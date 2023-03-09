@@ -330,8 +330,8 @@ class DonationDonation(models.Model):
                 continue
             if self.currency_id.is_zero(line.amount):
                 continue
-            account_id = line._get_account_id()
-            if not account_id:
+            account = line._get_account()
+            if not account:
                 raise UserError(
                     _("Failed to get account for donation line with product '%s'.")
                     % line.product_id.display_name
@@ -361,7 +361,7 @@ class DonationDonation(models.Model):
                         "product_id": line.product_id.id,
                         "credit": credit,
                         "debit": debit,
-                        "account_id": account_id,
+                        "account_id": account.id,
                         "analytic_distribution": line.analytic_distribution,
                         "partner_id": self.commercial_partner_id.id,
                         "currency_id": self.currency_id.id,
@@ -756,6 +756,24 @@ class DonationLine(models.Model):
             line.amount_company_currency = amount_company_currency
             line.tax_receipt_amount = tax_receipt_amount_cc
 
+    @api.depends("product_id")
+    def _compute_analytic_distribution(self):
+        for line in self:
+            product = line.product_id
+            if product:
+                account = line._get_account()
+                distribution = self.env[
+                    "account.analytic.distribution.model"
+                ]._get_distribution(
+                    {
+                        "product_id": product.id,
+                        "product_categ_id": product.categ_id.id,
+                        "account_prefix": account and account.code or False,
+                        "company_id": line.donation_id.company_id.id,
+                    }
+                )
+                line.analytic_distribution = distribution or line.analytic_distribution
+
     @api.onchange("product_id")
     def product_id_change(self):
         for line in self:
@@ -763,10 +781,10 @@ class DonationLine(models.Model):
                 # We should change that one day...
                 line.unit_price = line.product_id.list_price
 
-    def _get_account_id(self):
+    def _get_account(self):
         # Method designed to be inherited (in donation_mass for example)
         self.ensure_one()
         account = self.with_company(
             self.company_id.id
         ).product_id._get_product_accounts()["income"]
-        return account.id
+        return account
