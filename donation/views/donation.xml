@@ -321,7 +321,7 @@
                     name="analytic_distribution"
                     widget="analytic_distribution"
                     groups="analytic.group_analytic_accounting"
-                    options="{'product_field': 'product_id'}"
+                    options="{'product_field': 'product_id', 'business_domain': 'donation'}"
                 />
                 <field name="amount" />
                 <field name="tax_receipt_ok" string="Tax Receipt" optional="show" />
