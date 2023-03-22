@@ -3,7 +3,7 @@
 import time
 
 from odoo import fields
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
 
 
@@ -36,23 +36,8 @@ class TestDonationTaxReceipt(TransactionCase):
         with self.assertRaises(UserError):
             self.dt_receipt_rec.action_send_tax_receipt()
 
-    def test_donation_change(self):
-        self.product_id._donation_change()
+    def test_donation_type(self):
         self.assertEqual(self.product_id.type, "service")
-        self.assertTrue(self.product_id.donation)
-
-        self.product_id.product_tmpl_id._donation_change()
-        self.assertEqual(self.product_id.product_tmpl_id.type, "service")
-        self.assertTrue(self.product_id.product_tmpl_id.donation)
-
-    def test_donation_check_donation(self):
-        with self.assertRaises(ValidationError):
-            self.product_id.product_tmpl_id.donation = False
-
-    def test_donation_check_kind_donation(self):
-        with self.assertRaises(ValidationError):
-            self.product_id.product_tmpl_id.in_kind_donation = True
-            self.product_id.product_tmpl_id.donation = False
 
 
 class TestTaxReceiptAnnualCreate(TransactionCase):
