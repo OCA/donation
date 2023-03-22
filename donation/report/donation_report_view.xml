@@ -46,6 +46,11 @@
                         context="{'group_by': 'product_id'}"
                     />
                     <filter
+                        name="product_detailed_type_groupby"
+                        string="Product Type"
+                        context="{'group_by': 'product_detailed_type'}"
+                    />
+                    <filter
                         name="tax_receipt_ok_groupby"
                         string="Eligible for a Tax Receipt"
                         context="{'group_by': 'tax_receipt_ok'}"
@@ -104,6 +109,7 @@
                 <field name="campaign_id" optional="hide" />
                 <field name="product_categ_id" optional="hide" />
                 <field name="product_id" optional="show" />
+                <field name="product_detailed_type" optional="hide" />
                 <field name="tax_receipt_ok" optional="show" />
                 <field name="in_kind" optional="show" />
                 <field name="thanks_printed" optional="hide" />
