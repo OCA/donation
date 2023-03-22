@@ -693,9 +693,12 @@ class DonationLine(models.Model):
     product_id = fields.Many2one(
         "product.product",
         required=True,
-        domain=[("donation", "=", True)],
+        domain=[("detailed_type", "like", "donation")],
         ondelete="restrict",
         check_company=True,
+    )
+    product_detailed_type = fields.Selection(
+        related="product_id.detailed_type", store=True, string="Product Type"
     )
     quantity = fields.Integer(default=1)
     unit_price = fields.Monetary(currency_field="currency_id")
@@ -725,10 +728,20 @@ class DonationLine(models.Model):
         store=True,
     )
     in_kind = fields.Boolean(
-        related="product_id.in_kind_donation",
+        compute="_compute_in_kind",
         store=True,
-        string="In Kind",
     )
+
+    @api.depends("product_id")
+    def _compute_in_kind(self):
+        for line in self:
+            in_kind = False
+            if (
+                line.product_id.detailed_type
+                and line.product_id.detailed_type.startswith("donation_in_kind")
+            ):
+                in_kind = True
+            line.in_kind = in_kind
 
     @api.depends(
         "unit_price",
@@ -761,7 +774,11 @@ class DonationLine(models.Model):
         for line in self:
             product = line.product_id
             if product:
-                account = line._get_account()
+                account = False
+                try:
+                    account = line._get_account()
+                except Exception:
+                    pass
                 distribution = self.env[
                     "account.analytic.distribution.model"
                 ]._get_distribution(
