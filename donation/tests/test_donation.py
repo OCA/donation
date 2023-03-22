@@ -199,7 +199,6 @@ class TestDonation(TransactionCase):
         )
         self.donation_id.name_get()
         self.donation_id.save_default_values()
-        self.donation_id.partner_id_change()
         self.donation_id.tax_receipt_option_change()
         self.donation_id.validate()
         self.donation_id.tax_receipt_id = False

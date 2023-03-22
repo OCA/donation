@@ -13,7 +13,7 @@ class ResCompany(models.Model):
     donation_credit_transfer_product_id = fields.Many2one(
         "product.product",
         string="Product for Donations via Credit Transfer",
-        domain=[("donation", "=", True)],
+        domain=[("detailed_type", "=", "donation")],
         ondelete="restrict",
     )
 
@@ -21,7 +21,7 @@ class ResCompany(models.Model):
     def company_donation_bank_statement_check(self):
         for company in self:
             product = company.donation_credit_transfer_product_id
-            if product and not product.donation:
+            if product and product.detailed_type != "donation":
                 raise ValidationError(
                     _(
                         "On the company %(company)s, the Product for Donations "
