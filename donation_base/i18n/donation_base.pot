@@ -51,6 +51,15 @@ msgid ""
 msgstr ""
 
 #. module: donation_base
+#: model:ir.model.fields,help:donation_base.field_product_product__detailed_type
+#: model:ir.model.fields,help:donation_base.field_product_template__detailed_type
+msgid ""
+"A storable product is a product for which you manage stock. The Inventory app has to be installed.\n"
+"A consumable product is a product for which stock is not managed.\n"
+"A service is a non-material product you provide."
+msgstr ""
+
+#. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_needaction
 msgid "Action Needed"
 msgstr ""
@@ -168,6 +177,7 @@ msgid "Display Name"
 msgstr ""
 
 #. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__product_template__detailed_type__donation
 #: model:product.template,name:donation_base.product_product_donation_product_template
 #: model_terms:ir.ui.view,arch_db:donation_base.product_template_search_view
 msgid "Donation"
@@ -303,8 +313,6 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: donation_base
-#: model:ir.model.fields,field_description:donation_base.field_product_product__in_kind_donation
-#: model:ir.model.fields,field_description:donation_base.field_product_template__in_kind_donation
 #: model:product.template,name:donation_base.product_product_inkind_donation_product_template
 msgid "In-Kind Donation"
 msgstr ""
@@ -312,6 +320,16 @@ msgstr ""
 #. module: donation_base
 #: model:product.template,name:donation_base.product_product_inkind_donation_notaxreceipt_product_template
 msgid "In-Kind Donation - no tax receipt"
+msgstr ""
+
+#. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__product_template__detailed_type__donation_in_kind_consu
+msgid "In-Kind Donation Consummable"
+msgstr ""
+
+#. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__product_template__detailed_type__donation_in_kind_service
+msgid "In-Kind Donation Service"
 msgstr ""
 
 #. module: donation_base
@@ -323,12 +341,6 @@ msgstr ""
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_is_follower
 msgid "Is Follower"
-msgstr ""
-
-#. module: donation_base
-#: model:ir.model.fields,field_description:donation_base.field_product_product__donation
-#: model:ir.model.fields,field_description:donation_base.field_product_template__donation
-msgid "Is a Donation"
 msgstr ""
 
 #. module: donation_base
@@ -482,6 +494,12 @@ msgid "Product"
 msgstr ""
 
 #. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_product_product__detailed_type
+#: model:ir.model.fields,field_description:donation_base.field_product_template__detailed_type
+msgid "Product Type"
+msgstr ""
+
+#. module: donation_base
 #: model:ir.model,name:donation_base.model_product_product
 msgid "Product Variant"
 msgstr ""
@@ -557,24 +575,6 @@ msgstr ""
 msgid ""
 "The Donor '%(partner)s' already has an annual tax receipt in this timeframe:"
 " %(receipt)s dated %(number)s."
-msgstr ""
-
-#. module: donation_base
-#. odoo-python
-#: code:addons/donation_base/models/product.py:0
-#, python-format
-msgid ""
-"The option 'In-Kind Donation' is active on the product '%s', so you must "
-"also activate the option 'Is a Donation'."
-msgstr ""
-
-#. module: donation_base
-#. odoo-python
-#: code:addons/donation_base/models/product.py:0
-#, python-format
-msgid ""
-"The option 'Is Eligible for a Tax Receipt' is active on the product '%s', so"
-" you must also activate the option 'Is a Donation'."
 msgstr ""
 
 #. module: donation_base
