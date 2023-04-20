@@ -6,10 +6,9 @@
         <field name="default_code">DON</field>
         <field name="categ_id" ref="product.product_category_5" />
         <field name="sale_ok" eval="True" />
-        <field name="donation" eval="True" />
         <field name="tax_receipt_ok" eval="True" />
         <field name="list_price">0</field>
-        <field name="detailed_type">service</field>
+        <field name="detailed_type">donation</field>
         <field name="taxes_id" eval="False" />
         <field
             name="description"
@@ -20,10 +19,9 @@
         <field name="default_code">DON-NOTAXR</field>
         <field name="categ_id" ref="product.product_category_5" />
         <field name="sale_ok" eval="True" />
-        <field name="donation" eval="True" />
         <field name="tax_receipt_ok" eval="False" />
         <field name="list_price">0</field>
-        <field name="detailed_type">service</field>
+        <field name="detailed_type">donation</field>
         <field name="taxes_id" eval="False" />
         <field
             name="description"
@@ -34,11 +32,9 @@
         <field name="default_code">KIND-DON</field>
         <field name="categ_id" ref="product.product_category_5" />
         <field name="sale_ok" eval="True" />
-        <field name="donation" eval="True" />
         <field name="tax_receipt_ok" eval="True" />
-        <field name="in_kind_donation" eval="True" />
         <field name="list_price">0</field>
-        <field name="detailed_type">service</field>
+        <field name="detailed_type">donation_in_kind_consu</field>
         <field name="taxes_id" eval="False" />
         <field
             name="description"
@@ -49,11 +45,9 @@
         <field name="default_code">KIND-DON-NOTAXR</field>
         <field name="categ_id" ref="product.product_category_5" />
         <field name="sale_ok" eval="True" />
-        <field name="donation" eval="True" />
         <field name="tax_receipt_ok" eval="False" />
-        <field name="in_kind_donation" eval="True" />
         <field name="list_price">0</field>
-        <field name="detailed_type">service</field>
+        <field name="detailed_type">donation_in_kind_consu</field>
         <field name="taxes_id" eval="False" />
         <field
             name="description"
