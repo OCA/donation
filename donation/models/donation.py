@@ -170,11 +170,6 @@ class DonationDonation(models.Model):
         ondelete="restrict",
         readonly=True,
     )
-    bank_statement_id = fields.Many2one(
-        related="bank_statement_line_id.statement_id",
-        string="Bank Statement",
-        store=True,
-    )
     thanks_printed = fields.Boolean(
         copy=False,
         tracking=True,
@@ -276,7 +271,7 @@ class DonationDonation(models.Model):
             credit = -total_company_cur
             debit = 0
         if self.bank_statement_line_id:
-            account_id = journal.donation_account_id.id
+            account_id = company.donation_account_id.id
         else:
             payment_method = self.payment_mode_id.payment_method_id
             account_id = (
@@ -380,8 +375,14 @@ class DonationDonation(models.Model):
         vals["line_ids"].append((0, 0, ml_vals))
         return vals
 
+    def save_as_draft(self):
+        # Used in simple form view used as wizard
+        # Do nothing, just close
+        self.ensure_one()
+        return
+
     def validate(self):
-        check_total = self.env["res.users"].has_group(
+        check_total_grp = self.env["res.users"].has_group(
             "donation.group_donation_check_total"
         )
         for donation in self:
@@ -417,7 +418,9 @@ class DonationDonation(models.Model):
                     % donation.display_name
                 )
 
-            if check_total and donation.currency_id.compare_amounts(
+            if (
+                check_total_grp or donation.bank_statement_line_id
+            ) and donation.currency_id.compare_amounts(
                 donation.check_total, donation.amount_total
             ):
                 raise UserError(
@@ -472,42 +475,25 @@ class DonationDonation(models.Model):
     def _reconcile_donation_from_bank_statement(self):
         self.ensure_one()
         mlines_to_reconcile = self.env["account.move.line"]
-        journal = self.payment_mode_id.fixed_journal_id
-        if not journal:
-            raise UserError(
-                _(
-                    "Donation %(donation)s is linked to a bank statement line, "
-                    "but its payment mode '%(pay_mode)s' doesn't have a fixed link "
-                    "to a bank journal. This should never happen.",
-                    donation=self.display_name,
-                    pay_mode=self.payment_mode_id.display_name,
-                )
-            )
-        transit_account = journal.donation_account_id
+        transit_account = self.company_id.donation_account_id
         if not transit_account:
             raise UserError(
                 _(
                     "Donation %(donation)s is linked to a bank statement line, but "
-                    "the journal '%(journal)s' linked to its payment mode '%(pay_mode)s' "
-                    "doesn't have a donation by credit transfer account. "
-                    "This should never happen.",
+                    "the Donation by Credit Transfer Account is not set for company "
+                    "'%(company)s'. This should never happen.",
                     donation=self.display_name,
-                    journal=journal.display_name,
-                    pay_mode=self.payment_mode_id.display_name,
+                    company=self.company_id.display_name,
                 )
             )
         if not transit_account.reconcile:
             raise UserError(
                 _(
-                    "Donation %(donation)s is linked to a bank statement line, but "
-                    "the donation by credit transfer account "
-                    "'%(transit_account)s' configured on "
-                    "the journal '%(journal)s' linked to its payment mode '%(pay_mode)s' "
-                    "is not reconciliable. This should never happen.",
-                    donation=self.display_name,
-                    transit_account=transit_account.display_name,
-                    journal=journal.display_name,
-                    pay_mode=self.payment_mode_id.display_name,
+                    "The Donation by Credit Transfer Account '%(account)s' "
+                    "for company '%(company)s' is not reconciliable. "
+                    "This should never happen.",
+                    account=transit_account.display_name,
+                    company=self.company_id.display_name,
                 )
             )
 
@@ -778,7 +764,10 @@ class DonationLine(models.Model):
                 try:
                     account = line._get_account()
                 except Exception:
-                    pass
+                    logger.warning(
+                        "No income account configured for product %s",
+                        product.display_name,
+                    )
                 distribution = self.env[
                     "account.analytic.distribution.model"
                 ]._get_distribution(
