@@ -2,6 +2,10 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from openupgradelib import openupgrade
 
+column_renames = {
+    "donation_donation": [("journal_id", None)],
+}
+
 
 @openupgrade.migrate()
 def migrate(env, version):
@@ -24,3 +28,4 @@ def migrate(env, version):
         openupgrade.drop_columns(
             env.cr, [("res_users", "context_donation_payment_mode_id")]
         )
+    openupgrade.rename_columns(env.cr, column_renames)
