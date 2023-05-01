@@ -16,6 +16,14 @@ class ResCompany(models.Model):
         domain=[("detailed_type", "=", "donation")],
         ondelete="restrict",
     )
+    donation_account_id = fields.Many2one(
+        "account.account",
+        check_company=True,
+        copy=False,
+        ondelete="restrict",
+        string="Donation by Credit Transfer Account",
+        help="Transfer account for donations received by credit transfer. ",
+    )
 
     @api.constrains("donation_credit_transfer_product_id")
     def company_donation_bank_statement_check(self):

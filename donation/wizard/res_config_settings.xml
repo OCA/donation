@@ -32,12 +32,20 @@
                                 >
                                     <label
                                         for="donation_credit_transfer_product_id"
-                                        class="col-md-3"
+                                        class="col-md-5"
                                     />
                                     <field name="donation_credit_transfer_product_id" />
                                 </div>
                             </div>
-                       </div>
+                            <div class="o_setting_left_pane" />
+                            <div class="o_setting_right_pane">
+                                <label for="donation_account_id" class="col-md-5" />
+                                <field
+                                    name="donation_account_id"
+                                    context="{'default_reconcile': True, 'default_account_type': 'asset_current'}"
+                                />
+                            </div>
+                        </div>
                        <div
                             class="col-12 col-lg-6 o_setting_box"
                             id="donation_check_total"
