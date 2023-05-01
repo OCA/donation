@@ -1,7 +1,7 @@
 This module handles donations by cash, check or by credit transfer:
 
 * for donation by cash or check, you should first create a new donation and validate it. Then, if you have the module *account_check_deposit* from the project `OCA/account-financial-tools <https://github.com/OCA/account-financial-tools>`_, you can create a check deposit.
-* for a donation by credit transfer, the process in inverted: first, import your bank statement file and process it. When you process a statement line that correspond to a donation by credit transfer, make sure that the partner is the good one and, in the *Manual Operations* tab, set the *Donation by credit transfer account* (configured on the corresponding bank journal) as counterpart. When you close the bank statement, Odoo will generate a draft donation for each statement line identified as a donation by credit transfer. Then you should verify and validate these draft donations.
+* for a donation by credit transfer, the process is different: import your bank statement file and, while processing it, you will see a donation button that allow you to create a new donation directly from the bank statement reconcile interface.
 
 When you validate a donation:
 
