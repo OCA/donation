@@ -21,7 +21,7 @@ class DonationDonation(models.Model):
         "('company_id', '=', company_id)]",
     )
     mandate_required = fields.Boolean(
-        related="payment_mode_id.payment_method_id.mandate_required", readonly=True
+        related="payment_mode_id.payment_method_id.mandate_required",
     )
 
     @api.onchange("payment_mode_id")
@@ -36,6 +36,7 @@ class DonationDonation(models.Model):
                 [
                     ("state", "=", "valid"),
                     ("partner_id", "=", self.commercial_partner_id.id),
+                    ("company_id", "=", self.company_id.id),
                 ],
                 limit=1,
             )
@@ -69,28 +70,44 @@ class DonationDonation(models.Model):
                 and donation.payment_mode_id.payment_order_ok
                 and donation.move_id
             ):
-                payorders = apoo.search(
+                if donation.mandate_required and not donation.mandate_id:
+                    raise UserError(
+                        _("Mandate is missing on donation '%s'.")
+                        % donation.display_name
+                    )
+                payorder = apoo.search(
                     [
                         ("state", "=", "draft"),
                         ("company_id", "=", donation.company_id.id),
                         ("payment_mode_id", "=", donation.payment_mode_id.id),
-                    ]
+                    ],
+                    limit=1,
                 )
                 msg = False
-                if payorders:
-                    payorder = payorders[0]
-                else:
+                if not payorder:
                     payorder_vals = donation._prepare_payment_order()
                     payorder = apoo.create(payorder_vals)
+                    payorder.message_post(
+                        body=_(
+                            "Payment order created automatically upon validation of "
+                            "donation <a href=# data-oe-model=donation.donation "
+                            "data-oe-id=%(donation_id)d>%(donation)s</a>.",
+                            donation_id=donation.id,
+                            donation=donation.display_name,
+                        )
+                    )
                     msg = _(
                         "A new draft direct debit order "
                         "<a href=# data-oe-model=account.payment.order "
-                        "data-oe-id=%d>%s</a> has been automatically created"
-                    ) % (payorder.id, payorder.name)
+                        "data-oe-id=%(payorder_id)d>%(payorder)s</a> "
+                        "has been automatically created",
+                        payorder_id=payorder.id,
+                        payorder=payorder.display_name,
+                    )
                 # add payment line
-                payment_account_id = (
-                    donation.payment_mode_id.fixed_journal_id.payment_debit_account_id.id
-                )
+                payment_account_id = donation._prepare_counterpart_move_line(
+                    1, 1, donation.move_id.journal_id
+                )["account_id"]
                 for mline in donation.move_id.line_ids:
                     if mline.account_id.id == payment_account_id:
                         mline.sudo().create_payment_line_from_move_line(payorder)
@@ -100,15 +117,21 @@ class DonationDonation(models.Model):
                         "A new payment line has been automatically added "
                         "to the existing draft direct debit order "
                         "<a href=# data-oe-model=account.payment.order "
-                        "data-oe-id=%d>%s</a>."
-                    ) % (payorder.id, payorder.name)
+                        "data-oe-id=%(payorder_id)d>%(payorder)s</a>.",
+                        payorder_id=payorder.id,
+                        payorder=payorder.display_name,
+                    )
                 donation.message_post(body=msg)
         return res
 
     def done2cancel(self):
         for donation in self:
             if donation.move_id:
-                donation_mv_line_ids = [line.id for line in donation.move_id.line_ids]
+                donation_mv_line_ids = [
+                    line.id
+                    for line in donation.move_id.line_ids
+                    if line.account_id.reconcile
+                ]
                 if donation_mv_line_ids:
                     plines = self.env["account.payment.line"].search(
                         [
