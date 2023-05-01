@@ -27,7 +27,6 @@
         "views/donation_thanks_template.xml",
         "views/res_users.xml",
         "views/res_partner.xml",
-        "views/account_journal.xml",
         "report/donation_report_view.xml",
         "report/donation_thanks_view.xml",
         "report/donation_thanks_report.xml",
