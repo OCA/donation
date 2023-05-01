@@ -144,6 +144,82 @@
             </form>
         </field>
     </record>
+    <record id="donation_from_bank_statement_line_form" model="ir.ui.view">
+        <field name="name">Creation Donation from Bank Statement Line form</field>
+        <field name="model">donation.donation</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="main">
+                    <group name="manual">
+                        <field name="partner_id" readonly="1" />
+                        <field name="commercial_partner_id" invisible="1" />
+                        <field name="payment_mode_id" readonly="1" />
+                        <field
+                            name="currency_id"
+                            groups="base.group_multi_currency"
+                            readonly="1"
+                        />
+                            <field name="company_currency_id" invisible="1" />
+                        <field
+                            name="check_total"
+                            groups="donation.group_donation_check_total"
+                            readonly="1"
+                        />
+                        <field name="payment_ref" />
+                        <field
+                            name="donation_date"
+                            options="{'datepicker': {'warn_future': true}}"
+                        />
+                        <field name="campaign_id" />
+                        <field name="thanks_template_id" widget="selection" />
+                    </group>
+                    <group name="auto">
+                        <field name="company_id" invisible="1" />
+                        <field name="state" invisible="1" />
+                        <field
+                            name="company_id"
+                            groups="base.group_multi_company"
+                            readonly="1"
+                        />
+                        <field name="tax_receipt_option" />
+                        <field name="tax_receipt_total" />
+                        <field name="bank_statement_line_id" />
+                    </group>
+                    </group>
+                    <group name="lines" string="Lines" colspan="2">
+                        <field name="line_ids" nolabel="1" />
+                        <group name="subtotal" class="oe_subtotal_footer oe_right">
+                            <field
+                            name="amount_total"
+                            string="Total"
+                            class="oe_subtotal_footer_separator"
+                        />
+                        </group>
+                </group>
+                <footer>
+                    <button
+                        type="object"
+                        name="validate"
+                        string="Validate"
+                        class="btn-primary"
+                        states="draft"
+                        groups="donation.group_donation_user"
+                    />
+                    <button
+                        type="object"
+                        name="save_as_draft"
+                        string="Save as Draft"
+                        states="draft"
+                        groups="donation.group_donation_user"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
     <record id="donation_tree" model="ir.ui.view">
         <field name="name">donation.tree</field>
         <field name="model">donation.donation</field>
