@@ -23,3 +23,13 @@ class PosOrder(models.Model):
                 continue
 
         return res
+
+    @api.model
+    def _order_fields(self, ui_order):
+        if ui_order:
+            if "fiscal_coupon_date" not in ui_order or not ui_order["fiscal_coupon_date"]:
+                ui_order["fiscal_coupon_date"] = fields.Datetime.now()
+
+        result = super()._order_fields(ui_order)
+
+        return result
