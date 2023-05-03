@@ -17,9 +17,9 @@ class PosOrder(models.Model):
             order_id = order_ids.filtered(
                 lambda o_id: o_id.pos_reference == o.get("data").get("name")
             )
-            if not order_id:
+            try:
+                order_id.contribution = o.get("data").get("contribution")
+            except Exception:
                 continue
-            if o and "data" in o and "contribution" in o.get("data"):
-                order_id.contribution = o.get("data").get("contribution") 
 
         return res
