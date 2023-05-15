@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2021 Akretion France (http://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="res_config_settings_donation" model="ir.ui.view">
+        <field name="name">donation.res.config.settings.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div
+                    class="app_settings_block"
+                    data-string="Donation"
+                    string="Donation"
+                    data-key="donation"
+                    groups="donation.group_donation_manager"
+                >
+                    <h2>Donation</h2>
+                    <div class="row mt16 o_settings_container" id="donation">
+                        <div
+                            class="col-12 col-lg-12 o_setting_box"
+                            id="donation-settings"
+                        >
+                            <div class="o_setting_left_pane" />
+                            <div class="o_setting_right_pane">
+                                <div
+                                    class="row"
+                                    id="donation_credit_transfer_product_id"
+                                >
+                                    <label
+                                        for="donation_credit_transfer_product_id"
+                                        class="col-md-5"
+                                    />
+                                    <field name="donation_credit_transfer_product_id" />
+                                </div>
+                            </div>
+                            <div class="o_setting_left_pane" />
+                            <div class="o_setting_right_pane">
+                                <label for="donation_account_id" class="col-md-5" />
+                                <field
+                                    name="donation_account_id"
+                                    context="{'default_reconcile': True, 'default_account_type': 'asset_current'}"
+                                />
+                            </div>
+                        </div>
+                       <div
+                            class="col-12 col-lg-6 o_setting_box"
+                            id="donation_check_total"
+                        >
+                            <div class="o_setting_left_pane">
+                                    <field name="group_donation_check_total" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="group_donation_check_total" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="donation_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'donation', 'bin_size': False}</field>
+    </record>
+
+<menuitem
+        id="donation_settings_menu"
+        parent="donation_config_menu"
+        sequence="10"
+        action="donation_settings_action"
+        groups="base.group_system"
+    />
+
+</odoo>

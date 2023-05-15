@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2019 Akretion France
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+
+<record id="donation_thanks_template_form" model="ir.ui.view">
+    <field name="model">donation.thanks.template</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+                <group name="main">
+                    <field name="name" />
+                    <field name="text" />
+                    <field name="image" widget="image" />
+                    <field name="company_id" groups="base.group_multi_company" />
+                    <field name="active" invisible="1" />
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="donation_thanks_template_tree" model="ir.ui.view">
+    <field name="model">donation.thanks.template</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="sequence" widget="handle" />
+            <field name="name" />
+            <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    optional="show"
+                />
+        </tree>
+    </field>
+</record>
+
+<record id="donation_thanks_template_search" model="ir.ui.view">
+    <field name="model">donation.thanks.template</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name" />
+            <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active', '=', False)]"
+                />
+        </search>
+    </field>
+</record>
+
+<record id="donation_thanks_template_action" model="ir.actions.act_window">
+    <field name="name">Thanks Letter Templates</field>
+    <field name="res_model">donation.thanks.template</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem
+        id="donation_thanks_template_menu"
+        action="donation_thanks_template_action"
+        parent="donation.donation_config_menu"
+        sequence="50"
+    />
+
+</odoo>

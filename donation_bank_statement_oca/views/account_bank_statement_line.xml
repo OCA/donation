@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2023 Akretion France (http://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+
+<record id="bank_statement_line_form_reconcile_view" model="ir.ui.view">
+    <field name="model">account.bank.statement.line</field>
+    <field
+            name="inherit_id"
+            ref="account_reconcile_oca.bank_statement_line_form_reconcile_view"
+        />
+    <field name="arch" type="xml">
+        <button name="unreconcile_bank_line" position="before">
+            <button
+                    name="donation_reconcile_bank_line"
+                    type="object"
+                    string="Donation"
+                    class="btn btn-secondary"
+                    attrs="{'invisible': [('is_reconciled', '=', True)]}"
+                />
+        </button>
+    </field>
+</record>
+
+<record id="account_bank_statement_line_form" model="ir.ui.view">
+    <field name="model">account.bank.statement.line</field>
+    <field
+            name="inherit_id"
+            ref="account_statement_base.account_bank_statement_line_form"
+        />
+    <field name="arch" type="xml">
+        <field name="statement_id" position="after">
+            <field
+                    name="donation_ids"
+                    widget="many2many_tags"
+                    attrs="{'invisible': [('donation_ids', '=', [])]}"
+                />
+        </field>
+    </field>
+</record>
+
+
+</odoo>

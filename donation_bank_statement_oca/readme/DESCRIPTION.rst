@@ -1,0 +1,1 @@
+This module is a glue module between the modules **donation** module and **account_reconcile_oca** from `OCA/account-reconcile <https://github.com/OCA/account-reconcile>`_ which contains the OCA bank statement reconcile interface. It is needed to support donations by credit transfer where the donation is created while processing the bank statement line.
