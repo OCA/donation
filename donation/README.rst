@@ -14,20 +14,20 @@ Donation
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fdonation-lightgray.png?logo=github
-    :target: https://github.com/OCA/donation/tree/14.0/donation
+    :target: https://github.com/OCA/donation/tree/16.0/donation
     :alt: OCA/donation
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/donation-14-0/donation-14-0-donation
+    :target: https://translation.odoo-community.org/projects/donation-16-0/donation-16-0-donation
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/180/14.0
+    :target: https://runbot.odoo-community.org/runbot/180/16.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module handles donations by cash, check or by credit transfer and generate the corresponding journal entries and tax receipts. Before Odoo v14, support for donations by credit transfer was added by a separate module *donation_bank_statement*.
+This module handles donations by cash, check or by credit transfer and generate the corresponding journal entries and tax receipts. To fully support donations by credit transfer, if you are using the OCA bank statement reconcile interface, you also need the module **donation_bank_statement_oca**.
 
-This module will assist you in writing a thanks letter (before Odoo v14, this feature was added by a separate module *donation_thanks*).
+This module will assist you in writing a thanks letter.
 
 This module also supports in-kind donations (in-kind donations don't generate any accounting entry but can generate a tax receipt).
 
@@ -57,7 +57,7 @@ Usage
 This module handles donations by cash, check or by credit transfer:
 
 * for donation by cash or check, you should first create a new donation and validate it. Then, if you have the module *account_check_deposit* from the project `OCA/account-financial-tools <https://github.com/OCA/account-financial-tools>`_, you can create a check deposit.
-* for a donation by credit transfer, the process in inverted: first, import your bank statement file and process it. When you process a statement line that correspond to a donation by credit transfer, make sure that the partner is the good one and, in the *Manual Operations* tab, set the *Donation by credit transfer account* (configured on the corresponding bank journal) as counterpart. When you close the bank statement, Odoo will generate a draft donation for each statement line identified as a donation by credit transfer. Then you should verify and validate these draft donations.
+* for a donation by credit transfer, the process is different: import your bank statement file and, while processing it, you will see a donation button that allow you to create a new donation directly from the bank statement reconcile interface.
 
 When you validate a donation:
 
@@ -72,7 +72,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/donation/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/donation/issues/new?body=module:%20donation%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/donation/issues/new?body=module:%20donation%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -115,6 +115,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-alexis-via| 
 
-This module is part of the `OCA/donation <https://github.com/OCA/donation/tree/14.0/donation>`_ project on GitHub.
+This module is part of the `OCA/donation <https://github.com/OCA/donation/tree/16.0/donation>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
