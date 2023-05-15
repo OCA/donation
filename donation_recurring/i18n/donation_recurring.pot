@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -24,6 +24,7 @@ msgid "Active Recurring Template"
 msgstr ""
 
 #. module: donation_recurring
+#. odoo-python
 #: code:addons/donation_recurring/models/donation.py:0
 #, python-format
 msgid ""
@@ -57,7 +58,6 @@ msgid "Date"
 msgstr ""
 
 #. module: donation_recurring
-#: model:ir.model.fields,field_description:donation_recurring.field_donation_donation__display_name
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate__display_name
 msgid "Display Name"
 msgstr ""
@@ -91,13 +91,11 @@ msgid "History"
 msgstr ""
 
 #. module: donation_recurring
-#: model:ir.model.fields,field_description:donation_recurring.field_donation_donation__id
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate__id
 msgid "ID"
 msgstr ""
 
 #. module: donation_recurring
-#: model:ir.model.fields,field_description:donation_recurring.field_donation_donation____last_update
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate____last_update
 msgid "Last Modified on"
 msgstr ""
@@ -128,6 +126,7 @@ msgid "Re-activate"
 msgstr ""
 
 #. module: donation_recurring
+#. odoo-python
 #: code:addons/donation_recurring/models/donation.py:0
 #, python-format
 msgid "Recurring Donation %s"
@@ -145,6 +144,7 @@ msgid "Recurring Template"
 msgstr ""
 
 #. module: donation_recurring
+#. odoo-python
 #: code:addons/donation_recurring/wizard/donation_recurring_generate.py:0
 #, python-format
 msgid "Recurring donations have already been generated for %s."
@@ -167,6 +167,7 @@ msgid "Suspended"
 msgstr ""
 
 #. module: donation_recurring
+#. odoo-python
 #: code:addons/donation_recurring/models/donation.py:0
 #, python-format
 msgid "Suspended Recurring Donation %s"
@@ -178,12 +179,14 @@ msgid "Suspended Recurring Template"
 msgstr ""
 
 #. module: donation_recurring
+#. odoo-python
 #: code:addons/donation_recurring/models/donation.py:0
 #, python-format
 msgid "The recurring donation %s cannot have a tax receipt option 'Each'."
 msgstr ""
 
 #. module: donation_recurring
+#. odoo-python
 #: code:addons/donation_recurring/models/donation.py:0
 #, python-format
 msgid ""
@@ -191,18 +194,21 @@ msgid ""
 msgstr ""
 
 #. module: donation_recurring
+#. odoo-python
 #: code:addons/donation_recurring/models/donation.py:0
 #, python-format
 msgid "The recurring donation template %s must stay in draft state."
 msgstr ""
 
 #. module: donation_recurring
+#. odoo-python
 #: code:addons/donation_recurring/models/donation.py:0
 #, python-format
 msgid "Update of Tax Receipt Option"
 msgstr ""
 
 #. module: donation_recurring
+#. odoo-python
 #: code:addons/donation_recurring/models/donation.py:0
 #, python-format
 msgid ""
