@@ -134,4 +134,24 @@ odoo.define('pos_order_line.screens', function (require) {
             this.el.querySelector('.summary .total .donation .value').textContent = this.format_currency(donation_total);
         },
     });
-});
+    
+    // Inherit PosCategory to force searched produts to go through scale
+    screens.ProductCategoriesWidget.include({
+        perform_search: function(category, query, buy_result){
+            var products;
+            if(query){
+                products = this.pos.db.search_product_in_category(category.id,query);
+                if(buy_result && products.length === 1){
+                        this.gui.current_screen.click_product(products[0]);
+                        this.clear_search();
+                }else{
+                    this.product_list_widget.set_product_list(products);
+                }
+            }else{
+                products = this.pos.db.get_product_by_category(this.category.id);
+                this.product_list_widget.set_product_list(products);
+            }
+        },
+    });
+    
+    });
