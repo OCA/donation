@@ -1,0 +1,35 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* donation_bank_statement_oca
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: donation_bank_statement_oca
+#: model:ir.model,name:donation_bank_statement_oca.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr ""
+
+#. module: donation_bank_statement_oca
+#: model_terms:ir.ui.view,arch_db:donation_bank_statement_oca.bank_statement_line_form_reconcile_view
+msgid "Donation"
+msgstr ""
+
+#. module: donation_bank_statement_oca
+#. odoo-python
+#: code:addons/donation_bank_statement_oca/models/account_bank_statement_line.py:0
+#, python-format
+msgid ""
+"The reconcile mode of the bank journal '%(journal)s' is "
+"'%(reconcile_mode)s'. For donations, the only supported reconcile mode is "
+"'Edit'."
+msgstr ""
