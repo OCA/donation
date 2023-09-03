@@ -786,8 +786,8 @@ msgstr "Número de errores"
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "Números de mensajes que requieren una acción"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__message_has_error_counter
@@ -1233,6 +1233,9 @@ msgstr ""
 #, python-format
 msgid "You cannot change the Tax Receipt Option when it is Annual."
 msgstr "No puede cambiar la opción del recibo de impuestos cuando es Anual."
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Números de mensajes que requieren una acción"
 
 #~ msgid "Analytic Account"
 #~ msgstr "Cuenta analítica"
