@@ -445,7 +445,7 @@ msgstr ""
 
 #. module: donation_base
 #: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__message_needaction_counter
-msgid "Number of messages which requires an action"
+msgid "Number of messages requiring action"
 msgstr ""
 
 #. module: donation_base
