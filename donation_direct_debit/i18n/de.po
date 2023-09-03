@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* donation_direct_debit
+# 	* donation_direct_debit
 #
 msgid ""
 msgstr ""
@@ -15,15 +15,29 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. module: donation_direct_debit
-#: code:addons/donation_direct_debit/donation.py:75
+#. odoo-python
+#: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
-msgid "A new draft direct debit order %s has been automatically created"
+msgid ""
+"A new draft direct debit order <a href=# data-oe-model=account.payment.order "
+"data-oe-id=%(payorder_id)d>%(payorder)s</a> has been automatically created"
 msgstr ""
 
 #. module: donation_direct_debit
-#: code:addons/donation_direct_debit/donation.py:84
+#. odoo-python
+#: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
-msgid "A new payment line has been automatically added to the existing draft direct debit order %s"
+msgid ""
+"A new payment line has been automatically added to the existing draft direct "
+"debit order <a href=# data-oe-model=account.payment.order data-oe-id="
+"%(payorder_id)d>%(payorder)s</a>."
+msgstr ""
+
+#. module: donation_direct_debit
+#: model:ir.model.fields,help:donation_direct_debit.field_donation_donation__mandate_required
+msgid ""
+"Activate this option if this payment method requires your customer to sign a "
+"direct debit mandate with your company."
 msgstr ""
 
 #. module: donation_direct_debit
@@ -32,17 +46,36 @@ msgid "Donation"
 msgstr ""
 
 #. module: donation_direct_debit
-#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation_mandate_id
+#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation__mandate_id
 msgid "Mandate"
 msgstr ""
 
 #. module: donation_direct_debit
-#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation_payment_mode_id
-msgid "Payment Mode"
+#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation__mandate_required
+msgid "Mandate Required"
 msgstr ""
 
 #. module: donation_direct_debit
-#: code:addons/donation_direct_debit/donation.py:101
+#. odoo-python
+#: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
-msgid "You cannot cancel a donation which is linked to a payment line in a direct debit order. Remove it from the following direct debit order: %s."
+msgid "Mandate is missing on donation '%s'."
+msgstr ""
+
+#. module: donation_direct_debit
+#. odoo-python
+#: code:addons/donation_direct_debit/models/donation.py:0
+#, python-format
+msgid ""
+"Payment order created automatically upon validation of donation <a href=# "
+"data-oe-model=donation.donation data-oe-id=%(donation_id)d>%(donation)s</a>."
+msgstr ""
+
+#. module: donation_direct_debit
+#. odoo-python
+#: code:addons/donation_direct_debit/models/donation.py:0
+#, python-format
+msgid ""
+"You cannot cancel a donation which is linked to a payment line in a direct "
+"debit order. Remove it from the following direct debit order: %s."
 msgstr ""
