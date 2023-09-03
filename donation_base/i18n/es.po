@@ -74,8 +74,8 @@ msgstr ""
 "\"object.number\">RECPT-2023-001</span>\n"
 "                    Importe en <span style=\"font-weight: bold;\" t-out="
 "\"format_amount(object.amount, object.currency_id) or ''\">$ 10.00</span>\n"
-"                            Desde <t t-out=\"object.company_id.name\""
-">Barroux Abbey</t>.\n"
+"                            Desde <t t-out=\"object.company_id.name"
+"\">Barroux Abbey</t>.\n"
 "    <t t-if=\"not is_html_empty(user.signature)\">\n"
 "            <br><br>\n"
 "            <t t-out=\"user.signature or ''\">--<br>Mitchell Admin</t>\n"
@@ -478,8 +478,8 @@ msgstr "Número de errores"
 
 #. module: donation_base
 #: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "Número de mensajes que requieren una acción"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: donation_base
 #: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__message_has_error_counter
@@ -683,6 +683,9 @@ msgstr ""
 #: model:mail.template,subject:donation_base.tax_receipt_email_template
 msgid "{{object.company_id.name}} - Tax Receipt {{object.number or 'n/a'}}"
 msgstr "{{object.company_id.name}} - Tax Receipt {{object.number or 'n/a'}}"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Número de mensajes que requieren una acción"
 
 #~ msgid "Is a Donation"
 #~ msgstr "Es un donativo"
