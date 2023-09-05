@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-11 21:44+0000\n"
-"PO-Revision-Date: 2023-08-03 20:10+0000\n"
+"PO-Revision-Date: 2023-09-05 21:36+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
@@ -67,6 +67,11 @@ msgid ""
 "A consumable product is a product for which stock is not managed.\n"
 "A service is a non-material product you provide."
 msgstr ""
+"Un producto almacenable es un producto para el que se gestionan existencias. "
+"La aplicación Inventario debe estar instalada.\n"
+"Un producto consumible es un producto para el que no se gestionan "
+"existencias.\n"
+"Un servicio es un producto no material que usted proporciona."
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__move_id
@@ -128,22 +133,22 @@ msgstr "Importe en moneda de la Compañía"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__analytic_distribution
 msgid "Analytic"
-msgstr ""
+msgstr "Analítica"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__analytic_distribution_search
 msgid "Analytic Distribution Search"
-msgstr ""
+msgstr "Búsqueda de Distribución Analítica"
 
 #. module: donation
 #: model:ir.model,name:donation.model_account_analytic_applicability
 msgid "Analytic Plan's Applicabilities"
-msgstr ""
+msgstr "Aplicabilidad del Plan Analítico"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__analytic_precision
 msgid "Analytic Precision"
-msgstr ""
+msgstr "Precisión Analítica"
 
 #. module: donation
 #: model:ir.model.fields.selection,name:donation.selection__donation_donation__tax_receipt_option__annual
@@ -239,7 +244,7 @@ msgstr "Comprobar importe"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_res_config_settings__group_donation_check_total
 msgid "Check Total on Donations"
-msgstr ""
+msgstr "Comprobar el total de las donaciones"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__code
@@ -304,7 +309,7 @@ msgstr "Crear recibos anuales"
 #: code:addons/donation/models/account_bank_statement_line.py:0
 #, python-format
 msgid "Create Donation from Bank Statement Line"
-msgstr ""
+msgstr "Crear una donación a partir de un extracto bancario"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__create_uid
@@ -363,7 +368,7 @@ msgstr "Nombre mostrado"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_account_analytic_applicability__business_domain
 msgid "Domain"
-msgstr ""
+msgstr "Dominio"
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_donation
@@ -387,6 +392,9 @@ msgid ""
 "by Credit Transfer Account is not set for company '%(company)s'. This should "
 "never happen."
 msgstr ""
+"Donación %(donation)s está vinculada a una línea de extracto bancario, pero "
+"la cuenta de donación por transferencia no está configurada para la compañía "
+"'%(company)s'. Esto no debería ocurrir nunca."
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__campaign_id
@@ -568,7 +576,7 @@ msgstr "Agrupar por"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Tiene Mensaje"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__id
@@ -663,7 +671,7 @@ msgstr "Última actualización el"
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_from_bank_statement_line_form
 msgid "Lines"
-msgstr ""
+msgstr "Líneas"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_main_attachment_id
@@ -706,14 +714,14 @@ msgstr "Messages"
 #: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Missing Outstanding Receipts Account on company '%s'."
-msgstr ""
+msgstr "Falta la cuenta de cobros pendientes en la compañía '%s'."
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/account_bank_statement_line.py:0
 #, python-format
 msgid "Missing Product for Donations via Credit Transfer for company '%s'."
-msgstr ""
+msgstr "Falta producto para donaciones por transferencia de la compañía '%s'."
 
 #. module: donation
 #. odoo-python
@@ -787,7 +795,7 @@ msgstr "Número de errores"
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Número de mensajes que requieren una acción"
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__message_has_error_counter
@@ -802,6 +810,8 @@ msgid ""
 "On bank statement line '%(line)s', the amount (%(amount)s) is negative so it "
 "cannot be processed as a donation."
 msgstr ""
+"En la línea del extracto bancario '%(line)s', el monto (%(amount)s) es "
+"negativo, por lo que no se puede procesar como una donación."
 
 #. module: donation
 #. odoo-python
@@ -810,6 +820,7 @@ msgstr ""
 msgid ""
 "On bank statement line '%s', the partner is required to process a donation."
 msgstr ""
+"En la línea del extracto bancario '%s', el socio debe procesar una donación."
 
 #. module: donation
 #. odoo-python
@@ -819,6 +830,8 @@ msgid ""
 "On the company %(company)s, the Product for Donations via Credit Transfer "
 "(%(product)s) is not a donation product !"
 msgstr ""
+"¡En la compañía %(company)s, el Producto para donaciones mediante "
+"transferencia de crédito (%(product)s) no es un producto de donación!"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
@@ -901,7 +914,7 @@ msgstr "Categoría de producto"
 #: model:ir.model.fields,field_description:donation.field_donation_report__product_detailed_type
 #: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 msgid "Product Type"
-msgstr ""
+msgstr "Tipo de Producto"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_res_company__donation_credit_transfer_product_id
@@ -949,7 +962,7 @@ msgstr "Guardar valores por defecto"
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_from_bank_statement_line_form
 msgid "Save as Draft"
-msgstr ""
+msgstr "Guardar como borrador"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__sequence
@@ -1074,6 +1087,8 @@ msgid ""
 "The Donation by Credit Transfer Account '%(account)s' for company "
 "'%(company)s' is not reconciliable. This should never happen."
 msgstr ""
+"La cuenta de donativos por transferencia '%(account)s' para la compañía "
+"'%(company)s' no es conciliable. Esto no debería ocurrir nunca."
 
 #. module: donation
 #. odoo-python
@@ -1081,6 +1096,8 @@ msgstr ""
 #, python-format
 msgid "The Donation by Credit Transfer Account is not set for company '%s'."
 msgstr ""
+"La cuenta de donación por transferencia no está configurada para la compañía "
+"\"%s\"."
 
 #. module: donation
 #. odoo-python
@@ -1090,6 +1107,8 @@ msgid ""
 "The amount of donation %(donation)s (%(check_total)s) is different from the "
 "sum of the donation lines (%(amount_total)s)."
 msgstr ""
+"La cantidad de donación %(donation)s (%(check_total)s) es diferente de la "
+"suma de las líneas de donación (%(amount_total)s)."
 
 #. module: donation
 #. odoo-python
@@ -1108,6 +1127,8 @@ msgid ""
 "The donation '%(donation)s' is linked to the tax receipt %(tax_receipt)s, so "
 "you cannot delete it."
 msgstr ""
+"La donación '%(donation)s' está vinculada al recibo de impuestos "
+"%(tax_receipt)s, por lo que no puedes eliminarlo."
 
 #. module: donation
 #. odoo-python
@@ -1134,6 +1155,8 @@ msgid ""
 "The payment mode '%(pay_mode)s' selected on donation %(donation)s is not a "
 "donation payment mode."
 msgstr ""
+"El modo de pago '%(pay_mode)s' seleccionado en la donación %(donation)s no "
+"es un modo de pago de donación."
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__thanks_printed
@@ -1160,6 +1183,7 @@ msgstr "Total"
 #: model:ir.model.fields,help:donation.field_res_config_settings__donation_account_id
 msgid "Transfer account for donations received by credit transfer. "
 msgstr ""
+"Cuenta de transferencia para las donaciones recibidas por transferencia. "
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__activity_exception_decoration
