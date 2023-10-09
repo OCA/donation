@@ -20,131 +20,141 @@ msgstr ""
 "X-Generator: Weblate 3.9.1\n"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_res_partner_donation_count
-#: model:ir.model.fields,field_description:donation.field_res_users_donation_count
+#: model:ir.model.fields,field_description:donation.field_res_partner__donation_count
+#: model:ir.model.fields,field_description:donation.field_res_users__donation_count
 msgid "# of Donations"
 msgstr "# de Donativos"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:450
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "A cancelled donation should not be linked to a tax receipt"
 msgstr "Una donación cancelada no se puede unir a un recibo de impuestos"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:446
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "A cancelled donation should not be linked to an account move"
 msgstr "Una donación cancelada no se debe unir a un asiento contable"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_move_id
+#: model:ir.model.fields,field_description:donation.field_donation_donation__move_id
 msgid "Account Move"
 msgstr "Asiento contable"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_line_amount
-#: model:ir.model.fields,field_description:donation.field_donation_report_amount_company_currency
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_donation_line__amount
+#: model:ir.model.fields,field_description:donation.field_donation_report__amount_company_currency
 msgid "Amount"
 msgstr "Importe"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_amount_total
+#: model:ir.model.fields,field_description:donation.field_donation_donation__amount_total
 msgid "Amount Total"
 msgstr "Importe total"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_amount_total_company_currency
+#: model:ir.model.fields,field_description:donation.field_donation_donation__amount_total_company_currency
 msgid "Amount Total in Company Currency"
 msgstr "Importe total en moneda de la compañía"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_line_amount_company_currency
+#: model:ir.model.fields,field_description:donation.field_donation_line__amount_company_currency
 msgid "Amount in Company Currency"
 msgstr "Importe en moneda de la Compañía"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_line_analytic_account_id
+#: model:ir.model.fields,field_description:donation.field_donation_line__analytic_account_id
 msgid "Analytic Account"
 msgstr "Cuenta analítica"
 
 #. module: donation
-#: selection:donation.donation,tax_receipt_option:0
-#: selection:donation.tax.receipt.option.switch,new_tax_receipt_option:0
+#: model:ir.model.fields.selection,name:donation.selection__donation_donation__tax_receipt_option__annual
+#: model:ir.model.fields.selection,name:donation.selection__donation_tax_receipt_option_switch__new_tax_receipt_option__annual
 msgid "Annual Tax Receipt"
 msgstr "Recibo de impuestos anual"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_form
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: donation
+#: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Back to Draft"
 msgstr "Devolver a Borrador"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Campaign"
 msgstr "Campaña"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_form
-#: model:ir.ui.view,arch_db:donation.donation_tax_receipt_option_switch_form
-#: model:ir.ui.view,arch_db:donation.donation_validate_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_tax_receipt_option_switch_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_validate_form
 msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: donation
-#: selection:donation.donation,state:0
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model:ir.model.fields.selection,name:donation.selection__donation_donation__state__cancel
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Cancelled"
 msgstr "Cancelado"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:479
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Cancelled Donation of %s"
 msgstr "Donación cancelada de %s"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:360
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Cannot validate the donation of %s because it doesn't have any lines!"
 msgstr "No se puede validar la donación de %s porque no tiene líneas!"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:372
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Cannot validate the donation of %s because it is not in draft state."
 msgstr ""
 "No se puede validar la donación de %s porque no está en estado borrador."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:367
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Cannot validate the donation of %s because the total amount is 0 !"
 msgstr "No se puede validar la donación %s por que el importe total es 0 !"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_report_product_categ_id
+#: model:ir.model.fields,field_description:donation.field_donation_report__product_categ_id
 msgid "Category of Product"
 msgstr "Categoría de producto"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Change"
 msgstr "Cambiar"
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_tax_receipt_option_switch_action
-#: model:ir.ui.view,arch_db:donation.donation_tax_receipt_option_switch_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_tax_receipt_option_switch_form
 msgid "Change Tax Receipt Option"
 msgstr "Cambiar la opción del recibo de impuestos"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_check_total
+#: model:ir.model.fields,field_description:donation.field_donation_donation__check_total
 msgid "Check Amount"
 msgstr "Comprobar importe"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_campaign_code
+#: model:ir.model.fields,field_description:donation.field_donation_campaign__code
 msgid "Code"
 msgstr "Código"
 
@@ -154,15 +164,16 @@ msgid "Code attributed for a Donation Campaign"
 msgstr "Código asignado a una campaña de donativos"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_company_id
-#: model:ir.model.fields,field_description:donation.field_donation_report_company_id
-#: model:ir.ui.view,arch_db:donation.donation_report_search
+#: model:ir.model.fields,field_description:donation.field_donation_donation__company_id
+#: model:ir.model.fields,field_description:donation.field_donation_report__company_id
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 msgid "Company"
 msgstr "Compañía"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_company_currency_id
-#: model:ir.model.fields,field_description:donation.field_donation_report_company_currency_id
+#: model:ir.model.fields,field_description:donation.field_donation_donation__company_currency_id
+#: model:ir.model.fields,field_description:donation.field_donation_line__company_currency_id
+#: model:ir.model.fields,field_description:donation.field_donation_report__company_currency_id
 msgid "Company Currency"
 msgstr "Moneda de la Compañía"
 
@@ -177,7 +188,7 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_country_id
+#: model:ir.model.fields,field_description:donation.field_donation_donation__country_id
 msgid "Country"
 msgstr "País"
 
@@ -187,79 +198,79 @@ msgid "Create Annual Receipts"
 msgstr "Crear recibos anuales"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_campaign_create_uid
-#: model:ir.model.fields,field_description:donation.field_donation_donation_create_uid
-#: model:ir.model.fields,field_description:donation.field_donation_line_create_uid
-#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch_create_uid
-#: model:ir.model.fields,field_description:donation.field_donation_validate_create_uid
+#: model:ir.model.fields,field_description:donation.field_donation_campaign__create_uid
+#: model:ir.model.fields,field_description:donation.field_donation_donation__create_uid
+#: model:ir.model.fields,field_description:donation.field_donation_line__create_uid
+#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch__create_uid
+#: model:ir.model.fields,field_description:donation.field_donation_validate__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_campaign_create_date
-#: model:ir.model.fields,field_description:donation.field_donation_donation_create_date
-#: model:ir.model.fields,field_description:donation.field_donation_line_create_date
-#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch_create_date
-#: model:ir.model.fields,field_description:donation.field_donation_validate_create_date
+#: model:ir.model.fields,field_description:donation.field_donation_campaign__create_date
+#: model:ir.model.fields,field_description:donation.field_donation_donation__create_date
+#: model:ir.model.fields,field_description:donation.field_donation_line__create_date
+#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch__create_date
+#: model:ir.model.fields,field_description:donation.field_donation_validate__create_date
 msgid "Created on"
 msgstr "Creado el"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_currency_id
-#: model:ir.model.fields,field_description:donation.field_donation_line_company_currency_id
-#: model:ir.model.fields,field_description:donation.field_donation_line_currency_id
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model:ir.model.fields,field_description:donation.field_donation_donation__currency_id
+#: model:ir.model.fields,field_description:donation.field_donation_line__currency_id
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Currency"
 msgstr "Moneda"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_res_users_context_donation_campaign_id
+#: model:ir.model.fields,field_description:donation.field_res_users__context_donation_campaign_id
 msgid "Current Donation Campaign"
 msgstr "Campaña actual de donativos"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_res_users_context_donation_journal_id
+#: model:ir.model.fields,field_description:donation.field_res_users__context_donation_journal_id
 msgid "Current Donation Payment Method"
 msgstr "Método de pago de la donación actual"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_report_search
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_search
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Date"
 msgstr "Fecha"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_campaign_display_name
-#: model:ir.model.fields,field_description:donation.field_donation_donation_display_name
-#: model:ir.model.fields,field_description:donation.field_donation_line_display_name
-#: model:ir.model.fields,field_description:donation.field_donation_report_display_name
-#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch_display_name
-#: model:ir.model.fields,field_description:donation.field_donation_validate_display_name
+#: model:ir.model.fields,field_description:donation.field_donation_campaign__display_name
+#: model:ir.model.fields,field_description:donation.field_donation_donation__display_name
+#: model:ir.model.fields,field_description:donation.field_donation_line__display_name
+#: model:ir.model.fields,field_description:donation.field_donation_report__display_name
+#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch__display_name
+#: model:ir.model.fields,field_description:donation.field_donation_validate__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_donation
-#: model:ir.model.fields,field_description:donation.field_donation_line_donation_id
-#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch_donation_id
+#: model:ir.model.fields,field_description:donation.field_donation_line__donation_id
+#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch__donation_id
 #: model:ir.module.category,name:donation.module_category_donation
-#: model:ir.ui.view,arch_db:donation.donation_form
-#: model:ir.ui.view,arch_db:donation.donation_tree
+#: model:ir.ui.menu,name:donation.donation_top_menu
+#: model_terms:ir.ui.view,arch_db:donation.donation_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_tree
 msgid "Donation"
 msgstr "Donativo"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_campaign_id
-#: model:ir.model.fields,field_description:donation.field_donation_report_campaign_id
-#: model:ir.ui.view,arch_db:donation.donation_campaign_form
-#: model:ir.ui.view,arch_db:donation.donation_report_search
+#: model:ir.model.fields,field_description:donation.field_donation_donation__campaign_id
+#: model:ir.model.fields,field_description:donation.field_donation_report__campaign_id
+#: model_terms:ir.ui.view,arch_db:donation.donation_campaign_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 msgid "Donation Campaign"
 msgstr "Campaña de donativo"
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_campaign_action
 #: model:ir.ui.menu,name:donation.donation_campaign_menu
-#: model:ir.ui.view,arch_db:donation.donation_campaign_tree
+#: model_terms:ir.ui.view,arch_db:donation.donation_campaign_tree
 msgid "Donation Campaigns"
 msgstr "Campañas de donativos"
 
@@ -269,31 +280,32 @@ msgid "Donation Check Total"
 msgstr ""
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_donation_date
-#: model:ir.model.fields,field_description:donation.field_donation_report_donation_date
+#: model:ir.model.fields,field_description:donation.field_donation_donation__donation_date
+#: model:ir.model.fields,field_description:donation.field_donation_report__donation_date
 msgid "Donation Date"
 msgstr "Fecha de la donación"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_line_form
-#: model:ir.ui.view,arch_db:donation.donation_line_tree
+#: model_terms:ir.ui.view,arch_db:donation.donation_line_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_line_tree
 msgid "Donation Line"
 msgstr "Línea de donativos"
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_line
-#: model:ir.model.fields,field_description:donation.field_donation_donation_line_ids
-#: model:ir.ui.view,arch_db:donation.donation_form
+#: model:ir.model.fields,field_description:donation.field_donation_donation__line_ids
+#: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Donation Lines"
 msgstr "Líneas de donativos"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_number
+#: model:ir.model.fields,field_description:donation.field_donation_donation__number
 msgid "Donation Number"
 msgstr "Número de donativo"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_account_journal_allow_donation
+#: model:ir.model.fields,field_description:donation.field_account_bank_statement_import_journal_creation__allow_donation
+#: model:ir.model.fields,field_description:donation.field_account_journal__allow_donation
 msgid "Donation Payment Method"
 msgstr "Método de pago del donativo"
 
@@ -303,7 +315,7 @@ msgid "Donation Tax Receipts"
 msgstr "Recibo de impuestos de donativo"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:240
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Donation of %s"
 msgstr "Donativo de %s"
@@ -311,15 +323,14 @@ msgstr "Donativo de %s"
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_action
 #: model:ir.actions.act_window,name:donation.partner_donation_action
-#: model:ir.model.fields,field_description:donation.field_res_partner_donation_ids
-#: model:ir.model.fields,field_description:donation.field_res_users_donation_ids
+#: model:ir.model.fields,field_description:donation.field_res_partner__donation_ids
+#: model:ir.model.fields,field_description:donation.field_res_users__donation_ids
 #: model:ir.ui.menu,name:donation.donation_menu
 #: model:ir.ui.menu,name:donation.donation_title_menu
-#: model:ir.ui.menu,name:donation.donation_top_menu
-#: model:ir.ui.view,arch_db:donation.donation_graph
-#: model:ir.ui.view,arch_db:donation.donation_pivot
-#: model:ir.ui.view,arch_db:donation.donation_report_tree
-#: model:ir.ui.view,arch_db:donation.view_partner_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_graph
+#: model_terms:ir.ui.view,arch_db:donation.donation_pivot
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_tree
+#: model_terms:ir.ui.view,arch_db:donation.view_partner_form
 msgid "Donations"
 msgstr "Donativos"
 
@@ -327,9 +338,9 @@ msgstr "Donativos"
 #: model:ir.actions.act_window,name:donation.donation_report_action
 #: model:ir.model,name:donation.model_donation_report
 #: model:ir.ui.menu,name:donation.donation_report_menu
-#: model:ir.ui.view,arch_db:donation.donation_report_graph
-#: model:ir.ui.view,arch_db:donation.donation_report_pivot
-#: model:ir.ui.view,arch_db:donation.donation_report_search
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_graph
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_pivot
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 msgid "Donations Analysis"
 msgstr "Análisis de donativos"
 
@@ -339,14 +350,14 @@ msgid "Donations Lines"
 msgstr "Líneas de donativos"
 
 #. module: donation
-#: selection:donation.donation,state:0
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model:ir.model.fields.selection,name:donation.selection__donation_donation__state__done
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Done"
 msgstr "Realizado"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_partner_id
-#: model:ir.model.fields,field_description:donation.field_donation_report_partner_id
+#: model:ir.model.fields,field_description:donation.field_donation_donation__partner_id
+#: model:ir.model.fields,field_description:donation.field_donation_report__partner_id
 msgid "Donor"
 msgstr "Donante"
 
@@ -356,73 +367,105 @@ msgid "Donors"
 msgstr "Donantes"
 
 #. module: donation
-#: selection:donation.donation,state:0
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model:ir.model.fields.selection,name:donation.selection__donation_donation__state__draft
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Draft"
 msgstr "Borrador"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:477
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Draft Donation of %s"
 msgstr "Donación borrador de %s"
 
 #. module: donation
-#: model:ir.model.fields,help:donation.field_donation_donation_tax_receipt_total
+#: model:ir.model.fields,help:donation.field_donation_donation__tax_receipt_total
 msgid "Eligible Tax Receipt Sub-total in Company Currency"
 msgstr ""
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_report_tax_receipt_ok
-#: model:ir.ui.view,arch_db:donation.donation_report_search
+#: model:ir.model.fields,field_description:donation.field_donation_report__tax_receipt_ok
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 msgid "Eligible for a Tax Receipt"
 msgstr "Elegible para un recibo de impuestos"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:499
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Error:"
 msgstr "Error:"
 
 #. module: donation
-#: selection:donation.donation,tax_receipt_option:0
-#: selection:donation.tax.receipt.option.switch,new_tax_receipt_option:0
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_channel_ids
+msgid "Followers (Channels)"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields.selection,name:donation.selection__donation_donation__tax_receipt_option__each
+#: model:ir.model.fields.selection,name:donation.selection__donation_tax_receipt_option_switch__new_tax_receipt_option__each
 msgid "For Each Donation"
 msgstr "Por cada donación"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:397
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Full in-kind donation: no account move generated"
 msgstr "Donación completamente en especie: no se genera asiento contable"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_report_search
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_search
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Group By"
 msgstr "Agrupar por"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_campaign_id
-#: model:ir.model.fields,field_description:donation.field_donation_donation_id
-#: model:ir.model.fields,field_description:donation.field_donation_line_id
-#: model:ir.model.fields,field_description:donation.field_donation_report_id
-#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch_id
-#: model:ir.model.fields,field_description:donation.field_donation_validate_id
+#: model:ir.model.fields,field_description:donation.field_donation_campaign__id
+#: model:ir.model.fields,field_description:donation.field_donation_donation__id
+#: model:ir.model.fields,field_description:donation.field_donation_line__id
+#: model:ir.model.fields,field_description:donation.field_donation_report__id
+#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch__id
+#: model:ir.model.fields,field_description:donation.field_donation_validate__id
 msgid "ID"
 msgstr "ID"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_line_in_kind
-#: model:ir.model.fields,field_description:donation.field_donation_report_in_kind
-#: model:ir.ui.view,arch_db:donation.donation_report_search
+#: model:ir.model.fields,help:donation.field_donation_donation__message_needaction
+#: model:ir.model.fields,help:donation.field_donation_donation__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_donation_donation__message_has_error
+#: model:ir.model.fields,help:donation.field_donation_donation__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_donation_line__in_kind
+#: model:ir.model.fields,field_description:donation.field_donation_report__in_kind
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 msgid "In Kind"
 msgstr "En especie"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_line_tax_receipt_ok
+#: model:ir.model.fields,field_description:donation.field_donation_line__tax_receipt_ok
 msgid "Is Eligible for a Tax Receipt"
 msgstr "Es elegible para un recibo de impuestos"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_is_follower
+msgid "Is Follower"
+msgstr ""
 
 #. module: donation
 #: model:ir.model,name:donation.model_account_journal
@@ -430,32 +473,37 @@ msgid "Journal"
 msgstr "Diario"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_campaign___last_update
-#: model:ir.model.fields,field_description:donation.field_donation_donation___last_update
-#: model:ir.model.fields,field_description:donation.field_donation_line___last_update
-#: model:ir.model.fields,field_description:donation.field_donation_report___last_update
-#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch___last_update
-#: model:ir.model.fields,field_description:donation.field_donation_validate___last_update
+#: model:ir.model.fields,field_description:donation.field_donation_campaign____last_update
+#: model:ir.model.fields,field_description:donation.field_donation_donation____last_update
+#: model:ir.model.fields,field_description:donation.field_donation_line____last_update
+#: model:ir.model.fields,field_description:donation.field_donation_report____last_update
+#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch____last_update
+#: model:ir.model.fields,field_description:donation.field_donation_validate____last_update
 msgid "Last Modified on"
 msgstr "Última modificación el"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_campaign_write_uid
-#: model:ir.model.fields,field_description:donation.field_donation_donation_write_uid
-#: model:ir.model.fields,field_description:donation.field_donation_line_write_uid
-#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch_write_uid
-#: model:ir.model.fields,field_description:donation.field_donation_validate_write_uid
+#: model:ir.model.fields,field_description:donation.field_donation_campaign__write_uid
+#: model:ir.model.fields,field_description:donation.field_donation_donation__write_uid
+#: model:ir.model.fields,field_description:donation.field_donation_line__write_uid
+#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch__write_uid
+#: model:ir.model.fields,field_description:donation.field_donation_validate__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_campaign_write_date
-#: model:ir.model.fields,field_description:donation.field_donation_donation_write_date
-#: model:ir.model.fields,field_description:donation.field_donation_line_write_date
-#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch_write_date
-#: model:ir.model.fields,field_description:donation.field_donation_validate_write_date
+#: model:ir.model.fields,field_description:donation.field_donation_campaign__write_date
+#: model:ir.model.fields,field_description:donation.field_donation_donation__write_date
+#: model:ir.model.fields,field_description:donation.field_donation_line__write_date
+#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch__write_date
+#: model:ir.model.fields,field_description:donation.field_donation_validate__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
 
 #. module: donation
 #: model:ir.module.category,description:donation.module_category_donation
@@ -468,62 +516,97 @@ msgid "Manager"
 msgstr "Gestor"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:273
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Missing Default Debit Account on journal '%s'."
 msgstr "Falta la cuenta de débito por defecto del diario '%s'."
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_campaign_name
+#: model:ir.model.fields,field_description:donation.field_donation_campaign__name
 msgid "Name"
 msgstr "Nombre"
 
 #. module: donation
-#: selection:donation.donation,tax_receipt_option:0
+#: model:ir.model.fields.selection,name:donation.selection__donation_donation__tax_receipt_option__none
 msgid "None"
 msgstr "Ninguno"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_campaign_nota
+#: model:ir.model.fields,field_description:donation.field_donation_campaign__note
 msgid "Notes"
 msgstr "Notas"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_form
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_donation_donation__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_donation_donation__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_donation_donation__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: donation
+#: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Other Information"
 msgstr "Otra información"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_commercial_partner_id
+#: model:ir.model.fields,field_description:donation.field_donation_donation__commercial_partner_id
 msgid "Parent Donor"
 msgstr ""
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Parent Partner"
 msgstr ""
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_report_search
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_search
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Partner"
 msgstr "Empresa"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_report_country_id
-#: model:ir.ui.view,arch_db:donation.donation_report_search
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model:ir.model.fields,field_description:donation.field_donation_report__country_id
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_search
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Partner Country"
 msgstr "País de la empresa"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_journal_id
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model:ir.model.fields,field_description:donation.field_donation_donation__journal_id
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Payment Method"
 msgstr "Método de pago"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_payment_ref
+#: model:ir.model.fields,field_description:donation.field_donation_donation__payment_ref
 msgid "Payment Reference"
 msgstr "Referencia de pago"
 
@@ -533,14 +616,14 @@ msgid "Print Receipts"
 msgstr "Imprimir recibos"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_line_product_id
-#: model:ir.model.fields,field_description:donation.field_donation_report_product_id
-#: model:ir.ui.view,arch_db:donation.donation_report_search
+#: model:ir.model.fields,field_description:donation.field_donation_line__product_id
+#: model:ir.model.fields,field_description:donation.field_donation_report__product_id
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 msgid "Product"
 msgstr "Producto"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_report_search
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 msgid "Product Category"
 msgstr "Categoría de producto"
 
@@ -551,13 +634,13 @@ msgid "Products"
 msgstr "Productos"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_line_quantity
+#: model:ir.model.fields,field_description:donation.field_donation_line__quantity
 msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_donation_ids
-#: model:ir.ui.view,arch_db:donation.donation_tax_receipt_form
+#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt__donation_ids
+#: model_terms:ir.ui.view,arch_db:donation.donation_tax_receipt_form
 msgid "Related Donations"
 msgstr "Donaciones relacionadas"
 
@@ -567,33 +650,38 @@ msgid "Reports"
 msgstr "Informes"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_form
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: donation
+#: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Save Default Values"
 msgstr "Guardar valores por defecto"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Search Donations"
 msgstr "Buscar Donativos"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_line_sequence
+#: model:ir.model.fields,field_description:donation.field_donation_line__sequence
 msgid "Sequence"
 msgstr "Sequencia"
 
 #. module: donation
-#: model:ir.model.fields,help:donation.field_donation_line_tax_receipt_ok
+#: model:ir.model.fields,help:donation.field_donation_line__tax_receipt_ok
 msgid "Specify if the product is eligible for a tax receipt"
 msgstr "Especifica si el producto es elegible para un recibo de impuestos"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_campaign_start_date
+#: model:ir.model.fields,field_description:donation.field_donation_campaign__start_date
 msgid "Start Date"
 msgstr "Fecha de inicio"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_state
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model:ir.model.fields,field_description:donation.field_donation_donation__state
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "State"
 msgstr "Estado"
 
@@ -603,22 +691,22 @@ msgid "Switch Donation Tax Receipt Option"
 msgstr "Cambiar la opción del recibo de impuestos  de donaciones"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_tax_receipt_id
-#: model:ir.ui.view,arch_db:donation.donation_line_tree
+#: model:ir.model.fields,field_description:donation.field_donation_donation__tax_receipt_id
+#: model_terms:ir.ui.view,arch_db:donation.donation_line_tree
 msgid "Tax Receipt"
 msgstr "Recibo de impuestos"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_tax_receipt_total
-#: model:ir.model.fields,field_description:donation.field_donation_line_tax_receipt_amount
-#: model:ir.model.fields,field_description:donation.field_donation_report_tax_receipt_amount
+#: model:ir.model.fields,field_description:donation.field_donation_donation__tax_receipt_total
+#: model:ir.model.fields,field_description:donation.field_donation_line__tax_receipt_amount
+#: model:ir.model.fields,field_description:donation.field_donation_report__tax_receipt_amount
 msgid "Tax Receipt Eligible Amount"
 msgstr "Importe elegible para recibo de impuestos"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation_tax_receipt_option
-#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch_new_tax_receipt_option
-#: model:ir.ui.view,arch_db:donation.donation_search
+#: model:ir.model.fields,field_description:donation.field_donation_donation__tax_receipt_option
+#: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch__new_tax_receipt_option
+#: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Tax Receipt Option"
 msgstr "Opción de recibo de impuestos"
 
@@ -633,7 +721,7 @@ msgid "Tax Receipts"
 msgstr "Recibo de donaciones"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:379
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid ""
 "The amount of the donation of %s (%s) is different from the sum of the "
@@ -643,7 +731,7 @@ msgstr ""
 "donaciones (%s)."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:221
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid ""
 "The date of the donation of %s should be today or in the past, not in the "
@@ -652,13 +740,13 @@ msgstr ""
 "La fecha de la donación de %s debe ser hoy o en el pasado, no en el futuro!"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:458
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "The donation '%s' is in Done state, so you cannot delete it."
 msgstr "La donación '%s' está en el estado Realizado, no puede eliminarla."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:462
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid ""
 "The donation '%s' is linked to an account move, so you cannot delete it."
@@ -667,7 +755,7 @@ msgstr ""
 "eliminada."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:466
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid ""
 "The donation '%s' is linked to the tax receipt %s, so you cannot delete it."
@@ -676,7 +764,7 @@ msgstr ""
 "eliminada."
 
 #. module: donation
-#: code:addons/donation/models/account.py:19
+#: code:addons/donation/models/account.py:0
 #, python-format
 msgid ""
 "The journal '%s' has the option 'Donation Payment Method', so it's type "
@@ -686,27 +774,37 @@ msgstr ""
 "tipo debe ser 'Efectivo' o 'Banco'."
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_validate_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_validate_form
 msgid "This wizard will validate all the draft donations selected."
 msgstr "El asistente validará todas las donaciones en borrador seleccionadas."
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Total"
 msgstr "Total"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_report_tree
+#: model_terms:ir.ui.view,arch_db:donation.donation_report_tree
 msgid "True"
 msgstr "Verdadero"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_line_unit_price
+#: model:ir.model.fields,field_description:donation.field_donation_line__unit_price
 msgid "Unit Price"
 msgstr "Precio unitario"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_tax_receipt_option_switch_form
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,field_description:donation.field_donation_donation__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: donation
+#: model_terms:ir.ui.view,arch_db:donation.donation_tax_receipt_option_switch_form
 msgid "Update"
 msgstr "Actualizar"
 
@@ -721,13 +819,13 @@ msgid "Users"
 msgstr "Usuarios"
 
 #. module: donation
-#: model:ir.ui.view,arch_db:donation.donation_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Validate"
 msgstr "Validar"
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_validate
-#: model:ir.ui.view,arch_db:donation.donation_validate_form
+#: model_terms:ir.ui.view,arch_db:donation.donation_validate_form
 msgid "Validate Donations"
 msgstr "Validar donativos"
 
@@ -742,7 +840,17 @@ msgid "Viewer"
 msgstr "Visualizador"
 
 #. module: donation
-#: code:addons/donation/models/donation.py:431
+#: model:ir.model.fields,field_description:donation.field_donation_donation__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: donation
+#: model:ir.model.fields,help:donation.field_donation_donation__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid ""
 "You cannot cancel this donation because it is linked to the tax receipt %s. "
@@ -752,7 +860,7 @@ msgstr ""
 "Primero debe eliminar el recibo de impuestos (aunque puede que no sea legal)."
 
 #. module: donation
-#: code:addons/donation/models/donation.py:501
+#: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "You cannot change the Tax Receipt Option when it is Annual."
 msgstr "No puede cambiar la opción del recibo de impuestos cuando es Anual."
