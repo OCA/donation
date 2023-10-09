@@ -21,21 +21,21 @@ msgstr ""
 #: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
 msgid ""
-"A new draft direct debit order <a href=# data-oe-model=account.payment.order"
-" data-oe-id=%(payorder_id)d>%(payorder)s</a> has been automatically created"
+"A new draft direct debit order <a href=# data-oe-model=account.payment.order "
+"data-oe-id=%(payorder_id)d>%(payorder)s</a> has been automatically created"
 msgstr ""
 "Se ha creado automáticamente un nuevo borrador de orden de domiciliación "
-"bancaria <a href=# data-oe-model=account.paid.order data-oe-"
-"id=%(payorder_id)d>%(payorder)s</a>"
+"bancaria <a href=# data-oe-model=account.paid.order data-oe-id="
+"%(payorder_id)d>%(payorder)s</a>"
 
 #. module: donation_direct_debit
 #. odoo-python
 #: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
 msgid ""
-"A new payment line has been automatically added to the existing draft direct"
-" debit order <a href=# data-oe-model=account.payment.order data-oe-"
-"id=%(payorder_id)d>%(payorder)s</a>."
+"A new payment line has been automatically added to the existing draft direct "
+"debit order <a href=# data-oe-model=account.payment.order data-oe-id="
+"%(payorder_id)d>%(payorder)s</a>."
 msgstr ""
 "Se ha añadido automáticamente una nueva línea de pago al borrador de orden "
 "de domiciliación existente <a href=# data-oe-model=account.payment.order "
@@ -44,8 +44,8 @@ msgstr ""
 #. module: donation_direct_debit
 #: model:ir.model.fields,help:donation_direct_debit.field_donation_donation__mandate_required
 msgid ""
-"Activate this option if this payment method requires your customer to sign a"
-" direct debit mandate with your company."
+"Activate this option if this payment method requires your customer to sign a "
+"direct debit mandate with your company."
 msgstr ""
 "Active esta opción si este método de pago requiere que su cliente firme un "
 "mandato de domiciliación bancaria con su compañía."
