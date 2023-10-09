@@ -17,20 +17,33 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: donation_direct_debit
-#: code:addons/donation_direct_debit/donation.py:75
+#: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
-msgid "A new draft direct debit order %s has been automatically created"
-msgstr "Un nouvel ordre de prélèvement brouillon %s a été créé automatiquement"
+msgid ""
+"A new draft direct debit order <a href=# data-oe-model=account.payment.order "
+"data-oe-id=%d>%s</a> has been automatically created"
+msgstr ""
 
 #. module: donation_direct_debit
-#: code:addons/donation_direct_debit/donation.py:84
+#: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
 msgid ""
 "A new payment line has been automatically added to the existing draft direct "
-"debit order %s"
+"debit order <a href=# data-oe-model=account.payment.order data-oe-id=%d>%s</"
+"a>."
 msgstr ""
-"Une nouvelle ligne de paiement a été automatiquement ajoutée à l'ordre de "
-"prélèvement brouillon existant %s"
+
+#. module: donation_direct_debit
+#: model:ir.model.fields,help:donation_direct_debit.field_donation_donation__mandate_required
+msgid ""
+"Activate this option if this payment method requires your customer to sign a "
+"direct debit mandate with your company."
+msgstr ""
+
+#. module: donation_direct_debit
+#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: donation_direct_debit
 #: model:ir.model,name:donation_direct_debit.model_donation_donation
@@ -38,17 +51,27 @@ msgid "Donation"
 msgstr "Don"
 
 #. module: donation_direct_debit
-#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation_mandate_id
+#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation__id
+msgid "ID"
+msgstr ""
+
+#. module: donation_direct_debit
+#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: donation_direct_debit
+#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation__mandate_id
 msgid "Mandate"
 msgstr "Mandat"
 
 #. module: donation_direct_debit
-#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation_payment_mode_id
-msgid "Payment Mode"
+#: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation__mandate_required
+msgid "Mandate Required"
 msgstr ""
 
 #. module: donation_direct_debit
-#: code:addons/donation_direct_debit/donation.py:101
+#: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
 msgid ""
 "You cannot cancel a donation which is linked to a payment line in a direct "
@@ -56,6 +79,19 @@ msgid ""
 msgstr ""
 "Vous ne pouvez pas annuler un don lié à une ligne de paiement d'un ordre de "
 "prélèvement. Vous devez la supprimer de l'ordre de prélèvement %s."
+
+#, python-format
+#~ msgid "A new draft direct debit order %s has been automatically created"
+#~ msgstr ""
+#~ "Un nouvel ordre de prélèvement brouillon %s a été créé automatiquement"
+
+#, python-format
+#~ msgid ""
+#~ "A new payment line has been automatically added to the existing draft "
+#~ "direct debit order %s"
+#~ msgstr ""
+#~ "Une nouvelle ligne de paiement a été automatiquement ajoutée à l'ordre de "
+#~ "prélèvement brouillon existant %s"
 
 #~ msgid "No valid mandate found for donor %s"
 #~ msgstr "Aucun mandat valide trouvé pour le donateur %s"
