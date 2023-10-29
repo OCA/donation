@@ -349,7 +349,6 @@ msgstr "Si está marcado, nuevos mensajes requieren de su atención."
 
 #. module: donation_base
 #: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__message_has_error
-#: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcada, algunos mensajes tienen un error de entrega."
 
@@ -560,11 +559,6 @@ msgid "Responsible User"
 msgstr "Usuario Responsable"
 
 #. module: donation_base
-#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Error en la entrega de sms"
-
-#. module: donation_base
 #: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_form
 msgid "Send by Email"
 msgstr "Enviar por email"
@@ -683,6 +677,9 @@ msgstr ""
 #: model:mail.template,subject:donation_base.tax_receipt_email_template
 msgid "{{object.company_id.name}} - Tax Receipt {{object.number or 'n/a'}}"
 msgstr "{{object.company_id.name}} - Tax Receipt {{object.number or 'n/a'}}"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error en la entrega de sms"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Número de mensajes que requieren una acción"
