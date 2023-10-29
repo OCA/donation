@@ -606,7 +606,6 @@ msgstr "Si está marcada, nuevos mensajes requieren su atención."
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__message_has_error
-#: model:ir.model.fields,help:donation.field_donation_donation__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "si está marcada, algunos mensajes tienen un error de entrega."
 
@@ -950,11 +949,6 @@ msgid "Responsible User"
 msgstr "Usuario Responsable"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Error en la entrega de SMS"
-
-#. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Save Default Values"
 msgstr "Guardar valores por defecto"
@@ -1257,6 +1251,9 @@ msgstr ""
 #, python-format
 msgid "You cannot change the Tax Receipt Option when it is Annual."
 msgstr "No puede cambiar la opción del recibo de impuestos cuando es Anual."
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error en la entrega de SMS"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Números de mensajes que requieren una acción"
