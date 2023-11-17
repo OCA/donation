@@ -12,6 +12,10 @@
                     name="donation_account_id"
                     attrs="{'invisible': [('type', '!=', 'bank')]}"
                 />
+            <field
+                    name="donation_debit_order_account_id"
+                    attrs="{'invisible': [('type', '!=', 'bank')]}"
+                />
         </field>
     </field>
 </record>
