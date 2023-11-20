@@ -275,15 +275,12 @@ class DonationDonation(models.Model):
         }
         return vals
 
+    # TODO migration: remove 'journal' argument and use self.payment_mode_id.fixed_journal_id
     def _prepare_counterpart_move_line(
         self, total_company_cur, total_currency, journal
     ):
         self.ensure_one()
-        if not journal.payment_debit_account_id:
-            raise UserError(
-                _("Missing Outstanding Receipts Account on journal '%s'.")
-                % journal.display_name
-            )
+        journal = self.payment_mode_id.fixed_journal_id
         if self.company_currency_id.compare_amounts(total_company_cur, 0) > 0:
             debit = total_company_cur
             credit = 0
@@ -292,7 +289,19 @@ class DonationDonation(models.Model):
             debit = 0
         if self.bank_statement_line_id:
             account_id = journal.donation_account_id.id
+        elif self.payment_mode_id.payment_order_ok:
+            if not journal.donation_debit_order_account_id:
+                raise UserError(
+                    _("Missing Donation by Debit Order Account on journal '%s'.")
+                    % journal.display_name
+                )
+            account_id = journal.donation_debit_order_account_id.id
         else:
+            if not journal.payment_debit_account_id:
+                raise UserError(
+                    _("Missing Outstanding Receipts Account on journal '%s'.")
+                    % journal.display_name
+                )
             account_id = journal.payment_debit_account_id.id
         vals = {
             "debit": debit,

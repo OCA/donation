@@ -88,11 +88,11 @@ class DonationDonation(models.Model):
                         "data-oe-id=%d>%s</a> has been automatically created"
                     ) % (payorder.id, payorder.name)
                 # add payment line
-                payment_account_id = (
-                    donation.payment_mode_id.fixed_journal_id.payment_debit_account_id.id
+                match_account_id = (
+                    donation.payment_mode_id.fixed_journal_id.donation_debit_order_account_id.id
                 )
                 for mline in donation.move_id.line_ids:
-                    if mline.account_id.id == payment_account_id:
+                    if mline.account_id.id == match_account_id:
                         mline.sudo().create_payment_line_from_move_line(payorder)
                         break
                 if not msg:
