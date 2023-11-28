@@ -289,13 +289,6 @@ class DonationDonation(models.Model):
             debit = 0
         if self.bank_statement_line_id:
             account_id = journal.donation_account_id.id
-        elif self.payment_mode_id.payment_order_ok:
-            if not journal.donation_debit_order_account_id:
-                raise UserError(
-                    _("Missing Donation by Debit Order Account on journal '%s'.")
-                    % journal.display_name
-                )
-            account_id = journal.donation_debit_order_account_id.id
         else:
             if not journal.payment_debit_account_id:
                 raise UserError(
