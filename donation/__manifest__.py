@@ -22,7 +22,7 @@
         "wizard/res_config_settings.xml",
         "data/donation_sequence.xml",
         "views/account_payment_mode.xml",
-        #        "views/account_bank_statement.xml",
+        "views/account_journal.xml",
         "views/donation_campaign.xml",
         "views/donation_thanks_template.xml",
         "views/res_users.xml",
