@@ -15,6 +15,7 @@
     "depends": ["account_banking_sepa_direct_debit", "donation"],
     "data": [
         "views/donation.xml",
+        "views/account_journal.xml",
     ],
     "demo": ["demo/donation_demo.xml"],
     "installable": True,

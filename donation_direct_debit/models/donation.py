@@ -57,6 +57,22 @@ class DonationDonation(models.Model):
         vals = {"payment_mode_id": self.payment_mode_id.id}
         return vals
 
+    def _prepare_counterpart_move_line(
+        self, total_company_cur, total_currency, journal
+    ):
+        vals = super()._prepare_counterpart_move_line(
+            total_company_cur, total_currency, journal
+        )
+        journal = self.payment_mode_id.fixed_journal_id
+        if not self.bank_statement_line_id and self.payment_mode_id.payment_order_ok:
+            if not journal.donation_debit_order_account_id:
+                raise UserError(
+                    _("Missing Donation by Debit Order Account on journal '%s'.")
+                    % journal.display_name
+                )
+            vals["account_id"] = journal.donation_debit_order_account_id.id
+        return vals
+
     def validate(self):
         """Create Direct debit payment order on donation validation or update
         an existing draft Direct Debit pay order"""
