@@ -83,6 +83,7 @@ class DonationDonation(models.Model):
                 donation.payment_mode_id
                 and donation.payment_mode_id.payment_type == "inbound"
                 and donation.payment_mode_id.payment_order_ok
+                and donation.payment_mode_id.payment_method_code == "sepa_direct_debit"
                 and donation.move_id
             ):
                 payorders = apoo.search(
