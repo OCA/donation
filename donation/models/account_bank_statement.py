@@ -96,6 +96,7 @@ class AccountBankStatement(models.Model):
                 ("company_id", "=", self.company_id.id),
                 ("payment_type", "=", "inbound"),
                 ("fixed_journal_id", "=", self.journal_id.id),
+                ("payment_method_code", "in", ("manual", "sepa_credit_transfer")),
             ],
             limit=1,
         )
