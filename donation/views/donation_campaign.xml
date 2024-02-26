@@ -34,7 +34,7 @@
         <field name="name">donation.campaign.tree</field>
         <field name="model">donation.campaign</field>
         <field name="arch" type="xml">
-            <tree string="Donation Campaigns">
+            <tree>
                 <field name="sequence" widget="handle" />
                 <field name="code" optional="show" />
                 <field name="name" />
