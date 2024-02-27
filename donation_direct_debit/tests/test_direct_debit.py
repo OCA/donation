@@ -11,10 +11,19 @@ class TestDirectDebit(TransactionCase):
         dd_payment_mode = self.env.ref(
             "account_banking_sepa_direct_debit.payment_mode_inbound_sepa_dd1"
         )
+        trf_acc = self.env["account.account"].create(
+            {
+                "code": "TESTDD9",
+                "name": "Donation by debit debit trf account",
+                "reconcile": True,
+                "user_type_id": self.env.ref("account.data_account_type_receivable").id,
+            }
+        )
         bank_journal = self.env["account.journal"].create(
             {
                 "type": "bank",
                 "name": "Bank account test",
+                "donation_debit_order_account_id": trf_acc.id,
             }
         )
         dd_payment_mode.write(

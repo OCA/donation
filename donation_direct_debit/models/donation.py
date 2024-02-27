@@ -78,47 +78,41 @@ class DonationDonation(models.Model):
         an existing draft Direct Debit pay order"""
         res = super().validate()
         apoo = self.env["account.payment.order"].sudo()
+        aplo = self.env["account.payment.line"].sudo()
         for donation in self:
             if (
                 donation.payment_mode_id
                 and donation.payment_mode_id.payment_type == "inbound"
                 and donation.payment_mode_id.payment_order_ok
+                and donation.payment_mode_id.payment_method_code == "sepa_direct_debit"
                 and donation.move_id
             ):
-                payorders = apoo.search(
-                    [
-                        ("state", "=", "draft"),
-                        ("company_id", "=", donation.company_id.id),
-                        ("payment_mode_id", "=", donation.payment_mode_id.id),
-                    ]
-                )
-                msg = False
-                if payorders:
-                    payorder = payorders[0]
-                else:
-                    payorder_vals = donation._prepare_payment_order()
-                    payorder = apoo.create(payorder_vals)
-                    msg = _(
-                        "A new draft direct debit order "
-                        "<a href=# data-oe-model=account.payment.order "
-                        "data-oe-id=%d>%s</a> has been automatically created"
-                    ) % (payorder.id, payorder.name)
-                # add payment line
                 match_account_id = (
                     donation.payment_mode_id.fixed_journal_id.donation_debit_order_account_id.id
                 )
                 for mline in donation.move_id.line_ids:
                     if mline.account_id.id == match_account_id:
-                        mline.sudo().create_payment_line_from_move_line(payorder)
+                        payorder = apoo.search(
+                            [
+                                ("state", "=", "draft"),
+                                ("company_id", "=", donation.company_id.id),
+                                ("payment_mode_id", "=", donation.payment_mode_id.id),
+                            ],
+                            limit=1,
+                        )
+                        if not payorder:
+                            payorder_vals = donation._prepare_payment_order()
+                            payorder = apoo.create(payorder_vals)
+                        payline_vals = mline._prepare_payment_line_vals(payorder)
+                        payline = aplo.create(payline_vals)
+                        msg = _(
+                            "A new payment line %s has been automatically added "
+                            "to the draft direct debit order "
+                            "<a href=# data-oe-model=account.payment.order "
+                            "data-oe-id=%d>%s</a>."
+                        ) % (payline.name, payorder.id, payorder.name)
+                        donation.message_post(body=msg)
                         break
-                if not msg:
-                    msg = _(
-                        "A new payment line has been automatically added "
-                        "to the existing draft direct debit order "
-                        "<a href=# data-oe-model=account.payment.order "
-                        "data-oe-id=%d>%s</a>."
-                    ) % (payorder.id, payorder.name)
-                donation.message_post(body=msg)
         return res
 
     def done2cancel(self):

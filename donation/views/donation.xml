@@ -147,7 +147,7 @@
         <field name="name">donation.tree</field>
         <field name="model">donation.donation</field>
         <field name="arch" type="xml">
-            <tree string="Donation">
+            <tree>
                 <header>
                         <button
                         name="%(donation_validate_action)d"
@@ -301,7 +301,7 @@
         <field name="name">donation.line.tree</field>
         <field name="model">donation.line</field>
         <field name="arch" type="xml">
-            <tree string="Donation Line" editable="bottom">
+            <tree editable="bottom">
                 <field name="sequence" widget="handle" />
                 <field
                     name="donation_id"

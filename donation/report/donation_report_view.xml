@@ -96,7 +96,7 @@
         <field name="name">donation.report.tree</field>
         <field name="model">donation.report</field>
         <field name="arch" type="xml">
-            <tree string="Donations">
+            <tree>
                 <field name="partner_id" />
                 <field name="donation_date" />
                 <field name="country_id" />
