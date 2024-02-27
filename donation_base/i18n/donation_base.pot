@@ -195,7 +195,6 @@ msgstr ""
 #. module: donation_base
 #: model:ir.actions.report,name:donation_base.report_donation_tax_receipt
 #: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_form
-#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_tree
 #: model_terms:ir.ui.view,arch_db:donation_base.report_donationtaxreceipt_document
 msgid "Donation Tax Receipt"
 msgstr ""
