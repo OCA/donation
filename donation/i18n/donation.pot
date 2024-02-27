@@ -333,7 +333,6 @@ msgstr ""
 #: model:ir.module.category,name:donation.module_category_donation
 #: model:ir.ui.menu,name:donation.donation_top_menu
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
-#: model_terms:ir.ui.view,arch_db:donation.donation_tree
 #: model_terms:ir.ui.view,arch_db:donation.res_config_settings_donation
 msgid "Donation"
 msgstr ""
@@ -383,7 +382,6 @@ msgstr ""
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_campaign_action
 #: model:ir.ui.menu,name:donation.donation_campaign_menu
-#: model_terms:ir.ui.view,arch_db:donation.donation_campaign_tree
 msgid "Donation Campaigns"
 msgstr ""
 
@@ -400,7 +398,6 @@ msgstr ""
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_line_form
-#: model_terms:ir.ui.view,arch_db:donation.donation_line_tree
 msgid "Donation Line"
 msgstr ""
 
@@ -429,11 +426,6 @@ msgstr ""
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_thanks_template_form
 msgid "Donation Thanks Template"
-msgstr ""
-
-#. module: donation
-#: model_terms:ir.ui.view,arch_db:donation.donation_thanks_template_tree
-msgid "Donation Thanks Templates"
 msgstr ""
 
 #. module: donation
@@ -466,7 +458,6 @@ msgstr ""
 #: model:ir.ui.menu,name:donation.donation_title_menu
 #: model_terms:ir.ui.view,arch_db:donation.donation_graph
 #: model_terms:ir.ui.view,arch_db:donation.donation_pivot
-#: model_terms:ir.ui.view,arch_db:donation.donation_report_tree
 #: model_terms:ir.ui.view,arch_db:donation.view_bank_statement_form
 #: model_terms:ir.ui.view,arch_db:donation.view_partner_form
 msgid "Donations"
@@ -1058,6 +1049,14 @@ msgstr ""
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Thanks to Print"
+msgstr ""
+
+#. module: donation
+#: code:addons/donation/models/account_journal.py:0
+#, python-format
+msgid ""
+"The Donation by Credit Transfer Account of journal '%(journal)s' must be "
+"reconciliable, but the account '%(account)s' is not reconciliable."
 msgstr ""
 
 #. module: donation
