@@ -57,6 +57,7 @@ class AccountBankStatement(models.Model):
             "product_id": company.donation_credit_transfer_product_id.id,
             "quantity": 1,
             "unit_price": amount,
+            "analytic_account_id": move_line.analytic_account_id.id or False,
         }
         partner = stline.partner_id
         vals = {
