@@ -17,3 +17,6 @@ If you want "Annual Tax Receipts" for everyone, do this:
 * * Add the "Tax Receipt Option" to the list of fields to export.
 * * Export, download, open the spreadsheet, set "Annual Tax Receipt" on all lines, save.
 * * Odoo contact list - Favorites - Import records - Load file - Import.
+
+An Annual Tax Receipt will be sent to the "commercial partner".
+If a contact is not a company and has a "parent", the parent is the commercial partner.
