@@ -35,6 +35,10 @@ class DonationTaxReceipt(models.Model):
         domain=[("parent_id", "=", False)],
         index=True,
     )
+    partner_tag_ids = fields.Many2many(
+        related="partner_id.category_id",
+        help="Use tags on the donor to segment e.g. communication (email / snailmail)",
+    )
     company_id = fields.Many2one(
         "res.company",
         string="Company",

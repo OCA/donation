@@ -28,6 +28,7 @@
                             options="{'datepicker': {'warn_future': true}}"
                         />
                         <field name="partner_id" />
+                        <field name="partner_tag_ids" widget="many2many_tags" />
                         <field name="type" widget="radio" />
                         <field
                             name="donation_date"
@@ -54,6 +55,7 @@
             <tree>
                 <field name="number" />
                 <field name="partner_id" />
+                <field name="partner_tag_ids" widget="many2many_tags" optional="hide" />
                 <field name="date" />
                 <field name="donation_date" optional="hide" />
                 <field
@@ -81,6 +83,7 @@
             <search string="Search Donation Tax Receipts">
                 <field name="number" />
                 <field name="partner_id" />
+                <field name="partner_tag_ids" />
                 <filter
                     name="each"
                     string="One-Time Tax Receipts"
