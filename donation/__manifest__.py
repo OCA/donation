@@ -35,4 +35,5 @@
     "post_init_hook": "update_account_payment_mode",
     "demo": ["demo/donation_demo.xml"],
     "installable": True,
+    "application": True,
 }
