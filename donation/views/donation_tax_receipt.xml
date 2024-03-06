@@ -7,15 +7,38 @@
 -->
 <odoo>
     <record id="donation_tax_receipt_form" model="ir.ui.view">
-        <field name="name">donation.donation.tax.receipt.form</field>
+        <field name="name">donation.tax.receipt.form</field>
         <field name="model">donation.tax.receipt</field>
         <field name="inherit_id" ref="donation_base.donation_tax_receipt_form" />
         <field name="arch" type="xml">
+            <group name="main" position="inside">
+                <field name="thanks_template_id" />
+            </group>
             <group name="main" position="after">
                 <group name="donations" string="Related Donations">
                     <field name="donation_ids" nolabel="1" />
                 </group>
             </group>
+        </field>
+    </record>
+    <record id="donation_tax_receipt_tree" model="ir.ui.view">
+        <field name="name">donation.tax.receipt.tree</field>
+        <field name="model">donation.tax.receipt</field>
+        <field name="inherit_id" ref="donation_base.donation_tax_receipt_tree" />
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field name="thanks_template_id" optional="hide" />
+            </tree>
+        </field>
+    </record>
+    <record id="donation_tax_receipt_search" model="ir.ui.view">
+        <field name="name">donation.tax.receipt.search</field>
+        <field name="model">donation.tax.receipt</field>
+        <field name="inherit_id" ref="donation_base.donation_tax_receipt_search" />
+        <field name="arch" type="xml">
+            <search position="inside">
+                <field name="thanks_template_id" />
+            </search>
         </field>
     </record>
 </odoo>
