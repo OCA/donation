@@ -59,6 +59,11 @@ class AccountBankStatement(models.Model):
             "unit_price": amount,
             "analytic_account_id": move_line.analytic_account_id.id or False,
         }
+        # https://github.com/ows-cloud/apps/tree/14.0/donation_analytic_description
+        if "donation_description" in self.env["account.analytic.account"]._fields:
+            line_vals["description"] = move_line.analytic_account_id.with_context(
+                lang=stline.partner_id.lang
+            ).donation_description
         partner = stline.partner_id
         vals = {
             "company_id": company.id,
