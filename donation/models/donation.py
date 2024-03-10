@@ -87,6 +87,14 @@ class DonationDonation(models.Model):
         store=True,
         index=True,
     )
+    partner_address_ok = fields.Boolean(
+        related="partner_id.address_ok",
+        string="Donor address OK",
+    )
+    partner_lang = fields.Selection(
+        related="partner_id.lang",
+        string="Donor language",
+    )
     partner_tag_ids = fields.Many2many(
         string="Donor Tags",
         related="partner_id.category_id",

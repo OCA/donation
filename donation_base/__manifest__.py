@@ -11,7 +11,10 @@
     "author": "Barroux Abbey, Akretion, Odoo Community Association (OCA)",
     "maintainers": ["alexis-via"],
     "website": "https://github.com/OCA/donation",
-    "depends": ["account"],
+    "depends": [
+        "account",
+        "partner_address_ok", # https://github.com/OCA/partner-contact/pull/1694
+    ],
     "data": [
         "security/ir.model.access.csv",
         "security/tax_receipt_security.xml",

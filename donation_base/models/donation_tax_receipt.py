@@ -35,8 +35,17 @@ class DonationTaxReceipt(models.Model):
         domain=[("parent_id", "=", False)],
         index=True,
     )
+    partner_address_ok = fields.Boolean(
+        related="partner_id.address_ok",
+        string="Donor address OK",
+    )
+    partner_lang = fields.Selection(
+        related="partner_id.lang",
+        string="Donor language",
+    )
     partner_tag_ids = fields.Many2many(
         related="partner_id.category_id",
+        string="Donor tags",
         help="Use tags on the donor to segment e.g. communication (email / snailmail)",
     )
     company_id = fields.Many2one(

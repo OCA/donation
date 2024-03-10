@@ -68,6 +68,8 @@
                     <group name="main">
                         <group name="manual">
                             <field name="partner_id" />
+                            <field name="partner_address_ok" />
+                            <field name="partner_lang" />
                             <field name="partner_tag_ids" widget="many2many_tags" />
                             <field name="commercial_partner_id" invisible="1" />
                             <field name="payment_mode_id" widget="selection" />
@@ -170,6 +172,8 @@
                     </header>
                 <field name="number" invisible="context.get('recurring_view')" />
                 <field name="partner_id" invisible="context.get('partner_view')" />
+                <field name="partner_address_ok" optional="hide" />
+                <field name="partner_lang" optional="hide" />
                 <field name="partner_tag_ids" widget="many2many_tags" optional="hide" />
                 <field name="donation_date" />
                 <field name="amount_total_company_currency" sum="1" />
@@ -211,6 +215,7 @@
             <search string="Search Donations">
                 <field name="number" />
                 <field name="partner_id" />
+                <field name="partner_lang" />
                 <field name="partner_tag_ids" widget="many2many_tags" />
                 <separator />
                 <filter
