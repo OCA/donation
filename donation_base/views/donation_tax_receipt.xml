@@ -29,6 +29,7 @@
                         />
                         <field name="partner_id" />
                         <field name="partner_address_ok" />
+                        <field name="partner_email" />
                         <field name="partner_lang" />
                         <field name="partner_tag_ids" widget="many2many_tags" />
                         <field name="type" widget="radio" />
@@ -58,6 +59,7 @@
                 <field name="number" />
                 <field name="partner_id" />
                 <field name="partner_address_ok" optional="hide" />
+                <field name="partner_email" optional="hide" />
                 <field name="partner_lang" optional="hide" />
                 <field name="partner_tag_ids" widget="many2many_tags" optional="hide" />
                 <field name="date" />

@@ -91,6 +91,10 @@ class DonationDonation(models.Model):
         related="partner_id.address_ok",
         string="Donor address OK",
     )
+    partner_email = fields.Char(
+        related="partner_id.email",
+        string="Donor email",
+    )
     partner_lang = fields.Selection(
         related="partner_id.lang",
         string="Donor language",

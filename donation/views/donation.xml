@@ -69,6 +69,7 @@
                         <group name="manual">
                             <field name="partner_id" />
                             <field name="partner_address_ok" />
+                            <field name="partner_email" />
                             <field name="partner_lang" />
                             <field name="partner_tag_ids" widget="many2many_tags" />
                             <field name="commercial_partner_id" invisible="1" />
@@ -152,14 +153,14 @@
         <field name="arch" type="xml">
             <tree>
                 <header>
-                        <button
+                    <button
                         name="%(donation_validate_action)d"
                         type="action"
                         string="Validate"
                         groups="donation.group_donation_user"
                         invisible="context.get('recurring_view')"
                     />
-                        <button
+                    <button
                         name="thanks_printed_button"
                         type="object"
                         string="Mark as Thanks Printed"
@@ -169,10 +170,11 @@
                     />
                         <!-- Unfortunately, confirm="" doesn't work for
                             buttons in tree view... at least not in v14 -->
-                    </header>
+                </header>
                 <field name="number" invisible="context.get('recurring_view')" />
                 <field name="partner_id" invisible="context.get('partner_view')" />
                 <field name="partner_address_ok" optional="hide" />
+                <field name="partner_email" optional="hide" />
                 <field name="partner_lang" optional="hide" />
                 <field name="partner_tag_ids" widget="many2many_tags" optional="hide" />
                 <field name="donation_date" />
