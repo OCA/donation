@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-18 18:35+0000\n"
+"PO-Revision-Date: 2024-03-18 21:33+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -61,7 +61,7 @@ msgstr "ID"
 #. module: donation_direct_debit
 #: model:ir.model,name:donation_direct_debit.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Diario"
 
 #. module: donation_direct_debit
 #: model:ir.model.fields,field_description:donation_direct_debit.field_account_journal____last_update
@@ -83,7 +83,7 @@ msgstr "Mandato Requerido"
 #: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
 msgid "Missing Donation by Debit Order Account on journal '%s'."
-msgstr ""
+msgstr "Falta Donación por Cuenta de Orden de Débito en el diario '%s'."
 
 #. module: donation_direct_debit
 #: code:addons/donation_direct_debit/models/account_journal.py:0
@@ -93,6 +93,9 @@ msgid ""
 "receivable account, but the account '%(account)s' is configured with type "
 "'%(account_type)s'."
 msgstr ""
+"La cuenta Donación por orden de cargo del diario '%(journal)s' debe ser una "
+"cuenta deudora, pero la cuenta '%(account)s' está configurada con el tipo "
+"'%(account_type)s'."
 
 #. module: donation_direct_debit
 #: code:addons/donation_direct_debit/models/account_journal.py:0
@@ -101,6 +104,8 @@ msgid ""
 "The Donation by Debit Order Account of journal '%(journal)s' must be "
 "reconciliable, but the account '%(account)s' is not reconciliable."
 msgstr ""
+"La cuenta \"Donación por orden de cargo\" del diario \"%(journal)s\" debe "
+"ser conciliable, pero la cuenta \"%(account)s\" no lo es."
 
 #. module: donation_direct_debit
 #: model:ir.model.fields,help:donation_direct_debit.field_account_journal__donation_debit_order_account_id
@@ -109,6 +114,10 @@ msgid ""
 "handle donations by debit order on this bank account.This account must be a "
 "receivable account, otherwise the debit order will not work."
 msgstr ""
+"Cuenta de transferencia para donaciones por orden de débito. Déjela vacía si "
+"no gestiona donaciones por orden de débito en esta cuenta bancaria. Esta "
+"cuenta debe ser una cuenta deudora; de lo contrario, la orden de débito no "
+"funcionará."
 
 #. module: donation_direct_debit
 #: code:addons/donation_direct_debit/models/donation.py:0
