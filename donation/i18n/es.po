@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-11 21:44+0000\n"
-"PO-Revision-Date: 2024-02-21 00:41+0000\n"
+"PO-Revision-Date: 2024-03-18 21:33+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
@@ -1021,7 +1021,7 @@ msgstr ""
 #. module: donation
 #: model:ir.model,name:donation.model_donation_tax_receipt_option_switch
 msgid "Switch Donation Tax Receipt Option"
-msgstr "Cambiar la opción del recibo de impuestos  de donaciones"
+msgstr "Cambiar la Opción del Recibo de Impuestos de Donaciones"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__tax_receipt_id
@@ -1093,6 +1093,8 @@ msgid ""
 "The Donation by Credit Transfer Account of journal '%(journal)s' must be "
 "reconciliable, but the account '%(account)s' is not reconciliable."
 msgstr ""
+"La cuenta de donaciones por transferencia del diario \"%(journal)s\" debe "
+"ser conciliable, pero la cuenta \"%(account)s\" no lo es."
 
 #. module: donation
 #: code:addons/donation/models/donation.py:0
