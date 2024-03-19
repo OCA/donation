@@ -20,11 +20,28 @@ class ResPartner(models.Model):
         for partner in self:
             partner.donation_count = mapped_data.get(partner.id, 0)
 
+    @api.depends("donation_ids.thanks_printed")
+    def _compute_donation_send_thanks(self):
+        for partner in self:
+            if partner.donation_ids.filtered(lambda d: not d.thanks_printed):
+                partner.donation_send_thanks = "yes"
+            else:
+                partner.donation_send_thanks = "no"
+
     donation_ids = fields.One2many(
         "donation.donation", "partner_id", string="Donations", readonly=True
     )
     donation_count = fields.Integer(
         compute="_compute_donation_count", string="# of Donations", compute_sudo=True
+    )
+    # Stored selection to search on the <field>
+    donation_send_thanks = fields.Selection(
+        string="Send Donation Thanks",
+        selection=[("yes", "Yes"), ("no", "No")],
+        compute="_compute_donation_send_thanks",
+        store=True,
+        help="""Filter on donors who (don't) need a thanks.\n
+                Send it e.g. together with a newsletter.""",
     )
 
     def _prepare_donor_rank(self):

@@ -68,13 +68,17 @@
                     <group name="main">
                         <group name="manual">
                             <field name="partner_id" />
+                            <field name="partner_address_ok" />
+                            <field name="partner_email" />
+                            <field name="partner_lang" />
+                            <field name="partner_tag_ids" widget="many2many_tags" />
                             <field name="commercial_partner_id" invisible="1" />
                             <field name="payment_mode_id" widget="selection" />
                             <field
                                 name="currency_id"
                                 groups="base.group_multi_currency"
                             />
-                                <field name="company_currency_id" invisible="1" />
+                            <field name="company_currency_id" invisible="1" />
                             <field
                                 name="check_total"
                                 groups="donation.group_donation_check_total"
@@ -149,14 +153,14 @@
         <field name="arch" type="xml">
             <tree>
                 <header>
-                        <button
+                    <button
                         name="%(donation_validate_action)d"
                         type="action"
                         string="Validate"
                         groups="donation.group_donation_user"
                         invisible="context.get('recurring_view')"
                     />
-                        <button
+                    <button
                         name="thanks_printed_button"
                         type="object"
                         string="Mark as Thanks Printed"
@@ -166,9 +170,13 @@
                     />
                         <!-- Unfortunately, confirm="" doesn't work for
                             buttons in tree view... at least not in v14 -->
-                    </header>
+                </header>
                 <field name="number" invisible="context.get('recurring_view')" />
                 <field name="partner_id" invisible="context.get('partner_view')" />
+                <field name="partner_address_ok" optional="hide" />
+                <field name="partner_email" optional="hide" />
+                <field name="partner_lang" optional="hide" />
+                <field name="partner_tag_ids" widget="many2many_tags" optional="hide" />
                 <field name="donation_date" />
                 <field name="amount_total_company_currency" sum="1" />
                 <field name="amount_total" optional="hide" />
@@ -209,6 +217,8 @@
             <search string="Search Donations">
                 <field name="number" />
                 <field name="partner_id" />
+                <field name="partner_lang" />
+                <field name="partner_tag_ids" widget="many2many_tags" />
                 <separator />
                 <filter
                     name="draft"
@@ -222,7 +232,7 @@
                     domain="[('state', '=', 'cancel')]"
                 />
                 <separator />
-            <filter
+                <filter
                     name="thanks_to_print"
                     string="Thanks to Print"
                     domain="[('thanks_printed', '=', False)]"

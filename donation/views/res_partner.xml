@@ -29,4 +29,25 @@
             </xpath>
         </field>
     </record>
+    <record id="res_partner_view_form_donation_send_thanks" model="ir.ui.view">
+        <field name="name">res.partner.view.form.donation.send.thanks</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="donation_base.view_partner_property_form" />
+        <field name="groups_id" eval="[(4, ref('donation.group_donation_viewer'))]" />
+        <field name="arch" type="xml">
+            <field name="tax_receipt_send" position="after">
+                <field name="donation_send_thanks" />
+            </field>
+        </field>
+    </record>
+    <record id="res_partner_view_search" model="ir.ui.view">
+        <field name="name">res.partner.view.search.donation</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="donation_base.res_partner_view_search" />
+        <field name="arch" type="xml">
+            <search position="inside">
+                <field name="donation_send_thanks" />
+            </search>
+        </field>
+    </record>
 </odoo>

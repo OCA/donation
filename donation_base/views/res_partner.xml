@@ -26,6 +26,10 @@
                     name="tax_receipt_option"
                     attrs="{'invisible': [('parent_id', '!=', False)]}"
                 />
+                <field
+                    name="tax_receipt_send"
+                    attrs="{'invisible': [('parent_id', '!=', False)]}"
+                />
                 <field name="donor_rank" invisible="1" />
             </field>
             <xpath expr="//div[@name='button_box']" position="inside">
@@ -44,19 +48,22 @@
                 </button>
             </xpath>
         </field>
-</record>
+    </record>
     <record id="res_partner_view_search" model="ir.ui.view">
             <field name="name">donation.res.partner.search</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="account.res_partner_view_search" />
             <field name="arch" type="xml">
-                    <filter name="supplier" position="after">
-                        <filter
-                    string="Donors"
-                    name="donor"
-                    domain="[('donor_rank','>', 0)]"
-                />
+                <filter name="supplier" position="after">
+                    <filter
+                        string="Donors"
+                        name="donor"
+                        domain="[('donor_rank','>', 0)]"
+                    />
                 </filter>
+                <search position="inside">
+                    <field name="tax_receipt_send" />
+                </search>
             </field>
     </record>
     <record id="res_partner_action_donor" model="ir.actions.act_window">

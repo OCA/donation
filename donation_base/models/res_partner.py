@@ -25,6 +25,15 @@ class ResPartner(models.Model):
     tax_receipt_count = fields.Integer(
         compute="_compute_tax_receipt_count", string="# of Tax Receipts", readonly=True
     )
+    # Stored selection to search on the <field>
+    tax_receipt_send = fields.Selection(
+        string="Send Donation Tax Receipt",
+        selection=[("yes", "Yes"), ("no", "No")],
+        compute="_compute_tax_receipt_send",
+        store=True,
+        help="""Filter on donors who (don't) need a tax receipt.\n
+                Send it e.g. together with a newsletter.""",
+    )
     donor_rank = fields.Integer(default=0)
 
     # I don't want to sync tax_receipt_option between parent and child
@@ -35,6 +44,14 @@ class ResPartner(models.Model):
     def _compute_tax_receipt_count(self):
         for partner in self:
             partner.tax_receipt_count = len(partner.tax_receipt_ids.ids)
+
+    @api.depends("tax_receipt_ids.print_date")
+    def _compute_tax_receipt_send(self):
+        for partner in self:
+            if partner.tax_receipt_ids.filtered(lambda d: not d.print_date):
+                partner.tax_receipt_send = "yes"
+            else:
+                partner.tax_receipt_send = "no"
 
     @api.model_create_multi
     def create(self, vals_list):

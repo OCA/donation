@@ -12,6 +12,12 @@ class DonationTaxReceipt(models.Model):
     donation_ids = fields.One2many(
         "donation.donation", "tax_receipt_id", string="Related Donations"
     )
+    thanks_template_id = fields.Many2one(
+        "donation.thanks.template",
+        string="Thanks Template",
+        ondelete="restrict",
+        copy=False,
+    )
 
     @api.model
     def update_tax_receipt_annual_dict(
