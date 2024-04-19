@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
     <data noupdate="1">
         <record id="email_template_donation_summary" model="mail.template">
@@ -13,14 +13,13 @@
                 <div style="margin: 0px; padding: 0px;">
                     <p style="margin: 0px; padding: 0px; font-size: 13px;"> Dear
                        <t t-out="object.partner_id.name or ''">Brandon Freeman</t>, <br
-                       />
+                        />
                        <br
-                       /> We want to express our sincere gratitude for your suport and generosity towards our mission.
-                       <br
+                        /> We want to express our sincere gratitude for your suport and generosity towards our mission.                       <br
                        /> We are pleased to inform you that attached you will find a detailed summary of all
                        the donations you have made from <t
-                           t-out="object.start_date or ''"
-                       >01/01/2023</t>
+                            t-out="object.start_date or ''"
+                        >01/01/2023</t>
                        to <t t-out="object.end_date or ''">31/12/2023</t>.
                         <br />
                         <br

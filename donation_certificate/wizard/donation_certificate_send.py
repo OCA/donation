@@ -32,7 +32,7 @@ class DonationCertificateSend(models.TransientModel):
     template_id = fields.Many2one(
         "mail.template",
         "Use template",
-        domain="[("model", "=", "donation.tax.receipt"), ]",
+        domain="[('model', '=', 'donation.tax.receipt'), ]",
         default=lambda self: self._get_report_template(),
     )
 

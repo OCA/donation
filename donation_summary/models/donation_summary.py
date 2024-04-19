@@ -239,7 +239,7 @@ class DonationSummary(models.Model):
 
     def action_print_donation_summary(self):
         """Print the certificate and mark it as sent, so that we can see more
-            easily the next step of the workflow
+        easily the next step of the workflow
         """
         self.filtered(lambda sum: not sum.is_summary_send).write(
             {"is_summary_send": True}

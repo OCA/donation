@@ -35,7 +35,7 @@
     </record>
 
     <menuitem
-        id="donation_summary_menu" 
+        id="donation_summary_menu"
         action="donation_summary_action"
         parent="donation.donation_title_menu"
         sequence="20"

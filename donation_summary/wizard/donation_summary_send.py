@@ -1,7 +1,7 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.misc import get_lang
- 
+
 from odoo.addons.mail.wizard.mail_compose_message import _reopen
 
 
