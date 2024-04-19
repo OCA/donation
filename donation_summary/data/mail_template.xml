@@ -11,34 +11,42 @@
             <field name="description">Donation Summary</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
-                    <p style="margin: 0px; padding: 0px; font-size: 13px;"> Dear 
-                        <t t-out="object.partner_id.name or ''">Brandon Freeman</t>, <br />
-                        <br /> We want to express our sincere gratitude for your suport and generosity towards our mission.
-                        <br /> We are pleased to inform you that attached you will find a detailed summary of all 
-                        the donations you have made from <t t-out="object.start_date or ''">01/01/2023</t>
-                        to <t t-out="object.end_date or ''">31/12/2023</t>. 
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;"> Dear
+                       <t t-out="object.partner_id.name or ''">Brandon Freeman</t>, <br
+                       />
+                       <br
+                       /> We want to express our sincere gratitude for your suport and generosity towards our mission.
+                       <br
+                       /> We are pleased to inform you that attached you will find a detailed summary of all
+                       the donations you have made from <t
+                           t-out="object.start_date or ''"
+                       >01/01/2023</t>
+                       to <t t-out="object.end_date or ''">31/12/2023</t>.
                         <br />
-                        <br /> This summary includes the date and amount of each contribution, allowing you to have a 
-                        clear overview of your impact on our organization. 
+                        <br
+                        /> This summary includes the date and amount of each contribution, allowing you to have a
+                        clear overview of your impact on our organization.
                         <br />
-                        <br /> The total amount of your donations during this period add up to <span
+                        <br
+                        /> The total amount of your donations during this period add up to <span
                             style="font-weight:bold;"
-                            t-out="format_amount(object.amount_total, object.currency_id) or ''">$
+                            t-out="format_amount(object.amount_total, object.currency_id) or ''"
+                        >$
                         143,750.00</span>.
                         <br />
                         <br />
-                        <br /> If you would like more details or have any questions about your donation history,
+                        <br
+                        /> If you would like more details or have any questions about your donation history,
                         please fell free to contact us. <br />
                         <br /> Cordially, <br />
                         <br />
-                        <t
-                            t-out="object.company_id.name or ''">
+                        <t t-out="object.company_id.name or ''">
                             Association name </t>
                     </p>
                 </div>
             </field>
             <field name="lang">{{ object.partner_id.lang }}</field>
-            <field name="report_template" ref="report_donation_summary"/>
+            <field name="report_template" ref="report_donation_summary" />
             <field name="report_name">RDS_{{ (object.name or '') }}</field>
         </record>
     </data>

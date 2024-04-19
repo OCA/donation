@@ -1,13 +1,13 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8' ?>
 <odoo>
     <!-- Comments: Tengo mis dudas de si poner este botón o que el usuario acceda desde el botón "action" -->
     <record id="donation_cert_form_inherit_donation" model="ir.ui.view">
         <field name="name">donation.form.view.form.inherit</field>
         <field name="model">donation.donation</field>
-        <field name="inherit_id" ref="donation.donation_form"/>
+        <field name="inherit_id" ref="donation.donation_form" />
         <field name="arch" type="xml">
             <xpath expr="//form/header/button[@name='validate']" position="after">
-                <field name="is_certificate_send" invisible="1"/>
+                <field name="is_certificate_send" invisible="1" />
             </xpath>
         </field>
     </record>
@@ -28,8 +28,8 @@
     <!-- Comments: Debería asignarlo a que solo lo vea el tipo de [groups="donation.group_donation_user"] ?? -->
     <record id="action_donation_tax_receipt_send_and_print" model="ir.actions.server">
         <field name="name">Send Certificate</field>
-        <field name="model_id" ref="donation.model_donation_tax_receipt"/>
-        <field name="binding_model_id" ref="donation.model_donation_tax_receipt"/>
+        <field name="model_id" ref="donation.model_donation_tax_receipt" />
+        <field name="binding_model_id" ref="donation.model_donation_tax_receipt" />
         <!-- <field name='groups_id' eval="[(4, ref('account.group_account_invoice'))]"/> -->
         <field name="state">code</field>
         <field name="code">
@@ -41,7 +41,7 @@
     <record id="donation_tree_inherited" model="ir.ui.view">
         <field name="name">donation.donation.tree.inherited</field>
         <field name="model">donation.donation</field>
-        <field name="inherit_id" ref="donation.donation_tree"/>
+        <field name="inherit_id" ref="donation.donation_tree" />
         <field name="arch" type="xml">
             <xpath expr="//tree" position="inside">
                 <field name="tax_receipt_id" optional="hide" />

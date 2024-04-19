@@ -10,7 +10,7 @@
     "author": "Brenda Fernández Alayo",
     "license": "AGPL-3",
     "installable": True,
-    "depends": ['donation', 'account', 'mail', 'donation_base'],
+    "depends": ["donation", "account", "mail", "donation_base"],
     "data": [
         "security/ir.model.access.csv",
         "data/mail_template.xml",

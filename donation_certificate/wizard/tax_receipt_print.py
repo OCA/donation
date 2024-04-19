@@ -6,7 +6,6 @@
 from odoo import _, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import get_lang
-import wdb
 
 
 class DonationTaxReceiptPrint(models.TransientModel):
@@ -14,7 +13,12 @@ class DonationTaxReceiptPrint(models.TransientModel):
     _description = "Print Donation Tax Receipts"
 
     lang = fields.Selection(
-        [("es_ES", "Spanish"), ("ca_ES", "Catalan"), ("fr_FR", "French"), ("en_GB", "English")],
+        [
+            ("es_ES", "Spanish"),
+            ("ca_ES", "Catalan"),
+            ("fr_FR", "French"),
+            ("en_GB", "English"),
+        ],
         # readonly=True,
         # copy=False,
         # default="draft",
@@ -37,10 +41,12 @@ class DonationTaxReceiptPrint(models.TransientModel):
 
     def get_ref_report_name(self, lang):
         report_names = {
-            'es_ES': "donation_certificate.donation_certificate_report_py3o_ES",
-            'ca_ES': "donation_certificate.donation_certificate_report_py3o_CAT",
-            'fr_FR': "donation_certificate.donation_certificate_report_py3o_FR",
-            'en_GB': "donation_certificate.donation_certificate_report_py3o_EN"
+            "es_ES": "donation_certificate.donation_certificate_report_py3o_ES",
+            "ca_ES": "donation_certificate.donation_certificate_report_py3o_CAT",
+            "fr_FR": "donation_certificate.donation_certificate_report_py3o_FR",
+            "en_GB": "donation_certificate.donation_certificate_report_py3o_EN",
         }
 
-        return report_names.get(lang, "donation_certificate.donation_certificate_report_py3o_EN")
+        return report_names.get(
+            lang, "donation_certificate.donation_certificate_report_py3o_EN"
+        )

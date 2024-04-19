@@ -9,22 +9,22 @@
     <record id="donation_tax_receipt_print_form_inherit" model="ir.ui.view">
         <field name="name">donation_tax_receipt_print.form.inherit</field>
         <field name="model">donation.tax.receipt.print</field>
-        <field name="inherit_id" ref="donation_base.donation_tax_receipt_print_form"/>
+        <field name="inherit_id" ref="donation_base.donation_tax_receipt_print_form" />
         <field name="arch" type="xml">
             <xpath expr="//group[@name='main']/field[@name='receipt_ids']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//group[@name='main']" position="inside">
-                <field name="lang" widget="label_selection"/>
+                <field name="lang" widget="label_selection" />
             </xpath>
             <xpath expr="//group[@name='main']" position="after">
                 <field name="receipt_ids" nolabel="1">
                     <tree editable="bottom">
-                        <field name="number"/>
-                        <field name="date"/>
-                        <field name="partner_id"/>
-                        <field name="type"/>
-                        <field name="amount"/>
+                        <field name="number" />
+                        <field name="date" />
+                        <field name="partner_id" />
+                        <field name="type" />
+                        <field name="amount" />
                     </tree>
                 </field>
             </xpath>

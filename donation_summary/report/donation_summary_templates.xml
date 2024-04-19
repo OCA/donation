@@ -1,17 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <template id="report_donationsummary_document">
         <t t-call="web.external_layout">
             <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
             <t t-set="address">
-                <div t-field="o.partner_id"
-                    t-options='{"widget": "contact", "fields": ["address", "name", "phone", "vat"], "no_marker": True, "phone_icons": True}' />
+                <div
+                    t-field="o.partner_id"
+                    t-options='{"widget": "contact", "fields": ["address", "name", "phone", "vat"], "no_marker": True, "phone_icons": True}'
+                />
             </t>
             <t t-set="information_block">
                 <strong>Donor :</strong>
-                <div t-field="o.partner_id"
+                <div
+                    t-field="o.partner_id"
                     t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
-                    name="purchase_shipping_address" />
+                    name="purchase_shipping_address"
+                />
                 <strong>Start Date :</strong>
                 <span t-field="o.start_date" />
                 <strong>End Date :</strong>
@@ -20,7 +24,9 @@
             <div class="page">
                 <div class="oe_structure" />
 
-                <h2 class="mt-4">Request for Donation Summary: <span t-field="o.name" /></h2>
+                <h2 class="mt-4">Request for Donation Summary: <span
+                       t-field="o.name"
+                   /></h2>
 
                 <table class="table table-condensed">
                     <thead style="display: table-row-group">
@@ -73,8 +79,10 @@
     <template id="report_donationsummary">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="donation_summary.report_donationsummary_document"
-                    t-lang="o.partner_id.lang" />
+                <t
+                    t-call="donation_summary.report_donationsummary_document"
+                    t-lang="o.partner_id.lang"
+                />
             </t>
         </t>
     </template>

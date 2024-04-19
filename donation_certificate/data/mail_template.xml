@@ -5,7 +5,7 @@
         <record id="email_template_donation_certificate" model="mail.template">
             <field name="name">Donation: Certificate</field>
             <field name="model_id" ref="donation.model_donation_tax_receipt" />
-            <field name="auto_delete" eval="True"/>
+            <field name="auto_delete" eval="True" />
             <field name="email_from">{{ object.company_id.email }}</field>
             <field name="email_to">{{ object.partner_id.email }}</field>
             <field name="subject">Donation Certificate</field>
@@ -18,7 +18,10 @@
                         <br />
                         <br />
                         We want to express our sincere gratitude for your generous donation of
-                        <span style="font-weight:bold;" t-out="format_amount(object.amount, object.currency_id) or ''">$ 143,750.00</span>
+                        <span
+                            style="font-weight:bold;"
+                            t-out="format_amount(object.amount, object.currency_id) or ''"
+                        >$ 143,750.00</span>
                         to our organization. This contribution is a testament to your commitment and trust in our work.
                         <br />
                         <br />
@@ -30,7 +33,7 @@
                         <br />
                         <t t-out="object.company_id.name or ''">
                             --
-                            <br/>
+                            <br />
                             Association name
                         </t>
                     </p>

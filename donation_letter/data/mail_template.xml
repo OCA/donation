@@ -4,7 +4,7 @@
         <record id="email_template_thanks_letter" model="mail.template">
             <field name="name">Donation: Thanks Letter by email</field>
             <field name="model_id" ref="donation.model_donation_donation" />
-            <field name="auto_delete" eval="True"/>
+            <field name="auto_delete" eval="True" />
             <field name="email_from">{{ object.company_id.email }}</field>
             <field name="email_to">{{ object.partner_id.email }}</field>
             <field name="subject">Thank you for your donation</field>
@@ -14,9 +14,11 @@
                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
                         Dear
                         <t t-if="object.commercial_partner_id">
-                            <t t-out="object.partner_id.name or ''">Brandon Freeman</t> 
-                            (                            
-                            <t t-out="object.commercial_partner_id.name or ''">Azure Interior</t>
+                            <t t-out="object.partner_id.name or ''">Brandon Freeman</t>
+                            (
+                            <t
+                                t-out="object.commercial_partner_id.name or ''"
+                            >Azure Interior</t>
                             ),
                         </t>
                         <t t-else="">
@@ -25,7 +27,10 @@
                         <br />
                         <br />
                         We want to express our sincere gratitude for your generous donation of
-                        <span style="font-weight:bold;" t-out="format_amount(object.amount_total, object.currency_id) or ''">$ 143,750.00</span>
+                        <span
+                            style="font-weight:bold;"
+                            t-out="format_amount(object.amount_total, object.currency_id) or ''"
+                        >$ 143,750.00</span>
                         to our organization. This contribution is a testament to your commitment and trust in our work.
                         <br />
                         <br />
@@ -37,7 +42,7 @@
                         <br />
                         <t t-out="object.company_id.name or ''">
                                 --
-                            <br/>
+                            <br />
                                 Association name
                         </t>
                     </p>
