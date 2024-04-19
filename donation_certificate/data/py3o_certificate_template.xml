@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="py3o_template_certificate_ES" model="py3o.template">
+        <field name="name">Donation Certificate ES</field>
+        <field name="filetype">odt</field>
+        <field name="py3o_template_fallback">report/PDA34_Certificat_de_donacions_ES.odt</field>
+    </record>
+
+    <record id="py3o_template_certificate_CAT" model="py3o.template">
+        <field name="name">Donation Certificate CAT</field>
+        <field name="filetype">odt</field>
+        <field name="py3o_template_fallback">report/PDA34_Certificat_de_donacions_CAT.odt</field>
+    </record>
+
+    <record id="py3o_template_certificate_FR" model="py3o.template">
+        <field name="name">Donation Certificate FR</field>
+        <field name="filetype">odt</field>
+        <field name="py3o_template_fallback">report/PDA34_Certificat_de_donacions_FR.odt</field>
+    </record>
+
+    <record id="py3o_template_certificate_EN" model="py3o.template">
+        <field name="name">Donation Certificate EN</field>
+        <field name="filetype">odt</field>
+        <field name="py3o_template_fallback">report/PDA34_Certificat_de_donacions_EN.odt</field>
+    </record>
+
+</odoo>

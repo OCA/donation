@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- Comments: Tengo mis dudas de si poner este botón o que el usuario acceda desde el botón "action" -->
+    <record id="donation_tax_receipt_print_action" model="ir.ui.view">
+        <field name="name">donation.tax.receipt.view.form.inherit</field>
+        <field name="model">donation.tax.receipt</field>
+        <field name="inherit_id" ref="donation_base.donation_tax_receipt_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button name="action_print_tax_receipt" type="object" string="Print" class="btn-secondary"/>
+            </header>
+        </field>
+    </record>
+
+    <record id="donation_tax_receipt_invisible_print" model="ir.ui.view">
+        <field name="name">donation.tax.receipt.view.form.inherit</field>
+        <field name="model">donation.tax.receipt</field>
+        <field name="inherit_id" ref="donation_base.donation_tax_receipt_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(donation_base.report_donation_tax_receipt)d']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

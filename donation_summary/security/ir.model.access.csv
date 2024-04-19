@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_donation_summary,donation.summary,donation_summary.model_donation_summary,base.group_user,1,1,1,1
+access_donation_donation,donation.donation,donation.model_donation_donation,base.group_user,1,1,1,1
+access_donation_summary_send,donation.summary.send,donation_summary.model_donation_summary_send,base.group_user,1,1,1,1
