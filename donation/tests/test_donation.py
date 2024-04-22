@@ -15,10 +15,18 @@ class TestDonation(TransactionCase):
 
     def setUp(self):
         super().setUp()
+        donation_debit_order_account = self.env["account.account"].create(
+            {
+                "code": "1013Don",
+                "name": "Account Receivable Don",
+                "account_type": "asset_receivable",
+            }
+        )
         self.bank_journal = self.env["account.journal"].create(
             {
                 "type": "bank",
                 "name": "test bank journal",
+                "donation_debit_order_account_id": donation_debit_order_account.id
             }
         )
         self.payment_mode = self.env["account.payment.mode"].create(
