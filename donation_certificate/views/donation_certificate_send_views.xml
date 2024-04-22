@@ -30,11 +30,16 @@
                         <label for="is_email" />
                     </b>
                 </div>
-                <div class="text-start d-inline-block mr8" attrs="{'invisible': ['|', ('is_email','=', False), ('donation_without_email', '=', False)]}">
-                    <field name="donation_without_email" class="mr4"/>
+                <div
+                    class="text-start d-inline-block mr8"
+                    attrs="{'invisible': ['|', ('is_email','=', False), ('donation_without_email', '=', False)]}"
+                >
+                    <field name="donation_without_email" class="mr4" />
                 </div>
                 <div name="mail_form" attrs="{'invisible': [('is_email', '=', False)]}">
-                    <div attrs="{'invisible': [('composition_mode', '=', 'mass_mail')]}">
+                    <div
+                        attrs="{'invisible': [('composition_mode', '=', 'mass_mail')]}"
+                    >
                         <group>
                             <label
                                 for="partner_ids"

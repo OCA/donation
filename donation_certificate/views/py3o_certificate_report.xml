@@ -54,8 +54,10 @@
         <field name="binding_model_id" />
     </record>
 
-    <record id="py3o_template_configuration_form_view_inherit_report_py3o" model="ir.ui.view">
-        <field name="name">py3o.template.view.form.inherit</field>
+    <record
+        id="py3o_template_configuration_form_view_inherit_report_py3o"
+        model="ir.ui.view"
+    >        <field name="name">py3o.template.view.form.inherit</field>
         <field name="model">py3o.template</field>
         <field
             name="inherit_id"

@@ -34,9 +34,13 @@ class DonationTaxReceipt(models.Model):
                     if line.product_id.detailed_type == "donation":
                         amount_donation = amount_donation + line.amount
                     elif line.product_id.detailed_type == "donation_in_kind_consu":
-                        amount_donation_in_kind_consu = amount_donation_in_kind_consu + line.amount
+                        amount_donation_in_kind_consu = (
+                            amount_donation_in_kind_consu + line.amount
+                        )
                     else:
-                        amount_donation_in_kind_service = amount_donation_in_kind_service + line.amount
+                        amount_donation_in_kind_service = (
+                            amount_donation_in_kind_service + line.amount
+                        )
             rec.amount_donation = round(amount_donation, 2)
             rec.amount_donation_in_kind_consu = round(amount_donation_in_kind_consu, 2)
             rec.amount_donation_in_kind_service = round(

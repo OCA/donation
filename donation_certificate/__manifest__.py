@@ -22,6 +22,6 @@
         "views/donation_send_cert_button.xml",
         "views/py3o_certificate_report.xml",
         "wizard/tax_receipt_annual_create_view.xml",
-        "wizard/tax_receipt_print_view.xml"
+        "wizard/tax_receipt_print_view.xml",
     ],
 }

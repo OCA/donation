@@ -72,4 +72,4 @@ class Donation(models.Model):
         """
         :return: the correct mail template based on the current move type
         """
-        return 'donation_certificate.email_template_donation_certificate'
+        return "donation_certificate.email_template_donation_certificate"

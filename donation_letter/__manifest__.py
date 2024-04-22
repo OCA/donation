@@ -6,7 +6,7 @@
     "summary": "Donation Thanks Letter",
     "version": "16.0.1.0.0",
     "category": "Custom",
-    "website": "https://www.qubiq.es",
+    "website": "https://github.com/OCA/donation",
     "author": "Brenda Fernández Alayo",
     "license": "AGPL-3",
     "installable": True,

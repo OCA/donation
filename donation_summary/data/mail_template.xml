@@ -16,7 +16,7 @@
                         />
                        <br
                         /> We want to express our sincere gratitude for your suport and generosity towards our mission.                       <br
-                       /> We are pleased to inform you that attached you will find a detailed summary of all
+                        /> We are pleased to inform you that attached you will find a detailed summary of all
                        the donations you have made from <t
                             t-out="object.start_date or ''"
                         >01/01/2023</t>

@@ -52,13 +52,17 @@ class DonationCertificateSend(models.TransientModel):
         if not tax_receipts:
             raise UserError(_("You can only send invoices."))
 
-        composer = self.env["mail.compose.message"].create({
-            "composition_mode": "comment" if len(res_ids) == 1 else "mass_mail",
-        })
-        res.update({
-            "tax_receipt_ids": res_ids,
-            "composer_id": composer.id,
-        })
+        composer = self.env["mail.compose.message"].create(
+            {
+                "composition_mode": "comment" if len(res_ids) == 1 else "mass_mail",
+            }
+        )
+        res.update(
+            {
+                "tax_receipt_ids": res_ids,
+                "composer_id": composer.id,
+            }
+        )
         return res
 
     @api.onchange("tax_receipt_ids")
@@ -74,7 +78,7 @@ class DonationCertificateSend(models.TransientModel):
             "es_ES": "donation_certificate.donation_certificate_report_py3o_ES",
             "ca_ES": "donation_certificate.donation_certificate_report_py3o_CAT",
             "fr_FR": "donation_certificate.donation_certificate_report_py3o_FR",
-            "en_GB": "donation_certificate.donation_certificate_report_py3o_EN"
+            "en_GB": "donation_certificate.donation_certificate_report_py3o_EN",
         }
         report_name = report_names.get(
             lang, "donation_certificate.donation_certificate_report_py3o_EN"
@@ -110,7 +114,7 @@ class DonationCertificateSend(models.TransientModel):
             res_ids = self._context.get("active_ids")
             data = {
                 "composition_mode": "comment" if len(res_ids) == 1 else "mass_mail",
-                "template_id": self.template_id.id
+                "template_id": self.template_id.id,
             }
             if not self.composer_id:
                 self.composer_id = self.env["mail.compose.message"].create(data)
@@ -123,10 +127,12 @@ class DonationCertificateSend(models.TransientModel):
     def _compute_donation_without_email(self):
         for wizard in self:
             if wizard.is_email and len(wizard.tax_receipt_ids) > 1:
-                tax_receipts = self.env["donation.tax.receipt"].search([
-                    ("id", "in", self.env.context.get("active_ids")),
-                    ("partner_id.email", "=", False)
-                ])
+                tax_receipts = self.env["donation.tax.receipt"].search(
+                    [
+                        ("id", "in", self.env.context.get("active_ids")),
+                        ("partner_id.email", "=", False),
+                    ]
+                )
                 if tax_receipts:
                     wizard.donation_without_email = "%s\n%s" % (
                         _(
@@ -175,8 +181,12 @@ class DonationCertificateSend(models.TransientModel):
             active_records = self.env[self.model].browse(active_ids)
             langs = set(active_records.mapped("partner_id.lang"))
             for lang in langs:
-                active_ids_lang = active_records.filtered(lambda r: r.partner_id.lang == lang).ids
-                self_lang = self.with_context(active_ids=active_ids_lang, lang=get_lang(self.env, lang).code)
+                active_ids_lang = active_records.filtered(
+                    lambda r: r.partner_id.lang == lang
+                ).ids
+                self_lang = self.with_context(
+                    active_ids=active_ids_lang, lang=get_lang(self.env, lang).code
+                )
                 self_lang.onchange_template_id()
                 self_lang._send_email()
         else:
@@ -196,7 +206,7 @@ class DonationCertificateSend(models.TransientModel):
         return action
 
     def _print_document(self):
-        """ to override for each type of models that will use this composer."""
+        """to override for each type of models that will use this composer."""
         self.ensure_one()
         action = self.tax_receipt_ids.action_print_tax_receipt()
         action.update({"close_on_report_download": True})
