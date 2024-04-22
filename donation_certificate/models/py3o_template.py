@@ -1,7 +1,10 @@
 from base64 import b64encode
+
 # import sys
 import pkg_resources
+
 from odoo import api, fields, models
+
 # import os
 
 

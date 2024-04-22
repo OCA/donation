@@ -158,7 +158,7 @@ class DonationSummary(models.Model):
                 ]
             donations = self.env["donation.donation"].search(domain)
             if not donations:
-                raise UserError("There must be at least one donation in the summary.")
+                raise UserError(_("There must be at least one donation in the summary."))
             rec.donation_ids = donations
 
     def massive_send_summary(self):

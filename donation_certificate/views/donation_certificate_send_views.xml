@@ -48,7 +48,7 @@
                             />
                             <div groups="base.group_user">
                                 <span
-                                   attrs="{'invisible': [('composition_mode', '!=', 'mass_mail')]}"
+                                    attrs="{'invisible': [('composition_mode', '!=', 'mass_mail')]}"
                                 >
                                     <strong>Email mass mailing</strong> on
                                     <span>the selected records</span>
