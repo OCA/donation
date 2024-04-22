@@ -1,0 +1,3 @@
+libreoffice
+default-jre
+libreoffice-java-common
