@@ -13,8 +13,8 @@ class TestDirectDebit(TransactionCase):
         )
         donation_debit_order_account = self.env["account.account"].create(
             {
-                "code": "101300",
-                "name": "Account Receivable",
+                "code": "1013NEW",
+                "name": "Account Receivable NEW",
                 "account_type": "asset_receivable",
             }
         )
