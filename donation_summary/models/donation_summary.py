@@ -5,7 +5,6 @@ from odoo.exceptions import UserError
 from odoo.tools.misc import get_lang
 
 
-
 class DonationSummary(models.Model):
     _name = "donation.summary"
     _inherit = ["mail.thread", "mail.activity.mixin"]

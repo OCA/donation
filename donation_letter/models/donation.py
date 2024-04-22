@@ -56,7 +56,6 @@ class Donation(models.Model):
 
         return report_action
 
-
     def action_donation_print(self):
         """Print the donation and mark it as sent, so that we can see more
         easily the next step of the workflow
