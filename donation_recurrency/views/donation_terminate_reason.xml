@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="donation_terminate_reason_form_view">
+        <field name="model">donation.terminate.reason</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="terminate_comment_required" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record
+        model="ir.ui.view" id="donation_terminate_reason_tree_view">
+        <field name="model">donation.terminate.reason</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="terminate_comment_required" />
+            </tree>
+        </field>
+    </record>
+    <record
+        model="ir.actions.act_window" id="recurrency_terminate_reason_action">
+        <field name="name">Recurrency Termination Reason</field>
+        <field name="res_model">donation.terminate.reason</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <record model="ir.ui.menu"
+        id="donation_terminate_reason_menu">
+        <field name="name">Contract Termination Reason</field>
+        <field name="parent_id" ref="menu_config_donation" />
+        <field name="action" ref="donation_terminate_reason_act_window" />
+        <field name="sequence" eval="16" />
+    </record> -->
+
+    <menuitem
+        id="donation_recurrency_terminate_reason_menu"
+        action="recurrency_terminate_reason_action"
+        parent="donation.donation_config_menu"
+        sequence="20"
+    />
+</odoo>

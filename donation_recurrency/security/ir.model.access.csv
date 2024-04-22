@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_donation_recurrency,donation.recurrency,model_donation_recurrency,base.group_user,1,1,1,1
+access_donation_recurrency_line,donation.recurrency.line,model_donation_recurrency_line,base.group_user,1,1,1,1
+access_donation_donation_rec,donation.donation,donation.model_donation_donation,base.group_user,1,1,1,1
+access_donation_terminate_reason,donation.terminate.reason,model_donation_terminate_reason,base.group_user,1,1,1,1
+access_donation_recurrency_terminate,donation.recurrency.terminate,model_donation_recurrency_terminate,base.group_user,1,1,1,1

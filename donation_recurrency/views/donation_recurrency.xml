@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="recurrency_donation_action" model="ir.actions.act_window">
+        <field name="name">Donations</field>
+        <field name="res_model">donation.donation</field>
+        <field name="view_mode">tree,form,graph</field>
+        <field name="context">{'search_default_contract_id': active_id}</field>
+    </record>
+    <record id="donation_recurrency_form" model="ir.ui.view">
+        <field name="name">donation.recurrency.form</field>
+        <field name="model">donation.recurrency</field>
+        <field name="arch" type="xml">
+            <form string="Donation">
+                <field name="is_terminated" invisible='1' />
+                <div
+                    class="alert alert-danger"
+                    role="alert"
+                    style="margin-bottom:0px;"
+                    attrs="{'invisible': [('is_terminated','=',False)]}"
+                >
+                    <p> This recurrency was terminated for the reason <strong>
+                            <field
+                                name="terminate_reason_id"
+                                options="{'no_open':True}"
+                            />
+                        </strong> on <field
+                            name="terminate_date" /> . </p>
+                    <p>
+                        <field name="terminate_comment" />
+                    </p>
+                </div>
+                <header>
+                    
+                    <button string="Create Donations"
+                        name="recurring_create_donations"
+                        type="object"
+                        attrs="{'invisible': [('is_terminated','=',True)]}"
+                        />
+                    <button
+                        name="action_terminate_recurrency"
+                        type="object"
+                        string="Terminate Recurrency"
+                        attrs="{'invisible': [('is_terminated','=',True)]}"
+                    />
+                </header>
+                <sheet string="Donation Recurrency">
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            class="oe_stat_button"
+                            type="action"
+                            name="%(recurrency_donation_action)d"
+                            icon="fa-heart-o"
+                        >
+                            <field string="Donations" name="donation_count" widget="statinfo" />
+                        </button>
+                    </div>
+                    <group name="main">
+                        <group>
+                            <field name="partner_id"
+                                attrs="{'readonly': [('is_terminated','=',True)]}"
+                            />
+                            <field name="company_id" invisible="1" />
+                            <field name="payment_mode_id"
+                                widget="selection"
+                                attrs="{'readonly': [('is_terminated','=',True)]}"
+                            />
+                            <field name="thanks_template_id"
+                                attrs="{'readonly': [('is_terminated','=',True)]}"
+                            />
+                            <field name="campaign_id"
+                                attrs="{'readonly': [('is_terminated','=',True)]}"
+                            />
+                        </group>
+                        <notebook>
+                            <page string="Donation Lines" name="lines">
+                                <field name="line_ids" nolabel="1"
+                                    attrs="{'readonly': [('is_terminated','=',True)]}"
+                                />
+                                <!-- <group name="subtotal" class="oe_subtotal_footer oe_right">
+                            <field
+                                name="amount_total"
+                                string="Total"
+                                class="oe_subtotal_footer_separator"
+                            />
+                        </group> -->
+                            </page>
+                        </notebook>
+                    </group>
+                    <group name="recurring_invoices">
+                        <label for="recurring_interval" />
+                        <div class="o_row">
+                            <field
+                                name="recurring_interval"
+                                class="oe_inline"
+                                nolabel="1"
+                            />
+                            <field
+                                name="recurring_rule_type"
+                                class="oe_inline"
+                                nolabel="1"
+                            />
+                        </div>
+                    </group>
+                    <group>
+                        <field
+                            name="date_start"
+                        />
+                        <field name="date_end" />
+                        <field name="recurring_next_date" />
+                    </group>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="donation_line_tree" model="ir.ui.view">
+        <field name="name">donation.recurrency.line.tree</field>
+        <field name="model">donation.recurrency.line</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="sequence" widget="handle" />
+                <field
+                    name="donation_id"
+                    invisible="not context.get('donation_recurrency_line_main_view')"
+                />
+                <field name="product_id" context="{'default_donation': True}" />
+                <field name="product_detailed_type" optional="hide" />
+                <field name="quantity" />
+                <field name="unit_price" />
+                <field
+                    name="analytic_distribution"
+                    widget="analytic_distribution"
+                    groups="analytic.group_analytic_accounting"
+                    options="{'product_field': 'product_id', 'business_domain': 'donation'}"
+                />
+                <field name="amount" />
+                <field name="tax_receipt_ok" string="Tax Receipt" optional="show" />
+                <field name="in_kind" optional="hide" />
+                <field name="currency_id" invisible="1" />
+                <field name="company_id" invisible="1" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="donation_rec_line_action" model="ir.actions.act_window">
+        <field name="name">Donations Rec Lines</field>
+        <field name="res_model">donation.recurrency.line</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="donation_recurrency_tree" model="ir.ui.view">
+        <field name="name">donation.recurrency.tree</field>
+        <field name="model">donation.recurrency</field>
+        <field name="arch" type="xml">
+            <tree>
+                <header>
+                    <button
+                        name="recurring_create_donations"
+                        type="object"
+                        string="Create donations"
+                    />
+                </header>
+                <!-- <field name="code" /> -->
+                <field name="number" />
+                <field name="date_start" />
+                <field name="date_end" />
+                <field name="recurring_next_date" />
+                <field name="recurring_interval" />
+                <field name="recurring_rule_type" />
+                <field name="partner_id" />
+                <field name="payment_mode_id" />
+                <!-- <field name="tax_receipt_option" /> -->
+            </tree>
+        </field>
+    </record>
+
+    <!-- <record id="donation_recurrency_search" model="ir.ui.view">
+        <field name="name">donation.recurrency.search</field>
+        <field name="model">donation.recurrency</field>
+        <field name="inherit_id" ref="donation.donation_search" />
+        <field name="arch" type="xml">
+            <filter name="cancel" position="after">
+                <separator />
+                <filter
+                    name="from_recurring"
+                    string="From Recurring"
+                    domain="[('source_recurring_id', '!=', False)]"
+                />
+                <filter
+                    name="recurring_active"
+                    string="Active Recurring Template"
+                    domain="[('recurring_template', '=', 'active')]"
+                />
+                <filter
+                    name="recurring_suspended"
+                    string="Suspended Recurring Template"
+                    domain="[('recurring_template', '=', 'suspended')]"
+                />
+            </filter>
+        </field>
+    </record> -->
+
+    <record id="donation_recurrency_action" model="ir.actions.act_window">
+        <field name="name">Recurring Donations new module</field>
+        <field name="res_model">donation.recurrency</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new donation recurrency.
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem
+        id="donation_recurrency_menu"
+        action="donation_recurrency_action"
+        parent="donation.donation_title_menu"
+        sequence="20"
+    />
+
+</odoo>
