@@ -28,12 +28,9 @@ class DonationRecurrency(models.Model):
         if view_type == "form" and not self.env.user.has_group(
             "base.group_erp_manager"
         ):
-            print("Is terminated ", self.is_terminated)
-            print("Recurring next date ", self.recurring_next_date)
             for node in arch.xpath("//field[@name='recurring_next_date']"):
                 node.set("readonly", "1")
         # if view_type == 'form' and self.is_terminated:
-        #     print(self.recurring_next_date)
         #     for node in arch.xpath("//button[@name='recurring_create_donations']"):
         #         node.set('invisible', '1')
 
