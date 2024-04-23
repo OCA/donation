@@ -136,7 +136,8 @@ class DonationCertificateSend(models.TransientModel):
                 if tax_receipts:
                     wizard.donation_without_email = "%s\n%s" % (
                         _(
-                            "The following donation(s) will not be sent by email, because the customers don't have email address."
+                            "The following donation(s) will not be sent by email, "
+                            "because the customers don't have email address."
                         ),
                         "\n".join([i.number for i in tax_receipts]),
                     )
@@ -173,7 +174,8 @@ class DonationCertificateSend(models.TransientModel):
     def send_and_print_action(self):
         self.ensure_one()
         # Send the mails in the correct language by splitting the ids per lang.
-        # This should ideally be fixed in mail_compose_message, so when a fix is made there this whole commit should be reverted.
+        # This should ideally be fixed in mail_compose_message, so when a fix
+        # is made there this whole commit should be reverted.
         # basically self.body (which could be manually edited) extracts self.template_id,
         # which is then not translated for each customer.
         if self.composition_mode == "mass_mail" and self.template_id:

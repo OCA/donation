@@ -34,7 +34,9 @@ class DonationSummarySend(models.TransientModel):
         "Use template",
         default=lambda self: self._get_report_template(),
     )
-    # template_id = fields.Many2one('mail.template', 'Use template', domain="[('model', '=', 'donation.summary'), ]", default=lambda self: self._get_report_template())
+    # template_id = fields.Many2one('mail.template', 'Use template', 
+    # domain="[('model', '=', 'donation.summary'), ]", 
+    # default=lambda self: self._get_report_template())
 
     def _get_report_template(self):
         template = self.env.ref(
@@ -102,7 +104,8 @@ class DonationSummarySend(models.TransientModel):
                 # wizard.template_id.report_template = self.get_ref_report_name(lang)
                 wizard.composer_id.template_id = wizard.template_id.id
                 # Get different report depending on the lang
-                # wizard.composer_id.template_id.report_template = self.get_ref_report_name(lang)
+                # wizard.composer_id.template_id.report_template 
+                # = self.get_ref_report_name(lang)
                 wizard._compute_composition_mode()
                 wizard.composer_id._onchange_template_id_wrapper()
 
@@ -134,7 +137,8 @@ class DonationSummarySend(models.TransientModel):
                 if don_summary:
                     wizard.summary_without_email = "%s\n%s" % (
                         _(
-                            "The following donation(s) will not be sent by email, because the customers don't have email address."
+                            "The following donation(s) will not be sent by email, "
+                            "because the customers don't have email address."
                         ),
                         "\n".join([i.name for i in don_summary]),
                     )
@@ -171,7 +175,8 @@ class DonationSummarySend(models.TransientModel):
     def send_and_print_action(self):
         self.ensure_one()
         # Send the mails in the correct language by splitting the ids per lang.
-        # This should ideally be fixed in mail_compose_message, so when a fix is made there this whole commit should be reverted.
+        # This should ideally be fixed in mail_compose_message,
+        # so when a fix is made there this whole commit should be reverted.
         # basically self.body (which could be manually edited) extracts self.template_id,
         # which is then not translated for each customer.
         if self.composition_mode == "mass_mail" and self.template_id:

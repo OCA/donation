@@ -465,7 +465,8 @@ class DonationRecurrency(models.Model):
                 #     continue_while = False
                 # else:
                 #     continue_while = True
-                # continue_while = rec.recurring_next_date and (not rec.date_end or rec.recurring_next_date <= rec.date_end) and res
+                # continue_while = rec.recurring_next_date and 
+                # (not rec.date_end or rec.recurring_next_date <= rec.date_end) and res
 
 
 class DonationRecurrencyLine(models.Model):
