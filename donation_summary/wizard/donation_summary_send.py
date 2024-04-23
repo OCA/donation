@@ -34,8 +34,8 @@ class DonationSummarySend(models.TransientModel):
         "Use template",
         default=lambda self: self._get_report_template(),
     )
-    # template_id = fields.Many2one('mail.template', 'Use template', 
-    # domain="[('model', '=', 'donation.summary'), ]", 
+    # template_id = fields.Many2one('mail.template', 'Use template',
+    # domain="[('model', '=', 'donation.summary'), ]",
     # default=lambda self: self._get_report_template())
 
     def _get_report_template(self):
@@ -104,7 +104,7 @@ class DonationSummarySend(models.TransientModel):
                 # wizard.template_id.report_template = self.get_ref_report_name(lang)
                 wizard.composer_id.template_id = wizard.template_id.id
                 # Get different report depending on the lang
-                # wizard.composer_id.template_id.report_template 
+                # wizard.composer_id.template_id.report_template
                 # = self.get_ref_report_name(lang)
                 wizard._compute_composition_mode()
                 wizard.composer_id._onchange_template_id_wrapper()
