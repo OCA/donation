@@ -11,8 +11,7 @@
         <field name="body_html" type="html">
             <div style="margin: 0px; padding: 0px;">
                 <p style="margin: 0px; padding: 0px; font-size: 13px;"> Dear
-                    <t t-out="object.partner_id.name or ''">Brandon Freeman</t>, <br
-                    />
+                    <t t-out="object.partner_id.name or ''">Brandon Freeman</t>, <br />
                     <br
                     /> We want to express our sincere gratitude for your suport and generosity towards our mission.                       <br
                     /> We are pleased to inform you that attached you will find a detailed summary of all

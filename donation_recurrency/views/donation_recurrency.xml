@@ -24,15 +24,15 @@
                                 name="terminate_reason_id"
                                 options="{'no_open':True}"
                             />
-                        </strong> on <field
-                            name="terminate_date" /> . </p>
+                        </strong> on <field name="terminate_date" /> . </p>
                     <p>
                         <field name="terminate_comment" />
                     </p>
                 </div>
                 <header>
 
-                    <button string="Create Donations"
+                    <button
+                        string="Create Donations"
                         name="recurring_create_donations"
                         type="object"
                         attrs="{'invisible': [('is_terminated','=',True)]}"
@@ -52,29 +52,39 @@
                             name="%(recurrency_donation_action)d"
                             icon="fa-heart-o"
                         >
-                            <field string="Donations" name="donation_count" widget="statinfo" />
+                            <field
+                                string="Donations"
+                                name="donation_count"
+                                widget="statinfo"
+                            />
                         </button>
                     </div>
                     <group name="main">
                         <group>
-                            <field name="partner_id"
+                            <field
+                                name="partner_id"
                                 attrs="{'readonly': [('is_terminated','=',True)]}"
                             />
                             <field name="company_id" invisible="1" />
-                            <field name="payment_mode_id"
+                            <field
+                                name="payment_mode_id"
                                 widget="selection"
                                 attrs="{'readonly': [('is_terminated','=',True)]}"
                             />
-                            <field name="thanks_template_id"
+                            <field
+                                name="thanks_template_id"
                                 attrs="{'readonly': [('is_terminated','=',True)]}"
                             />
-                            <field name="campaign_id"
+                            <field
+                                name="campaign_id"
                                 attrs="{'readonly': [('is_terminated','=',True)]}"
                             />
                         </group>
                         <notebook>
                             <page string="Donation Lines" name="lines">
-                                <field name="line_ids" nolabel="1"
+                                <field
+                                    name="line_ids"
+                                    nolabel="1"
                                     attrs="{'readonly': [('is_terminated','=',True)]}"
                                 />
                                 <!-- <group name="subtotal" class="oe_subtotal_footer oe_right">
@@ -103,9 +113,7 @@
                         </div>
                     </group>
                     <group>
-                        <field
-                            name="date_start"
-                        />
+                        <field name="date_start" />
                         <field name="date_end" />
                         <field name="recurring_next_date" />
                     </group>
