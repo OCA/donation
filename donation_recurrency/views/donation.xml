@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
-
-
 
     <record id="donation_donation_search_inherit" model="ir.ui.view">
         <field name="name">donation.donation.search</field>
@@ -10,11 +7,9 @@
         <field name="inherit_id" ref="donation.donation_search" />
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <field name="contract_id"/>
+                <field name="contract_id" />
             </field>
-
         </field>
     </record>
-
 
 </odoo>

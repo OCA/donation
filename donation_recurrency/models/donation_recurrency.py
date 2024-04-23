@@ -1,13 +1,15 @@
-from odoo import models, fields, _, api
+from odoo import _, api, fields, models
+
 # , Command
 # from odoo.osv import expression
 from odoo.exceptions import UserError
+
 # , ValidationError
-from lxml import etree
+# from lxml import etree
 
 
 class DonationRecurrency(models.Model):
-    _name = 'donation.recurrency'
+    _name = "donation.recurrency"
     _description = "Donation Recurrency"
     # _order = "code, name asc"
     _inherit = [
@@ -18,14 +20,18 @@ class DonationRecurrency(models.Model):
     ]
 
     @api.model
-    def _get_view(self, view_id=None, view_type='form', **options):
+    def _get_view(self, view_id=None, view_type="form", **options):
 
-        arch, view = super(DonationRecurrency, self)._get_view(view_id, view_type, **options)
-        if view_type == 'form' and not self.env.user.has_group('base.group_erp_manager'):
+        arch, view = super(DonationRecurrency, self)._get_view(
+            view_id, view_type, **options
+        )
+        if view_type == "form" and not self.env.user.has_group(
+            "base.group_erp_manager"
+        ):
             print("Is terminated ", self.is_terminated)
             print("Recurring next date ", self.recurring_next_date)
             for node in arch.xpath("//field[@name='recurring_next_date']"):
-                node.set('readonly', '1')
+                node.set("readonly", "1")
         # if view_type == 'form' and self.is_terminated:
         #     print(self.recurring_next_date)
         #     for node in arch.xpath("//button[@name='recurring_create_donations']"):
@@ -53,7 +59,7 @@ class DonationRecurrency(models.Model):
         # states={"draft": [("readonly", False)]},
     )
     currency_id = fields.Many2one(
-        comodel_name='res.currency',
+        comodel_name="res.currency",
         default=lambda self: self.env.company.currency_id,
     )
     partner_id = fields.Many2one(
@@ -148,10 +154,12 @@ class DonationRecurrency(models.Model):
     )
 
     _sql_constraints = [
-        ('no_delete', 'CHECK(active = TRUE)', 'No se permite eliminar registros, solo archivarlos.')
+        (
+            "no_delete",
+            "CHECK(active = TRUE)",
+            "No se permite eliminar registros, solo archivarlos.",
+        )
     ]
-
-
 
     def _prepare_value_for_stop(self, date_end):
         self.ensure_one()
@@ -167,7 +175,7 @@ class DonationRecurrency(models.Model):
             ),
         }
 
-    @api.onchange('partner_id')
+    @api.onchange("partner_id")
     def _payment_mode_id(self):
         self.payment_mode_id = self.partner_id.customer_payment_mode_id
 
@@ -184,9 +192,7 @@ class DonationRecurrency(models.Model):
             else:
                 if not rec.date_end or rec.date_end > date_end:
                     old_date_end = rec.date_end
-                    rec.write(
-                        rec._prepare_value_for_stop(date_end)
-                    )
+                    rec.write(rec._prepare_value_for_stop(date_end))
                     if post_message:
                         msg = (
                             _(
@@ -276,18 +282,15 @@ class DonationRecurrency(models.Model):
         lines_donations = []
         if not self.line_ids:
             raise UserError(
-                _(
-                    "Cannot create recurrence %s because it doesn't "
-                    "have any lines!"
-                )
+                _("Cannot create recurrence %s because it doesn't " "have any lines!")
                 % self.display_name
             )
         for line in self.line_ids:
             vals = {
-                'product_id': line.product_id.id,
-                'quantity': line.quantity,
-                'unit_price': round(line.unit_price, 2),
-                'currency_id': self.env.company.currency_id.id
+                "product_id": line.product_id.id,
+                "quantity": line.quantity,
+                "unit_price": round(line.unit_price, 2),
+                "currency_id": self.env.company.currency_id.id,
             }
             lines_donations.append(self.env["donation.line"].sudo().create(vals).id)
         return sorted(lines_donations)
@@ -300,15 +303,15 @@ class DonationRecurrency(models.Model):
         self.ensure_one()
 
         vals = {
-            'partner_id': self.partner_id.id,
-            'payment_mode_id': self.payment_mode_id.id,
-            'company_id': self.company_id.id,
-            'campaign_id': self.campaign_id.id,
-            'tax_receipt_option': 'annual',
-            'thanks_template_id': self.thanks_template_id.id,
-            'line_ids': [],
-            'donation_date': date_donation,
-            'contract_id': self.id
+            "partner_id": self.partner_id.id,
+            "payment_mode_id": self.payment_mode_id.id,
+            "company_id": self.company_id.id,
+            "campaign_id": self.campaign_id.id,
+            "tax_receipt_option": "annual",
+            "thanks_template_id": self.thanks_template_id.id,
+            "line_ids": [],
+            "donation_date": date_donation,
+            "contract_id": self.id,
         }
 
         return vals
@@ -342,9 +345,7 @@ class DonationRecurrency(models.Model):
                 continue
             donation_vals = contract._prepare_donation(date_ref)
             donation_vals["line_ids"] = [(6, 0, donation_lines)]
-            donations_values.append(
-                donation_vals
-            )
+            donations_values.append(donation_vals)
             contract._update_recurring_next_date()
         return donations_values
 
@@ -360,17 +361,14 @@ class DonationRecurrency(models.Model):
 
     def _get_related_donations(self):
         self.ensure_one()
-        donations = (
-            self.env["donation.donation"]
-            .search(
-                [
-                    (
-                        "contract_id",
-                        "in",
-                        self.ids,
-                    )
-                ]
-            )
+        donations = self.env["donation.donation"].search(
+            [
+                (
+                    "contract_id",
+                    "in",
+                    self.ids,
+                )
+            ]
         )
         return donations
 
@@ -455,7 +453,11 @@ class DonationRecurrency(models.Model):
     def recurring_create_donations(self):
         for rec in self:
             continue_while = True
-            while rec.recurring_next_date and (not rec.date_end or rec.recurring_next_date <= rec.date_end) and continue_while:
+            while (
+                rec.recurring_next_date
+                and (not rec.date_end or rec.recurring_next_date <= rec.date_end)
+                and continue_while
+            ):
                 continue_while = rec.recurring_create_donation()
                 # if rec.date_end and rec.recurring_next_date:
                 #     continue_while = rec.recurring_next_date <= rec.date_end
@@ -470,8 +472,10 @@ class DonationRecurrencyLine(models.Model):
     _name = "donation.recurrency.line"
     _description = "Donation  REC Lines"
     _rec_name = "product_id"
-    _inherit = ["donation.line",
-                "donation.recurrency.mixin",]
+    _inherit = [
+        "donation.line",
+        "donation.recurrency.mixin",
+    ]
     _description = "Donation Recurrency Lines"
 
     donation_id = fields.Many2one(
