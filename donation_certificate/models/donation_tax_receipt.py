@@ -61,7 +61,9 @@ class DonationTaxReceipt(models.Model):
             default_template_id=template and template.id or False,
             default_composition_mode="comment",
             mark_invoice_as_sent=True,
-            default_email_layout_xmlid="mail.mail_notification_layout_with_responsible_signature",
+            default_email_layout_xmlid=(
+                "mail.mail_notification_layout_with_responsible_signature"
+            ),
             force_email=True,
             active_ids=self.ids,
         )
