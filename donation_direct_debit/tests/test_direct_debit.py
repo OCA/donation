@@ -22,7 +22,7 @@ class TestDirectDebit(TransactionCase):
             {
                 "type": "bank",
                 "name": "Bank account test",
-                "donation_debit_order_account_id": donation_debit_order_account.id
+                "donation_debit_order_account_id": donation_debit_order_account.id,
             }
         )
         dd_payment_mode.write(

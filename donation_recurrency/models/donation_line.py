@@ -3,6 +3,7 @@
 # from dateutil.relativedelta import relativedelta
 
 from odoo import fields, models
+
 # from odoo.exceptions import ValidationError
 
 # from .contract_line_constraints import get_allowed

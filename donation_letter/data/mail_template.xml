@@ -1,54 +1,52 @@
 <?xml version="1.0" ?>
 <odoo>
-    <data noupdate="1">
-        <record id="email_template_thanks_letter" model="mail.template">
-            <field name="name">Donation: Thanks Letter by email</field>
-            <field name="model_id" ref="donation.model_donation_donation" />
-            <field name="auto_delete" eval="True" />
-            <field name="email_from">{{ object.company_id.email }}</field>
-            <field name="email_to">{{ object.partner_id.email }}</field>
-            <field name="subject">Thank you for your donation</field>
-            <field name="description">Letter of appreciation</field>
-            <field name="body_html" type="html">
-                <div style="margin: 0px; padding: 0px;">
-                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
-                        Dear
-                        <t t-if="object.commercial_partner_id">
-                            <t t-out="object.partner_id.name or ''">Brandon Freeman</t>
-                            (
-                            <t
-                                t-out="object.commercial_partner_id.name or ''"
-                            >Azure Interior</t>
-                            ),
-                        </t>
-                        <t t-else="">
-                            <t t-out="object.partner_id.name or ''">Donor name</t>,
-                        </t>
+    <record id="email_template_thanks_letter" model="mail.template">
+        <field name="name">Donation: Thanks Letter by email</field>
+        <field name="model_id" ref="donation.model_donation_donation" />
+        <field name="auto_delete" eval="True" />
+        <field name="email_from">{{ object.company_id.email }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="subject">Thank you for your donation</field>
+        <field name="description">Letter of appreciation</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear
+                    <t t-if="object.commercial_partner_id">
+                        <t t-out="object.partner_id.name or ''">Brandon Freeman</t>
+                        (
+                        <t
+                            t-out="object.commercial_partner_id.name or ''"
+                        >Azure Interior</t>
+                        ),
+                    </t>
+                    <t t-else="">
+                        <t t-out="object.partner_id.name or ''">Donor name</t>,
+                    </t>
+                    <br />
+                    <br />
+                    We want to express our sincere gratitude for your generous donation of
+                    <span
+                        style="font-weight:bold;"
+                        t-out="format_amount(object.amount_total, object.currency_id) or ''"
+                    >$ 143,750.00</span>
+                    to our organization. This contribution is a testament to your commitment and trust in our work.
+                    <br />
+                    <br />
+                    With this collaboration you help us move forward with our mission. We sincerely appreciate your support.
+                    <br />
+                    <br />
+                    Cordially,
+                    <br />
+                    <br />
+                    <t t-out="object.company_id.name or ''">
+                            --
                         <br />
-                        <br />
-                        We want to express our sincere gratitude for your generous donation of
-                        <span
-                            style="font-weight:bold;"
-                            t-out="format_amount(object.amount_total, object.currency_id) or ''"
-                        >$ 143,750.00</span>
-                        to our organization. This contribution is a testament to your commitment and trust in our work.
-                        <br />
-                        <br />
-                        With this collaboration you help us move forward with our mission. We sincerely appreciate your support.
-                        <br />
-                        <br />
-                        Cordially,
-                        <br />
-                        <br />
-                        <t t-out="object.company_id.name or ''">
-                                --
-                            <br />
-                                Association name
-                        </t>
-                    </p>
-                </div>
-            </field>
-            <field name="lang">{{ object.partner_id.lang }}</field>
-        </record>
-    </data>
+                            Association name
+                    </t>
+                </p>
+            </div>
+        </field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+    </record>
 </odoo>

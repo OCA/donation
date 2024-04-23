@@ -26,7 +26,7 @@ class TestDonationRecurring(TransactionCase):
             {
                 "type": "bank",
                 "name": "test bank journal",
-                "donation_debit_order_account_id": donation_debit_order_account.id
+                "donation_debit_order_account_id": donation_debit_order_account.id,
             }
         )
         self.payment_mode = self.env["account.payment.mode"].create(
