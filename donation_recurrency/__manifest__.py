@@ -18,5 +18,5 @@
         "views/donation_terminate_reason.xml",
         "views/donation.xml",
         "wizards/donation_recurrency_terminate.xml",
-     ],
- }
+    ],
+}
