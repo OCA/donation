@@ -12,9 +12,8 @@
     "depends": ["base", "donation", "account_payment_mode", "donation_direct_debit"],
     "data": [
         "security/ir.model.access.csv",
-         # 'views/donation_line.xml',
         "data/donation_recurrency_sequence.xml",
-         "data/donation_cron.xml",
+        "data/donation_cron.xml",
         "views/donation_recurrency.xml",
         "views/donation_terminate_reason.xml",
         "views/donation.xml",
