@@ -7,7 +7,8 @@
     "version": "16.0.1.0.0",
     "category": "Custom",
     "website": "https://github.com/OCA/donation",
-    "author": "Brenda Fernández Alayo",
+    "author": "Barroux Abbey, Akretion, Odoo Community Association (OCA)",
+    "maintainers": ["brendajfa"],
     "license": "AGPL-3",
     "depends": ["base", "donation", "account_payment_mode", "donation_direct_debit"],
     "data": [
