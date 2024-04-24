@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Editar la vista de "Crear recibos anuales" -->
+    <!-- <record id="tax_receipt_annual_create_form_inherited" model="ir.ui.view">
+        <field name="name">tax.receipt.annual.create.form.inherited</field>
+        <field name="model">tax.receipt.annual.create</field>
+        <field name="inherit_id" ref="donation_base.tax_receipt_annual_create_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <group>
+                    <field name="option" widget="selection" />
+                    <field name="partner_id" />
+                </group>
+            </xpath>
+        </field>
+    </record> -->
+</odoo>

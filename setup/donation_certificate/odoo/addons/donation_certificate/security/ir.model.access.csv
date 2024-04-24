@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_donation_certificate_send,donation.certificate.send,donation_certificate.model_donation_certificate_send,base.group_user,1,1,1,1
+access_donation_donation,donation.donation,donation.model_donation_donation,base.group_user,1,1,1,1
+access_donation_tax_receipt,donation.tax.receipt,model_donation_tax_receipt,base.group_user,1,1,1,1
+access_tax_receipt_annual_create,tax.receipt.annual.create,model_tax_receipt_annual_create,base.group_user,1,1,1,1
+access_py3o_template,py3o.template,report_py3o.model_py3o_template,base.group_user,1,1,1,1
+access_donation_tax_receipt_print,donation.tax.receipt.print,donation_base.model_donation_tax_receipt_print,base.group_user,1,1,1,1
