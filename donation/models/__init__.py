@@ -5,7 +5,6 @@ from . import account_payment_mode
 from . import donation_thanks_template
 from . import account_bank_statement_line
 from . import account_analytic_applicability
-from . import account_journal
 from . import res_partner
 from . import res_users
 from . import res_company
