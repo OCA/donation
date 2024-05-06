@@ -4,7 +4,7 @@
 
 {
     "name": "Donation",
-    "version": "16.0.1.0.0",
+    "version": "16.0.2.0.0",
     "category": "Accounting",
     "license": "AGPL-3",
     "summary": "Manage donations",
@@ -22,7 +22,6 @@
         "wizard/res_config_settings.xml",
         "data/donation_sequence.xml",
         "views/account_payment_mode.xml",
-        "views/account_journal.xml",
         "views/donation_campaign.xml",
         "views/donation_thanks_template.xml",
         "views/res_users.xml",

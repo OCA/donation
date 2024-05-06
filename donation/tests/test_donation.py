@@ -9,7 +9,6 @@ from odoo.tests.common import TransactionCase
 
 
 class TestDonation(TransactionCase):
-
     at_install = False
     post_install = True
 
