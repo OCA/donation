@@ -43,6 +43,23 @@ class DonationDonation(models.Model):
             if mandate:
                 self.mandate_id = mandate
 
+    # Mathod inherited from donation module
+    # TODO migration: remove 'journal' argument and use self.payment_mode_id.fixed_journal_id
+    def _prepare_counterpart_move_line(
+        self, total_company_cur, total_currency, journal
+    ):
+        vals = super()._prepare_counterpart_move_line(
+            total_company_cur, total_currency, journal
+        )
+        if not self.bank_statement_line_id and self.payment_mode_id.payment_order_ok:
+            if not self.company_id.donation_debit_order_account_id:
+                raise UserError(
+                    _("Missing Donation by Debit Order Account on company '%s'.")
+                    % self.company_id.display_name
+                )
+            vals["account_id"] = self.company_id.donation_debit_order_account_id.id
+        return vals
+
     def _prepare_donation_move(self):
         vals = super()._prepare_donation_move()
         vals.update(
