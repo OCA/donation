@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-05-08 09:35+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: donation_direct_debit
 #. odoo-python
@@ -22,6 +24,9 @@ msgid ""
 "A new draft direct debit order <a href=# data-oe-model=account.payment.order"
 " data-oe-id=%(payorder_id)d>%(payorder)s</a> has been automatically created"
 msgstr ""
+"Una nuova bozza ordine di addebito diretto <a href=# data-oe-"
+"model=account.payment.order data-oe-id=%(payorder_id)d>%(payorder)s</a> è "
+"stata creata automaticamente"
 
 #. module: donation_direct_debit
 #. odoo-python
@@ -32,6 +37,9 @@ msgid ""
 " debit order <a href=# data-oe-model=account.payment.order data-oe-"
 "id=%(payorder_id)d>%(payorder)s</a>."
 msgstr ""
+"Una nuova riga di pagamento è stata aggiunta automaticamente alla bozza "
+"ordine di addebito diretto <a href=# data-oe-model=account.payment.order "
+"data-oe-id=%(payorder_id)d>%(payorder)s</a>."
 
 #. module: donation_direct_debit
 #: model:ir.model.fields,help:donation_direct_debit.field_donation_donation__mandate_required
@@ -39,28 +47,30 @@ msgid ""
 "Activate this option if this payment method requires your customer to sign a"
 " direct debit mandate with your company."
 msgstr ""
+"Attivare questa opzione se questo metodo di pagamento richiede che il "
+"cliente firmi un mandato di addebito diretto (SDD) con la vostra azienda."
 
 #. module: donation_direct_debit
 #: model:ir.model,name:donation_direct_debit.model_donation_donation
 msgid "Donation"
-msgstr ""
+msgstr "Donazione"
 
 #. module: donation_direct_debit
 #: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation__mandate_id
 msgid "Mandate"
-msgstr ""
+msgstr "Mandato"
 
 #. module: donation_direct_debit
 #: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation__mandate_required
 msgid "Mandate Required"
-msgstr ""
+msgstr "Mandato richiesto"
 
 #. module: donation_direct_debit
 #. odoo-python
 #: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
 msgid "Mandate is missing on donation '%s'."
-msgstr ""
+msgstr "Manca il mancato nella donazione '%s'."
 
 #. module: donation_direct_debit
 #. odoo-python
@@ -70,6 +80,9 @@ msgid ""
 "Payment order created automatically upon validation of donation <a href=# "
 "data-oe-model=donation.donation data-oe-id=%(donation_id)d>%(donation)s</a>."
 msgstr ""
+"Ordine di pagamento generato automaticamente alla validazione della "
+"donazione <a href=# data-oe-model=donation.donation data-oe-"
+"id=%(donation_id)d>%(donation)s</a>."
 
 #. module: donation_direct_debit
 #. odoo-python
@@ -79,3 +92,6 @@ msgid ""
 "You cannot cancel a donation which is linked to a payment line in a direct "
 "debit order. Remove it from the following direct debit order: %s."
 msgstr ""
+"Non si può annullare una donazione che è collegata ad una riga di pagamento "
+"in un ordine di addebito diretto. Rimuoverla dal seguente ordine di addebito "
+"diretto: %s."
