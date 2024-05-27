@@ -8,6 +8,15 @@ from odoo.tests.common import TransactionCase
 class TestDirectDebit(TransactionCase):
     def test_direct_debit(self):
         donation = self.env.ref("donation_direct_debit.donation6")
+        account = self.env["account.account"].create(
+            {
+                "company_id": donation.company_id.id,
+                "code": "TESTDD1",
+                "name": "Test donation by direct debit",
+                "account_type": "asset_receivable",
+            }
+        )
+        donation.company_id.write({"donation_debit_order_account_id": account.id})
         dd_payment_mode = self.env.ref(
             "account_banking_sepa_direct_debit.payment_mode_inbound_sepa_dd1"
         )
