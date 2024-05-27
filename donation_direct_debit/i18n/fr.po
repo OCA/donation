@@ -43,9 +43,25 @@ msgid ""
 msgstr ""
 
 #. module: donation_direct_debit
+#: model:ir.model,name:donation_direct_debit.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: donation_direct_debit
+#: model:ir.model,name:donation_direct_debit.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: donation_direct_debit
 #: model:ir.model,name:donation_direct_debit.model_donation_donation
 msgid "Donation"
 msgstr "Don"
+
+#. module: donation_direct_debit
+#: model:ir.model.fields,field_description:donation_direct_debit.field_res_company__donation_debit_order_account_id
+#: model:ir.model.fields,field_description:donation_direct_debit.field_res_config_settings__donation_debit_order_account_id
+msgid "Donation by Debit Order Account"
+msgstr ""
 
 #. module: donation_direct_debit
 #: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation__mandate_id
@@ -68,9 +84,44 @@ msgstr ""
 #. odoo-python
 #: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
+msgid "Missing Donation by Debit Order Account on company '%s'."
+msgstr ""
+
+#. module: donation_direct_debit
+#. odoo-python
+#: code:addons/donation_direct_debit/models/donation.py:0
+#, python-format
 msgid ""
 "Payment order created automatically upon validation of donation <a href=# "
 "data-oe-model=donation.donation data-oe-id=%(donation_id)d>%(donation)s</a>."
+msgstr ""
+
+#. module: donation_direct_debit
+#. odoo-python
+#: code:addons/donation_direct_debit/models/res_company.py:0
+#, python-format
+msgid ""
+"The Donation by Debit Order Account of company '%(company)s' must be a "
+"receivable account, but the account '%(account)s' is configured with account "
+"type '%(account_type)s'."
+msgstr ""
+
+#. module: donation_direct_debit
+#. odoo-python
+#: code:addons/donation_direct_debit/models/res_company.py:0
+#, python-format
+msgid ""
+"The Donation by Debit Order Account of company '%(company)s' must be "
+"reconciliable, but the account '%(account)s' is not reconciliable."
+msgstr ""
+
+#. module: donation_direct_debit
+#: model:ir.model.fields,help:donation_direct_debit.field_res_company__donation_debit_order_account_id
+#: model:ir.model.fields,help:donation_direct_debit.field_res_config_settings__donation_debit_order_account_id
+msgid ""
+"Transfer account for donations by debit order. Leave empty if you don't "
+"handle donations by debit order on this bank account.This account must be a "
+"receivable account, otherwise the debit order will not work."
 msgstr ""
 
 #. module: donation_direct_debit
