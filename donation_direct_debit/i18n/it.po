@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-05-08 09:35+0000\n"
+"PO-Revision-Date: 2024-05-29 12:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -53,12 +53,12 @@ msgstr ""
 #. module: donation_direct_debit
 #: model:ir.model,name:donation_direct_debit.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Aziende"
 
 #. module: donation_direct_debit
 #: model:ir.model,name:donation_direct_debit.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Impostazioni configurazione"
 
 #. module: donation_direct_debit
 #: model:ir.model,name:donation_direct_debit.model_donation_donation
@@ -69,7 +69,7 @@ msgstr "Donazione"
 #: model:ir.model.fields,field_description:donation_direct_debit.field_res_company__donation_debit_order_account_id
 #: model:ir.model.fields,field_description:donation_direct_debit.field_res_config_settings__donation_debit_order_account_id
 msgid "Donation by Debit Order Account"
-msgstr ""
+msgstr "Donazione da conto ordine di addebito"
 
 #. module: donation_direct_debit
 #: model:ir.model.fields,field_description:donation_direct_debit.field_donation_donation__mandate_id
@@ -86,14 +86,14 @@ msgstr "Mandato richiesto"
 #: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
 msgid "Mandate is missing on donation '%s'."
-msgstr "Manca il mancato nella donazione '%s'."
+msgstr "Manca il mandato nella donazione '%s'."
 
 #. module: donation_direct_debit
 #. odoo-python
 #: code:addons/donation_direct_debit/models/donation.py:0
 #, python-format
 msgid "Missing Donation by Debit Order Account on company '%s'."
-msgstr ""
+msgstr "Donazione da conto ordine di addebito mancante nell'azienda '%s'."
 
 #. module: donation_direct_debit
 #. odoo-python
@@ -116,6 +116,9 @@ msgid ""
 "receivable account, but the account '%(account)s' is configured with account "
 "type '%(account_type)s'."
 msgstr ""
+"La donazione da conto ordine di addebito della azienda '%(company)s' deve "
+"essere un conto ricevibile, ma il conto '%(account)s' è configurato come "
+"conto di tipo '%(account_type)s'."
 
 #. module: donation_direct_debit
 #. odoo-python
@@ -125,6 +128,8 @@ msgid ""
 "The Donation by Debit Order Account of company '%(company)s' must be "
 "reconciliable, but the account '%(account)s' is not reconciliable."
 msgstr ""
+"La donazione con conto ordine di addebito della azienda '%(company)s' deve "
+"essere riconciliabile, ma il conto '%(account)s' non lo è."
 
 #. module: donation_direct_debit
 #: model:ir.model.fields,help:donation_direct_debit.field_res_company__donation_debit_order_account_id
@@ -134,6 +139,10 @@ msgid ""
 "handle donations by debit order on this bank account.This account must be a "
 "receivable account, otherwise the debit order will not work."
 msgstr ""
+"Conto trasferimento per donazione da ordine di addebito. Lasciare vuoto se "
+"non si gestiscono donazioni con ordine di addebito su questo conto bancario. "
+"Questo deve essere un conto riconciliabile, altrimenti l'ordine di addebito "
+"non funzionerà."
 
 #. module: donation_direct_debit
 #. odoo-python
