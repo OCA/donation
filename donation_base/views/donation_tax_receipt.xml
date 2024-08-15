@@ -38,7 +38,7 @@
                             options="{'datepicker': {'warn_future': true}}"
                         />
                         <field name="print_date" />
-                        <field name="currency_id" invisible="1" />
+                        <field name="currency_id" column_invisible="1" />
                         <field name="amount" />
                         <field name="company_id" groups="base.group_multi_company" />
                     </group>
@@ -68,7 +68,7 @@
                     optional="show"
                 />
                 <field name="amount" />
-                <field name="currency_id" invisible="1" />
+                <field name="currency_id" column_invisible="1" />
                 <field name="print_date" optional="show" />
                 <field
                     name="company_id"

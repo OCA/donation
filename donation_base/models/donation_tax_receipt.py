@@ -82,7 +82,7 @@ class DonationTaxReceipt(models.Model):
         layout_xmlid = "donation_base.tax_receipt_email_template"
         ctx = dict(
             default_model=self._name,
-            default_res_id=self.id,
+            default_res_ids=[self.id],
             default_use_template=bool(template),
             default_template_id=template.id,
             default_composition_mode="comment",

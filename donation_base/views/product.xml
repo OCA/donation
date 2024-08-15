@@ -33,10 +33,10 @@
         <field name="inherit_id" ref="product.product_template_form_view" />
         <field name="arch" type="xml">
             <field name="detailed_type" position="after">
-                <!-- unfortunately, Odoo doesn't accept 'not like' in attrs -->
+                <!-- unfortunately, Python doesn't accept 'not like' -->
                 <field
                     name="tax_receipt_ok"
-                    attrs="{'invisible': [('detailed_type', 'not in', ('donation', 'donation_in_kind_service', 'donation_in_kind_consu'))]}"
+                    invisible="detailed_type not in ('donation', 'donation_in_kind_service', 'donation_in_kind_consu')"
                 />
             </field>
         </field>

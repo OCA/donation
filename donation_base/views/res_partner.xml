@@ -10,7 +10,7 @@
         <field name="name">Donation Tax Receipts</field>
         <field name="res_model">donation.tax.receipt</field>
         <field name="view_mode">tree,form,graph,pivot</field>
-        <field name="context">{'search_default_partner_id': active_id}</field>
+        <field name="context">{'search_default_partner_id': id}</field>
     </record>
     <record id="view_partner_property_form" model="ir.ui.view">
         <field name="name">donation.tax.receipt.res.partner.form</field>
@@ -21,11 +21,8 @@
                 expr="//group[@name='fiscal_information']/field[@name='property_account_position_id']"
                 position="after"
             >
-                <field
-                    name="tax_receipt_option"
-                    attrs="{'invisible': [('parent_id', '!=', False)]}"
-                />
-                <field name="donor_rank" invisible="1" />
+                <field name="tax_receipt_option" invisible="parent_id != False" />
+                <field name="donor_rank" column_invisible="1" />
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                     <button
@@ -33,7 +30,7 @@
                     class="oe_stat_button"
                     type="action"
                     name="%(donation_base.partner_tax_receipt_action)d"
-                    attrs="{'invisible': [('parent_id', '!=', False)]}"
+                    invisible="parent_id != False"
                     icon="fa-file-text"
                     groups="account.group_account_invoice,account.group_account_readonly"
                 >
