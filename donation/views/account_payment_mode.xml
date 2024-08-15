@@ -8,10 +8,7 @@
     <field name="inherit_id" ref="account_payment_mode.account_payment_mode_form" />
     <field name="arch" type="xml">
         <field name="payment_type" position="after">
-            <field
-                    name="donation"
-                    attrs="{'invisible': [('payment_type', '!=', 'inbound')]}"
-                />
+            <field name="donation" invisible="payment_type != 'inbound'" />
         </field>
     </field>
 </record>

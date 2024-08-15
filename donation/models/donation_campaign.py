@@ -12,14 +12,12 @@ class DonationCampaign(models.Model):
     _order = "sequence, id"
 
     @api.depends("code", "name")
-    def name_get(self):
-        res = []
+    def _compute_display_name(self):
         for camp in self:
             name = camp.name
             if camp.code:
-                name = "[%s] %s" % (camp.code, name)
-            res.append((camp.id, name))
-        return res
+                name = f"[{camp.code}] {name}"
+            camp.display_name = name
 
     active = fields.Boolean(default=True)
     sequence = fields.Integer(default=10)

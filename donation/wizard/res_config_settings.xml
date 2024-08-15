@@ -10,55 +10,28 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="base.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('settings')]" position="inside">
-                <div
-                    class="app_settings_block"
+            <xpath expr="//form" position="inside">
+                <app
                     data-string="Donation"
                     string="Donation"
-                    data-key="donation"
+                    name="donation"
                     groups="donation.group_donation_manager"
                 >
-                    <h2>Donation</h2>
-                    <div class="row mt16 o_settings_container" id="donation">
-                        <div
-                            class="col-12 col-lg-12 o_setting_box"
-                            id="donation-settings"
-                        >
-                            <div class="o_setting_left_pane" />
-                            <div class="o_setting_right_pane">
-                                <div
-                                    class="row"
-                                    id="donation_credit_transfer_product_id"
-                                >
-                                    <label
-                                        for="donation_credit_transfer_product_id"
-                                        class="col-md-5"
-                                    />
-                                    <field name="donation_credit_transfer_product_id" />
-                                </div>
-                            </div>
-                            <div class="o_setting_left_pane" />
-                            <div class="o_setting_right_pane">
-                                <label for="donation_account_id" class="col-md-5" />
-                                <field
-                                    name="donation_account_id"
-                                    context="{'default_reconcile': True, 'default_account_type': 'asset_current'}"
-                                />
-                            </div>
-                        </div>
-                       <div
-                            class="col-12 col-lg-6 o_setting_box"
-                            id="donation_check_total"
-                        >
-                            <div class="o_setting_left_pane">
-                                    <field name="group_donation_check_total" />
-                            </div>
-                            <div class="o_setting_right_pane">
-                                <label for="group_donation_check_total" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <block id="donation" title="Donation">
+                        <setting id="donation_credit_transfer_product_id">
+                            <field name="donation_credit_transfer_product_id" />
+                        </setting>
+                        <setting id="donation_account_id">
+                            <field
+                                name="donation_account_id"
+                                context="{'default_reconcile': True, 'default_account_type': 'asset_current'}"
+                            />
+                        </setting>
+                       <setting id="donation_check_total">
+                           <field name="group_donation_check_total" />
+                        </setting>
+                    </block>
+                </app>
             </xpath>
         </field>
     </record>

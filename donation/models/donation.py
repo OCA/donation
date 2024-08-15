@@ -254,10 +254,7 @@ class DonationDonation(models.Model):
         }
         return vals
 
-    # TODO migration: remove 'journal' argument and use self.payment_mode_id.fixed_journal_id
-    def _prepare_counterpart_move_line(
-        self, total_company_cur, total_currency, journal
-    ):
+    def _prepare_counterpart_move_line(self, total_company_cur, total_currency):
         self.ensure_one()
         journal = self.payment_mode_id.fixed_journal_id
         company = journal.company_id
@@ -371,9 +368,7 @@ class DonationDonation(models.Model):
             return False
 
         # counter-part
-        ml_vals = self._prepare_counterpart_move_line(
-            total_company_cur, total_currency, journal
-        )
+        ml_vals = self._prepare_counterpart_move_line(total_company_cur, total_currency)
         vals["line_ids"].append((0, 0, ml_vals))
         return vals
 
@@ -427,8 +422,9 @@ class DonationDonation(models.Model):
             ):
                 raise UserError(
                     _(
-                        "The amount of donation %(donation)s (%(check_total)s) is different "
-                        "from the sum of the donation lines (%(amount_total)s).",
+                        "The amount of donation %(donation)s (%(check_total)s) is "
+                        "different from the sum of the donation lines "
+                        "(%(amount_total)s).",
                         donation=donation.display_name,
                         check_total=format_amount(
                             self.env, donation.check_total, donation.currency_id
@@ -606,17 +602,15 @@ class DonationDonation(models.Model):
         return super().unlink()
 
     @api.depends("state", "number")
-    def name_get(self):
-        res = []
+    def _compute_display_name(self):
         for donation in self:
             name = donation.number
             if donation.state != "done":
                 display_state = donation._fields["state"].convert_to_export(
                     donation.state, donation
                 )
-                name = "%s (%s)" % (name, display_state)
-            res.append((donation.id, name))
-        return res
+                name = f"{name} ({display_state})"
+            donation.display_name = name
 
     @api.depends("partner_id")
     def _compute_tax_receipt_option(self):

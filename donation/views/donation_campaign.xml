@@ -16,7 +16,7 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active == True"
                     />
 
                 <group name="main">
@@ -25,8 +25,8 @@
                     <field name="company_id" groups="base.group_multi_company" />
                     <field name="start_date" />
                     <field name="note" />
-                    <field name="active" invisible="1" />
-                    <field name="company_id" invisible="1" />
+                    <field name="active" column_invisible="1" />
+                    <field name="company_id" column_invisible="1" />
                 </group>
         </sheet>
             </form>

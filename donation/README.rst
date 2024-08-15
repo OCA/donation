@@ -123,6 +123,7 @@ Contributors
 -  Alexis de Lattre <alexis.delattre@akretion.com>
 -  Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 -  Nikul Chaudhary <nikul.chaudhary.serpentcs@gmail.com>
+-  Esteve Blanch <3501974+esteveblanch@users.noreply.github.com>
 
 Maintainers
 -----------

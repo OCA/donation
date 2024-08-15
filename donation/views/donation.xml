@@ -17,23 +17,22 @@
                         name="validate"
                         string="Validate"
                         class="oe_highlight"
-                        states="draft"
                         groups="donation.group_donation_user"
-                        invisible="context.get('recurring_view')"
+                        invisible="context.get('recurring_view') or state != 'draft'"
                     />
                     <button
                         name="print_thanks"
                         string="Print Thanks Letter"
                         type="object"
                         groups="donation.group_donation_user"
-                        attrs="{'invisible': ['|', ('thanks_printed', '=', True), ('state', '!=', 'done')]}"
+                        invisible="thanks_printed == True or state != 'done'"
                         class="oe_highlight"
                     />
                     <button
                         type="object"
                         name="cancel2draft"
                         string="Back to Draft"
-                        states="cancel"
+                        invisible="state != 'cancel'"
                         groups="donation.group_donation_user"
                     />
                     <button
@@ -41,8 +40,7 @@
                         name="done2cancel"
                         string="Cancel"
                         groups="donation.group_donation_user"
-                        states="done"
-                        invisible="context.get('recurring_view')"
+                        invisible="context.get('recurring_view') or state!='done'"
                     />
                     <button
                         type="object"
@@ -68,13 +66,16 @@
                     <group name="main">
                         <group name="manual">
                             <field name="partner_id" />
-                            <field name="commercial_partner_id" invisible="1" />
+                            <field name="commercial_partner_id" column_invisible="1" />
                             <field name="payment_mode_id" widget="selection" />
                             <field
                                 name="currency_id"
                                 groups="base.group_multi_currency"
                             />
-                                <field name="company_currency_id" invisible="1" />
+                                <field
+                                name="company_currency_id"
+                                column_invisible="1"
+                            />
                             <field
                                 name="check_total"
                                 groups="donation.group_donation_check_total"
@@ -88,7 +89,7 @@
                             <field name="thanks_template_id" widget="selection" />
                         </group>
                         <group name="auto">
-                            <field name="company_id" invisible="1" />
+                            <field name="company_id" column_invisible="1" />
                             <field
                                 name="company_id"
                                 groups="base.group_multi_company"
@@ -101,7 +102,7 @@
                                     string="Change"
                                     type="action"
                                     class="oe_link"
-                                    attrs="{'invisible': ['|', ('state', '!=', 'done'), ('tax_receipt_id', '!=', False)]}"
+                                    invisible="state != 'done' or tax_receipt_id != False"
                                 />
                             </div>
                             <field name="tax_receipt_total" />
@@ -153,14 +154,14 @@
                 <group name="main">
                     <group name="manual">
                         <field name="partner_id" readonly="1" />
-                        <field name="commercial_partner_id" invisible="1" />
+                        <field name="commercial_partner_id" column_invisible="1" />
                         <field name="payment_mode_id" readonly="1" />
                         <field
                             name="currency_id"
                             groups="base.group_multi_currency"
                             readonly="1"
                         />
-                            <field name="company_currency_id" invisible="1" />
+                            <field name="company_currency_id" column_invisible="1" />
                         <field
                             name="check_total"
                             groups="donation.group_donation_check_total"
@@ -175,8 +176,8 @@
                         <field name="thanks_template_id" widget="selection" />
                     </group>
                     <group name="auto">
-                        <field name="company_id" invisible="1" />
-                        <field name="state" invisible="1" />
+                        <field name="company_id" column_invisible="1" />
+                        <field name="state" column_invisible="1" />
                         <field
                             name="company_id"
                             groups="base.group_multi_company"
@@ -203,14 +204,14 @@
                         name="validate"
                         string="Validate"
                         class="btn-primary"
-                        states="draft"
+                        invisible="state != 'draft'"
                         groups="donation.group_donation_user"
                     />
                     <button
                         type="object"
                         name="save_as_draft"
                         string="Save as Draft"
-                        states="draft"
+                        invisible="state != 'draft'"
                         groups="donation.group_donation_user"
                     />
                 </footer>
@@ -253,8 +254,8 @@
                 <field name="donation_date" />
                 <field name="amount_total_company_currency" sum="1" />
                 <field name="amount_total" optional="hide" />
-                <field name="currency_id" invisible="1" />
-                <field name="company_currency_id" invisible="1" />
+                <field name="currency_id" column_invisible="1" />
+                <field name="company_currency_id" column_invisible="1" />
                 <field name="payment_mode_id" />
                 <field
                     name="tax_receipt_option"
@@ -403,8 +404,8 @@
                 <field name="amount" />
                 <field name="tax_receipt_ok" string="Tax Receipt" optional="show" />
                 <field name="in_kind" optional="hide" />
-                <field name="currency_id" invisible="1" />
-                <field name="company_id" invisible="1" />
+                <field name="currency_id" column_invisible="1" />
+                <field name="company_id" column_invisible="1" />
             </tree>
         </field>
     </record>
@@ -431,10 +432,10 @@
                     <field name="tax_receipt_ok" />
                     <field name="amount_company_currency" />
                     <field name="in_kind" />
-                    <field name="currency_id" invisible="1" />
-                    <field name="company_currency_id" invisible="1" />
-                    <field name="company_id" invisible="1" />
-                    <field name="product_detailed_type" invisible="1" />
+                    <field name="currency_id" column_invisible="1" />
+                    <field name="company_currency_id" column_invisible="1" />
+                    <field name="company_id" column_invisible="1" />
+                    <field name="product_detailed_type" column_invisible="1" />
                 </group>
             </form>
         </field>

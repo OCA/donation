@@ -116,7 +116,7 @@
                 <field name="thanks_template_id" optional="hide" />
                 <field name="tax_receipt_amount" sum="1" optional="show" />
                 <field name="amount_company_currency" sum="1" />
-                <field name="company_currency_id" invisible="1" />
+                <field name="company_currency_id" column_invisible="1" />
                 <field
                     name="company_id"
                     groups="base.group_multi_company"

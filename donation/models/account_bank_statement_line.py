@@ -41,7 +41,8 @@ class AccountBankStatementLine(models.Model):
         if not self.company_id.donation_account_id:
             raise UserError(
                 _(
-                    "The Donation by Credit Transfer Account is not set for company '%s'."
+                    "The Donation by Credit Transfer Account is not set for company "
+                    "'%s'."
                 )
                 % self.company_id.display_name
             )

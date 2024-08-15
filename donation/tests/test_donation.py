@@ -283,7 +283,7 @@ class TestDonation(TransactionCase):
         wizard = self.validate.with_context(
             active_ids=self.don8.ids,
             active_model="donation.donation",
-            active_id=self.don8.id,
+            id=self.don8.id,
         ).create({})
         wizard.run()
 

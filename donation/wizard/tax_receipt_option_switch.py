@@ -13,7 +13,7 @@ class DonationTaxReceiptOptionSwitch(models.TransientModel):
         "donation.donation",
         string="Donation",
         required=True,
-        default=lambda self: self._context.get("active_id"),
+        default=lambda self: self._context.get("id"),
     )
     new_tax_receipt_option = fields.Selection(
         [("each", "For Each Donation"), ("annual", "Annual Tax Receipt")],

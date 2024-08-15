@@ -9,7 +9,7 @@
         <field name="name">Donations</field>
         <field name="res_model">donation.donation</field>
         <field name="view_mode">tree,form,graph</field>
-        <field name="context">{'search_default_partner_id': active_id}</field>
+        <field name="context">{'search_default_partner_id': id}</field>
     </record>
     <record id="view_partner_property_form" model="ir.ui.view">
         <field name="name">donation.button.res.partner.form</field>
