@@ -24,10 +24,10 @@ msgstr "# de Donatius"
 #. module: donation
 #: model:ir.actions.report,print_report_name:donation.report_thanks
 msgid ""
-"'donation_thanks-%s%s' % (object.number, object.state == 'draft' and '-"
-"draft' or '')"
+"'donation_thanks-%s%s' % (object.number, object.state == 'draft' and "
+"'-draft' or '')"
 msgstr ""
-"'donation_thanks-%s%s' % (object.number, object.state == 'draft' and '-"
+"'carta_agraiment-%s%s' % (object.number, object.state == 'draft' and '-"
 "draft' or '')"
 
 #. module: donation
@@ -40,7 +40,7 @@ msgstr "Ja existeix una campanya amb el mateix codi"
 #: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "A cancelled donation should not be linked to a tax receipt"
-msgstr "No es pot afegir una donació cancel·lada a un registre d'impostos"
+msgstr "No es pot afegir una donació cancel·lada a un certificat fiscal"
 
 #. module: donation
 #. odoo-python
@@ -58,13 +58,11 @@ msgstr "Ja existeix una donació per aquest moviment bancari."
 #: model:ir.model.fields,help:donation.field_donation_line__product_detailed_type
 #: model:ir.model.fields,help:donation.field_donation_report__product_detailed_type
 msgid ""
-"A storable product is a product for which you manage stock. The Inventory "
-"app has to be installed.\n"
+"A storable product is a product for which you manage stock. The Inventory app has to be installed.\n"
 "A consumable product is a product for which stock is not managed.\n"
 "A service is a non-material product you provide."
 msgstr ""
-"Un producte emmagatzemable és un producte pel qual gestioneu estoc. "
-"Cal instal·lar l'aplicació Inventari.\n"
+"Un producte emmagatzemable és un producte pel qual gestioneu estoc. Cal instal·lar l'aplicació Inventari.\n"
 "Un consumible és un producte pel qual no es gestiona estoc.\n"
 "Un servei és un producte no material que subministreu."
 
@@ -127,18 +125,18 @@ msgstr "Import en la moneda de l'empresa"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__analytic_distribution
-msgid "Analytic"
-msgstr "Analítica"
+msgid "Analytic Distribution"
+msgstr "Distribució analítica"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__analytic_distribution_search
 msgid "Analytic Distribution Search"
-msgstr ""
+msgstr "Cerca de Distribució Analítica"
 
 #. module: donation
 #: model:ir.model,name:donation.model_account_analytic_applicability
 msgid "Analytic Plan's Applicabilities"
-msgstr ""
+msgstr "Aplicabilitats del pla analític"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__analytic_precision
@@ -149,7 +147,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:donation.selection__donation_donation__tax_receipt_option__annual
 #: model:ir.model.fields.selection,name:donation.selection__donation_tax_receipt_option_switch__new_tax_receipt_option__annual
 msgid "Annual Tax Receipt"
-msgstr "Rebut d'impostos anual"
+msgstr "Certificat fiscal anual"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_campaign_form
@@ -172,7 +170,7 @@ msgstr "Restablir com a esborrany"
 #. module: donation
 #: model:ir.model,name:donation.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Linea d'extracte bancari"
+msgstr "Línia d'extracte bancari"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_report_search
@@ -205,8 +203,7 @@ msgstr "No es possible validar la donació %s ja que no disposa de línies"
 #: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "Cannot validate donation %s because it is not in draft state."
-msgstr ""
-"No es possible validar la donació %s ja que no es troba en esborrany."
+msgstr "No es possible validar la donació %s ja que no es troba en esborrany."
 
 #. module: donation
 #. odoo-python
@@ -229,7 +226,7 @@ msgstr "Canvia"
 #: model:ir.actions.act_window,name:donation.donation_tax_receipt_option_switch_action
 #: model_terms:ir.ui.view,arch_db:donation.donation_tax_receipt_option_switch_form
 msgid "Change Tax Receipt Option"
-msgstr "Canvia la opció del rebut d'impostos"
+msgstr "Canvia la opció del certificat fiscal"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__check_total
@@ -277,7 +274,7 @@ msgstr "Moneda de l'empresa"
 #. module: donation
 #: model:ir.model,name:donation.model_res_config_settings
 msgid "Config Settings"
-msgstr "Configuració"
+msgstr "Paràmetres de configuració"
 
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_config_menu
@@ -297,7 +294,7 @@ msgstr "País"
 #. module: donation
 #: model:ir.ui.menu,name:donation.tax_receipt_annual_create_menu
 msgid "Create Annual Receipts"
-msgstr "Crear rebuts anuals"
+msgstr "Crea certificats anuals"
 
 #. module: donation
 #. odoo-python
@@ -426,7 +423,7 @@ msgstr "Número de donatiu"
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_tax_receipt_menu
 msgid "Donation Tax Receipts"
-msgstr "Rebuts d'impostos de donació"
+msgstr "Certificats fiscals de donacions"
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_thanks_template
@@ -444,7 +441,8 @@ msgstr "Donació per transferència bancària"
 #: code:addons/donation/models/account_payment_mode.py:0
 #, python-format
 msgid "Donation payment mode '%s' is not an inbound payment mode."
-msgstr "El mode de pagament de donació «%s» no és un mode de pagament entrant."
+msgstr ""
+"El mode de pagament de donació «%s» no és un mode de pagament entrant."
 
 #. module: donation
 #. odoo-python
@@ -508,13 +506,13 @@ msgstr "Esborrany"
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__tax_receipt_total
 msgid "Eligible Tax Receipt Sub-total in Company Currency"
-msgstr "Subtotal del rebut fiscal elegible en moneda de l'empresa"
+msgstr "Subtotal del certificat fiscal elegible en moneda de l'empresa"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_report__tax_receipt_ok
 #: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 msgid "Eligible for a Tax Receipt"
-msgstr "Elegible per a un rebut d'impostos"
+msgstr "Elegible per a un certificat fiscal"
 
 #. module: donation
 #. odoo-python
@@ -594,7 +592,8 @@ msgstr "Icona que indica una activitat d'excepció."
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si està marcat, hi ha nous missatges que requereixen la vostra atenció."
+msgstr ""
+"Si està marcat, hi ha nous missatges que requereixen la vostra atenció."
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__message_has_error
@@ -605,7 +604,8 @@ msgstr "Si està marcat, alguns missatges tenen un error d'entrega."
 #. module: donation
 #: model:ir.model.fields,help:donation.field_account_payment_mode__donation
 msgid "If enabled, this payment mode will be available on donations"
-msgstr "Si està marcat, aquest mode de pagament estarà disponible en els donatius"
+msgstr ""
+"Si està marcat, aquest mode de pagament estarà disponible en els donatius"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_thanks_template__image
@@ -622,7 +622,7 @@ msgstr "En espècie"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__tax_receipt_ok
 msgid "Is Eligible for a Tax Receipt"
-msgstr "És elegible per a un rebut d'impostos"
+msgstr "És elegible per a un certificat fiscal"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_is_follower
@@ -637,7 +637,7 @@ msgstr "És seguidor"
 #: model:ir.model.fields,field_description:donation.field_donation_thanks_template__write_uid
 #: model:ir.model.fields,field_description:donation.field_donation_validate__write_uid
 msgid "Last Updated by"
-msgstr "Última actualització perr"
+msgstr "Última actualització per"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__write_date
@@ -697,7 +697,9 @@ msgstr "Falta el compte de rebuts destacats a l'empresa '%s'."
 #: code:addons/donation/models/account_bank_statement_line.py:0
 #, python-format
 msgid "Missing Product for Donations via Credit Transfer for company '%s'."
-msgstr "Falta el producte per a les donacions mitjançant transferència de crèdit per a l'empresa '%s'."
+msgstr ""
+"Falta el producte per a les donacions mitjançant transferència de crèdit per"
+" a l'empresa '%s'."
 
 #. module: donation
 #. odoo-python
@@ -706,8 +708,9 @@ msgstr "Falta el producte per a les donacions mitjançant transferència de crè
 msgid ""
 "Missing inbound payment mode linked to the bank journal '%s' configured with"
 " 'Link to Bank Account' set to 'Fixed'."
-msgstr "Manca el mode de pagament entrant enllaçat al diari bancari '%s' configurat amb "
-"'Enllaç al compte bancari' establert a 'Fix'."
+msgstr ""
+"Manca el mode de pagament entrant enllaçat al diari bancari '%s' configurat "
+"amb 'Enllaç al compte bancari' establert a 'Fix'."
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__my_activity_date_deadline
@@ -788,8 +791,8 @@ msgid ""
 "On bank statement line '%(line)s', the amount (%(amount)s) is negative so it"
 " cannot be processed as a donation."
 msgstr ""
-"A la línia d'extracte bancari '%(line)s', l'import (%(amount)s) és negatiu, de manera que "
-"no es pot processar com a donatiu."
+"A la línia d'extracte bancari '%(line)s', l'import (%(amount)s) és negatiu, "
+"de manera que no es pot processar com a donatiu."
 
 #. module: donation
 #. odoo-python
@@ -798,7 +801,8 @@ msgstr ""
 msgid ""
 "On bank statement line '%s', the partner is required to process a donation."
 msgstr ""
-"A la línia d'extractes bancaris «%s», l'empresa és requerida per processar una donació."
+"A la línia d'extractes bancaris «%s», l'empresa és requerida per processar "
+"una donació."
 
 #. module: donation
 #. odoo-python
@@ -808,8 +812,8 @@ msgid ""
 "On the company %(company)s, the Product for Donations via Credit Transfer "
 "(%(product)s) is not a donation product !"
 msgstr ""
-"A l'empresa %(company)s, el producte per a donacions mitjançant transferència de crèdit "
-"(%(product)s) no és un producte de donació."
+"A l'empresa %(company)s, el producte per a donacions mitjançant "
+"transferència de crèdit (%(product)s) no és un producte de donació."
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
@@ -850,8 +854,8 @@ msgid ""
 "Payment Mode is not set on donation %s (only fully in-kind donations don't "
 "require a payment mode)."
 msgstr ""
-"El mode de pagament no està establert a la donació %s (només els donatius totalment en espècie "
-"no requereixen un mode de pagament)."
+"El mode de pagament no està establert a la donació %s (només els donatius "
+"totalment en espècie no requereixen un mode de pagament)."
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.account_payment_mode_donation_action
@@ -868,7 +872,7 @@ msgstr "Referència de pagament"
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_tax_receipt_print_menu
 msgid "Print Receipts"
-msgstr "Imprimeix tiquet"
+msgstr "Imprimeix certificats"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
@@ -968,7 +972,7 @@ msgstr "Línia d'extracte del banc d'origen"
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_line__tax_receipt_ok
 msgid "Specify if the product is eligible for a tax receipt"
-msgstr "Especifiqueu si el producte és elegible per a un rebut fiscal"
+msgstr "Especifiqueu si el producte és elegible per a un certificat fiscal"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__start_date
@@ -997,37 +1001,37 @@ msgstr ""
 #. module: donation
 #: model:ir.model,name:donation.model_donation_tax_receipt_option_switch
 msgid "Switch Donation Tax Receipt Option"
-msgstr "Canvia l'opció de rebut de l'impost de donació"
+msgstr "Canvia l'opció del certificat fiscal de donació"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__tax_receipt_id
 #: model_terms:ir.ui.view,arch_db:donation.donation_line_tree
 msgid "Tax Receipt"
-msgstr "Rebut d'impostos"
+msgstr "Certificat fiscal"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__tax_receipt_total
 #: model:ir.model.fields,field_description:donation.field_donation_line__tax_receipt_amount
 #: model:ir.model.fields,field_description:donation.field_donation_report__tax_receipt_amount
 msgid "Tax Receipt Eligible Amount"
-msgstr "Import subvencionable del rebut de l'impost"
+msgstr "Import subvencionable del certificat fiscal"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__tax_receipt_option
 #: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch__new_tax_receipt_option
 #: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Tax Receipt Option"
-msgstr "Opció de rebut d'impostos"
+msgstr "Opció de certificat fiscal"
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_tax_receipt
 msgid "Tax Receipt for Donations"
-msgstr "Rebut d'impostos per a donacions"
+msgstr "Certificat fiscal per a donacions"
 
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_tax_title_menu
 msgid "Tax Receipts"
-msgstr "Rebuts d'impostos"
+msgstr "Certificats fiscals"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_thanks_template__text
@@ -1070,15 +1074,17 @@ msgid ""
 "The Donation by Credit Transfer Account '%(account)s' for company "
 "'%(company)s' is not reconciliable. This should never happen."
 msgstr ""
-"La donació per transferència bancària del compte '%(account)s' per a l'empresa "
-"'%(company)s' no és reconciliable. Això no hauria de passar mai."
+"La donació per transferència bancària del compte '%(account)s' per a "
+"l'empresa '%(company)s' no és reconciliable. Això no hauria de passar mai."
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/account_bank_statement_line.py:0
 #, python-format
 msgid "The Donation by Credit Transfer Account is not set for company '%s'."
-msgstr "El compte de donació per transferència bancària no està establerta per a l'empresa '%s'."
+msgstr ""
+"El compte de donació per transferència bancària no està establerta per a "
+"l'empresa '%s'."
 
 #. module: donation
 #. odoo-python
@@ -1088,8 +1094,8 @@ msgid ""
 "The amount of donation %(donation)s (%(check_total)s) is different from the "
 "sum of the donation lines (%(amount_total)s)."
 msgstr ""
-"L'import de la donació %(donation)s (%(check_total)s) és diferent de la "
-"suma de les línies de donació (%(amount_total)s)."
+"L'import de la donació %(donation)s (%(check_total)s) és diferent de la suma"
+" de les línies de donació (%(amount_total)s)."
 
 #. module: donation
 #. odoo-python
@@ -1108,8 +1114,8 @@ msgid ""
 "The donation '%(donation)s' is linked to the tax receipt %(tax_receipt)s, so"
 " you cannot delete it."
 msgstr ""
-"El donatiu '%(donation)s' està vinculat al rebut d'impostos %(tax_receipt)s, "
-"de manera que no el podeu suprimir."
+"El donatiu '%(donation)s' està vinculat al certificat fiscal %(tax.receipt)s,"
+" de manera que no el podeu suprimir."
 
 #. module: donation
 #. odoo-python
@@ -1125,7 +1131,8 @@ msgstr "El donatiu «%s» està en estat Fet, per tant no el podeu suprimir."
 msgid ""
 "The donation '%s' is linked to an account move, so you cannot delete it."
 msgstr ""
-"El donatiu «%s» està enllaçat a un moviment comptable, de manera que no el podeu suprimir."
+"El donatiu «%s» està enllaçat a un moviment comptable, de manera que no el "
+"podeu suprimir."
 
 #. module: donation
 #. odoo-python
@@ -1135,8 +1142,8 @@ msgid ""
 "The payment mode '%(pay_mode)s' selected on donation %(donation)s is not a "
 "donation payment mode."
 msgstr ""
-"El mode de pagament '%(pay_mode)s' seleccionat a la donació %(donation)s no és "
-"un mode de pagament de donació."
+"El mode de pagament '%(pay_mode)s' seleccionat a la donació %(donation)s no "
+"és un mode de pagament de donació."
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__thanks_printed
@@ -1149,7 +1156,8 @@ msgstr ""
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_validate_form
 msgid "This wizard will validate all the draft donations selected."
-msgstr "Aquest assistent validarà tots els esborranys de donatius seleccionats."
+msgstr ""
+"Aquest assistent validarà tots els esborranys de donatius seleccionats."
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
@@ -1161,7 +1169,8 @@ msgstr ""
 #: model:ir.model.fields,help:donation.field_res_company__donation_account_id
 #: model:ir.model.fields,help:donation.field_res_config_settings__donation_account_id
 msgid "Transfer account for donations received by credit transfer. "
-msgstr "Compte de transferència de donatius rebuts per transferència de crèdit. "
+msgstr ""
+"Compte de transferència de donatius rebuts per transferència de crèdit. "
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__activity_exception_decoration
@@ -1227,13 +1236,13 @@ msgid ""
 "You should first delete this tax receipt (but it may not be legally "
 "allowed)."
 msgstr ""
-"No podeu cancel·lar aquest donatiu perquè està vinculat al rebut d'impostos %s. "
-"En primer lloc, has d'eliminar aquest rebut fiscal (però pot ser que no estigui "
-"legalment permès)."
+"No podeu cancel·lar aquest donatiu perquè està vinculat al certificat fiscal "
+"%s. En primer lloc, has d'eliminar aquest certificat (però pot ser que no "
+"estigui legalment permès)."
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "You cannot change the Tax Receipt Option when it is Annual."
-msgstr "No es pot canviar l'Opció de rebut d'impostos quan és Anual."
+msgstr "No es pot canviar l'Opció de certificat fiscal quan és Anual."
