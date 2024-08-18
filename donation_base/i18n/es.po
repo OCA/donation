@@ -1,0 +1,694 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * donation_base
+#
+# Translators:
+# enjolras <yo@miguelrevilla.com>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-11 21:44+0000\n"
+"PO-Revision-Date: 2023-09-05 21:36+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_res_partner__tax_receipt_count
+#: model:ir.model.fields,field_description:donation_base.field_res_users__tax_receipt_count
+msgid "# of Tax Receipts"
+msgstr "# de Comprobantes Fiscales"
+
+#. module: donation_base
+#: model:ir.actions.report,print_report_name:donation_base.report_donation_tax_receipt
+msgid "'Fiscal_receipt-'+(object.number or '').replace('/','')"
+msgstr "'Fiscal_receipt-'+(object.number or '').replace('/','')"
+
+#. module: donation_base
+#: model:mail.template,body_html:donation_base.tax_receipt_email_template
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"        <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Dear <t t-out=\"object.partner_id.name\">Alexis</t>\n"
+"                <t t-if=\"object.partner_id.parent_id\">\n"
+"                                (<i><t t-out=\"object.partner_id.parent_id."
+"name\"></t></i>)\n"
+"</t>\n"
+"    ,<br><br>\n"
+"\n"
+"    Thank you very much for your donation.<br><br>\n"
+"\n"
+"    Please find enclosed your tax receipt <span style=\"font-weight: bold;\" "
+"t-out=\"object.number\">RECPT-2023-001</span>\n"
+"                    amounting in <span style=\"font-weight: bold;\" t-out="
+"\"format_amount(object.amount, object.currency_id) or ''\">$ 10.00</span>\n"
+"                            from <t t-out=\"object.company_id.name\">Barroux "
+"Abbey</t>.\n"
+"    <t t-if=\"not is_html_empty(user.signature)\">\n"
+"            <br><br>\n"
+"            <t t-out=\"user.signature or ''\">--<br>Mitchell Admin</t>\n"
+"    </t>\n"
+"    <br><br>\n"
+"    </p>\n"
+"    </div>\n"
+"    "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"        <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Estimado <t t-out=\"object.partner_id.name\">Alexis</t>\n"
+"                <t t-if=\"object.partner_id.parent_id\">\n"
+"                                (<i><t t-out=\"object.partner_id.parent_id."
+"name\"></t></i>)\n"
+"</t>\n"
+"    ,<br><br>\n"
+"\n"
+"    Muchas gracias por su donación.<br><br>\n"
+"\n"
+"     Le adjuntamos su recibo fiscal<span style=\"font-weight: bold;\" t-out="
+"\"object.number\">RECPT-2023-001</span>\n"
+"                    Importe en <span style=\"font-weight: bold;\" t-out="
+"\"format_amount(object.amount, object.currency_id) or ''\">$ 10.00</span>\n"
+"                            Desde <t t-out=\"object.company_id.name"
+"\">Barroux Abbey</t>.\n"
+"    <t t-if=\"not is_html_empty(user.signature)\">\n"
+"            <br><br>\n"
+"            <t t-out=\"user.signature or ''\">--<br>Mitchell Admin</t>\n"
+"    </t>\n"
+"    <br><br>\n"
+"    </p>\n"
+"    </div>\n"
+"    "
+
+#. module: donation_base
+#: model:ir.model.fields,help:donation_base.field_product_product__detailed_type
+#: model:ir.model.fields,help:donation_base.field_product_template__detailed_type
+msgid ""
+"A storable product is a product for which you manage stock. The Inventory "
+"app has to be installed.\n"
+"A consumable product is a product for which stock is not managed.\n"
+"A service is a non-material product you provide."
+msgstr ""
+"Un producto almacenable es un producto para el que se gestionan existencias. "
+"La aplicación Inventario debe estar instalada.\n"
+"Un producto consumible es un producto para el que no se gestionan "
+"existencias.\n"
+"Un servicio es un producto no material que usted proporciona."
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_needaction
+msgid "Action Needed"
+msgstr "Acción necesaria"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoración de Actividad de Excepción"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__activity_state
+msgid "Activity State"
+msgstr "Estado de la Actividad"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Icono del tipo de actividad"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__amount
+msgid "Amount"
+msgstr "Importe"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.report_donationtaxreceipt_document
+msgid "Amount Total:"
+msgstr "Importe total:"
+
+#. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__donation_tax_receipt__type__annual
+#: model:ir.model.fields.selection,name:donation_base.selection__res_partner__tax_receipt_option__annual
+msgid "Annual Tax Receipt"
+msgstr "Recibo de impuestos anual"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
+msgid "Annual Tax Receipts"
+msgstr "Recibos de impuestos anuales"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_attachment_count
+msgid "Attachment Count"
+msgstr "Recuento de archivos adjuntos"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_print_form
+#: model_terms:ir.ui.view,arch_db:donation_base.tax_receipt_annual_create_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__company_id
+#: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create__company_id
+msgid "Company"
+msgstr "Companía"
+
+#. module: donation_base
+#. odoo-python
+#: code:addons/donation_base/models/donation_tax_receipt.py:0
+#, python-format
+msgid "Compose Email"
+msgstr "Componer correo electrónico"
+
+#. module: donation_base
+#: model:ir.model,name:donation_base.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: donation_base
+#: model:ir.actions.act_window,name:donation_base.tax_receipt_annual_create_action
+msgid "Create Annual Receipts"
+msgstr "Crear recibos anuales"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__create_uid
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print__create_uid
+#: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__create_date
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print__create_date
+#: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__date
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
+msgid "Date"
+msgstr "Fecha"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.report_donationtaxreceipt_document
+msgid "Date:"
+msgstr "Fecha:"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__display_name
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print__display_name
+#: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__product_template__detailed_type__donation
+#: model:product.template,name:donation_base.product_product_donation_product_template
+#: model_terms:ir.ui.view,arch_db:donation_base.product_template_search_view
+msgid "Donation"
+msgstr "Donativo"
+
+#. module: donation_base
+#: model:product.template,name:donation_base.product_product_donation_notaxreceipt_product_template
+msgid "Donation - no tax receipt"
+msgstr "Donativo - sin recibo de impuestos"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__donation_date
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
+msgid "Donation Date"
+msgstr "Fecha del donativo"
+
+#. module: donation_base
+#: model:ir.actions.report,name:donation_base.report_donation_tax_receipt
+#: model_terms:ir.ui.view,arch_db:donation_base.report_donationtaxreceipt_document
+msgid "Donation Tax Receipt"
+msgstr "Recibo de impuestos de donativo"
+
+#. module: donation_base
+#: model:mail.template,name:donation_base.tax_receipt_email_template
+msgid "Donation Tax Receipt - Send by Email"
+msgstr "Recibo de impuestos por donación - Enviar por correo electrónico"
+
+#. module: donation_base
+#: model:ir.actions.act_window,name:donation_base.donation_tax_receipt_action
+#: model:ir.actions.act_window,name:donation_base.partner_tax_receipt_action
+msgid "Donation Tax Receipts"
+msgstr "Recibos de impuestos de donativo"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__partner_id
+msgid "Donor"
+msgstr "Donante"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_res_partner__donor_rank
+#: model:ir.model.fields,field_description:donation_base.field_res_users__donor_rank
+msgid "Donor Rank"
+msgstr "Rango del donante"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.report_donationtaxreceipt_document
+msgid "Donor:"
+msgstr "Donante:"
+
+#. module: donation_base
+#: model:ir.actions.act_window,name:donation_base.res_partner_action_donor
+#: model_terms:ir.ui.view,arch_db:donation_base.res_partner_view_search
+msgid "Donors"
+msgstr "Donantes"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.product_template_search_view
+msgid "Eligible for a Tax Receipt"
+msgstr "Elegible para un recibo de impuestos"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create__end_date
+msgid "End Date"
+msgstr "Fecha de finalización"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores/as"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (socios)"
+
+#. module: donation_base
+#: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Icono de fuente impresionante, por ejemplo fa-tasks"
+
+#. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__res_partner__tax_receipt_option__each
+msgid "For Each Donation"
+msgstr "Por cada donativo"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.tax_receipt_annual_create_form
+msgid "Generate"
+msgstr "Generar"
+
+#. module: donation_base
+#: model:ir.model,name:donation_base.model_tax_receipt_annual_create
+#: model_terms:ir.ui.view,arch_db:donation_base.tax_receipt_annual_create_form
+msgid "Generate Annual Tax Receipts"
+msgstr "Generar recibos de impuestos anuales"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__has_message
+msgid "Has Message"
+msgstr "Tiene mensaje"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__id
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print__id
+#: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create__id
+msgid "ID"
+msgstr "ID"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__activity_exception_icon
+msgid "Icon"
+msgstr "Icono"
+
+#. module: donation_base
+#: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "icono para indicar una actividad por excepción."
+
+#. module: donation_base
+#: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, nuevos mensajes requieren de su atención."
+
+#. module: donation_base
+#: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcada, algunos mensajes tienen un error de entrega."
+
+#. module: donation_base
+#: model:product.template,name:donation_base.product_product_inkind_donation_product_template
+msgid "In-Kind Donation"
+msgstr "Donativo en especie"
+
+#. module: donation_base
+#: model:product.template,name:donation_base.product_product_inkind_donation_notaxreceipt_product_template
+msgid "In-Kind Donation - no tax receipt"
+msgstr "Donativo en especie - sin recibo fiscal"
+
+#. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__product_template__detailed_type__donation_in_kind_consu
+msgid "In-Kind Donation Consummable"
+msgstr "Donativo en especie Consumible"
+
+#. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__product_template__detailed_type__donation_in_kind_service
+msgid "In-Kind Donation Service"
+msgstr "Servicio de donativos en especie"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_product_product__tax_receipt_ok
+#: model:ir.model.fields,field_description:donation_base.field_product_template__tax_receipt_ok
+msgid "Is Eligible for a Tax Receipt"
+msgstr "Es elegible para un recibo de impuestos"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_is_follower
+msgid "Is Follower"
+msgstr "Es seguidor/a"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt____last_update
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print____last_update
+#: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__write_uid
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print__write_uid
+#: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__write_date
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print__write_date
+#: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Archivo adjunto principal"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_has_error
+msgid "Message Delivery error"
+msgstr "Error en entrega del mensaje"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: donation_base
+#. odoo-python
+#: code:addons/donation_base/models/donation_tax_receipt.py:0
+#, python-format
+msgid "Missing email on partner '%s'."
+msgstr "Falta el correo electrónico del socio '%s'."
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Fecha límite de Mi Actividad"
+
+#. module: donation_base
+#. odoo-python
+#: code:addons/donation_base/models/donation_tax_receipt.py:0
+#, python-format
+msgid "New"
+msgstr "Nuevo/a"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Fecha Límite para la Próxima Actividad"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de la Siguiente Actividad"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo de la Siguiente Actividad"
+
+#. module: donation_base
+#. odoo-python
+#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:0
+#, python-format
+msgid "No annual tax receipt to generate"
+msgstr "No hay recibos de impuestos anuales a generar"
+
+#. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__res_partner__tax_receipt_option__none
+msgid "None"
+msgstr "Ninguno"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: donation_base
+#: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: donation_base
+#: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de entrega"
+
+#. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__donation_tax_receipt__type__each
+msgid "One-Time Tax Receipt"
+msgstr "Recibo de impuestos por única vez"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
+msgid "One-Time Tax Receipts"
+msgstr "Recibos de impuestos por única vez"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
+msgid "Partner"
+msgstr "Socio"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_form
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__print_date
+msgid "Print Date"
+msgstr "Fecha de impresión"
+
+#. module: donation_base
+#: model:ir.model,name:donation_base.model_donation_tax_receipt_print
+msgid "Print Donation Tax Receipts"
+msgstr "Imprimir recibos de impuestos de donativos"
+
+#. module: donation_base
+#: model:ir.actions.act_window,name:donation_base.donation_tax_receipt_print_action
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_print_form
+msgid "Print Receipts"
+msgstr "Imprimir recibos"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_print_form
+msgid "Print Tax Receipts"
+msgstr "Imprimir recibos de impuestos"
+
+#. module: donation_base
+#: model:ir.model,name:donation_base.model_product_template
+msgid "Product"
+msgstr "Producto"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_product_product__detailed_type
+#: model:ir.model.fields,field_description:donation_base.field_product_template__detailed_type
+msgid "Product Type"
+msgstr "Tipo de Producto"
+
+#. module: donation_base
+#: model:ir.model,name:donation_base.model_product_product
+msgid "Product Variant"
+msgstr "Variante de Producto"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__number
+msgid "Receipt Number"
+msgstr "Número de recibo"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print__receipt_ids
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_print_form
+msgid "Receipts to Print"
+msgstr "Recibos a imprimir"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario Responsable"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_form
+msgid "Send by Email"
+msgstr "Enviar por email"
+
+#. module: donation_base
+#: model:ir.model.fields,help:donation_base.field_product_product__tax_receipt_ok
+#: model:ir.model.fields,help:donation_base.field_product_template__tax_receipt_ok
+msgid "Specify if the product is eligible for a tax receipt"
+msgstr "Especifica si el producto es elegible para un recibo de impuestos"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create__start_date
+msgid "Start Date"
+msgstr "Fecha de inicio"
+
+#. module: donation_base
+#: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado basado en actividades\n"
+"Atrasada: La fecha de vencimiento ya ha pasado\n"
+"Hoy: La fecha de entrega es hoy\n"
+"Planificada: Futuras actividades."
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_res_partner__tax_receipt_option
+#: model:ir.model.fields,field_description:donation_base.field_res_users__tax_receipt_option
+msgid "Tax Receipt Option"
+msgstr "Opción de recibo de impuestos"
+
+#. module: donation_base
+#: model:ir.model,name:donation_base.model_donation_tax_receipt
+msgid "Tax Receipt for Donations"
+msgstr "Recibo de impuestos para donaciones"
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_res_partner__tax_receipt_ids
+#: model:ir.model.fields,field_description:donation_base.field_res_users__tax_receipt_ids
+#: model_terms:ir.ui.view,arch_db:donation_base.view_partner_property_form
+msgid "Tax Receipts"
+msgstr "Recibos de impuestos"
+
+#. module: donation_base
+#. odoo-python
+#: code:addons/donation_base/wizard/tax_receipt_annual_create.py:0
+#, python-format
+msgid ""
+"The Donor '%(partner)s' already has an annual tax receipt in this timeframe: "
+"%(receipt)s dated %(number)s."
+msgstr ""
+"El donante '%(partner)s' ya tiene un recibo fiscal anual en este periodo: "
+"%(receipt)s con fecha %(number)s."
+
+#. module: donation_base
+#. odoo-python
+#: code:addons/donation_base/wizard/tax_receipt_print.py:0
+#, python-format
+msgid "There are no tax receipts to print."
+msgstr "No hay recibos de impuestos para imprimir."
+
+#. module: donation_base
+#. odoo-python
+#: code:addons/donation_base/models/product.py:0
+#, python-format
+msgid "There shouldn't have any Customer Taxes on the donation product '%s'."
+msgstr ""
+"No debería haber ningún Impuesto al Cliente en el producto de donación '%s'."
+
+#. module: donation_base
+#: model_terms:product.template,description:donation_base.product_product_donation_product_template
+#: model_terms:product.template,description:donation_base.product_product_inkind_donation_product_template
+msgid "This donation item is eligible for a tax receipt."
+msgstr "Este artículo de donación es elegible para un recibo de impuestos."
+
+#. module: donation_base
+#: model_terms:product.template,description:donation_base.product_product_donation_notaxreceipt_product_template
+#: model_terms:product.template,description:donation_base.product_product_inkind_donation_notaxreceipt_product_template
+msgid "This donation item is not eligible for a tax receipt."
+msgstr "Este artículo de donación no es elegible para un recibo de impuestos."
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__type
+#: model_terms:ir.ui.view,arch_db:donation_base.donation_tax_receipt_search
+msgid "Type"
+msgstr "Tipo"
+
+#. module: donation_base
+#: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo (o clase) de actividad excepcional registrada."
+
+#. module: donation_base
+#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes de la página web"
+
+#. module: donation_base
+#: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de la comunicación en la página web"
+
+#. module: donation_base
+#: model:mail.template,report_name:donation_base.tax_receipt_email_template
+msgid ""
+"{{object.company_id.name.replace(' ', '_')}}-Tax_Receipt_{{(object.number or "
+"'').replace('/','_')}}"
+msgstr ""
+"{{object.company_id.name.replace(' ', '_')}}-Tax_Receipt_{{(object.number or "
+"'').replace('/','_')}}"
+
+#. module: donation_base
+#: model:mail.template,subject:donation_base.tax_receipt_email_template
+msgid "{{object.company_id.name}} - Tax Receipt {{object.number or 'n/a'}}"
+msgstr "{{object.company_id.name}} - Tax Receipt {{object.number or 'n/a'}}"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error en la entrega de sms"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Número de mensajes que requieren una acción"
+
+#~ msgid "Is a Donation"
+#~ msgstr "Es un donativo"
+
+#~ msgid "Product Template"
+#~ msgstr "Plantilla de producto"
+
+#~ msgid "Receipts To Print"
+#~ msgstr "Recibos a imprimir"
