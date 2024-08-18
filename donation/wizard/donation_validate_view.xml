@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2014-2016 Barroux Abbey (www.barroux.org)
+  Copyright 2014-2016 Akretion France (www.akretion.com)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="donation_validate_form" model="ir.ui.view">
+        <field name="name">donation_validate.form</field>
+        <field name="model">donation.validate</field>
+        <field name="arch" type="xml">
+            <form string="Validate Donations">
+                <p>
+                    This wizard will validate all the draft donations selected.
+                </p>
+                <footer>
+                    <button
+                        type="object"
+                        name="run"
+                        string="Validate"
+                        class="btn-primary"
+                    />
+                    <button special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="donation_validate_action" model="ir.actions.act_window">
+        <field name="name">Validate Draft Donations</field>
+        <field name="res_model">donation.validate</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
