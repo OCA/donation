@@ -463,8 +463,8 @@ class DonationDonation(models.Model):
                 move_vals = donation._prepare_donation_move()
                 # when we have a full in-kind donation: no account move
                 if move_vals:
-                    move = self.env["account.move"].create(move_vals)
-                    move.action_post()
+                    move = self.env["account.move"].sudo().create(move_vals)
+                    move.sudo().action_post()
                     vals["move_id"] = move.id
             else:
                 donation.message_post(
@@ -477,7 +477,7 @@ class DonationDonation(models.Model):
 
             donation.write(vals)
             if donation.bank_statement_line_id:
-                donation._reconcile_donation_from_bank_statement()
+                donation.sudo()._reconcile_donation_from_bank_statement()
             donation.partner_id._update_donor_rank()
         return
 
@@ -583,8 +583,8 @@ class DonationDonation(models.Model):
                     % donation.tax_receipt_id.number
                 )
             if donation.move_id:
-                donation.move_id.button_cancel()
-                donation.with_context(force_delete=True).move_id.unlink()
+                donation.move_id.sudo().button_cancel()
+                donation.with_context(force_delete=True).sudo().move_id.unlink()
             donation.write({"state": "cancel"})
             donation.partner_id._update_donor_rank()
 
