@@ -4,7 +4,7 @@
 
 {
     "name": "Donation",
-    "version": "16.0.2.0.0",
+    "version": "16.0.2.1.0",
     "category": "Accounting",
     "license": "AGPL-3",
     "summary": "Manage donations",
