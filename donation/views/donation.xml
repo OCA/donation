@@ -74,7 +74,8 @@
                                 name="currency_id"
                                 groups="base.group_multi_currency"
                             />
-                                <field name="company_currency_id" invisible="1" />
+                            <field name="currency_id" invisible="1" />
+                            <field name="company_currency_id" invisible="1" />
                             <field
                                 name="check_total"
                                 groups="donation.group_donation_check_total"
