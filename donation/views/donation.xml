@@ -122,8 +122,14 @@
                         <page string="Other Information" name="other">
                             <group name="other">
                             <group name="other-left">
-                                <field name="move_id" />
-                                <field name="bank_statement_line_id" />
+                                <field
+                                        name="move_id"
+                                        groups="account.group_account_user"
+                                    />
+                                <field
+                                        name="bank_statement_line_id"
+                                        groups="account.group_account_user"
+                                    />
                                 <field
                                         name="amount_total_company_currency"
                                         groups="base.group_multi_currency"
