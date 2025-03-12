@@ -43,6 +43,7 @@
                         groups="donation.group_donation_user"
                         states="done"
                         invisible="context.get('recurring_view')"
+                        confirm="Are you sure you want to cancel this donation?"
                     />
                     <button
                         type="object"
