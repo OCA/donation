@@ -582,7 +582,7 @@ class DonationDonation(models.Model):
                     )
                     % donation.tax_receipt_id.number
                 )
-            if donation.move_id:
+            if donation.sudo().move_id:
                 donation.move_id.sudo().button_cancel()
                 donation.with_context(force_delete=True).sudo().move_id.unlink()
             donation.write({"state": "cancel"})
