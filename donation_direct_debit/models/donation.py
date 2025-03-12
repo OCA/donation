@@ -116,16 +116,20 @@ class DonationDonation(models.Model):
         return res
 
     def done2cancel(self):
-        for donation in self:
+        for donation in self.sudo():
             if donation.move_id:
                 donation_mv_line_ids = [line.id for line in donation.move_id.line_ids]
                 if donation_mv_line_ids:
-                    plines = self.env["account.payment.line"].search(
-                        [
-                            ("move_line_id", "in", donation_mv_line_ids),
-                            ("company_id", "=", donation.company_id.id),
-                            ("state", "in", ("draft", "open")),
-                        ]
+                    plines = (
+                        self.env["account.payment.line"]
+                        .sudo()
+                        .search(
+                            [
+                                ("move_line_id", "in", donation_mv_line_ids),
+                                ("company_id", "=", donation.company_id.id),
+                                ("state", "in", ("draft", "open")),
+                            ]
+                        )
                     )
                     if plines:
                         raise UserError(
