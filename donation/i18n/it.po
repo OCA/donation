@@ -24,8 +24,8 @@ msgstr ""
 #. module: donation
 #: model:ir.actions.report,print_report_name:donation.report_thanks
 msgid ""
-"'donation_thanks-%s%s' % (object.number, object.state == 'draft' and "
-"'-draft' or '')"
+"'donation_thanks-%s%s' % (object.number, object.state == 'draft' and '-"
+"draft' or '')"
 msgstr ""
 
 #. module: donation
@@ -124,6 +124,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:donation.donation_thanks_template_form
 #: model_terms:ir.ui.view,arch_db:donation.donation_thanks_template_search
 msgid "Archived"
+msgstr ""
+
+#. module: donation
+#: model_terms:ir.ui.view,arch_db:donation.donation_form
+msgid "Are you sure you want to cancel this donation?"
 msgstr ""
 
 #. module: donation
@@ -360,8 +365,8 @@ msgstr ""
 #, python-format
 msgid ""
 "Donation %s is linked to a bank statement line, but the journal '%s' linked "
-"to its payment mode '%s' doesn't have a donation by credit transfer account."
-" This should never happen."
+"to its payment mode '%s' doesn't have a donation by credit transfer account. "
+"This should never happen."
 msgstr ""
 
 #. module: donation
@@ -728,8 +733,8 @@ msgstr ""
 #: code:addons/donation/models/account_bank_statement.py:0
 #, python-format
 msgid ""
-"Missing inbound payment mode linked to the bank journal '%s' configured with"
-" 'Link to Bank Account' set to 'Fixed'."
+"Missing inbound payment mode linked to the bank journal '%s' configured with "
+"'Link to Bank Account' set to 'Fixed'."
 msgstr ""
 
 #. module: donation
@@ -755,9 +760,6 @@ msgid "Name or Code"
 msgstr ""
 
 #. module: donation
-#: code:addons/donation/models/donation.py:0
-#: code:addons/donation/models/donation.py:0
-#: code:addons/donation/models/donation.py:0
 #: code:addons/donation/models/donation.py:0
 #, python-format
 msgid "New"
@@ -817,8 +819,8 @@ msgstr ""
 #: code:addons/donation/models/res_company.py:0
 #, python-format
 msgid ""
-"On the company %s, the Product for Donations via Credit Transfer (%s) is not"
-" a donation product !"
+"On the company %s, the Product for Donations via Credit Transfer (%s) is not "
+"a donation product !"
 msgstr ""
 
 #. module: donation
@@ -1099,8 +1101,7 @@ msgstr ""
 #: code:addons/donation/models/donation.py:0
 #, python-format
 msgid ""
-"The payment mode '%s' selected on donation %s is not a donation payment "
-"mode."
+"The payment mode '%s' selected on donation %s is not a donation payment mode."
 msgstr ""
 
 #. module: donation
@@ -1205,8 +1206,7 @@ msgstr ""
 #, python-format
 msgid ""
 "You cannot cancel this donation because it is linked to the tax receipt %s. "
-"You should first delete this tax receipt (but it may not be legally "
-"allowed)."
+"You should first delete this tax receipt (but it may not be legally allowed)."
 msgstr ""
 
 #. module: donation

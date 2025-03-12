@@ -134,6 +134,11 @@ msgid "Archived"
 msgstr "Archivado"
 
 #. module: donation
+#: model_terms:ir.ui.view,arch_db:donation.donation_form
+msgid "Are you sure you want to cancel this donation?"
+msgstr ""
+
+#. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_attachment_count
 msgid "Attachment Count"
 msgstr "Recuento de anexos"
@@ -387,12 +392,12 @@ msgstr ""
 #, python-format
 msgid ""
 "Donation <a href=# data-oe-model=donation.donation data-oe-id=%d>%s</a> "
-"dated %s created for partner <a href=# data-oe-model=res.partner data-oe-id="
-"%d>%s</a>."
+"dated %s created for partner <a href=# data-oe-model=res.partner data-oe-"
+"id=%d>%s</a>."
 msgstr ""
 "Donación <a href=# data-oe-model=donation.donation data-oe-id=%d>%s</a> "
-"dated %s created for partner <a href=# data-oe-model=res.partner data-oe-id="
-"%d>%s</a>."
+"dated %s created for partner <a href=# data-oe-model=res.partner data-oe-"
+"id=%d>%s</a>."
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__campaign_id
