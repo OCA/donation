@@ -53,4 +53,4 @@ class ResPartner(models.Model):
     def _update_donor_rank(self):
         """This method is inherited in donation and donation_sale"""
         self.ensure_one()
-        self.write({"donor_rank": self._prepare_donor_rank()})
+        self.sudo().write({"donor_rank": self._prepare_donor_rank()})
