@@ -14,7 +14,7 @@ class DonationTaxReceipt(models.Model):
     _order = "id desc"
     _rec_name = "number"
 
-    number = fields.Char(string="Receipt Number")
+    number = fields.Char(string="Receipt Number", default=lambda self: _("New"))
     date = fields.Date(
         string="Date", required=True, default=fields.Date.context_today, index=True
     )
@@ -48,15 +48,17 @@ class DonationTaxReceipt(models.Model):
         required=True,
     )
 
-    @api.model
-    def create(self, vals):
-        date = vals.get("donation_date")
-        if vals.get("number", "/") == "/":
-            seq = self.env["ir.sequence"]
-            vals["number"] = (
-                seq.with_context(date=date).next_by_code("donation.tax.receipt") or "/"
-            )
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if "company_id" in vals:
+                self = self.with_company(vals["company_id"])
+            date = vals.get("donation_date")
+            if vals.get("number", _("New")) == _("New"):
+                vals["number"] = self.env["ir.sequence"].next_by_code(
+                    "donation.tax.receipt", sequence_date=date
+                ) or _("New")
+        return super().create(vals_list)
 
     @api.model
     def update_tax_receipt_annual_dict(
