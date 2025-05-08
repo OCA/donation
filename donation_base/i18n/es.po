@@ -420,6 +420,12 @@ msgid "My Activity Deadline"
 msgstr "Fecha Límite de Mi Actividad"
 
 #. module: donation_base
+#: code:addons/donation_base/models/donation_tax_receipt.py:0
+#, python-format
+msgid "New"
+msgstr ""
+
+#. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__activity_date_deadline
 msgid "Next Activity Deadline"
 msgstr "Fecha Límite de la Siguiente Actividad"

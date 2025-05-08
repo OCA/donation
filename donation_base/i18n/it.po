@@ -24,8 +24,10 @@ msgid ""
 "    % endif\n"
 "    ,</p>\n"
 "\n"
-"    <p>Please find enclosed your tax receipt <strong>${object.number}</strong>\n"
-"    amounting in <strong>${object.amount} ${object.currency_id.name}</strong>\n"
+"    <p>Please find enclosed your tax receipt <strong>${object.number}</"
+"strong>\n"
+"    amounting in <strong>${object.amount} ${object.currency_id.name}</"
+"strong>\n"
 "    from ${object.company_id.name}.\n"
 "    </p>\n"
 "\n"
@@ -394,6 +396,12 @@ msgid "My Activity Deadline"
 msgstr ""
 
 #. module: donation_base
+#: code:addons/donation_base/models/donation_tax_receipt.py:0
+#, python-format
+msgid "New"
+msgstr ""
+
+#. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__activity_date_deadline
 msgid "Next Activity Deadline"
 msgstr ""
@@ -563,8 +571,8 @@ msgstr ""
 #: code:addons/donation_base/wizard/tax_receipt_annual_create.py:0
 #, python-format
 msgid ""
-"The Donor '%s' already has an annual tax receipt in this timeframe: %s dated"
-" %s."
+"The Donor '%s' already has an annual tax receipt in this timeframe: %s dated "
+"%s."
 msgstr ""
 
 #. module: donation_base
@@ -579,8 +587,8 @@ msgstr ""
 #: code:addons/donation_base/models/product.py:0
 #, python-format
 msgid ""
-"The option 'Is Eligible for a Tax Receipt' is active on the product '%s', so"
-" you must also activate the option 'Is a Donation'."
+"The option 'Is Eligible for a Tax Receipt' is active on the product '%s', so "
+"you must also activate the option 'Is a Donation'."
 msgstr ""
 
 #. module: donation_base
