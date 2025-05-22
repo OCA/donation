@@ -444,6 +444,12 @@
         <field name="name">Donations</field>
         <field name="res_model">donation.donation</field>
         <field name="view_mode">tree,form,pivot,graph</field>
+        <!-- Force an empty value to domain because this action is inherited
+             by donation_recurring which adds a domain. But, when you uninstall
+             donation_recurring, it will not return to its initial value. With
+             the line below, when you reload the donation module,
+             it will return to its empty value -->
+        <field name="domain" />
     </record>
     <record id="donation_line_action" model="ir.actions.act_window">
         <field name="name">Donations Lines</field>
