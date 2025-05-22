@@ -1,1 +1,1 @@
-from . import donation_line
+from . import account_analytic_distribution_model
