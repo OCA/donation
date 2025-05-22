@@ -22,4 +22,5 @@
     ],
     "demo": ["demo/donation_recurring_demo.xml"],
     "installable": True,
+    "uninstall_hook": "donation_action_reset_domain",
 }
