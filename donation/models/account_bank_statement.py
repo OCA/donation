@@ -79,17 +79,17 @@ class AccountBankStatement(models.Model):
         ddo = self.env["donation.donation"]
         transit_account = self.journal_id.donation_account_id
         company_cur = self.company_id.currency_id
-        logger.info(
-            "Trying to create donations for statement %s. Transit account=%s",
-            self.display_name,
-            transit_account.display_name,
-        )
         if not transit_account:
             logger.info(
                 "Journal %s doesn't have a donation transit account. "
                 "Skip creation of donations." % self.journal_id.display_name
             )
             return False
+        logger.info(
+            "Trying to create donations for statement %s. Transit account=%s",
+            self.display_name,
+            transit_account.display_name,
+        )
         payment_mode = self.env["account.payment.mode"].search(
             [
                 ("bank_account_link", "=", "fixed"),
