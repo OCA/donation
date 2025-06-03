@@ -28,7 +28,7 @@
                 <field name="donor_rank" invisible="1" />
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
-                    <button
+                <button
                     id="donation_tax_receipt_button"
                     class="oe_stat_button"
                     type="action"
@@ -45,27 +45,23 @@
                 </button>
             </xpath>
         </field>
-</record>
+    </record>
     <record id="res_partner_view_search" model="ir.ui.view">
-            <field name="name">donation.res.partner.search</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="account.res_partner_view_search" />
-            <field name="arch" type="xml">
-                    <filter name="supplier" position="after">
-                        <filter
-                    string="Donors"
-                    name="donor"
-                    domain="[('donor_rank','>', 0)]"
-                />
-                </filter>
-            </field>
+        <field name="name">donation.res.partner.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.res_partner_view_search" />
+        <field name="arch" type="xml">
+            <filter name="supplier" position="after">
+                <filter string="Donors" name="donor" domain="[('donor_rank','>', 0)]" />
+            </filter>
+        </field>
     </record>
     <record id="res_partner_action_donor" model="ir.actions.act_window">
-            <field name="name">Donors</field>
-            <field name="res_model">res.partner</field>
-            <field name="view_mode">kanban,tree,form</field>
-            <field
+        <field name="name">Donors</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field
             name="context"
         >{'search_default_donor': 1, 'res_partner_search_mode': 'donor', 'default_is_company': False, 'default_donor_rank': 1}</field>
-        </record>
+    </record>
 </odoo>
