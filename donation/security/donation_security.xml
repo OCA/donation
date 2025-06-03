@@ -36,10 +36,10 @@
     <data noupdate="1">
         <record id="base.default_user" model="res.users">
             <field name="groups_id" eval="[(4, ref('group_donation_manager'))]" />
-    </record>
-            <record id="base.user_admin" model="res.users">
-        <field name="groups_id" eval="[(4, ref('group_donation_manager'))]" />
-    </record>
+        </record>
+        <record id="base.user_admin" model="res.users">
+            <field name="groups_id" eval="[(4, ref('group_donation_manager'))]" />
+        </record>
         <!-- Multi-company Rules -->
         <record id="donation_company_rule" model="ir.rule">
             <field name="name">Donation Multi-company</field>
@@ -60,19 +60,18 @@
             <field name="domain_force">[('company_id', 'in', company_ids)]</field>
         </record>
         <record id="donation_thanks_template_company_rule" model="ir.rule">
-    <field name="name">Donation Thanks Template multi-company</field>
-    <field name="model_id" ref="model_donation_thanks_template" />
-    <field
+            <field name="name">Donation Thanks Template multi-company</field>
+            <field name="model_id" ref="model_donation_thanks_template" />
+            <field
                 name="domain_force"
             >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-</record>
+        </record>
         <record id="donation_campaign_company_rule" model="ir.rule">
-    <field name="name">Donation Campaign multi-company</field>
-    <field name="model_id" ref="model_donation_campaign" />
-    <field
+            <field name="name">Donation Campaign multi-company</field>
+            <field name="model_id" ref="model_donation_campaign" />
+            <field
                 name="domain_force"
             >['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-</record>
-
+        </record>
     </data>
 </odoo>

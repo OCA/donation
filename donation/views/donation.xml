@@ -123,16 +123,15 @@
                         </page>
                         <page string="Other Information" name="other">
                             <group name="other">
-                            <group name="other-left">
-                                <field name="move_id" />
-                                <field name="bank_statement_line_id" />
-                                <field
+                                <group name="other-left">
+                                    <field name="move_id" />
+                                    <field name="bank_statement_line_id" />
+                                    <field
                                         name="amount_total_company_currency"
                                         groups="base.group_multi_currency"
                                     />
-                            </group>
-                            <group name="other-right">
-                            </group>
+                                </group>
+                                <group name="other-right" />
                             </group>
                         </page>
                     </notebook>
@@ -161,7 +160,7 @@
                             groups="base.group_multi_currency"
                             readonly="1"
                         />
-                            <field name="company_currency_id" invisible="1" />
+                        <field name="company_currency_id" invisible="1" />
                         <field
                             name="check_total"
                             groups="donation.group_donation_check_total"
@@ -187,16 +186,16 @@
                         <field name="tax_receipt_total" />
                         <field name="bank_statement_line_id" />
                     </group>
-                    </group>
-                    <group name="lines" string="Lines" colspan="2">
-                        <field name="line_ids" nolabel="1" />
-                        <group name="subtotal" class="oe_subtotal_footer oe_right">
-                            <field
+                </group>
+                <group name="lines" string="Lines" colspan="2">
+                    <field name="line_ids" nolabel="1" />
+                    <group name="subtotal" class="oe_subtotal_footer oe_right">
+                        <field
                             name="amount_total"
                             string="Total"
                             class="oe_subtotal_footer_separator"
                         />
-                        </group>
+                    </group>
                 </group>
                 <footer>
                     <button
@@ -219,22 +218,20 @@
         </field>
     </record>
 
-
-
     <record id="donation_tree" model="ir.ui.view">
         <field name="name">donation.tree</field>
         <field name="model">donation.donation</field>
         <field name="arch" type="xml">
             <tree>
                 <header>
-                        <button
+                    <button
                         name="%(donation_validate_action)d"
                         type="action"
                         string="Validate"
                         groups="donation.group_donation_user"
                         invisible="context.get('recurring_view')"
                     />
-                        <button
+                    <button
                         name="thanks_printed_button"
                         type="object"
                         string="Mark as Thanks Printed"
@@ -242,9 +239,9 @@
                         invisible="context.get('recurring_view')"
                         confirm="Mark all selected donation as Thanks Printed?"
                     />
-                        <!-- Unfortunately, confirm="" doesn't work for
+                    <!-- Unfortunately, confirm="" doesn't work for
                             buttons in tree view... at least not in v14 -->
-                    </header>
+                </header>
                 <field
                     name="number"
                     invisible="context.get('recurring_view')"
@@ -306,7 +303,7 @@
                     domain="[('state', '=', 'cancel')]"
                 />
                 <separator />
-            <filter
+                <filter
                     name="thanks_to_print"
                     string="Thanks to Print"
                     domain="[('thanks_printed', '=', False)]"
