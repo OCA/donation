@@ -17,23 +17,22 @@
                         name="validate"
                         string="Validate"
                         class="oe_highlight"
-                        states="draft"
                         groups="donation.group_donation_user"
-                        invisible="context.get('recurring_view')"
+                        invisible="state != 'draft' or context.get('recurring_view')"
                     />
                     <button
                         name="print_thanks"
                         string="Print Thanks Letter"
                         type="object"
                         groups="donation.group_donation_user"
-                        attrs="{'invisible': ['|', ('thanks_printed', '=', True), ('state', '!=', 'done')]}"
+                        invisible="thanks_printed == True or state != 'done'"
                         class="oe_highlight"
                     />
                     <button
                         type="object"
                         name="cancel2draft"
                         string="Back to Draft"
-                        states="cancel"
+                        invisible="state != 'cancel'"
                         groups="donation.group_donation_user"
                     />
                     <button
@@ -41,8 +40,7 @@
                         name="done2cancel"
                         string="Cancel"
                         groups="donation.group_donation_user"
-                        states="done"
-                        invisible="context.get('recurring_view')"
+                        invisible="state != 'done' or context.get('recurring_view')"
                     />
                     <button
                         type="object"
@@ -102,7 +100,7 @@
                                     string="Change"
                                     type="action"
                                     class="oe_link"
-                                    attrs="{'invisible': ['|', ('state', '!=', 'done'), ('tax_receipt_id', '!=', False)]}"
+                                    invisible="state != 'done' or tax_receipt_id != False"
                                 />
                             </div>
                             <field name="tax_receipt_total" />
@@ -136,11 +134,7 @@
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers" />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter />
             </form>
         </field>
     </record>
@@ -203,14 +197,14 @@
                         name="validate"
                         string="Validate"
                         class="btn-primary"
-                        states="draft"
+                        invisible="state != 'draft'"
                         groups="donation.group_donation_user"
                     />
                     <button
                         type="object"
                         name="save_as_draft"
                         string="Save as Draft"
-                        states="draft"
+                        invisible="state != 'draft'"
                         groups="donation.group_donation_user"
                     />
                 </footer>
@@ -219,10 +213,10 @@
     </record>
 
     <record id="donation_tree" model="ir.ui.view">
-        <field name="name">donation.tree</field>
+        <field name="name">donation.list</field>
         <field name="model">donation.donation</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <header>
                     <button
                         name="%(donation_validate_action)d"
@@ -240,7 +234,7 @@
                         confirm="Mark all selected donation as Thanks Printed?"
                     />
                     <!-- Unfortunately, confirm="" doesn't work for
-                            buttons in tree view... at least not in v14 -->
+                            buttons in list view... at least not in v14 -->
                 </header>
                 <field
                     name="number"
@@ -278,7 +272,7 @@
                     decoration-muted="state == 'cancel'"
                     decoration-success="state == 'done'"
                 />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="donation_search" model="ir.ui.view">
@@ -379,17 +373,17 @@
         </field>
     </record>
     <record id="donation_line_tree" model="ir.ui.view">
-        <field name="name">donation.line.tree</field>
+        <field name="name">donation.line.list</field>
         <field name="model">donation.line</field>
         <field name="arch" type="xml">
-            <tree editable="bottom">
+            <list editable="bottom">
                 <field name="sequence" widget="handle" />
                 <field
                     name="donation_id"
                     invisible="not context.get('donation_line_main_view')"
                 />
                 <field name="product_id" context="{'default_donation': True}" />
-                <field name="product_detailed_type" optional="hide" />
+                <field name="product_service_tracking" optional="hide" />
                 <field name="quantity" />
                 <field name="unit_price" />
                 <field
@@ -403,7 +397,7 @@
                 <field name="in_kind" optional="hide" />
                 <field name="currency_id" invisible="1" />
                 <field name="company_id" invisible="1" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="donation_line_form" model="ir.ui.view">
@@ -432,7 +426,7 @@
                     <field name="currency_id" invisible="1" />
                     <field name="company_currency_id" invisible="1" />
                     <field name="company_id" invisible="1" />
-                    <field name="product_detailed_type" invisible="1" />
+                    <field name="product_service_tracking" invisible="1" />
                 </group>
             </form>
         </field>
@@ -440,7 +434,7 @@
     <record id="donation_action" model="ir.actions.act_window">
         <field name="name">Donations</field>
         <field name="res_model">donation.donation</field>
-        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="view_mode">list,form,pivot,graph</field>
         <!-- Force an empty value to domain because this action is inherited
              by donation_recurring which adds a domain. But, when you uninstall
              donation_recurring, it will not return to its initial value. With
@@ -451,7 +445,7 @@
     <record id="donation_line_action" model="ir.actions.act_window">
         <field name="name">Donations Lines</field>
         <field name="res_model">donation.line</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <menuitem
         id="donation_top_menu"
@@ -489,10 +483,10 @@
     <record id="donation_product_action" model="ir.actions.act_window">
         <field name="name">Products</field>
         <field name="res_model">product.template</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field
             name="context"
-        >{'search_default_filter_donation': 1, 'default_detailed_type': 'donation'}</field>
+        >{'search_default_filter_donation': 1, 'default_service_tracking': 'donation'}</field>
     </record>
     <menuitem
         id="donation_products"

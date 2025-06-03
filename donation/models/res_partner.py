@@ -11,10 +11,10 @@ class ResPartner(models.Model):
 
     @api.depends("donation_ids.partner_id")
     def _compute_donation_count(self):
-        rg_res = self.env["donation.donation"].read_group(
+        rg_res = self.env["donation.donation"]._read_group(
             [("partner_id", "in", self.ids), ("state", "=", "done")],
-            ["partner_id"],
-            ["partner_id"],
+            ['partner_id'],
+            ['__count'],
         )
         mapped_data = {x["partner_id"][0]: x["partner_id_count"] for x in rg_res}
         for partner in self:

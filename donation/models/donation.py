@@ -254,7 +254,8 @@ class DonationDonation(models.Model):
         }
         return vals
 
-    # TODO migration: remove 'journal' argument and use self.payment_mode_id.fixed_journal_id
+    # TODO migration: remove 'journal' argument and
+    # use self.payment_mode_id.fixed_journal_id
     def _prepare_counterpart_move_line(
         self, total_company_cur, total_currency, journal
     ):
@@ -398,10 +399,7 @@ class DonationDonation(models.Model):
                 )
             if not donation.line_ids:
                 raise UserError(
-                    _(
-                        "Cannot validate donation %s because it doesn't "
-                        "have any lines!"
-                    )
+                    _("Cannot validate donation %s because it doesn't have any lines!")
                     % donation.display_name
                 )
 
@@ -413,10 +411,7 @@ class DonationDonation(models.Model):
 
             if donation.state != "draft":
                 raise UserError(
-                    _(
-                        "Cannot validate donation %s because it is not "
-                        "in draft state."
-                    )
+                    _("Cannot validate donation %s because it is not in draft state.")
                     % donation.display_name
                 )
 
@@ -427,7 +422,8 @@ class DonationDonation(models.Model):
             ):
                 raise UserError(
                     _(
-                        "The amount of donation %(donation)s (%(check_total)s) is different "
+                        "The amount of donation "
+                        "%(donation)s (%(check_total)s) is different "
                         "from the sum of the donation lines (%(amount_total)s).",
                         donation=donation.display_name,
                         check_total=format_amount(
@@ -516,14 +512,14 @@ class DonationDonation(models.Model):
             ):
                 mlines_to_reconcile |= statement_mline
                 logger.info(
-                    "Found bank statement move line to reconcile " "ID=%d",
+                    "Found bank statement move line to reconcile ID=%d",
                     statement_mline.id,
                 )
                 break
         if len(mlines_to_reconcile) == 2:
             mlines_to_reconcile.reconcile()
             logger.info(
-                "Successfull reconcilation between donation and " "bank statement."
+                "Successfull reconcilation between donation and bank statement."
             )
 
     def generate_each_tax_receipt(self):
@@ -614,7 +610,7 @@ class DonationDonation(models.Model):
                 display_state = donation._fields["state"].convert_to_export(
                     donation.state, donation
                 )
-                name = "%s (%s)" % (name, display_state)
+                name = f"{name} ({display_state})"
             res.append((donation.id, name))
         return res
 
@@ -681,12 +677,12 @@ class DonationLine(models.Model):
     product_id = fields.Many2one(
         "product.product",
         required=True,
-        domain=[("detailed_type", "like", "donation")],
+        domain=[("service_tracking", "like", "donation")],
         ondelete="restrict",
         check_company=True,
     )
-    product_detailed_type = fields.Selection(
-        related="product_id.detailed_type", store=True, string="Product Type"
+    product_service_tracking = fields.Selection(
+        related="product_id.service_tracking", store=True, string="Product Type"
     )
     quantity = fields.Integer(default=1)
     unit_price = fields.Monetary(currency_field="currency_id")
@@ -725,8 +721,8 @@ class DonationLine(models.Model):
         for line in self:
             in_kind = False
             if (
-                line.product_id.detailed_type
-                and line.product_id.detailed_type.startswith("donation_in_kind")
+                line.product_id.service_tracking
+                and line.product_id.service_tracking.startswith("donation_in_kind")
             ):
                 in_kind = True
             line.in_kind = in_kind

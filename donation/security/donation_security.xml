@@ -6,7 +6,7 @@
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <data noupdate="0">
+    <data>
         <record id="module_category_donation" model="ir.module.category">
             <field name="name">Donation</field>
             <field name="description">Manage donations</field>

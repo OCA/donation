@@ -16,8 +16,8 @@ class DonationReport(models.Model):
 
     donation_date = fields.Date(readonly=True)
     product_id = fields.Many2one("product.product", readonly=True)
-    product_detailed_type = fields.Selection(
-        related="product_id.detailed_type", store=True
+    product_service_tracking = fields.Selection(
+        related="product_id.service_tracking", store=True
     )
     partner_id = fields.Many2one("res.partner", "Donor", readonly=True)
     country_id = fields.Many2one("res.country", "Partner Country", readonly=True)
@@ -51,7 +51,7 @@ class DonationReport(models.Model):
             SELECT min(l.id) AS id,
                 d.donation_date,
                 l.product_id,
-                l.product_detailed_type,
+                l.product_service_tracking,
                 l.in_kind,
                 l.tax_receipt_ok,
                 pt.categ_id AS product_categ_id,
@@ -89,7 +89,7 @@ class DonationReport(models.Model):
         return sql.SQL(
             """
             GROUP BY l.product_id,
-                l.product_detailed_type,
+                l.product_service_tracking,
                 l.in_kind,
                 l.tax_receipt_ok,
                 pt.categ_id,

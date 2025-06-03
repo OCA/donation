@@ -16,7 +16,7 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active == True"
                     />
 
                     <group name="main">
@@ -33,10 +33,10 @@
         </field>
     </record>
     <record id="donation_campaign_tree" model="ir.ui.view">
-        <field name="name">donation.campaign.tree</field>
+        <field name="name">donation.campaign.list</field>
         <field name="model">donation.campaign</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="sequence" widget="handle" />
                 <field name="code" optional="show" />
                 <field name="name" />
@@ -46,7 +46,7 @@
                     groups="base.group_multi_company"
                     optional="show"
                 />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="donation_campaign_search" model="ir.ui.view">
@@ -79,7 +79,7 @@
     <record id="donation_campaign_action" model="ir.actions.act_window">
         <field name="name">Donation Campaigns</field>
         <field name="res_model">donation.campaign</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <menuitem
         id="donation_campaign_menu"

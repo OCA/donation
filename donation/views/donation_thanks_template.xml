@@ -14,7 +14,7 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active == True"
                     />
                     <group name="main">
                         <field name="name" />
@@ -31,7 +31,7 @@
     <record id="donation_thanks_template_tree" model="ir.ui.view">
         <field name="model">donation.thanks.template</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field
@@ -39,7 +39,7 @@
                     groups="base.group_multi_company"
                     optional="show"
                 />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -60,7 +60,7 @@
     <record id="donation_thanks_template_action" model="ir.actions.act_window">
         <field name="name">Thanks Letter Templates</field>
         <field name="res_model">donation.thanks.template</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem
