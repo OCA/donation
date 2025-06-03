@@ -70,7 +70,6 @@
                         string="Payment Mode"
                         context="{'group_by': 'payment_mode_id'}"
                     />
-
                 </group>
             </search>
         </field>

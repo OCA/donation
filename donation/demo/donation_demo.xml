@@ -21,5 +21,4 @@
             ref="donation_base.product_product_donation"
         />
     </record>
-
 </odoo>
