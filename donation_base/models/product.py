@@ -10,17 +10,12 @@ from odoo.exceptions import ValidationError
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    detailed_type = fields.Selection(
-        selection_add=[
-            ("donation", "Donation"),
-            ("donation_in_kind_consu", "In-Kind Donation Consummable"),
-            ("donation_in_kind_service", "In-Kind Donation Service"),
+    donation_type = fields.Selection(
+        selection=[
+            ("donation", "Monetary Donation"),
+            ("donation_in_kind", "In-Kind Donation"),
         ],
-        ondelete={
-            "donation": "set service",
-            "donation_in_kind_consu": "set consu",
-            "donation_in_kind_service": "set service",
-        },
+        string="Donation",
     )
     tax_receipt_ok = fields.Boolean(
         string="Is Eligible for a Tax Receipt",
@@ -32,34 +27,21 @@ class ProductTemplate(models.Model):
         help="Specify if the product is eligible for a tax receipt",
     )
 
-    @api.depends("detailed_type")
+    @api.depends("donation_type")
     def _compute_tax_receipt_ok(self):
         for product in self:
-            if product.detailed_type and not product.detailed_type.startswith(
-                "donation"
-            ):
+            if not product.donation_type:
                 product.tax_receipt_ok = False
 
-    def _detailed_type_mapping(self):
-        res = super()._detailed_type_mapping()
-        res.update(
-            {
-                "donation": "service",
-                "donation_in_kind_consu": "consu",
-                "donation_in_kind_service": "service",
-            }
-        )
-        return res
-
-    @api.onchange("detailed_type")
+    @api.onchange("donation_type")
     def _donation_change(self):
         for product in self:
-            if product.detailed_type == "donation":
+            if product.donation_type:
                 product.taxes_id = False
                 product.supplier_taxes_id = False
                 product.purchase_ok = False
 
-    @api.constrains("detailed_type", "taxes_id")
+    @api.constrains("donation_type", "taxes_id")
     def donation_check(self):
         for product in self:
             # The check below is to make sure that we don't forget to remove
@@ -67,7 +49,7 @@ class ProductTemplate(models.Model):
             # for users of donation_sale. If there are countries that have
             # sale tax on donations (!), please tell us and we can remove this
             # constraint
-            if product.detailed_type == "donation" and product.taxes_id:
+            if product.donation_type and product.taxes_id:
                 raise ValidationError(
                     _(
                         "There shouldn't have any Customer Taxes on the "
@@ -80,10 +62,10 @@ class ProductTemplate(models.Model):
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    @api.onchange("detailed_type")
+    @api.onchange("donation_type")
     def _donation_change(self):
         for product in self:
-            if product.detailed_type == "donation":
+            if product.donation_type:
                 product.taxes_id = False
                 product.supplier_taxes_id = False
                 product.purchase_ok = False

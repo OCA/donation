@@ -14,10 +14,13 @@
         <field name="partner_to">{{object.partner_id.id}}</field>
         <field name="model_id" ref="donation_base.model_donation_tax_receipt" />
         <field name="auto_delete" eval="False" />
-        <field name="report_template" ref="report_donation_tax_receipt" />
         <field
-            name="report_name"
-        >{{object.company_id.name.replace(' ', '_')}}-Tax_Receipt_{{(object.number or '').replace('/','_')}}</field>
+            name="report_template_ids"
+            eval="[(4, ref('report_donation_tax_receipt'))]"
+        />
+        <!-- <field -->
+        <!--     name="report_name" -->
+        <!-- >{{object.company_id.name.replace(' ', '_')}}-Tax_Receipt_{{(object.number or '').replace('/','_')}}</field> -->
         <field name="lang">{{object.partner_id.lang}}</field>
         <field name="body_html" type="html">
             <div style="margin: 0px; padding: 0px;">
