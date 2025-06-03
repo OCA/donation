@@ -6,19 +6,15 @@
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-
-
-<record id="report_thanks" model="ir.actions.report">
-    <field name="name">Thanks Letter</field>
-    <field name="model">donation.donation</field>
-    <field name="report_name">donation.report_donation_thanks</field>
-    <field name="report_file">donation.report_donation_thanks</field>
-    <field name="report_type">qweb-pdf</field>
-    <field
+    <record id="report_thanks" model="ir.actions.report">
+        <field name="name">Thanks Letter</field>
+        <field name="model">donation.donation</field>
+        <field name="report_name">donation.report_donation_thanks</field>
+        <field name="report_file">donation.report_donation_thanks</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
             name="print_report_name"
         >'donation_thanks-%s%s' % (object.number, object.state == 'draft' and '-draft' or '')</field>
-    <field name="binding_model_id" ref="model_donation_donation" />
-</record>
-
-
+        <field name="binding_model_id" ref="model_donation_donation" />
+    </record>
 </odoo>

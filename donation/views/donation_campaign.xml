@@ -11,7 +11,7 @@
         <field name="model">donation.campaign</field>
         <field name="arch" type="xml">
             <form>
-                    <sheet>
+                <sheet>
                     <widget
                         name="web_ribbon"
                         title="Archived"
@@ -19,16 +19,16 @@
                         attrs="{'invisible': [('active', '=', True)]}"
                     />
 
-                <group name="main">
-                    <field name="name" />
-                    <field name="code" />
-                    <field name="company_id" groups="base.group_multi_company" />
-                    <field name="start_date" />
-                    <field name="note" />
-                    <field name="active" invisible="1" />
-                    <field name="company_id" invisible="1" />
-                </group>
-        </sheet>
+                    <group name="main">
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="company_id" groups="base.group_multi_company" />
+                        <field name="start_date" />
+                        <field name="note" />
+                        <field name="active" invisible="1" />
+                        <field name="company_id" invisible="1" />
+                    </group>
+                </sheet>
             </form>
         </field>
     </record>
@@ -54,25 +54,25 @@
         <field name="model">donation.campaign</field>
         <field name="arch" type="xml">
             <search>
-                    <field
+                <field
                     name="name"
                     filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"
                     string="Name or Code"
                 />
-                    <field name="code" />
+                <field name="code" />
                 <separator />
                 <filter
                     string="Archived"
                     name="inactive"
                     domain="[('active', '=', False)]"
                 />
-                        <group name="groupby">
-                                <filter
+                <group name="groupby">
+                    <filter
                         name="company_groupby"
                         string="Company"
                         context="{'group_by': 'company_id'}"
                     />
-                        </group>
+                </group>
             </search>
         </field>
     </record>
