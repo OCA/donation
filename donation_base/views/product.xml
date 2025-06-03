@@ -11,14 +11,14 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_search_view" />
         <field name="arch" type="xml">
-            <filter name="consumable" position="after">
+            <filter name="combo" position="after">
+                <separator />
                 <filter
                     name="filter_donation"
                     string="Donation"
-                    domain="[('detailed_type', 'in', ('donation', 'donation_in_kind_consu', 'donation_in_kind_service'))]"
+                    domain="[('donation_type', '!=', False)]"
                 />
-            </filter>
-            <filter name="filter_to_purchase" position="after">
+                <separator />
                 <filter
                     name="filter_tax_receipt_ok"
                     string="Eligible for a Tax Receipt"
@@ -32,12 +32,10 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_form_view" />
         <field name="arch" type="xml">
-            <field name="detailed_type" position="after">
+            <field name="service_tracking" position="after">
                 <!-- unfortunately, Odoo doesn't accept 'not like' in attrs -->
-                <field
-                    name="tax_receipt_ok"
-                    attrs="{'invisible': [('detailed_type', 'not in', ('donation', 'donation_in_kind_service', 'donation_in_kind_consu'))]}"
-                />
+                <field name="donation_type" invisible="type != 'service'" />
+                <field name="tax_receipt_ok" invisible="not donation_type" />
             </field>
         </field>
     </record>

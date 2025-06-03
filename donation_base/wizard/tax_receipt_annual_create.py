@@ -83,7 +83,7 @@ class TaxReceiptAnnualCreate(models.TransientModel):
                 raise UserError(
                     _(
                         "The Donor '%(partner)s' already has an annual tax receipt "
-                        "in this timeframe: %(receipt)s dated %(number)s.",
+                        "in this timeframe: %(receipt)s dated %(date)s.",
                         partner=partner.display_name,
                         receipt=existing_receipt.number,
                         date=format_date(self.env, existing_receipt.date),

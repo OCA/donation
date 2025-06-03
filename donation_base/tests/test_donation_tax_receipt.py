@@ -38,6 +38,7 @@ class TestDonationTaxReceipt(TransactionCase):
 
     def test_donation_type(self):
         self.assertEqual(self.product_id.type, "service")
+        self.assertTrue(self.product_id.donation_type)
 
 
 class TestTaxReceiptAnnualCreate(TransactionCase):
