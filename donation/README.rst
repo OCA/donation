@@ -49,49 +49,49 @@ Configuration
 
 To configure this module, you need to:
 
-   - create donation products
-   - make sure you have an inbound payment mode for each payment mode
-     used to receive donations. This payment mode must be configured
-     with *Link to Bank Account* set to *Fixed* and with the donation
-     option active.
-   - if you wish to have a control amount on the donation, add the users
-     to the group *Donation Check Total*
+   -  create donation products
+   -  make sure you have an inbound payment method for each payment
+      method used to receive donations. This payment method must be
+      configured with *Link to Bank Account* set to *Fixed* and with the
+      donation option active.
+   -  if you wish to have a control amount on the donation, add the
+      users to the group *Donation Check Total*
 
 If you receive donations via credit transfer, you must also:
 
-- in the configuration page *Invoicing > Configuration > Settings*, in
-  the *Donations* section, select the product that will be used for
-  donations by credit transfer.
-- on the bank journals corresponding to the bank accounts on which you
-  receive donations by credit transfer, in the *Payments Configuration*
-  tab, select the *Donation by credit transfer account*. This account
-  must allow reconciliation.
-- Make sure that the accountant that processes bank statements has
-  *User* access level or higher on the *Donation* application.
+-  in the configuration page *Invoicing > Configuration > Settings*, in
+   the *Donations* section, select the product that will be used for
+   donations by credit transfer.
+-  on the bank journals corresponding to the bank accounts on which you
+   receive donations by credit transfer, in the *Payments Configuration*
+   tab, select the *Donation by credit transfer account*. This account
+   must allow reconciliation.
+-  Make sure that the accountant that processes bank statements has
+   *User* access level or higher on the *Donation* application.
 
 Usage
 =====
 
 This module handles donations by cash, check or by credit transfer:
 
-- for donation by cash or check, you should first create a new donation
-  and validate it. Then, if you have the module *account_check_deposit*
-  from the project
-  `OCA/account-financial-tools <https://github.com/OCA/account-financial-tools>`__,
-  you can create a check deposit.
-- for a donation by credit transfer, the process is different: import
-  your bank statement file and, while processing it, you will see a
-  donation button that allow you to create a new donation directly from
-  the bank statement reconcile interface.
+-  for donation by cash or check, you should first create a new donation
+   and validate it. Then, if you have the module *account_check_deposit*
+   from the project
+   `OCA/account-financial-tools <https://github.com/OCA/account-financial-tools>`__,
+   you can create a check deposit.
+-  for a donation by credit transfer, the process is different: import
+   your bank statement file and, while processing it, you will see a
+   donation button that allow you to create a new donation directly from
+   the bank statement reconcile interface.
 
 When you validate a donation:
 
-- it will create a journal entry that goes directly from the revenue
-  account to the payment account without going through a receivable
-  account.
-- if the tax receipt option of the donor is configured as *For Each
-  Donation* and the product of the donation line is eligible to a tax
-  receipt, it will generate the tax receipt.
+-  it will create a journal entry that goes directly from the revenue
+   account to the payment account without going through a receivable
+   account.
+-  if the tax receipt option of the donor is configured as *For Each
+   Donation* and the product of the donation line is eligible to a tax
+   receipt, it will generate the tax receipt.
 
 To have some statistics about the donations, go to the menu Donation >
 Reporting > Donations Analysis.
@@ -118,11 +118,11 @@ Authors
 Contributors
 ------------
 
-- Brother Bernard <informatique - at - barroux.org>
-- Brother Irénée (Barroux Abbey)
-- Alexis de Lattre <alexis.delattre@akretion.com>
-- Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
-- Nikul Chaudhary <nikul.chaudhary.serpentcs@gmail.com>
+-  Brother Bernard <informatique - at - barroux.org>
+-  Brother Irénée (Barroux Abbey)
+-  Alexis de Lattre <alexis.delattre@akretion.com>
+-  Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
+-  Nikul Chaudhary <nikul.chaudhary.serpentcs@gmail.com>
 
 Maintainers
 -----------

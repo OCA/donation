@@ -2,12 +2,9 @@
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import SUPERUSER_ID, api
 
-
-def update_account_payment_mode(cr, registry):
-    env = api.Environment(cr, SUPERUSER_ID, {})
-    modes = env["account.payment.mode"].search(
-        [("payment_type", "=", "inbound"), ("bank_account_link", "=", "fixed")]
+def update_account_payment_method_line(env):
+    modes = env["account.payment.method.line"].search(
+        [("payment_type", "=", "inbound")]
     )
     modes.write({"donation": True})

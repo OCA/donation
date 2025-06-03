@@ -5,7 +5,7 @@
 
 import logging
 
-from odoo import _, api, fields, models
+from odoo import Command, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.misc import format_amount
 
@@ -22,7 +22,6 @@ class DonationDonation(models.Model):
     currency_id = fields.Many2one(
         "res.currency",
         required=True,
-        states={"done": [("readonly", True)]},
         tracking=True,
         ondelete="restrict",
         default=lambda self: self.env.company.currency_id,
@@ -32,7 +31,6 @@ class DonationDonation(models.Model):
         string="Donor",
         required=True,
         index=True,
-        states={"done": [("readonly", True)]},
         tracking=True,
         ondelete="restrict",
     )
@@ -50,7 +48,6 @@ class DonationDonation(models.Model):
     )
     check_total = fields.Monetary(
         string="Check Amount",
-        states={"done": [("readonly", True)]},
         currency_field="currency_id",
         tracking=True,
     )
@@ -68,26 +65,23 @@ class DonationDonation(models.Model):
     )
     donation_date = fields.Date(
         required=True,
-        states={"done": [("readonly", True)]},
         index=True,
         tracking=True,
     )
     company_id = fields.Many2one(
         "res.company",
         required=True,
-        states={"done": [("readonly", True)]},
         default=lambda self: self.env.company,
     )
     line_ids = fields.One2many(
         "donation.line",
         "donation_id",
         string="Donation Lines",
-        states={"done": [("readonly", True)]},
         copy=True,
     )
     move_id = fields.Many2one(
         "account.move",
-        string="Account Move",
+        string="Journal Entry",
         readonly=True,
         copy=False,
         check_company=True,
@@ -97,21 +91,19 @@ class DonationDonation(models.Model):
         copy=False,
         string="Donation Number",
         index=True,
-        default=lambda self: _("New"),
+        default=lambda self: self.env._("New"),
         readonly=True,
-        states={"draft": [("readonly", False)]},
     )
-    payment_mode_id = fields.Many2one(
-        "account.payment.mode",
+    payment_method_line_id = fields.Many2one(
+        "account.payment.method.line",
+        string="Payment Method",
         domain="[('company_id', '=', company_id), ('donation', '=', True)]",
         tracking=True,
         check_company=True,
-        states={"done": [("readonly", True)]},
-        default=lambda self: self.env.user.context_donation_payment_mode_id,
+        default=lambda self: self.env.user.context_donation_payment_method_line_id,
     )
     payment_ref = fields.Char(
         string="Payment Reference",
-        states={"done": [("readonly", True)]},
         copy=False,
     )
     state = fields.Selection(
@@ -149,7 +141,6 @@ class DonationDonation(models.Model):
             ("annual", "Annual Tax Receipt"),
         ],
         compute="_compute_tax_receipt_option",
-        states={"done": [("readonly", True)]},
         index=True,
         tracking=True,
         precompute=True,
@@ -236,10 +227,10 @@ class DonationDonation(models.Model):
         for vals in vals_list:
             if "company_id" in vals:
                 self = self.with_company(vals["company_id"])
-            if vals.get("number", _("New")) == _("New"):
+            if vals.get("number", self.env._("New")) == self.env._("New"):
                 vals["number"] = self.env["ir.sequence"].next_by_code(
                     "donation.donation", sequence_date=vals.get("donation_date")
-                ) or _("New")
+                ) or self.env._("New")
         return super().create(vals_list)
 
     def _prepare_each_tax_receipt(self):
@@ -254,13 +245,8 @@ class DonationDonation(models.Model):
         }
         return vals
 
-    # TODO migration: remove 'journal' argument and use self.payment_mode_id.fixed_journal_id
-    def _prepare_counterpart_move_line(
-        self, total_company_cur, total_currency, journal
-    ):
+    def _prepare_counterpart_move_line(self, total_company_cur, total_currency):
         self.ensure_one()
-        journal = self.payment_mode_id.fixed_journal_id
-        company = journal.company_id
         if self.company_currency_id.compare_amounts(total_company_cur, 0) > 0:
             debit = total_company_cur
             credit = 0
@@ -268,20 +254,16 @@ class DonationDonation(models.Model):
             credit = -total_company_cur
             debit = 0
         if self.bank_statement_line_id:
-            account_id = company.donation_account_id.id
+            account_id = self.company_id.donation_account_id.id
         else:
-            if not company.account_journal_payment_debit_account_id:
+            account_id = self.payment_method_line_id.payment_account_id.id
+            if not account_id:
                 raise UserError(
-                    _("Missing Outstanding Receipts Account on company '%s'.")
-                    % company.display_name
+                    self.env._(
+                        "Payment account is not set on payment method '%s'.",
+                        self.payment_method_line_id.display_name,
+                    )
                 )
-            payment_method = self.payment_mode_id.payment_method_id
-            account_id = (
-                journal.inbound_payment_method_line_ids.filtered(
-                    lambda x: x.payment_method_id == payment_method
-                ).payment_account_id.id
-                or company.account_journal_payment_debit_account_id.id
-            )
         vals = {
             "debit": debit,
             "credit": credit,
@@ -296,17 +278,16 @@ class DonationDonation(models.Model):
 
     def _prepare_donation_move(self):
         self.ensure_one()
-        if not self.bank_statement_line_id and not self.payment_mode_id.donation:
+        if not self.bank_statement_line_id and not self.payment_method_line_id.donation:
             raise UserError(
-                _(
-                    "The payment mode '%(pay_mode)s' selected on donation "
-                    "%(donation)s is not a donation payment mode.",
-                    pay_mode=self.payment_mode_id.display_name,
+                self.env._(
+                    "The payment method '%(pay_mode)s' selected on donation "
+                    "%(donation)s is not a donation payment method.",
+                    pay_mode=self.payment_method_line_id.display_name,
                     donation=self.display_name,
                 )
             )
-        assert self.payment_mode_id.bank_account_link == "fixed"
-        journal = self.payment_mode_id.fixed_journal_id
+        journal = self.payment_method_line_id.journal_id
         assert journal
 
         # Note : we can have negative donations for donors that use direct
@@ -330,8 +311,10 @@ class DonationDonation(models.Model):
             account = line._get_account()
             if not account:
                 raise UserError(
-                    _("Failed to get account for donation line with product '%s'.")
-                    % line.product_id.display_name
+                    self.env._(
+                        "Failed to get account for donation line with product '%s'.",
+                        line.product_id.display_name,
+                    )
                 )
 
             total_currency += line.amount
@@ -350,9 +333,7 @@ class DonationDonation(models.Model):
                 debit = -amount_cc
                 credit = 0
             vals["line_ids"].append(
-                (
-                    0,
-                    0,
+                Command.create(
                     {
                         "display_type": "product",
                         "product_id": line.product_id.id,
@@ -363,7 +344,7 @@ class DonationDonation(models.Model):
                         "partner_id": self.commercial_partner_id.id,
                         "currency_id": self.currency_id.id,
                         "amount_currency": -line.amount,
-                    },
+                    }
                 )
             )
 
@@ -371,10 +352,8 @@ class DonationDonation(models.Model):
             return False
 
         # counter-part
-        ml_vals = self._prepare_counterpart_move_line(
-            total_company_cur, total_currency, journal
-        )
-        vals["line_ids"].append((0, 0, ml_vals))
+        ml_vals = self._prepare_counterpart_move_line(total_company_cur, total_currency)
+        vals["line_ids"].append(Command.create(ml_vals))
         return vals
 
     def save_as_draft(self):
@@ -384,40 +363,39 @@ class DonationDonation(models.Model):
         return
 
     def validate(self):
-        check_total_grp = self.env["res.users"].has_group(
-            "donation.group_donation_check_total"
-        )
+        check_total_grp = self.env.user.has_group("donation.group_donation_check_total")
         for donation in self:
             if donation.donation_date > fields.Date.context_today(self):
                 raise UserError(
-                    _(
+                    self.env._(
                         "The date of donation %s should be today "
-                        "or in the past, not in the future!"
+                        "or in the past, not in the future!",
+                        donation.display_name,
                     )
-                    % donation.display_name
                 )
             if not donation.line_ids:
                 raise UserError(
-                    _(
+                    self.env._(
                         "Cannot validate donation %s because it doesn't "
-                        "have any lines!"
+                        "have any lines!",
+                        donation.display_name,
                     )
-                    % donation.display_name
                 )
 
             if donation.currency_id.is_zero(donation.amount_total):
                 raise UserError(
-                    _("Cannot validate donation %s because the total amount is 0!")
-                    % donation.display_name
+                    self.env._(
+                        "Cannot validate donation %s because the total amount is 0!",
+                        donation.display_name,
+                    )
                 )
 
             if donation.state != "draft":
                 raise UserError(
-                    _(
-                        "Cannot validate donation %s because it is not "
-                        "in draft state."
+                    self.env._(
+                        "Cannot validate donation %s because it is not in draft state.",
+                        donation.display_name,
                     )
-                    % donation.display_name
                 )
 
             if (
@@ -426,8 +404,9 @@ class DonationDonation(models.Model):
                 donation.check_total, donation.amount_total
             ):
                 raise UserError(
-                    _(
-                        "The amount of donation %(donation)s (%(check_total)s) is different "
+                    self.env._(
+                        "The amount of donation "
+                        "%(donation)s (%(check_total)s) is different "
                         "from the sum of the donation lines (%(amount_total)s).",
                         donation=donation.display_name,
                         check_total=format_amount(
@@ -439,18 +418,18 @@ class DonationDonation(models.Model):
                     )
                 )
             full_in_kind = all([line.in_kind for line in donation.line_ids])
-            if not donation.payment_mode_id and not full_in_kind:
+            if not donation.payment_method_line_id and not full_in_kind:
                 raise UserError(
-                    _(
-                        "Payment Mode is not set on donation %s (only fully "
-                        "in-kind donations don't require a payment mode)."
+                    self.env._(
+                        "Payment method is not set on donation %s (only fully "
+                        "in-kind donations don't require a payment method).",
+                        donation.display_name,
                     )
-                    % donation.display_name
                 )
 
             vals = {"state": "done"}
-            if full_in_kind and donation.payment_mode_id:
-                vals["payment_mode_id"] = False
+            if full_in_kind and donation.payment_method_line_id:
+                vals["payment_method_line_id"] = False
 
             if not full_in_kind:
                 move_vals = donation._prepare_donation_move()
@@ -461,7 +440,9 @@ class DonationDonation(models.Model):
                     vals["move_id"] = move.id
             else:
                 donation.message_post(
-                    body=_("Full in-kind donation: no account move generated")
+                    body=self.env._(
+                        "Full in-kind donation: no journal entry generated."
+                    )
                 )
 
             receipt = donation.generate_each_tax_receipt()
@@ -480,7 +461,7 @@ class DonationDonation(models.Model):
         transit_account = self.company_id.donation_account_id
         if not transit_account:
             raise UserError(
-                _(
+                self.env._(
                     "Donation %(donation)s is linked to a bank statement line, but "
                     "the Donation by Credit Transfer Account is not set for company "
                     "'%(company)s'. This should never happen.",
@@ -490,7 +471,7 @@ class DonationDonation(models.Model):
             )
         if not transit_account.reconcile:
             raise UserError(
-                _(
+                self.env._(
                     "The Donation by Credit Transfer Account '%(account)s' "
                     "for company '%(company)s' is not reconciliable. "
                     "This should never happen.",
@@ -506,7 +487,7 @@ class DonationDonation(models.Model):
             ):
                 mlines_to_reconcile |= donation_mline
                 logger.info(
-                    "Found donation move line to reconcile ID=%d" % donation_mline.id
+                    "Found donation move line to reconcile ID=%s", donation_mline.id
                 )
                 break
         for statement_mline in self.bank_statement_line_id.move_id.line_ids:
@@ -516,14 +497,14 @@ class DonationDonation(models.Model):
             ):
                 mlines_to_reconcile |= statement_mline
                 logger.info(
-                    "Found bank statement move line to reconcile " "ID=%d",
+                    "Found bank statement move line to reconcile ID=%d",
                     statement_mline.id,
                 )
                 break
         if len(mlines_to_reconcile) == 2:
             mlines_to_reconcile.reconcile()
             logger.info(
-                "Successfull reconcilation between donation and " "bank statement."
+                "Successfull reconcilation between donation and bank statement."
             )
 
     def generate_each_tax_receipt(self):
@@ -540,10 +521,12 @@ class DonationDonation(models.Model):
 
     def save_default_values(self):
         self.ensure_one()
+        method_line_id = self.payment_method_line_id
+        compaign_id = self.campaign_id
         self.env.user.write(
             {
-                "context_donation_payment_mode_id": self.payment_mode_id.id,
-                "context_donation_campaign_id": self.campaign_id.id,
+                "context_donation_payment_method_line_id": method_line_id.id,
+                "context_donation_campaign_id": compaign_id.id,
             }
         )
 
@@ -552,13 +535,13 @@ class DonationDonation(models.Model):
         for donation in self:
             if donation.tax_receipt_id:
                 raise UserError(
-                    _(
+                    self.env._(
                         "You cannot cancel this donation because "
                         "it is linked to the tax receipt %s. You should first "
                         "delete this tax receipt (but it may not be legally "
-                        "allowed)."
+                        "allowed).",
+                        donation.tax_receipt_id.display_name,
                     )
-                    % donation.tax_receipt_id.display_name
                 )
             if donation.move_id:
                 donation.move_id.button_cancel()
@@ -571,11 +554,19 @@ class DonationDonation(models.Model):
         for donation in self:
             if donation.move_id:
                 raise UserError(
-                    _("A cancelled donation should not be linked to an account move")
+                    self.env._(
+                        "Cancelled donation '%s' is linked to a journal entry. "
+                        "This should never happen.",
+                        donation.display_name,
+                    )
                 )
             if donation.tax_receipt_id:
                 raise UserError(
-                    _("A cancelled donation should not be linked to a tax receipt")
+                    self.env._(
+                        "Cancelled donation '%s' is linked to a tax receipt. "
+                        "This should never happen.",
+                        donation.display_name,
+                    )
                 )
         self.write({"state": "draft"})
 
@@ -583,21 +574,23 @@ class DonationDonation(models.Model):
         for donation in self:
             if donation.state == "done":
                 raise UserError(
-                    _("The donation '%s' is in Done state, so you cannot delete it.")
-                    % donation.display_name
+                    self.env._(
+                        "Donation '%s' is in Done state, so you cannot delete it.",
+                        donation.display_name,
+                    )
                 )
             if donation.move_id:
                 raise UserError(
-                    _(
-                        "The donation '%s' is linked to an account move, "
-                        "so you cannot delete it."
+                    self.env._(
+                        "Donation '%s' is linked to a journal entry, "
+                        "so you cannot delete it.",
+                        donation.display_name,
                     )
-                    % donation.display_name
                 )
             if donation.tax_receipt_id:
                 raise UserError(
-                    _(
-                        "The donation '%(donation)s' is linked to the tax receipt "
+                    self.env._(
+                        "Donation '%(donation)s' is linked to the tax receipt "
                         "%(tax_receipt)s, so you cannot delete it.",
                         donation=donation.display_name,
                         tax_receipt=donation.tax_receipt_id.display_name,
@@ -606,17 +599,14 @@ class DonationDonation(models.Model):
         return super().unlink()
 
     @api.depends("state", "number")
-    def name_get(self):
-        res = []
+    def _compute_display_name(self):
+        state2label = dict(self.fields_get("state", "selection")["state"]["selection"])
         for donation in self:
             name = donation.number
             if donation.state != "done":
-                display_state = donation._fields["state"].convert_to_export(
-                    donation.state, donation
-                )
-                name = "%s (%s)" % (name, display_state)
-            res.append((donation.id, name))
-        return res
+                display_state = state2label.get(donation.state)
+                name = f"{name} ({display_state})"
+            donation.display_name = name
 
     @api.depends("partner_id")
     def _compute_tax_receipt_option(self):
@@ -637,8 +627,8 @@ class DonationDonation(models.Model):
         ):
             res = {
                 "warning": {
-                    "title": _("Error:"),
-                    "message": _(
+                    "title": self.env._("Error:"),
+                    "message": self.env._(
                         "You cannot change the Tax Receipt Option when it is Annual."
                     ),
                 },
@@ -681,12 +671,12 @@ class DonationLine(models.Model):
     product_id = fields.Many2one(
         "product.product",
         required=True,
-        domain=[("detailed_type", "like", "donation")],
+        domain=[("donation_type", "!=", False)],
         ondelete="restrict",
         check_company=True,
     )
-    product_detailed_type = fields.Selection(
-        related="product_id.detailed_type", store=True, string="Product Type"
+    product_donation_type = fields.Selection(
+        related="product_id.donation_type", store=True, string="Product Type donation"
     )
     quantity = fields.Integer(default=1)
     unit_price = fields.Monetary(currency_field="currency_id")
@@ -725,8 +715,8 @@ class DonationLine(models.Model):
         for line in self:
             in_kind = False
             if (
-                line.product_id.detailed_type
-                and line.product_id.detailed_type.startswith("donation_in_kind")
+                line.product_id.donation_type
+                and line.product_id.donation_type.startswith("donation_in_kind")
             ):
                 in_kind = True
             line.in_kind = in_kind

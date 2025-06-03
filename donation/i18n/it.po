@@ -341,7 +341,7 @@ msgid "Current Donation Campaign"
 msgstr "Campagna donazioni attuale"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_res_users__context_donation_payment_mode_id
+#: model:ir.model.fields,field_description:donation.field_res_users__context_donation_payment_method_line_id
 msgid "Current Donation Payment Mode"
 msgstr "Metodo pagamento donazione attuale"
 
@@ -369,13 +369,13 @@ msgstr "Dominio"
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_donation
-#: model:ir.model.fields,field_description:donation.field_account_payment_mode__donation
+#: model:ir.model.fields,field_description:donation.field_account_payment_method_line__donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__donation_id
 #: model:ir.model.fields,field_description:donation.field_donation_tax_receipt_option_switch__donation_id
 #: model:ir.model.fields.selection,name:donation.selection__account_analytic_applicability__business_domain__donation
 #: model:ir.module.category,name:donation.module_category_donation
 #: model:ir.ui.menu,name:donation.donation_top_menu
-#: model_terms:ir.ui.view,arch_db:donation.account_payment_mode_search
+#: model_terms:ir.ui.view,arch_db:donation.account_payment_method_line_search
 #: model_terms:ir.ui.view,arch_db:donation.res_config_settings_donation
 msgid "Donation"
 msgstr "Donazione"
@@ -446,7 +446,7 @@ msgstr "Conto donazione con bonifico bancario"
 
 #. module: donation
 #. odoo-python
-#: code:addons/donation/models/account_payment_mode.py:0
+#: code:addons/donation/models/account_payment_method_line.py:0
 #, python-format
 msgid "Donation payment mode '%s' is not an inbound payment mode."
 msgstr ""
@@ -455,7 +455,7 @@ msgstr ""
 
 #. module: donation
 #. odoo-python
-#: code:addons/donation/models/account_payment_mode.py:0
+#: code:addons/donation/models/account_payment_method_line.py:0
 #, python-format
 msgid ""
 "Donation payment mode '%s' must be configured with 'Link to Bank Account' "
@@ -608,7 +608,7 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
 #. module: donation
-#: model:ir.model.fields,help:donation.field_account_payment_mode__donation
+#: model:ir.model.fields,help:donation.field_account_payment_method_line__donation
 msgid "If enabled, this payment mode will be available on donations"
 msgstr ""
 "Se abilitata, questo metodo di pagamento sarà disponibile nelle donazioni"
@@ -860,8 +860,8 @@ msgid "Partner Country"
 msgstr "Nazione partner"
 
 #. module: donation
-#: model:ir.model.fields,field_description:donation.field_donation_donation__payment_mode_id
-#: model:ir.model.fields,field_description:donation.field_donation_report__payment_mode_id
+#: model:ir.model.fields,field_description:donation.field_donation_donation__payment_method_line_id
+#: model:ir.model.fields,field_description:donation.field_donation_report__payment_method_line_id
 #: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 #: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Payment Mode"
@@ -879,9 +879,9 @@ msgstr ""
 "completamente in natura non richiedono un metodo di pagamento)."
 
 #. module: donation
-#: model:ir.actions.act_window,name:donation.account_payment_mode_donation_action
-#: model:ir.model,name:donation.model_account_payment_mode
-#: model:ir.ui.menu,name:donation.account_payment_mode_donation_menu
+#: model:ir.actions.act_window,name:donation.account_payment_method_line_donation_action
+#: model:ir.model,name:donation.model_account_payment_method_line
+#: model:ir.ui.menu,name:donation.account_payment_method_line_donation_menu
 msgid "Payment Modes"
 msgstr "Modi di pagamento"
 

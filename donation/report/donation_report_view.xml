@@ -46,9 +46,9 @@
                         context="{'group_by': 'product_id'}"
                     />
                     <filter
-                        name="product_detailed_type_groupby"
-                        string="Product Type"
-                        context="{'group_by': 'product_detailed_type'}"
+                        name="product_donation_type"
+                        string="Product Type donation"
+                        context="{'group_by': 'product_donation_type'}"
                     />
                     <filter
                         name="tax_receipt_ok_groupby"
@@ -57,8 +57,8 @@
                     />
                     <filter
                         name="in_kind_groupby"
-                        string="In Kind"
-                        context="{'group_by': 'in_kind'}"
+                        string="In kind"
+                        context="{'group_by': 'in_kind' }"
                     />
                     <filter
                         name="campaign_groupby"
@@ -66,9 +66,9 @@
                         context="{'group_by': 'campaign_id'}"
                     />
                     <filter
-                        name="payment_mode_groupby"
-                        string="Payment Mode"
-                        context="{'group_by': 'payment_mode_id'}"
+                        name="payment_method_line_groupby"
+                        string="Payment Method"
+                        context="{'group_by': 'payment_method_line_id'}"
                     />
                 </group>
             </search>
@@ -95,20 +95,20 @@
             </pivot>
         </field>
     </record>
-    <!-- tree view used for drill-through -->
+    <!-- list view used for drill-through -->
     <record id="donation_report_tree" model="ir.ui.view">
-        <field name="name">donation.report.tree</field>
+        <field name="name">donation.report.list</field>
         <field name="model">donation.report</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="partner_id" optional="show" />
                 <field name="donation_date" optional="show" />
                 <field name="country_id" optional="hide" />
-                <field name="payment_mode_id" optional="show" />
+                <field name="payment_method_line_id" optional="show" />
                 <field name="campaign_id" optional="hide" />
                 <field name="product_categ_id" optional="hide" />
                 <field name="product_id" optional="show" />
-                <field name="product_detailed_type" optional="hide" />
+                <field name="product_donation_type" optional="hide" />
                 <field name="tax_receipt_ok" optional="show" />
                 <field name="in_kind" optional="show" />
                 <field name="thanks_printed" optional="hide" />
@@ -121,13 +121,13 @@
                     groups="base.group_multi_company"
                     optional="show"
                 />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="donation_report_action" model="ir.actions.act_window">
         <field name="name">Donations Analysis</field>
         <field name="res_model">donation.report</field>
-        <field name="view_mode">pivot,graph,tree</field>
+        <field name="view_mode">pivot,graph,list</field>
     </record>
     <menuitem
         id="donation_report_title_menu"

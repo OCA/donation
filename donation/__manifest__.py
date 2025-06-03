@@ -4,14 +4,16 @@
 
 {
     "name": "Donation",
-    "version": "16.0.2.2.0",
+    "version": "18.0.1.0.0",
     "category": "Accounting",
     "license": "AGPL-3",
     "summary": "Manage donations",
     "author": "Barroux Abbey, Akretion, Odoo Community Association (OCA)",
     "maintainers": ["alexis-via"],
     "website": "https://github.com/OCA/donation",
-    "depends": ["donation_base", "account_payment_mode"],
+    "depends": [
+        "donation_base",
+    ],
     "data": [
         "security/donation_security.xml",
         "security/ir.model.access.csv",
@@ -21,7 +23,7 @@
         "views/donation.xml",
         "wizard/res_config_settings.xml",
         "data/donation_sequence.xml",
-        "views/account_payment_mode.xml",
+        "views/account_payment_method_line.xml",
         "views/donation_campaign.xml",
         "views/donation_thanks_template.xml",
         "views/res_users.xml",
@@ -30,7 +32,7 @@
         "report/donation_thanks_view.xml",
         "report/donation_thanks_report.xml",
     ],
-    "post_init_hook": "update_account_payment_mode",
+    "post_init_hook": "update_account_payment_method_line",
     "demo": ["demo/donation_demo.xml"],
     "installable": True,
 }
