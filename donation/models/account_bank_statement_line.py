@@ -2,7 +2,7 @@
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import Command, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.misc import format_amount
 
@@ -23,15 +23,15 @@ class AccountBankStatementLine(models.Model):
         self.ensure_one()
         if not self.partner_id:
             raise UserError(
-                _(
+                self.env._(
                     "On bank statement line '%s', the partner is required to "
-                    "process a donation."
+                    "process a donation.",
+                    self.display_name,
                 )
-                % self.display_name
             )
         if self.currency_id.compare_amounts(self.amount, 0) <= 0:
             raise UserError(
-                _(
+                self.env._(
                     "On bank statement line '%(line)s', the amount (%(amount)s) "
                     "is negative so it cannot be processed as a donation.",
                     line=self.display_name,
@@ -40,67 +40,65 @@ class AccountBankStatementLine(models.Model):
             )
         if not self.company_id.donation_account_id:
             raise UserError(
-                _(
-                    "The Donation by Credit Transfer Account is not set for company '%s'."
+                self.env._(
+                    "The Donation by Credit Transfer Account"
+                    "is not set for company '%s'.",
+                    self.company_id.display_name,
                 )
-                % self.company_id.display_name
             )
 
-    def _get_payment_mode_donation(self):
+    def _get_payment_method_line_donation(self):
         self.ensure_one()
-        payment_mode = self.env["account.payment.mode"].search(
+        payment_method_line = self.env["account.payment.method.line"].search(
             [
                 ("company_id", "=", self.company_id.id),
                 ("payment_type", "=", "inbound"),
-                ("bank_account_link", "=", "fixed"),
-                ("fixed_journal_id", "=", self.journal_id.id),
+                ("journal_id", "=", self.journal_id.id),
             ],
             limit=1,
         )
-        if not payment_mode:
+        if not payment_method_line:
             raise UserError(
-                _(
-                    "Missing inbound payment mode linked to the bank journal '%s' "
-                    "configured with 'Link to Bank Account' set to 'Fixed'."
+                self.env._(
+                    "Missing inbound payment method linked to the bank journal '%s'.",
+                    self.journal_id.display_name,
                 )
-                % self.journal_id.display_name
             )
-        return payment_mode
+        return payment_method_line
 
     def _get_donation_product(self):
         self.ensure_one()
         product = self.company_id.donation_credit_transfer_product_id
         if not product:
             raise UserError(
-                _(
-                    "Missing Product for Donations via Credit Transfer "
-                    "for company '%s'."
+                self.env._(
+                    "Missing Product for Donations via Credit Transfert "
+                    "for company '%s'.",
+                    self.company_id.display_name,
                 )
-                % self.company_id.display_name
             )
         return product
 
     def _prepare_donation_context(self):
         self.ensure_one()
         product = self._get_donation_product()
+        payment_method_line_id = self._get_payment_method_line_donation().id
         context = {
             "default_company_id": self.company_id.id,
             "default_partner_id": self.partner_id.id,
             "default_currency_id": self.currency_id.id,
-            "default_payment_mode_id": self._get_payment_mode_donation().id,
+            "default_payment_method_line_id": payment_method_line_id,
             "default_payment_ref": self.payment_ref,
             "default_donation_date": self.date,
             "default_bank_statement_line_id": self.id,
             "default_check_total": self.amount,
             "default_line_ids": [
-                (
-                    0,
-                    0,
+                Command.create(
                     {
                         "product_id": product.id,
                         "quantity": 1,
                         "unit_price": self.amount,
-                    },
+                    }
                 )
             ],
         }
@@ -109,7 +107,7 @@ class AccountBankStatementLine(models.Model):
     def _prepare_donation_action(self):
         action = {
             "type": "ir.actions.act_window",
-            "name": _("Create Donation from Bank Statement Line"),
+            "name": self.env._("Create Donation from Bank Statement Line"),
             "res_model": "donation.donation",
             "view_mode": "form",
             "view_id": self.env.ref(

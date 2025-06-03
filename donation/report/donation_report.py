@@ -16,8 +16,8 @@ class DonationReport(models.Model):
 
     donation_date = fields.Date(readonly=True)
     product_id = fields.Many2one("product.product", readonly=True)
-    product_detailed_type = fields.Selection(
-        related="product_id.detailed_type", store=True
+    product_donation_type = fields.Selection(
+        related="product_id.donation_type", store=True
     )
     partner_id = fields.Many2one("res.partner", "Donor", readonly=True)
     country_id = fields.Many2one("res.country", "Partner Country", readonly=True)
@@ -28,7 +28,9 @@ class DonationReport(models.Model):
     campaign_id = fields.Many2one(
         "donation.campaign", "Donation Campaign", readonly=True
     )
-    payment_mode_id = fields.Many2one("account.payment.mode", readonly=True)
+    payment_method_line_id = fields.Many2one(
+        "account.payment.method.line", readonly=True
+    )
     thanks_printed = fields.Boolean(readonly=True)
     thanks_template_id = fields.Many2one(
         "donation.thanks.template", string="Thanks Template", readonly=True
@@ -51,12 +53,12 @@ class DonationReport(models.Model):
             SELECT min(l.id) AS id,
                 d.donation_date,
                 l.product_id,
-                l.product_detailed_type,
+                l.product_donation_type,
                 l.in_kind,
                 l.tax_receipt_ok,
                 pt.categ_id AS product_categ_id,
                 d.company_id,
-                d.payment_mode_id,
+                d.payment_method_line_id,
                 d.partner_id,
                 d.country_id,
                 d.campaign_id,
@@ -89,7 +91,7 @@ class DonationReport(models.Model):
         return sql.SQL(
             """
             GROUP BY l.product_id,
-                l.product_detailed_type,
+                l.product_donation_type,
                 l.in_kind,
                 l.tax_receipt_ok,
                 pt.categ_id,
@@ -98,7 +100,7 @@ class DonationReport(models.Model):
                 d.country_id,
                 d.campaign_id,
                 d.company_id,
-                d.payment_mode_id,
+                d.payment_method_line_id,
                 d.thanks_printed,
                 d.thanks_template_id,
                 d.company_currency_id

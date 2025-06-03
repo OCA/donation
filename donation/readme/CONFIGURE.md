@@ -1,8 +1,8 @@
 To configure this module, you need to:
 
 > - create donation products
-> - make sure you have an inbound payment mode for each payment mode
->   used to receive donations. This payment mode must be configured with
+> - make sure you have an inbound payment method for each payment method
+>   used to receive donations. This payment method must be configured with
 >   *Link to Bank Account* set to *Fixed* and with the donation option
 >   active.
 > - if you wish to have a control amount on the donation, add the users

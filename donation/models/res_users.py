@@ -13,9 +13,9 @@ class ResUsers(models.Model):
     context_donation_campaign_id = fields.Many2one(
         "donation.campaign", "Current Donation Campaign"
     )
-    context_donation_payment_mode_id = fields.Many2one(
-        "account.payment.mode",
-        "Current Donation Payment Mode",
+    context_donation_payment_method_line_id = fields.Many2one(
+        "account.payment.method.line",
+        "Current Donation Payment Method",
         domain=[("donation", "=", True)],
         company_dependent=True,
     )

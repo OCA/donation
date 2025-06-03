@@ -10,16 +10,7 @@ class DonationCampaign(models.Model):
     _name = "donation.campaign"
     _description = "Code attributed for a Donation Campaign"
     _order = "sequence, id"
-
-    @api.depends("code", "name")
-    def name_get(self):
-        res = []
-        for camp in self:
-            name = camp.name
-            if camp.code:
-                name = "[%s] %s" % (camp.code, name)
-            res.append((camp.id, name))
-        return res
+    _rec_names_search = ["name", "code"]
 
     active = fields.Boolean(default=True)
     sequence = fields.Integer(default=10)
@@ -38,12 +29,10 @@ class DonationCampaign(models.Model):
         )
     ]
 
-    @api.model
-    def name_search(self, name="", args=None, operator="ilike", limit=100):
-        if args is None:
-            args = []
-        if name and operator == "ilike":
-            recs = self.search([("code", "=", name)] + args, limit=limit)
-            if recs:
-                return recs.name_get()
-        return super().name_search(name=name, args=args, operator=operator, limit=limit)
+    @api.depends("code", "name")
+    def _compute_display_name(self):
+        for camp in self:
+            name = camp.name
+            if camp.code:
+                name = f"[{camp.code}] {name}"
+            camp.display_name = name

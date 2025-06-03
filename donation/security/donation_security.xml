@@ -6,7 +6,7 @@
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <data noupdate="0">
+    <data>
         <record id="module_category_donation" model="ir.module.category">
             <field name="name">Donation</field>
             <field name="description">Manage donations</field>
@@ -35,10 +35,16 @@
     </data>
     <data noupdate="1">
         <record id="base.default_user" model="res.users">
-            <field name="groups_id" eval="[(4, ref('group_donation_manager'))]" />
+            <field
+                name="groups_id"
+                eval="[(4, ref('donation.group_donation_manager'))]"
+            />
         </record>
         <record id="base.user_admin" model="res.users">
-            <field name="groups_id" eval="[(4, ref('group_donation_manager'))]" />
+            <field
+                name="groups_id"
+                eval="[(4, ref('donation.group_donation_manager'))]"
+            />
         </record>
         <!-- Multi-company Rules -->
         <record id="donation_company_rule" model="ir.rule">

@@ -4,7 +4,7 @@
 
 import time
 
-from odoo import fields
+from odoo import Command, fields
 from odoo.tests.common import TransactionCase
 
 
@@ -12,140 +12,147 @@ class TestDonation(TransactionCase):
     at_install = False
     post_install = True
 
-    def setUp(self):
-        super().setUp()
-        self.bank_journal = self.env["account.journal"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+        cls.company = cls.env.ref("base.main_company")
+        cls.bank_journal = cls.env["account.journal"].create(
             {
                 "type": "bank",
                 "name": "test bank journal",
+                "company_id": cls.company.id,
             }
         )
-        self.payment_mode = self.env["account.payment.mode"].create(
+        cls.payment_account = cls.env["account.account"].create(
             {
-                "name": "test_payment_mode",
+                "name": "Donation Payment account",
+                "code": "TESTDONATION",
+                "company_ids": [Command.set([cls.company.id])],
+                "account_type": "asset_current",
+                "reconcile": True,
+            }
+        )
+        cls.payment_method_line = cls.env["account.payment.method.line"].create(
+            {
+                "name": "test_payment_method_line",
+                "company_id": cls.company.id,
+                "payment_account_id": cls.payment_account.id,
                 "donation": True,
-                "bank_account_link": "fixed",
-                "fixed_journal_id": self.bank_journal.id,
-                "payment_method_id": self.env.ref(
+                "journal_id": cls.bank_journal.id,
+                "payment_method_id": cls.env.ref(
                     "account.account_payment_method_manual_in"
                 ).id,
             }
         )
         today = time.strftime("%Y-%m-%d")
-        self.product = self.env.ref("donation_base.product_product_donation")
-        self.inkind_product = self.env.ref(
+        cls.product = cls.env.ref("donation_base.product_product_donation")
+        cls.inkind_product = cls.env.ref(
             "donation_base.product_product_inkind_donation"
         )
-        self.ddo = self.env["donation.donation"]
-        self.donor1 = self.env.ref("donation_base.donor1")
-        self.donor2 = self.env.ref("donation_base.donor2")
-        self.donor3 = self.env.ref("donation_base.donor3")
+        cls.ddo = cls.env["donation.donation"]
+        cls.donor1 = cls.env["res.partner"].create({"name": "Test donor1"})
+        cls.donor2 = cls.env["res.partner"].create({"name": "Test donor2"})
+        cls.donor3 = cls.env["res.partner"].create({"name": "Test donor3"})
 
-        self.don1 = self.ddo.create(
+        cls.don1 = cls.ddo.create(
             {
+                "company_id": cls.company.id,
                 "check_total": 100,
-                "partner_id": self.donor1.id,
+                "partner_id": cls.donor1.id,
                 "donation_date": today,
-                "payment_mode_id": self.payment_mode.id,
+                "payment_method_line_id": cls.payment_method_line.id,
                 "tax_receipt_option": "each",
                 "line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
-                            "product_id": self.product.id,
+                            "product_id": cls.product.id,
                             "quantity": 1,
                             "unit_price": 100,
-                        },
+                        }
                     )
                 ],
             }
         )
-        self.don2 = self.ddo.create(
+        cls.don2 = cls.ddo.create(
             {
+                "company_id": cls.company.id,
                 "check_total": 120,
-                "partner_id": self.donor2.id,
+                "partner_id": cls.donor2.id,
                 "donation_date": today,
-                "payment_mode_id": self.payment_mode.id,
+                "payment_method_line_id": cls.payment_method_line.id,
                 "tax_receipt_option": "annual",
                 "line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
-                            "product_id": self.product.id,
+                            "product_id": cls.product.id,
                             "quantity": 1,
                             "unit_price": 120,
-                        },
+                        }
                     )
                 ],
             }
         )
-        self.don3 = self.ddo.create(
+        cls.don3 = cls.ddo.create(
             {
+                "company_id": cls.company.id,
                 "check_total": 150,
-                "partner_id": self.donor3.id,
+                "partner_id": cls.donor3.id,
                 "donation_date": today,
-                "payment_mode_id": self.payment_mode.id,
+                "payment_method_line_id": cls.payment_method_line.id,
                 "tax_receipt_option": "none",
                 "line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
-                            "product_id": self.product.id,
+                            "product_id": cls.product.id,
                             "quantity": 1,
                             "unit_price": 150,
-                        },
+                        }
                     )
                 ],
             }
         )
-        self.don4 = self.ddo.create(
+        cls.don4 = cls.ddo.create(
             {
+                "company_id": cls.company.id,
                 "check_total": 1000,
-                "partner_id": self.donor1.id,
+                "partner_id": cls.donor1.id,
                 "donation_date": today,
-                "payment_mode_id": self.payment_mode.id,
+                "payment_method_line_id": cls.payment_method_line.id,
                 "tax_receipt_option": "each",
                 "line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
-                            "product_id": self.inkind_product.id,
+                            "product_id": cls.inkind_product.id,
                             "quantity": 1,
                             "unit_price": 1000,
-                        },
+                        }
                     )
                 ],
             }
         )
-        self.don5 = self.ddo.create(
+        cls.don5 = cls.ddo.create(
             {
+                "company_id": cls.company.id,
                 "check_total": 1200,
-                "partner_id": self.donor1.id,
+                "partner_id": cls.donor1.id,
                 "donation_date": today,
-                "payment_mode_id": self.payment_mode.id,
+                "payment_method_line_id": cls.payment_method_line.id,
                 "tax_receipt_option": "each",
                 "line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
-                            "product_id": self.inkind_product.id,
+                            "product_id": cls.inkind_product.id,
                             "quantity": 1,
                             "unit_price": 800,
-                        },
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
-                            "product_id": self.product.id,
+                            "product_id": cls.product.id,
                             "quantity": 1,
                             "unit_price": 400,
-                        },
+                        }
                     ),
                 ],
             }
@@ -163,7 +170,7 @@ class TestDonation(TransactionCase):
                 self.assertEqual(donation.move_id.state, "posted")
                 self.assertEqual(donation.payment_ref, donation.move_id.ref)
                 self.assertEqual(
-                    donation.payment_mode_id.fixed_journal_id,
+                    donation.payment_method_line_id.journal_id,
                     donation.move_id.journal_id,
                 )
                 self.assertEqual(donation.donation_date, donation.move_id.date)
@@ -181,22 +188,19 @@ class TestDonation(TransactionCase):
                 "check_total": 1000,
                 "partner_id": self.donor1.id,
                 "donation_date": time.strftime("%Y-%m-%d"),
-                "payment_mode_id": self.payment_mode.id,
+                "payment_method_line_id": self.payment_method_line.id,
                 "tax_receipt_option": "each",
                 "line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": self.inkind_product.id,
                             "quantity": 1,
                             "unit_price": 1000,
-                        },
+                        }
                     )
                 ],
             }
         )
-        self.donation_id.name_get()
         self.donation_id.save_default_values()
         self.donation_id.tax_receipt_option_change()
         self.donation_id.validate()
@@ -256,24 +260,21 @@ class TestDonation(TransactionCase):
 
     def test_donation_campaign(self):
         self.campaign_id = self.env.ref("donation.quest_origin")
-        self.campaign_id.name_get()
 
         self.don8 = self.ddo.create(
             {
                 "check_total": 1000,
                 "partner_id": self.donor1.id,
                 "donation_date": time.strftime("%Y-%m-%d"),
-                "payment_mode_id": self.payment_mode.id,
+                "payment_method_line_id": self.payment_method_line.id,
                 "tax_receipt_option": "each",
                 "line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": self.inkind_product.id,
                             "quantity": 1,
                             "unit_price": 1000,
-                        },
+                        }
                     )
                 ],
             }
@@ -299,31 +300,27 @@ class TestDonation(TransactionCase):
     ):
         donation = self.ddo.create(
             {
-                "payment_mode_id": self.payment_mode.id,
+                "payment_method_line_id": self.payment_method_line.id,
                 "partner_id": partner.id,
                 "tax_receipt_option": "annual",
                 "donation_date": time.strftime("%Y-01-01"),
                 "payment_ref": payment_ref,
                 "line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": self.product.id,
                             "quantity": 1,
                             "unit_price": amount_tax_receipt,
-                        },
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": self.env.ref(
                                 "donation_base.product_product_donation_notaxreceipt"
                             ).id,
                             "quantity": 1,
                             "unit_price": amount_no_tax_receipt,
-                        },
+                        }
                     ),
                 ],
             }

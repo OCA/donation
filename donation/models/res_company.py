@@ -3,7 +3,7 @@
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -13,8 +13,9 @@ class ResCompany(models.Model):
     donation_credit_transfer_product_id = fields.Many2one(
         "product.product",
         string="Product for Donations via Credit Transfer",
-        domain=[("detailed_type", "=", "donation")],
+        domain=[("donation_type", "!=", False)],
         ondelete="restrict",
+        check_company=True,
     )
     donation_account_id = fields.Many2one(
         "account.account",
@@ -26,12 +27,12 @@ class ResCompany(models.Model):
     )
 
     @api.constrains("donation_credit_transfer_product_id")
-    def company_donation_bank_statement_check(self):
+    def _company_donation_bank_statement_check(self):
         for company in self:
             product = company.donation_credit_transfer_product_id
-            if product and product.detailed_type != "donation":
+            if product and not product.donation_type:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "On the company %(company)s, the Product for Donations "
                         "via Credit Transfer (%(product)s) is not a donation product !",
                         company=company.display_name,

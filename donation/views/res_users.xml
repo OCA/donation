@@ -12,7 +12,7 @@
         <field name="inherit_id" ref="base.view_users_form" />
         <field name="arch" type="xml">
             <group name="preferences" position="inside">
-                <field name="context_donation_payment_mode_id" />
+                <field name="context_donation_payment_method_line_id" />
                 <field name="context_donation_campaign_id" />
             </group>
         </field>
@@ -24,7 +24,7 @@
         <field name="arch" type="xml">
             <field name="tz" position="after">
                 <field
-                    name="context_donation_payment_mode_id"
+                    name="context_donation_payment_method_line_id"
                     groups="donation.group_donation_user"
                     readonly="0"
                 />
