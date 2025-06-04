@@ -10,6 +10,7 @@ from odoo.exceptions import ValidationError
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
+    is_donation = fields.Boolean(compute="_compute_is_donation", store=True)
     detailed_type = fields.Selection(
         selection_add=[
             ("donation", "Donation"),
@@ -31,6 +32,11 @@ class ProductTemplate(models.Model):
         precompute=True,
         help="Specify if the product is eligible for a tax receipt",
     )
+
+    @api.depends("detailed_type")
+    def _compute_is_donation(self):
+        for product in self:
+            product.is_donation = product.detailed_type.startswith("donation")
 
     @api.depends("detailed_type")
     def _compute_tax_receipt_ok(self):
