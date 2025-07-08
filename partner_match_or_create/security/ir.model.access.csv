@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_partner_match_or_create,Full access on partner.match.or.create wizard,model_partner_match_or_create,base.group_partner_manager,1,1,1,1
