@@ -214,7 +214,11 @@
         <field name="model">donation.donation</field>
         <field name="arch" type="xml">
             <search string="Search Donations">
-                <field name="number" />
+                <field
+                    name="number"
+                    string="Number or Donor"
+                    filter_domain="['|', ('number', 'ilike', self), ('partner_id', 'ilike', self)]"
+                />
                 <field name="partner_id" />
                 <separator />
                 <filter

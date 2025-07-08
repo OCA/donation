@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2025 Akretion France (https://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+                  <record id="donation_form" model="ir.ui.view">
+                          <field name="model">donation.donation</field>
+                          <field name="inherit_id" ref="donation.donation_form" />
+                          <field name="arch" type="xml">
+                                  <button name="validate" position="before">
+                                          <button
+                    name="%(partner_match_or_create.partner_match_or_create_action)d"
+                    type="action"
+                    string="Set Partner from Web Form Infos"
+                    attrs="{'invisible': ['|', ('partner_id', '!=', False), ('controller_mode', '=', False)]}"
+                    groups="donation.group_donation_user"
+                    class="btn-primary"
+                />
+                                  </button>
+                                  <notebook position="inside">
+                                          <page
+                    name="controller"
+                    string="Web Form"
+                    attrs="{'invisible': [('controller_mode', '=', False)]}"
+                >
+                                          <group name="controller" string="Web Form">
+
+<field name="controller_mode" invisible="1" />
+                        <field name="controller_title_id" />
+                        <field name="controller_firstname" />
+                        <field name="controller_lastname" />
+                        <field name="controller_email" widget="email" />
+                        <field name="controller_phone" />
+                        <field name="controller_mobile" />
+                        <field name="controller_street" />
+                        <field name="controller_street2" />
+                        <field name="controller_zip" />
+                        <field name="controller_city" />
+                        <field name="controller_country_id" />
+                        <field name="controller_message" nolabel="1" colspan="2" />
+                        <field name="controller_notes" nolabel="1" colspan="2" />
+                    </group>
+            </page>
+    </notebook>
+        </field>
+    </record>
+
+<record id="donation_search" model="ir.ui.view">
+                          <field name="model">donation.donation</field>
+                          <field name="inherit_id" ref="donation.donation_search" />
+                          <field name="arch" type="xml">
+                                  <group name="groupby" position="before">
+                                          <filter
+                    name="controller_created"
+                    domain="[('controller_mode', '=', 'created')]"
+                    string="Created from Web Form"
+                />
+                                          <filter
+                    name="controller_none"
+                    domain="[('controller_mode', '=', False)]"
+                    string="Manual"
+                />
+
+
+                                          <separator />
+                                  </group>
+<field name="number" position="attributes">
+<attribute
+                    name="filter_domain"
+                >['|', '|', ('number', 'ilike', self), ('partner_id', 'ilike', self), ('partner_name', 'ilike', self)]</attribute>
+</field>
+                          </field>
+                  </record>
+
+          </odoo>

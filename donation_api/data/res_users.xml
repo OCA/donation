@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2025 Akretion France (https://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo noupdate="1">
+
+<record id="donation_api_user" model="res.users" context="{'no_reset_password': True}">
+  <field name="name">Donation API User</field>
+  <field name="login">donation_api_user</field>
+  <field name="email">donation_api_user@example.org</field>
+  <field
+            name="groups_id"
+            eval="[(6, 0, [ref('base.group_user'), ref('donation.group_donation_user'), ref('fastapi.group_fastapi_endpoint_runner')])]"
+        />
+</record>
+
+</odoo>
