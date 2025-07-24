@@ -48,12 +48,12 @@ class AccountBankStatementLine(models.Model):
 
     def _get_payment_mode_donation(self):
         self.ensure_one()
-        payment_mode = self.env["account.payment.mode"].search(
+        payment_mode = self.env["account.payment.method.line"].search(
             [
                 ("company_id", "=", self.company_id.id),
                 ("payment_type", "=", "inbound"),
-                ("bank_account_link", "=", "fixed"),
-                ("fixed_journal_id", "=", self.journal_id.id),
+                # ("bank_account_link", "=", "fixed"),
+                ("journal_id", "=", self.journal_id.id),
             ],
             limit=1,
         )
@@ -72,10 +72,7 @@ class AccountBankStatementLine(models.Model):
         product = self.company_id.donation_credit_transfer_product_id
         if not product:
             raise UserError(
-                _(
-                    "Missing Product for Donations via Credit Transfer "
-                    "for company '%s'."
-                )
+                _("Missing Product for Donations via Credit Transfer for company '%s'.")
                 % self.company_id.display_name
             )
         return product
