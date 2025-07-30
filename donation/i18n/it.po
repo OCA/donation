@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-21 13:27+0000\n"
+"PO-Revision-Date: 2025-07-30 14:25+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -343,7 +343,7 @@ msgstr "Campagna donazioni attuale"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_res_users__context_donation_payment_mode_id
 msgid "Current Donation Payment Mode"
-msgstr "Metodo pagamento donazione attuale"
+msgstr "Metodo di pagamento donazione attuale"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_report_search
@@ -730,7 +730,7 @@ msgid ""
 "Missing inbound payment mode linked to the bank journal '%s' configured with"
 " 'Link to Bank Account' set to 'Fixed'."
 msgstr ""
-"Manca metodo pagamento in ingresso collegato al registro banca '%s' "
+"Manca il metodo di pagamento in ingresso collegato al registro banca '%s' "
 "configurato con 'Collegato a conto bancario' impostato a 'Fisso'."
 
 #. module: donation
