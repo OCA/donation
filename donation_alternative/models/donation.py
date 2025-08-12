@@ -22,7 +22,6 @@ class DonationDonation(models.Model):
     currency_id = fields.Many2one(
         "res.currency",
         required=True,
-        states={"done": [("readonly", True)]},
         tracking=True,
         ondelete="restrict",
         default=lambda self: self.env.company.currency_id,
@@ -32,7 +31,6 @@ class DonationDonation(models.Model):
         string="Donor",
         required=True,
         index=True,
-        states={"done": [("readonly", True)]},
         tracking=True,
         ondelete="restrict",
     )
@@ -50,7 +48,6 @@ class DonationDonation(models.Model):
     )
     check_total = fields.Monetary(
         string="Check Amount",
-        states={"done": [("readonly", True)]},
         currency_field="currency_id",
         tracking=True,
     )
@@ -68,21 +65,18 @@ class DonationDonation(models.Model):
     )
     donation_date = fields.Date(
         required=True,
-        states={"done": [("readonly", True)]},
         index=True,
         tracking=True,
     )
     company_id = fields.Many2one(
         "res.company",
         required=True,
-        states={"done": [("readonly", True)]},
         default=lambda self: self.env.company,
     )
     line_ids = fields.One2many(
         "donation.line",
         "donation_id",
         string="Donation Lines",
-        states={"done": [("readonly", True)]},
         copy=True,
     )
     move_id = fields.Many2one(
@@ -99,19 +93,16 @@ class DonationDonation(models.Model):
         index=True,
         default=lambda self: _("New"),
         readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     payment_method_line_id = fields.Many2one(
         "account.payment.method.line",
         domain="[('company_id', '=', company_id), ('donation', '=', True)]",
         tracking=True,
         check_company=True,
-        states={"done": [("readonly", True)]},
         default=lambda self: self.env.user.context_donation_payment_method_line_id,
     )
     payment_ref = fields.Char(
         string="Payment Reference",
-        states={"done": [("readonly", True)]},
         copy=False,
     )
     state = fields.Selection(
@@ -149,7 +140,6 @@ class DonationDonation(models.Model):
             ("annual", "Annual Tax Receipt"),
         ],
         compute="_compute_tax_receipt_option",
-        states={"done": [("readonly", True)]},
         index=True,
         tracking=True,
         precompute=True,

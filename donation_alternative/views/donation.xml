@@ -65,36 +65,40 @@
                     </div>
                     <group name="main">
                         <group name="manual">
-                            <field name="partner_id" />
+                            <field name="partner_id" readonly="state == 'done'"/>
                             <field name="commercial_partner_id" invisible="1" />
-                            <field name="payment_method_line_id" widget="selection" />
+                            <field name="payment_method_line_id" readonly="state == 'done'" widget="selection" />
                             <field
                                 name="currency_id"
                                 groups="base.group_multi_currency"
+                                readonly="state == 'done'"
                             />
                             <field name="currency_id" invisible="1" />
                             <field name="company_currency_id" invisible="1" />
                             <field
                                 name="check_total"
+                                readonly="state =='done'"
                                 groups="donation_alternative.group_donation_check_total"
                             />
-                            <field name="payment_ref" />
+                            <field name="payment_ref" readonly="state == 'done'"/>
                             <field
                                 name="donation_date"
+                                readonly = "state == 'done'"
                                 options="{'datepicker': {'warn_future': true}}"
                             />
                             <field name="campaign_id" />
                             <field name="thanks_template_id" widget="selection" />
                         </group>
                         <group name="auto">
-                            <field name="company_id" invisible="1" />
+                            <field name="company_id" invisible="1" readonly="state =='done'"/>
                             <field
                                 name="company_id"
+                                readonly="state =='done'"
                                 groups="base.group_multi_company"
                             />
                             <label for="tax_receipt_option" />
                             <div name="tax_receipt_option">
-                                <field name="tax_receipt_option" class="oe_inline" />
+                                <field name="tax_receipt_option" class="oe_inline" readonly="state == 'done'" />
                                 <button
                                     name="%(donation_tax_receipt_option_switch_action)d"
                                     string="Change"
@@ -110,7 +114,7 @@
                     </group>
                     <notebook>
                         <page string="Donation Lines" name="lines">
-                            <field name="line_ids" nolabel="1" />
+                            <field name="line_ids" nolabel="1" readonly="state == 'done'"/>
                             <group name="subtotal" class="oe_subtotal_footer oe_right">
                                 <field
                                     name="amount_total"
@@ -160,9 +164,10 @@
                             groups="donation_alternative.group_donation_check_total"
                             readonly="1"
                         />
-                        <field name="payment_ref" />
+                        <field name="payment_ref" readonly="state == 'done'"/>
                         <field
                             name="donation_date"
+                            readonly = "state == 'done'"
                             options="{'datepicker': {'warn_future': true}}"
                         />
                         <field name="campaign_id" />
@@ -176,13 +181,13 @@
                             groups="base.group_multi_company"
                             readonly="1"
                         />
-                        <field name="tax_receipt_option" />
+                        <field name="tax_receipt_option" readonly="state == 'done'"/>
                         <field name="tax_receipt_total" />
                         <field name="bank_statement_line_id" />
                     </group>
                 </group>
                 <group name="lines" string="Lines" colspan="2">
-                    <field name="line_ids" nolabel="1" />
+                    <field name="line_ids" nolabel="1" readonly="state == 'done'"/>
                     <group name="subtotal" class="oe_subtotal_footer oe_right">
                         <field
                             name="amount_total"
@@ -241,13 +246,13 @@
                     invisible="context.get('recurring_view')"
                     decoration-bf="1"
                 />
-                <field name="partner_id" invisible="context.get('partner_view')" />
-                <field name="donation_date" />
+                <field name="partner_id" invisible="context.get('partner_view')" readonly="state == 'done'"/>
+                <field name="donation_date" readonly="state == 'done'" />
                 <field name="amount_total_company_currency" sum="1" />
                 <field name="amount_total" optional="hide" />
                 <field name="currency_id" invisible="1" />
                 <field name="company_currency_id" invisible="1" />
-                <field name="payment_method_line_id" />
+                <field name="payment_method_line_id" readonly="state == 'done'"/>
                 <field
                     name="tax_receipt_option"
                     optional="hide"
@@ -258,9 +263,10 @@
                 <field name="campaign_id" optional="show" />
                 <field name="thanks_template_id" optional="hide" />
                 <field name="thanks_printed" optional="hide" />
-                <field name="payment_ref" optional="hide" />
+                <field name="payment_ref" optional="hide" readonly="state == 'done'"/>
                 <field
                     name="company_id"
+                    readonly="state == 'done'"
                     groups="base.group_multi_company"
                     optional="show"
                 />
@@ -281,7 +287,7 @@
         <field name="arch" type="xml">
             <search>
                 <field name="number" />
-                <field name="partner_id" />
+                <field name="partner_id"/>
                 <separator />
                 <filter string="Date" name="donation_date" date="donation_date" />
                 <separator />

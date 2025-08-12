@@ -29,7 +29,7 @@ class ResCompany(models.Model):
     def company_donation_bank_statement_check(self):
         for company in self:
             product = company.donation_credit_transfer_product_id
-            if product and product.detailed_type != "donation":
+            if product and product.service_tracking != "donation":
                 raise ValidationError(
                     _(
                         "On the company %(company)s, the Product for Donations "
