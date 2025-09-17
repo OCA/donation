@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -28,35 +28,29 @@ msgstr ""
 #: model:mail.template,body_html:donation_base.tax_receipt_email_template
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"        <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "        Dear <t t-out=\"object.partner_id.name\">Alexis</t>\n"
 "                <t t-if=\"object.partner_id.parent_id\">\n"
-"                                (<i><t t-out=\"object.partner_id.parent_id.name\"></t></i>)\n"
+"                                (<i>\n"
+"                    <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                </i>)\n"
 "</t>\n"
-"    ,<br><br>\n"
+"    ,<br/><br/>\n"
 "\n"
-"    Thank you very much for your donation.<br><br>\n"
+"    Thank you very much for your donation.<br/><br/>\n"
 "\n"
 "    Please find enclosed your tax receipt <span style=\"font-weight: bold;\" t-out=\"object.number\">RECPT-2023-001</span>\n"
 "                    amounting in <span style=\"font-weight: bold;\" t-out=\"format_amount(object.amount, object.currency_id) or ''\">$ 10.00</span>\n"
 "                            from <t t-out=\"object.company_id.name\">Barroux Abbey</t>.\n"
-"    <t t-if=\"not is_html_empty(user.signature)\">\n"
-"            <br><br>\n"
-"            <t t-out=\"user.signature or ''\">--<br>Mitchell Admin</t>\n"
-"    </t>\n"
-"    <br><br>\n"
+"    <t t-if=\"not is_html_empty(user.signature)\" data-o-mail-quote-container=\"1\">\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    <t t-out=\"user.signature or ''\" data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/>Mitchell Admin</t>\n"
+"                </t>\n"
+"    <br/><br/>\n"
 "    </p>\n"
-"    </div>\n"
-"    "
-msgstr ""
-
-#. module: donation_base
-#: model:ir.model.fields,help:donation_base.field_product_product__detailed_type
-#: model:ir.model.fields,help:donation_base.field_product_template__detailed_type
-msgid ""
-"A storable product is a product for which you manage stock. The Inventory app has to be installed.\n"
-"A consumable product is a product for which stock is not managed.\n"
-"A service is a non-material product you provide."
+"            </div>\n"
+"        "
 msgstr ""
 
 #. module: donation_base
@@ -125,7 +119,6 @@ msgstr ""
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/models/donation_tax_receipt.py:0
-#, python-format
 msgid "Compose Email"
 msgstr ""
 
@@ -177,7 +170,8 @@ msgid "Display Name"
 msgstr ""
 
 #. module: donation_base
-#: model:ir.model.fields.selection,name:donation_base.selection__product_template__detailed_type__donation
+#: model:ir.model.fields,field_description:donation_base.field_product_product__donation_type
+#: model:ir.model.fields,field_description:donation_base.field_product_template__donation_type
 #: model:product.template,name:donation_base.product_product_donation_product_template
 #: model_terms:ir.ui.view,arch_db:donation_base.product_template_search_view
 msgid "Donation"
@@ -312,6 +306,7 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__product_template__donation_type__donation_in_kind
 #: model:product.template,name:donation_base.product_product_inkind_donation_product_template
 msgid "In-Kind Donation"
 msgstr ""
@@ -319,16 +314,6 @@ msgstr ""
 #. module: donation_base
 #: model:product.template,name:donation_base.product_product_inkind_donation_notaxreceipt_product_template
 msgid "In-Kind Donation - no tax receipt"
-msgstr ""
-
-#. module: donation_base
-#: model:ir.model.fields.selection,name:donation_base.selection__product_template__detailed_type__donation_in_kind_consu
-msgid "In-Kind Donation Consummable"
-msgstr ""
-
-#. module: donation_base
-#: model:ir.model.fields.selection,name:donation_base.selection__product_template__detailed_type__donation_in_kind_service
-msgid "In-Kind Donation Service"
 msgstr ""
 
 #. module: donation_base
@@ -340,13 +325,6 @@ msgstr ""
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_is_follower
 msgid "Is Follower"
-msgstr ""
-
-#. module: donation_base
-#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt____last_update
-#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print____last_update
-#: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: donation_base
@@ -364,11 +342,6 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: donation_base
-#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_main_attachment_id
-msgid "Main Attachment"
-msgstr ""
-
-#. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_has_error
 msgid "Message Delivery error"
 msgstr ""
@@ -381,8 +354,12 @@ msgstr ""
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/models/donation_tax_receipt.py:0
-#, python-format
 msgid "Missing email on partner '%s'."
+msgstr ""
+
+#. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__product_template__donation_type__donation
+msgid "Monetary Donation"
 msgstr ""
 
 #. module: donation_base
@@ -393,9 +370,6 @@ msgstr ""
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/models/donation_tax_receipt.py:0
-#: code:addons/donation_base/models/donation_tax_receipt.py:0
-#: code:addons/donation_base/models/donation_tax_receipt.py:0
-#, python-format
 msgid "New"
 msgstr ""
 
@@ -417,7 +391,6 @@ msgstr ""
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/wizard/tax_receipt_annual_create.py:0
-#, python-format
 msgid "No annual tax receipt to generate"
 msgstr ""
 
@@ -493,12 +466,6 @@ msgid "Product"
 msgstr ""
 
 #. module: donation_base
-#: model:ir.model.fields,field_description:donation_base.field_product_product__detailed_type
-#: model:ir.model.fields,field_description:donation_base.field_product_template__detailed_type
-msgid "Product Type"
-msgstr ""
-
-#. module: donation_base
 #: model:ir.model,name:donation_base.model_product_product
 msgid "Product Variant"
 msgstr ""
@@ -565,23 +532,20 @@ msgstr ""
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/wizard/tax_receipt_annual_create.py:0
-#, python-format
 msgid ""
 "The Donor '%(partner)s' already has an annual tax receipt in this timeframe:"
-" %(receipt)s dated %(number)s."
+" %(receipt)s dated %(date)s."
 msgstr ""
 
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/wizard/tax_receipt_print.py:0
-#, python-format
 msgid "There are no tax receipts to print."
 msgstr ""
 
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/models/product.py:0
-#, python-format
 msgid "There shouldn't have any Customer Taxes on the donation product '%s'."
 msgstr ""
 
@@ -616,13 +580,6 @@ msgstr ""
 #. module: donation_base
 #: model:ir.model.fields,help:donation_base.field_donation_tax_receipt__website_message_ids
 msgid "Website communication history"
-msgstr ""
-
-#. module: donation_base
-#: model:mail.template,report_name:donation_base.tax_receipt_email_template
-msgid ""
-"{{object.company_id.name.replace(' ', '_')}}-Tax_Receipt_{{(object.number or"
-" '').replace('/','_')}}"
 msgstr ""
 
 #. module: donation_base
