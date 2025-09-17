@@ -1,0 +1,11 @@
+[project]
+name = "odoo-addons-oca-donation"
+version = "18.0.20250917.0"
+dependencies = [
+    "odoo-addon-donation_base==18.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 18.0",
+]
