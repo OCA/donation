@@ -40,6 +40,7 @@
                         <field name="print_date" />
                         <field name="currency_id" invisible="1" />
                         <field name="amount" />
+                        <field name="payment_mode_id"/>
                         <field name="company_id" groups="base.group_multi_company" />
                     </group>
                 </sheet>
