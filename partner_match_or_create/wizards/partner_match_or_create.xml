@@ -11,7 +11,7 @@
     <field name="model">partner.match.or.create</field>
     <field name="arch" type="xml">
         <form>
-            <group name="main" col="4">
+            <group name="main" col="4" string="">
                 <field name="res_model" invisible="1" />
                 <field name="res_id" invisible="1" />
                 <field name="firstname" />
@@ -32,6 +32,7 @@
                             class="o_address_state"
                             placeholder="State"
                             options="{'no_open': True, 'no_quick_create': True}"
+                            context="{'default_country_id': country_id}"
                         />
                     <field name="zip" placeholder="ZIP" class="o_address_zip" />
                     <field
@@ -65,6 +66,7 @@
                     attrs="{'invisible': ['|', ('create_or_update', '!=', 'update'), ('update_partner_id', '=', False)]}"
                     name="update-infos"
                     col="4"
+                    string=""
                 >
                 <field name="update_partner_phone" />
                 <field name="update_partner_mobile" />
@@ -73,11 +75,10 @@
             <group
                     attrs="{'invisible': ['|', ('create_or_update', '!=', 'update'), ('update_partner_id', '=', False)]}"
                     name="update-address"
-                    col="4"
                 >
                 <label for="update_partner_street" string="Current Address" />
 
-                <div class="o_address_format" colspan="3">
+                <div class="o_address_format">
                     <field name="update_partner_street" class="o_address_street" />
                     <field name="update_partner_street2" class="o_address_street" />
                     <field
@@ -104,6 +105,14 @@
                         />
 
                 </div>
+            </group>
+            <group
+                    attrs="{'invisible': ['|', ('create_or_update', '!=', 'update'), ('update_partner_id', '=', False)]}"
+                    name="update-bools"
+                    col="4"
+                    string=""
+                >
+
                 <field name="update_phone" />
                 <field name="update_mobile" />
                 <field name="update_email" />
