@@ -35,6 +35,7 @@ class PartnerMatchOrCreate(models.TransientModel):
         compute="_compute_update_partner_id",
         store=True,
         readonly=False,
+        precompute=True,
     )
     update_partner_email = fields.Char(
         related="update_partner_id.email", string="Current E-mail"
@@ -70,15 +71,25 @@ class PartnerMatchOrCreate(models.TransientModel):
         readonly=False,
         store=True,
         string="Update E-mail",
+        precompute=True,
     )
     update_phone = fields.Boolean(
-        compute="_compute_update_bool", readonly=False, store=True
+        compute="_compute_update_bool",
+        readonly=False,
+        store=True,
+        precompute=True,
     )
     update_mobile = fields.Boolean(
-        compute="_compute_update_bool", readonly=False, store=True
+        compute="_compute_update_bool",
+        readonly=False,
+        store=True,
+        precompute=True,
     )
     update_address = fields.Boolean(
-        compute="_compute_update_bool", readonly=False, store=True
+        compute="_compute_update_bool",
+        readonly=False,
+        store=True,
+        precompute=True,
     )
     suggested_partner_ids = fields.Many2many(
         "res.partner", readonly=True, string="Suggested Contacts"
