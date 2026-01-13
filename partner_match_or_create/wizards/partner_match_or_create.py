@@ -265,7 +265,8 @@ class PartnerMatchOrCreate(models.TransientModel):
         model = self.env[self.res_model]
         partner.message_post(
             body=_(
-                "Contact created by the wizard of the module <em>partner_match_or_create</em>."
+                "Contact created by the wizard of the module "
+                "<em>partner_match_or_create</em>."
             )
         )
         record = model.browse(self.res_id)

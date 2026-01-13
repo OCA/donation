@@ -40,7 +40,8 @@ class ResPartner(models.Model):
                 partner_id = partner[0]["id"]
         if partner_id:
             logger.info("Match on email %s with partner ID %d", email, partner_id)
-        # 'and vals['controller_country_id'] to make sure the mobile phone has been reformatted
+        # "and vals['controller_country_id']" to make sure the mobile phone has been
+        # reformatted
         if not partner_id and mobile and vals["controller_country_id"]:
             if "res.partner.phone" in self.env:  # module base_partner_one2many_phone
                 partner_phone = (
