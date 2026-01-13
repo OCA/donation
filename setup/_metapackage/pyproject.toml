@@ -1,7 +1,8 @@
 [project]
 name = "odoo-addons-oca-donation"
-version = "18.0.20250917.0"
+version = "18.0.20260113.0"
 dependencies = [
+    "odoo-addon-donation==18.0.*",
     "odoo-addon-donation_base==18.0.*",
 ]
 classifiers=[
