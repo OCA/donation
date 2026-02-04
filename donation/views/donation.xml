@@ -512,7 +512,7 @@
         <field name="view_mode">kanban,list,form</field>
         <field
             name="context"
-        >{'search_default_filter_donation': 1, 'default_donation_type': True}</field>
+        >{'search_default_filter_donation': 1, 'default_donation_type': 'donation', 'default_type': 'service'}</field>
     </record>
     <menuitem
         id="donation_products"
