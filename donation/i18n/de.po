@@ -950,7 +950,7 @@ msgstr "Verantwortlicher Benutzer"
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Save Default Values"
-msgstr "Standardwerte speichern"
+msgstr "Als Standardwerte speichern"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_from_bank_statement_line_form
