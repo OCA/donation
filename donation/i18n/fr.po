@@ -425,7 +425,7 @@ msgstr "Reçus fiscaux"
 #. module: donation
 #: model:ir.model,name:donation.model_donation_thanks_template
 msgid "Donation Thanks Letter Template"
-msgstr ""
+msgstr "Modèle de lettre de remerciement pour don"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_res_company__donation_account_id
@@ -671,16 +671,6 @@ msgid "Manager"
 msgstr "Responsable"
 
 #. module: donation
-#: model_terms:ir.ui.view,arch_db:donation.donation_tree
-msgid "Mark all selected donation as Thanks Printed?"
-msgstr ""
-
-#. module: donation
-#: model_terms:ir.ui.view,arch_db:donation.donation_tree
-msgid "Mark as Thanks Printed"
-msgstr ""
-
-#. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_has_error
 msgid "Message Delivery error"
 msgstr ""
@@ -865,9 +855,10 @@ msgid "Print Receipts"
 msgstr ""
 
 #. module: donation
+#: model:ir.actions.server,name:donation.action_print_thanks
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Print Thanks Letter"
-msgstr ""
+msgstr "Imprimer la lettre de remerciement"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__product_id
@@ -1017,30 +1008,30 @@ msgstr ""
 #. module: donation
 #: model:ir.actions.report,name:donation.report_thanks
 msgid "Thanks Letter"
-msgstr ""
+msgstr "Lettre de remerciement"
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_thanks_template_action
 #: model:ir.ui.menu,name:donation.donation_thanks_template_menu
 msgid "Thanks Letter Templates"
-msgstr ""
+msgstr "Modèles de lettres de remerciement"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__thanks_printed
 #: model:ir.model.fields,field_description:donation.field_donation_report__thanks_printed
 msgid "Thanks Printed"
-msgstr ""
+msgstr "Remerciement imprimé"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__thanks_template_id
 #: model:ir.model.fields,field_description:donation.field_donation_report__thanks_template_id
 msgid "Thanks Template"
-msgstr ""
+msgstr "Modèle de remerciement"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Thanks to Print"
-msgstr ""
+msgstr "Remerciements à imprimer"
 
 #. module: donation
 #. odoo-python
@@ -1116,6 +1107,8 @@ msgid ""
 "This field automatically becomes active when the thanks letter has been "
 "printed."
 msgstr ""
+"Ce champ devient automatiquement actif lorsque la lettre de remerciement a "
+"été imprimée."
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_validate_form

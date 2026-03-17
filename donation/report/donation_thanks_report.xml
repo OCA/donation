@@ -15,6 +15,14 @@
         <field
             name="print_report_name"
         >'donation_thanks-%s%s' % (object.number, object.state == 'draft' and '-draft' or '')</field>
+        <field name="binding_model_id" eval="False" />
+    </record>
+
+    <record id="action_print_thanks" model="ir.actions.server">
+        <field name="name">Print Thanks Letter</field>
+        <field name="model_id" ref="model_donation_donation" />
         <field name="binding_model_id" ref="model_donation_donation" />
+        <field name="state">code</field>
+        <field name="code">action = records.print_thanks()</field>
     </record>
 </odoo>

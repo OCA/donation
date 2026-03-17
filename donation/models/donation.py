@@ -637,17 +637,12 @@ class DonationDonation(models.Model):
             return res
 
     def print_thanks(self):
-        self.ensure_one()
         self.write({"thanks_printed": True})
-        action = (
+        return (
             self.env.ref("donation.report_thanks")
             .with_context(discard_logo_check=True)
             .report_action(self)
         )
-        return action
-
-    def thanks_printed_button(self):
-        self.write({"thanks_printed": True})
 
 
 class DonationLine(models.Model):

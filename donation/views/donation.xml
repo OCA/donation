@@ -246,14 +246,6 @@
                         groups="donation.group_donation_user"
                         invisible="context.get('recurring_view')"
                     />
-                    <button
-                        name="thanks_printed_button"
-                        type="object"
-                        string="Mark as Thanks Printed"
-                        groups="donation.group_donation_user"
-                        invisible="context.get('recurring_view')"
-                        confirm="Mark all selected donation as Thanks Printed?"
-                    />
                     <!-- Unfortunately, confirm="" doesn't work for
                             buttons in list view... at least not in v14 -->
                 </header>
