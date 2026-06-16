@@ -23,7 +23,7 @@ class ResPartner(models.Model):
             groupby=["partner_id"],
             aggregates=["__count"],
         )
-        mapped_data = {partner: count for (partner, count) in rg_res}
+        mapped_data = {partner.id: count for (partner, count) in rg_res}
         for partner in self:
             partner.donation_count = mapped_data.get(partner.id, 0)
 
