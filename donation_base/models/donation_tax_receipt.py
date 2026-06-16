@@ -79,10 +79,10 @@ class DonationTaxReceipt(models.Model):
                 _("Missing email on partner '%s'.") % self.partner_id.display_name
             )
         template = self.env.ref("donation_base.tax_receipt_email_template")
-        layout_xmlid = "donation_base.tax_receipt_email_template"
+        layout_xmlid = "mail.mail_notification_light"
         ctx = dict(
             default_model=self._name,
-            default_res_id=self.id,
+            default_res_ids=self.ids,
             default_use_template=bool(template),
             default_template_id=template.id,
             default_composition_mode="comment",
