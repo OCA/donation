@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo-addon-donation_base>=16.0dev,<16.1dev',
         'odoo-addon-donation_direct_debit>=16.0dev,<16.1dev',
         'odoo-addon-donation_recurring>=16.0dev,<16.1dev',
+        'odoo-addon-partner_match_or_create>=16.0dev,<16.1dev',
         'odoo-addon-product_analytic_donation>=16.0dev,<16.1dev',
     ],
     classifiers=[
