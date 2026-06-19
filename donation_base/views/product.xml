@@ -25,6 +25,13 @@
                     domain="[('tax_receipt_ok', '=', True)]"
                 />
             </filter>
+            <filter name="type" position="after">
+                <filter
+                    name="donation_type_groupby"
+                    string="Donation Type"
+                    context="{'group_by': 'donation_type'}"
+                />
+            </filter>
         </field>
     </record>
     <record id="product_template_form_view" model="ir.ui.view">
