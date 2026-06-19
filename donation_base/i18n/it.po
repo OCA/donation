@@ -31,66 +31,36 @@ msgstr "'Fiscal_receipt-'+(object.number or '').replace('/','')"
 #: model:mail.template,body_html:donation_base.tax_receipt_email_template
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"        <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "        Dear <t t-out=\"object.partner_id.name\">Alexis</t>\n"
 "                <t t-if=\"object.partner_id.parent_id\">\n"
-"                                (<i><t t-out=\"object.partner_id.parent_id.name\"></t></i>)\n"
+"                                (<i>\n"
+"                    <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                </i>)\n"
 "</t>\n"
-"    ,<br><br>\n"
+"    ,<br/><br/>\n"
 "\n"
-"    Thank you very much for your donation.<br><br>\n"
+"    Thank you very much for your donation.<br/><br/>\n"
 "\n"
-"    Please find enclosed your tax receipt <span style=\"font-weight: bold;\" t-out=\"object.number\">RECPT-2023-001</span>\n"
-"                    amounting in <span style=\"font-weight: bold;\" t-out=\"format_amount(object.amount, object.currency_id) or ''\">$ 10.00</span>\n"
-"                            from <t t-out=\"object.company_id.name\">Barroux Abbey</t>.\n"
-"    <t t-if=\"not is_html_empty(user.signature)\">\n"
-"            <br><br>\n"
-"            <t t-out=\"user.signature or ''\">--<br>Mitchell Admin</t>\n"
-"    </t>\n"
-"    <br><br>\n"
-"    </p>\n"
-"    </div>\n"
-"    "
-msgstr ""
-"<div style=\"margin: 0px; padding: 0px;\">\n"
-"        <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"        Spettabile <t t-out=\"object.partner_id.name\">Alexis</t>\n"
-"                <t t-if=\"object.partner_id.parent_id\">\n"
-"                                (<i><t t-out=\"object.partner_id.parent_id."
-"name\"></t></i>)\n"
-"</t>\n"
-"    ,<br><br>\n"
-"\n"
-"    grazie per la donazione.<br><br>\n"
-"\n"
-"    In allegato la sua ricevuta fiscale <span style=\"font-weight: bold;\" "
+"    Please find enclosed your tax receipt <span style=\"font-weight: bold;\" "
 "t-out=\"object.number\">RECPT-2023-001</span>\n"
-"                    del valori di <span style=\"font-weight: bold;\" t-out="
-"\"format_amount(object.amount, object.currency_id) or ''\">$ 10.00</span>\n"
-"                            da <t t-out=\"object.company_id.name\">Barroux "
+"                    amounting in <span style=\"font-weight: bold;\" t-"
+"out=\"format_amount(object.amount, object.currency_id) or ''\">$ 10.00</"
+"span>\n"
+"                            from <t t-out=\"object.company_id.name\">Barroux "
 "Abbey</t>.\n"
-"    <t t-if=\"not is_html_empty(user.signature)\">\n"
-"            <br><br>\n"
-"            <t t-out=\"user.signature or ''\">--<br>Mitchell Admin</t>\n"
-"    </t>\n"
-"    <br><br>\n"
+"    <t t-if=\"not is_html_empty(user.signature)\" data-o-mail-quote-"
+"container=\"1\">\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    <t t-out=\"user.signature or ''\" data-o-mail-"
+"quote=\"1\">--<br data-o-mail-quote=\"1\"/>Mitchell Admin</t>\n"
+"                </t>\n"
+"    <br/><br/>\n"
 "    </p>\n"
-"    </div>\n"
-"    "
-
-#. module: donation_base
-#: model:ir.model.fields,help:donation_base.field_product_product__detailed_type
-#: model:ir.model.fields,help:donation_base.field_product_template__detailed_type
-msgid ""
-"A storable product is a product for which you manage stock. The Inventory app has to be installed.\n"
-"A consumable product is a product for which stock is not managed.\n"
-"A service is a non-material product you provide."
+"            </div>\n"
+"        "
 msgstr ""
-"Un prodotto stoccabile è un prodotto per il quale si gestiscono le giacenze. "
-"Deve essere installata l'app Magazzino.\n"
-"Un prodotto consumabile è un prodotto per il quale non sono gestite le "
-"giacenze.\n"
-"Un servizio è un prodotto non materiale che viene fornito."
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_needaction
@@ -158,7 +128,6 @@ msgstr "Azienda"
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/models/donation_tax_receipt.py:0
-#, python-format
 msgid "Compose Email"
 msgstr "Componi e-mail"
 
@@ -210,7 +179,8 @@ msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: donation_base
-#: model:ir.model.fields.selection,name:donation_base.selection__product_template__detailed_type__donation
+#: model:ir.model.fields,field_description:donation_base.field_product_product__donation_type
+#: model:ir.model.fields,field_description:donation_base.field_product_template__donation_type
 #: model:product.template,name:donation_base.product_product_donation_product_template
 #: model_terms:ir.ui.view,arch_db:donation_base.product_template_search_view
 msgid "Donation"
@@ -243,6 +213,11 @@ msgstr "Ricevuta fiscale donazione - Invia per e-mail"
 #: model:ir.actions.act_window,name:donation_base.partner_tax_receipt_action
 msgid "Donation Tax Receipts"
 msgstr "Ricevute fiscali donazione"
+
+#. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.product_template_search_view
+msgid "Donation Type"
+msgstr ""
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__partner_id
@@ -345,6 +320,7 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
 #. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__product_template__donation_type__donation_in_kind
 #: model:product.template,name:donation_base.product_product_inkind_donation_product_template
 msgid "In-Kind Donation"
 msgstr "Donazione in natura"
@@ -353,16 +329,6 @@ msgstr "Donazione in natura"
 #: model:product.template,name:donation_base.product_product_inkind_donation_notaxreceipt_product_template
 msgid "In-Kind Donation - no tax receipt"
 msgstr "Donazione in natura - nessuna ricevuta fiscale"
-
-#. module: donation_base
-#: model:ir.model.fields.selection,name:donation_base.selection__product_template__detailed_type__donation_in_kind_consu
-msgid "In-Kind Donation Consummable"
-msgstr "Donazione in nauta consumabile"
-
-#. module: donation_base
-#: model:ir.model.fields.selection,name:donation_base.selection__product_template__detailed_type__donation_in_kind_service
-msgid "In-Kind Donation Service"
-msgstr "Servizio donazione in natura"
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_product_product__tax_receipt_ok
@@ -374,13 +340,6 @@ msgstr "È idoneo per una ricevuta fiscale"
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_is_follower
 msgid "Is Follower"
 msgstr "Segue"
-
-#. module: donation_base
-#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt____last_update
-#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt_print____last_update
-#: model:ir.model.fields,field_description:donation_base.field_tax_receipt_annual_create____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__write_uid
@@ -397,11 +356,6 @@ msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
 
 #. module: donation_base
-#: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Allegato principale"
-
-#. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_has_error
 msgid "Message Delivery error"
 msgstr "Errore di consegna messaggio"
@@ -414,9 +368,13 @@ msgstr "Messaggi"
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/models/donation_tax_receipt.py:0
-#, python-format
 msgid "Missing email on partner '%s'."
 msgstr "E-mail mancante nel partner '%s'."
+
+#. module: donation_base
+#: model:ir.model.fields.selection,name:donation_base.selection__product_template__donation_type__donation
+msgid "Monetary Donation"
+msgstr ""
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__my_activity_date_deadline
@@ -426,9 +384,6 @@ msgstr "Scadenza mia attività"
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/models/donation_tax_receipt.py:0
-#: code:addons/donation_base/models/donation_tax_receipt.py:0
-#: code:addons/donation_base/models/donation_tax_receipt.py:0
-#, python-format
 msgid "New"
 msgstr "Nuova"
 
@@ -450,7 +405,6 @@ msgstr "Tipo prossima attività"
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/wizard/tax_receipt_annual_create.py:0
-#, python-format
 msgid "No annual tax receipt to generate"
 msgstr "Nessuna ricevuta fiscale annuale da generare"
 
@@ -526,12 +480,6 @@ msgid "Product"
 msgstr "Prodotto"
 
 #. module: donation_base
-#: model:ir.model.fields,field_description:donation_base.field_product_product__detailed_type
-#: model:ir.model.fields,field_description:donation_base.field_product_template__detailed_type
-msgid "Product Type"
-msgstr "Tipologia prodotto"
-
-#. module: donation_base
 #: model:ir.model,name:donation_base.model_product_product
 msgid "Product Variant"
 msgstr "Variante prodotto"
@@ -602,25 +550,20 @@ msgstr "Ricevute fiscali"
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/wizard/tax_receipt_annual_create.py:0
-#, python-format
 msgid ""
-"The Donor '%(partner)s' already has an annual tax receipt in this timeframe:"
-" %(receipt)s dated %(number)s."
+"The Donor '%(partner)s' already has an annual tax receipt in this timeframe: "
+"%(receipt)s dated %(date)s."
 msgstr ""
-"Il donatore '%(partner)s' ha già una ricevuta fiscale annuale in questo "
-"periodo: %(receipt)s datata %(number)s."
 
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/wizard/tax_receipt_print.py:0
-#, python-format
 msgid "There are no tax receipts to print."
 msgstr "Non ci sono ricevute fiscali da stampare."
 
 #. module: donation_base
 #. odoo-python
 #: code:addons/donation_base/models/product.py:0
-#, python-format
 msgid "There shouldn't have any Customer Taxes on the donation product '%s'."
 msgstr ""
 "Non dovrebbero esserci imposte a carico del cliente sul prodotto donazione "
@@ -660,16 +603,104 @@ msgid "Website communication history"
 msgstr "Cronologia comunicazioni sito web"
 
 #. module: donation_base
-#: model:mail.template,report_name:donation_base.tax_receipt_email_template
-msgid ""
-"{{object.company_id.name.replace(' ', '_')}}-Tax_Receipt_{{(object.number or"
-" '').replace('/','_')}}"
-msgstr ""
-"{{object.company_id.name.replace(' ', '_')}}-Tax_Receipt_{{(object.number or "
-"'').replace('/','_')}}"
-
-#. module: donation_base
 #: model:mail.template,subject:donation_base.tax_receipt_email_template
 msgid "{{object.company_id.name}} - Tax Receipt {{object.number or 'n/a'}}"
 msgstr ""
 "{{object.company_id.name}} - Ricevuta fiscale {{object.number or 'n/a'}}"
+
+#~ msgid ""
+#~ "<div style=\"margin: 0px; padding: 0px;\">\n"
+#~ "        <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+#~ "        Dear <t t-out=\"object.partner_id.name\">Alexis</t>\n"
+#~ "                <t t-if=\"object.partner_id.parent_id\">\n"
+#~ "                                (<i><t t-"
+#~ "out=\"object.partner_id.parent_id.name\"></t></i>)\n"
+#~ "</t>\n"
+#~ "    ,<br><br>\n"
+#~ "\n"
+#~ "    Thank you very much for your donation.<br><br>\n"
+#~ "\n"
+#~ "    Please find enclosed your tax receipt <span style=\"font-weight: bold;"
+#~ "\" t-out=\"object.number\">RECPT-2023-001</span>\n"
+#~ "                    amounting in <span style=\"font-weight: bold;\" t-"
+#~ "out=\"format_amount(object.amount, object.currency_id) or ''\">$ 10.00</"
+#~ "span>\n"
+#~ "                            from <t t-"
+#~ "out=\"object.company_id.name\">Barroux Abbey</t>.\n"
+#~ "    <t t-if=\"not is_html_empty(user.signature)\">\n"
+#~ "            <br><br>\n"
+#~ "            <t t-out=\"user.signature or ''\">--<br>Mitchell Admin</t>\n"
+#~ "    </t>\n"
+#~ "    <br><br>\n"
+#~ "    </p>\n"
+#~ "    </div>\n"
+#~ "    "
+#~ msgstr ""
+#~ "<div style=\"margin: 0px; padding: 0px;\">\n"
+#~ "        <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+#~ "        Spettabile <t t-out=\"object.partner_id.name\">Alexis</t>\n"
+#~ "                <t t-if=\"object.partner_id.parent_id\">\n"
+#~ "                                (<i><t t-"
+#~ "out=\"object.partner_id.parent_id.name\"></t></i>)\n"
+#~ "</t>\n"
+#~ "    ,<br><br>\n"
+#~ "\n"
+#~ "    grazie per la donazione.<br><br>\n"
+#~ "\n"
+#~ "    In allegato la sua ricevuta fiscale <span style=\"font-weight: bold;"
+#~ "\" t-out=\"object.number\">RECPT-2023-001</span>\n"
+#~ "                    del valori di <span style=\"font-weight: bold;\" t-"
+#~ "out=\"format_amount(object.amount, object.currency_id) or ''\">$ 10.00</"
+#~ "span>\n"
+#~ "                            da <t t-"
+#~ "out=\"object.company_id.name\">Barroux Abbey</t>.\n"
+#~ "    <t t-if=\"not is_html_empty(user.signature)\">\n"
+#~ "            <br><br>\n"
+#~ "            <t t-out=\"user.signature or ''\">--<br>Mitchell Admin</t>\n"
+#~ "    </t>\n"
+#~ "    <br><br>\n"
+#~ "    </p>\n"
+#~ "    </div>\n"
+#~ "    "
+
+#~ msgid ""
+#~ "A storable product is a product for which you manage stock. The Inventory "
+#~ "app has to be installed.\n"
+#~ "A consumable product is a product for which stock is not managed.\n"
+#~ "A service is a non-material product you provide."
+#~ msgstr ""
+#~ "Un prodotto stoccabile è un prodotto per il quale si gestiscono le "
+#~ "giacenze. Deve essere installata l'app Magazzino.\n"
+#~ "Un prodotto consumabile è un prodotto per il quale non sono gestite le "
+#~ "giacenze.\n"
+#~ "Un servizio è un prodotto non materiale che viene fornito."
+
+#~ msgid "In-Kind Donation Consummable"
+#~ msgstr "Donazione in nauta consumabile"
+
+#~ msgid "In-Kind Donation Service"
+#~ msgstr "Servizio donazione in natura"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
+
+#~ msgid "Main Attachment"
+#~ msgstr "Allegato principale"
+
+#~ msgid "Product Type"
+#~ msgstr "Tipologia prodotto"
+
+#, python-format
+#~ msgid ""
+#~ "The Donor '%(partner)s' already has an annual tax receipt in this "
+#~ "timeframe: %(receipt)s dated %(number)s."
+#~ msgstr ""
+#~ "Il donatore '%(partner)s' ha già una ricevuta fiscale annuale in questo "
+#~ "periodo: %(receipt)s datata %(number)s."
+
+#~ msgid ""
+#~ "{{object.company_id.name.replace(' ', '_')}}-Tax_Receipt_{{(object.number "
+#~ "or '').replace('/','_')}}"
+#~ msgstr ""
+#~ "{{object.company_id.name.replace(' ', '_')}}-Tax_Receipt_{{(object.number "
+#~ "or '').replace('/','_')}}"
