@@ -206,6 +206,11 @@ msgid "Donation Tax Receipts"
 msgstr ""
 
 #. module: donation_base
+#: model_terms:ir.ui.view,arch_db:donation_base.product_template_search_view
+msgid "Donation Type"
+msgstr ""
+
+#. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__partner_id
 msgid "Donor"
 msgstr ""
