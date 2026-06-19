@@ -449,6 +449,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:donation.field_account_bank_statement_line__donation_ids
 #: model:ir.model.fields,field_description:donation.field_res_partner__donation_ids
 #: model:ir.model.fields,field_description:donation.field_res_users__donation_ids
+#: model:ir.ui.menu,name:donation.donation_config_donation_menu
 #: model:ir.ui.menu,name:donation.donation_menu
 #: model:ir.ui.menu,name:donation.donation_title_menu
 #: model_terms:ir.ui.view,arch_db:donation.view_partner_property_form
