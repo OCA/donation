@@ -66,7 +66,7 @@
     <menuitem
         id="donation_thanks_template_menu"
         action="donation_thanks_template_action"
-        parent="donation.donation_config_menu"
-        sequence="50"
+        parent="donation.donation_config_donation_menu"
+        sequence="40"
     />
 </odoo>

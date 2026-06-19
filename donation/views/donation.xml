@@ -421,8 +421,8 @@
                 <field name="amount" />
                 <field name="tax_receipt_ok" string="Tax Receipt" optional="show" />
                 <field name="in_kind" optional="hide" />
-                <field name="currency_id" invisible="1" />
-                <field name="company_id" invisible="1" />
+                <field name="currency_id" column_invisible="1" />
+                <field name="company_id" column_invisible="1" />
             </list>
         </field>
     </record>
@@ -500,6 +500,13 @@
         groups="donation.group_donation_manager"
     />
     <menuitem
+        id="donation_config_donation_menu"
+        parent="donation_config_menu"
+        name="Donations"
+        sequence="20"
+        groups="donation.group_donation_manager"
+    />
+    <menuitem
         id="donor"
         action="donation_base.res_partner_action_donor"
         parent="donation_title_menu"
@@ -517,8 +524,8 @@
     <menuitem
         id="donation_products"
         action="donation_product_action"
-        parent="donation_config_menu"
-        sequence="20"
+        parent="donation_config_donation_menu"
+        sequence="10"
     />
     <menuitem
         id="donation_tax_title_menu"

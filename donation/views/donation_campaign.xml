@@ -84,7 +84,7 @@
     <menuitem
         id="donation_campaign_menu"
         action="donation_campaign_action"
-        parent="donation_config_menu"
-        sequence="40"
+        parent="donation_config_donation_menu"
+        sequence="30"
     />
 </odoo>
