@@ -421,8 +421,8 @@
                 <field name="amount" />
                 <field name="tax_receipt_ok" string="Tax Receipt" optional="show" />
                 <field name="in_kind" optional="hide" />
-                <field name="currency_id" invisible="1" />
-                <field name="company_id" invisible="1" />
+                <field name="currency_id" column_invisible="1" />
+                <field name="company_id" column_invisible="1" />
             </list>
         </field>
     </record>
