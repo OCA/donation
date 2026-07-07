@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-13 17:06+0000\n"
+"PO-Revision-Date: 2026-07-07 09:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_res_partner__tax_receipt_count
@@ -61,6 +61,36 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Spettabile <t t-out=\"object.partner_id.name\">Alexis</t>\n"
+"                <t t-if=\"object.partner_id.parent_id\">\n"
+"                                (<i>\n"
+"                    <t t-out=\"object.partner_id.parent_id.name\"/>\n"
+"                </i>)\n"
+"</t>\n"
+"    ,<br/><br/>\n"
+"\n"
+"    grazie per la vostra donazione.<br/><br/>\n"
+"\n"
+"    Trova allegata la sua ricevuta fiscale <span style=\"font-weight: "
+"bold;\" t-out=\"object.number\">RECPT-2023-001</span>\n"
+"                    del valore di <span style=\"font-weight: bold;\" t-"
+"out=\"format_amount(object.amount, object.currency_id) or ''\">$ 10.00</span>"
+"\n"
+"                            da <t t-out=\"object.company_id.name\">Barroux "
+"Abbey</t>.\n"
+"    <t t-if=\"not is_html_empty(user.signature)\" data-o-mail-quote-"
+"container=\"1\">\n"
+"                    <br/>\n"
+"                    <br/>\n"
+"                    <t t-out=\"user.signature or ''\" data-o-mail-"
+"quote=\"1\">--<br data-o-mail-quote=\"1\"/>Mitchell Admin</t>\n"
+"                </t>\n"
+"    <br/><br/>\n"
+"    </p>\n"
+"            </div>\n"
+"        "
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__message_needaction
@@ -217,7 +247,7 @@ msgstr "Ricevute fiscali donazione"
 #. module: donation_base
 #: model_terms:ir.ui.view,arch_db:donation_base.product_template_search_view
 msgid "Donation Type"
-msgstr ""
+msgstr "Tipo donazione"
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__partner_id
@@ -374,7 +404,7 @@ msgstr "E-mail mancante nel partner '%s'."
 #. module: donation_base
 #: model:ir.model.fields.selection,name:donation_base.selection__product_template__donation_type__donation
 msgid "Monetary Donation"
-msgstr ""
+msgstr "Donazione in denaro"
 
 #. module: donation_base
 #: model:ir.model.fields,field_description:donation_base.field_donation_tax_receipt__my_activity_date_deadline
@@ -554,6 +584,8 @@ msgid ""
 "The Donor '%(partner)s' already has an annual tax receipt in this timeframe: "
 "%(receipt)s dated %(date)s."
 msgstr ""
+"Il donatore '%(partner)s' ha già una ricevuta fiscale in questo periodo: %"
+"(receipt)s datata %(date)s."
 
 #. module: donation_base
 #. odoo-python
