@@ -64,7 +64,7 @@ Authors
 Contributors
 ------------
 
--  Alexis de Lattre <alexis.delattre@akretion.com>
+- Alexis de Lattre <alexis.delattre@akretion.com>
 
 Maintainers
 -----------

@@ -34,8 +34,10 @@ def donation_new(
     partner: Annotated[Partner, Depends(authenticated_partner)],
     donationcreate: DonationCreate,
 ) -> DonationCreated:
-    logger.info("Donation controller /new called with staycreate=%s", donationcreate)
-    env["donation.donation"]
+    logger.info(
+        "Donation controller /new called with donationcreate=%s", donationcreate
+    )
+    ddo = env["donation.donation"]
     company_id = donationcreate.company_id
     if not company_id:
         company_str = (
@@ -49,7 +51,7 @@ def donation_new(
             except Exception as e:
                 logger.warning(
                     "Failed to convert ir.config_parameter "
-                    "stay.controller.company_id %s to int: %s",
+                    "donation.controller.company_id %s to int: %s",
                     company_str,
                     e,
                 )
@@ -57,7 +59,7 @@ def donation_new(
         company_id = env.ref("base.main_company").id
     # protection for DoS attacks
     limit_create_date = datetime.now() - timedelta(1)
-    recent_draft_stay = sso.search_count(
+    recent_draft_donation = ddo.search_count(
         [
             ("company_id", "=", company_id),
             ("create_date", ">=", limit_create_date),
@@ -65,29 +67,29 @@ def donation_new(
             ("controller_mode", "=", "created"),
         ]
     )
-    recent_draft_stay_limit_str = (
+    recent_draft_donation_limit_str = (
         env["ir.config_parameter"]
         .sudo()
-        .get_param("stay.controller.max_requests_24h", 100)
+        .get_param("donation.controller.max_requests_24h", 100)
     )
-    recent_draft_stay_limit = int(recent_draft_stay_limit_str)
-    logger.debug("recent_draft_stay=%d", recent_draft_stay)
-    if recent_draft_stay > recent_draft_stay_limit and not tools.config.get(
+    recent_draft_donation_limit = int(recent_draft_donation_limit_str)
+    logger.debug("recent_draft_donation=%d", recent_draft_donation)
+    if recent_draft_donation > recent_draft_donation_limit and not tools.config.get(
         "test_enable"
     ):
         logger.error(
-            "stay controller: %d draft stays created during the last 24h. "
+            "donation controller: %d draft donations created during the last 24h. "
             "Suspecting DoS attack. Request ignored.",
-            recent_draft_stay,
+            recent_draft_donation,
         )
         raise HTTPException(status_code=status.HTTP_429_TOO_MANY_REQUESTS)
 
-    vals = sso._controller_prepare_create_update(staycreate)
+    vals = ddo._controller_prepare_create_update(donationcreate)
     if not vals:
         return False
 
-    arrival_date = staycreate.arrival_date
-    departure_date = staycreate.departure_date
+    arrival_date = donationcreate.arrival_date
+    departure_date = donationcreate.departure_date
     if arrival_date < date.today():
         error_msg = f"Arrival date {arrival_date} cannot be in the past"
         logger.error(error_msg)
@@ -103,42 +105,34 @@ def donation_new(
         raise HTTPException(
             status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=error_msg
         )
-    guest_qty = staycreate.guest_qty
-    if guest_qty < 1:
-        error_msg = f"Guest quantity ({guest_qty}) must be strictly positive."
-        logger.error(error_msg)
-        raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=error_msg
-        )
 
     vals.update(
         {
             "controller_mode": "created",
             "company_id": company_id,
-            "group_id": staycreate.group_id or False,
-            "guest_qty": guest_qty,
-            "arrival_date": arrival_date,
-            "departure_date": departure_date,
+            "group_id": donationcreate.group_id or False,
         }
     )
-    logger.debug("Creating new stay with vals=%s", vals)
-    stay = sso.create(vals)
-    logger.info("Create stay %s ID %d from controller", stay.display_name, stay.id)
+    logger.debug("Creating new donation with vals=%s", vals)
+    donation = ddo.create(vals)
+    logger.info(
+        "Create donation %s ID %d from controller", donation.display_name, donation.id
+    )
     try:
-        env.ref("stay_api.stay_controller_notify").sudo().with_context(
+        env.ref("donation_api.donation_controller_notify").sudo().with_context(
             action_description=_("created")
-        ).send_mail(stay.id)
-        logger.info("Mail sent for stay creation notification")
+        ).send_mail(donation.id)
+        logger.info("Mail sent for donation creation notification")
     except Exception as e:
-        logger.error("Failed to generate stay creation email: %s", e)
+        logger.error("Failed to generate donation creation email: %s", e)
     answer_dict = {
-        "name": stay.name,
-        "id": stay.id,
+        "name": donation.name,
+        "id": donation.id,
         "company_id": vals["company_id"],
         "partner_id": vals["partner_id"],
         "phone": vals["controller_phone"],
         "mobile": vals["controller_mobile"],
-        "uuid": stay.controller_uuid,
+        "uuid": donation.controller_uuid,
     }
-    logger.info("Stay controller /new answer: %s", answer_dict)
-    return StayCreated(**answer_dict)
+    logger.info("Donation controller /new answer: %s", answer_dict)
+    return DonationCreated(**answer_dict)

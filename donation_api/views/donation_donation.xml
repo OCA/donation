@@ -70,7 +70,7 @@
 <field name="number" position="attributes">
 <attribute
                     name="filter_domain"
-                >['|', '|', ('number', 'ilike', self), ('partner_id', 'ilike', self), ('partner_name', 'ilike', self)]</attribute>
+                >['|', '|', ('number', 'ilike', self), ('partner_id', 'ilike', self), ('controller_lastname', 'ilike', self)]</attribute>
 </field>
                           </field>
                   </record>

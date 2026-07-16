@@ -57,34 +57,11 @@ class DonationDonation(models.Model):
             "email",
             "phone",
             "mobile",
-            "departure_note",
-            "arrival_note",
         ]
         for to_strip_field in to_strip_fields:
             ini_value = getattr(cobject, to_strip_field)
             if isinstance(ini_value, str):
                 setattr(cobject, to_strip_field, ini_value.strip() or False)
-        time_values_allowed = ("morning", "afternoon", "evening")
-        arrival_time = cobject.arrival_time
-        if arrival_time not in time_values_allowed:
-            error_msg = (
-                f"Wrong arrival time: {arrival_time}. "
-                f"Possible values: {', '.join(time_values_allowed)}."
-            )
-            logger.error(error_msg)
-            raise HTTPException(
-                status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=error_msg
-            )
-        departure_time = cobject.departure_time
-        if departure_time not in time_values_allowed:
-            error_msg = (
-                f"Wrong departure time: {departure_time}. "
-                f"Possible values: {', '.join(time_values_allowed)}."
-            )
-            logger.error(error_msg)
-            raise HTTPException(
-                status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=error_msg
-            )
         notes_list = cobject.notes_list
         if not isinstance(notes_list, list):
             notes_list = []
@@ -92,10 +69,7 @@ class DonationDonation(models.Model):
         if not lastname:  # Should never happen because checked by fastapi
             logger.error("Missing lastname in stay controller. Quitting.")
             return False
-        partner_name = lastname
         firstname = cobject.firstname
-        if firstname:
-            partner_name = f"{firstname} {partner_name}"
         title_code = cobject.title
         title_id = False
         if title_code:
@@ -105,7 +79,6 @@ class DonationDonation(models.Model):
             )
             if title:
                 title_id = title.id
-                partner_name = f"{title.shortcut or title.name} {partner_name}"
             else:
                 avail_title_read = self.env["res.partner.title"].search_read(
                     [("stay_code", "!=", False)], ["stay_code"]
@@ -160,11 +133,6 @@ class DonationDonation(models.Model):
                 )
 
         vals = {
-            "partner_name": partner_name,
-            "arrival_time": arrival_time,
-            "arrival_note": cobject.arrival_note,
-            "departure_time": departure_time,
-            "departure_note": cobject.departure_note,
             "controller_message": cobject.message,
             "controller_firstname": firstname,
             "controller_lastname": lastname,
