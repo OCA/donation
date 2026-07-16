@@ -75,7 +75,7 @@ class DonationDonation(models.Model):
     partner_id = fields.Many2one(
         "res.partner",
         string="Donor",
-        required=True,
+        required=False,  # now only required on confirmation
         index=True,
         states={"done": [("readonly", True)]},
         tracking=True,
@@ -253,15 +253,16 @@ class DonationDonation(models.Model):
         )
     ]
 
-    @api.model
-    def create(self, vals):
-        if "company_id" in vals:
-            self = self.with_company(vals["company_id"])
-        if vals.get("number", _("New")) == _("New"):
-            vals["number"] = self.env["ir.sequence"].next_by_code(
-                "donation.donation", sequence_date=vals.get("donation_date")
-            ) or _("New")
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if "company_id" in vals:
+                self = self.with_company(vals["company_id"])
+            if vals.get("number", _("New")) == _("New"):
+                vals["number"] = self.env["ir.sequence"].next_by_code(
+                    "donation.donation", sequence_date=vals.get("donation_date")
+                ) or _("New")
+        return super().create(vals_list)
 
     def _prepare_each_tax_receipt(self):
         self.ensure_one()
@@ -395,6 +396,8 @@ class DonationDonation(models.Model):
             "donation.group_donation_check_total"
         )
         for donation in self:
+            if not donation.partner_id:
+                raise UserError(_("Donor is not set on donation %s.") % donation.number)
             if donation.donation_date > fields.Date.context_today(self):
                 raise UserError(
                     _(
