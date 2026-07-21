@@ -61,7 +61,7 @@ class ResPartner(models.Model):
                     partner_id = partner_phone[0]["partner_id"][0]
             else:
                 partner = self.env["res.partner"].search_read(
-                    [("mobile", "=", mobile)], ["id"], limit=1
+                    [("phone", "=", mobile)], ["id"], limit=1
                 )
                 if partner:
                     partner_id = partner[0]["id"]

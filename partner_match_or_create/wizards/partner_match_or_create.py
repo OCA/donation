@@ -6,7 +6,7 @@ import logging
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +19,6 @@ class PartnerMatchOrCreate(models.TransientModel):
     res_id = fields.Integer(required=True, readonly=True)
     firstname = fields.Char()
     lastname = fields.Char(required=True)
-    title_id = fields.Many2one("res.partner.title")
     email = fields.Char(string="E-mail")
     phone = fields.Char()
     mobile = fields.Char()
@@ -42,9 +41,6 @@ class PartnerMatchOrCreate(models.TransientModel):
     )
     update_partner_phone = fields.Char(
         related="update_partner_id.phone", string="Current Phone"
-    )
-    update_partner_mobile = fields.Char(
-        related="update_partner_id.mobile", string="Current Mobile"
     )
     # I can't use a related on update_partner_id because the full address
     # is not displayed any more when update_partner_id is changed
@@ -74,12 +70,6 @@ class PartnerMatchOrCreate(models.TransientModel):
         precompute=True,
     )
     update_phone = fields.Boolean(
-        compute="_compute_update_bool",
-        readonly=False,
-        store=True,
-        precompute=True,
-    )
-    update_mobile = fields.Boolean(
         compute="_compute_update_bool",
         readonly=False,
         store=True,
@@ -118,16 +108,14 @@ class PartnerMatchOrCreate(models.TransientModel):
         for wiz in self:
             update_email = False
             update_phone = False
-            update_mobile = False
             update_address = False
             upartner = wiz.update_partner_id
             if upartner:
                 if wiz.email and wiz.email != upartner.email:
                     update_email = True
-                if wiz.phone and wiz.phone != upartner.phone:
+                preferred_phone = wiz.mobile or wiz.phone
+                if preferred_phone and preferred_phone != upartner.phone:
                     update_phone = True
-                if wiz.mobile and wiz.mobile != upartner.mobile:
-                    update_mobile = True
                 if (
                     wiz.street
                     and wiz.city
@@ -147,7 +135,6 @@ class PartnerMatchOrCreate(models.TransientModel):
                     update_address = True
             wiz.update_email = update_email
             wiz.update_phone = update_phone
-            wiz.update_mobile = update_mobile
             wiz.update_address = update_address
 
     @api.depends("create_or_update")
@@ -175,7 +162,7 @@ class PartnerMatchOrCreate(models.TransientModel):
         # same country
         if vals.get("country_id"):
             domain_or_list.append([("country_id", "=", vals["country_id"])])
-        domain = expression.AND(domain_or_list)
+        domain = Domain.AND(domain_or_list)
         return domain
 
     @api.model
@@ -203,7 +190,6 @@ class PartnerMatchOrCreate(models.TransientModel):
         for rfield in [
             "firstname",
             "lastname",
-            "title_id",
             "email",
             "phone",
             "mobile",
@@ -238,15 +224,13 @@ class PartnerMatchOrCreate(models.TransientModel):
         rpo = self.env["res.partner"]
         vals = {
             "email": self.email,
-            "phone": self.phone,
-            "mobile": self.mobile,
+            "phone": self.mobile or self.phone,
             "street": self.street,
             "street2": self.street2,
             "zip": self.zip,
             "city": self.city,
             "state_id": self.state_id.id or False,
             "country_id": self.country_id.id or False,
-            "title": self.title_id.id or False,
         }
         # if OCA module partner_firstname is installed
         if hasattr(rpo, "firstname") and hasattr(rpo, "lastname"):
@@ -294,9 +278,7 @@ class PartnerMatchOrCreate(models.TransientModel):
             raise UserError(_("The partner to update is not set."))
         vals = {}
         if self.update_phone:
-            vals["phone"] = self.phone
-        if self.update_mobile:
-            vals["mobile"] = self.mobile
+            vals["phone"] = self.mobile or self.phone
         if self.update_email:
             vals["email"] = self.email
         if self.update_address:

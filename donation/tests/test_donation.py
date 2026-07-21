@@ -46,9 +46,32 @@ class TestDonation(TransactionCase):
             }
         )
         today = time.strftime("%Y-%m-%d")
-        cls.product = cls.env.ref("donation_base.product_product_donation")
-        cls.inkind_product = cls.env.ref(
-            "donation_base.product_product_inkind_donation"
+        cls.product = cls.env["product.product"].create(
+            {
+                "name": "Donation",
+                "type": "service",
+                "donation_type": "donation",
+                "tax_receipt_ok": True,
+                "taxes_id": False,
+            }
+        )
+        cls.inkind_product = cls.env["product.product"].create(
+            {
+                "name": "In-Kind Donation",
+                "type": "service",
+                "donation_type": "donation_in_kind",
+                "tax_receipt_ok": True,
+                "taxes_id": False,
+            }
+        )
+        cls.no_tax_receipt_product = cls.env["product.product"].create(
+            {
+                "name": "Donation - no tax receipt",
+                "type": "service",
+                "donation_type": "donation",
+                "tax_receipt_ok": False,
+                "taxes_id": False,
+            }
         )
         cls.ddo = cls.env["donation.donation"]
         cls.donor1 = cls.env["res.partner"].create({"name": "Test donor1"})
@@ -259,8 +282,6 @@ class TestDonation(TransactionCase):
         self.assertEqual(tax_receipt.currency_id, dons[0].company_id.currency_id)
 
     def test_donation_campaign(self):
-        self.campaign_id = self.env.ref("donation.quest_origin")
-
         self.don8 = self.ddo.create(
             {
                 "check_total": 1000,
@@ -315,9 +336,7 @@ class TestDonation(TransactionCase):
                     ),
                     Command.create(
                         {
-                            "product_id": self.env.ref(
-                                "donation_base.product_product_donation_notaxreceipt"
-                            ).id,
+                            "product_id": self.no_tax_receipt_product.id,
                             "quantity": 1,
                             "unit_price": amount_no_tax_receipt,
                         }

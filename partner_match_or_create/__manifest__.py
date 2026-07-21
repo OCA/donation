@@ -4,7 +4,7 @@
 
 {
     "name": "Partner Match or Create",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Tools",
     "license": "AGPL-3",
     "summary": "Create a new partner or match an existing partner",
@@ -14,9 +14,7 @@
     "depends": ["phone_validation"],
     "data": [
         "security/ir.model.access.csv",
-        "views/res_partner_title.xml",
         "wizards/partner_match_or_create.xml",
     ],
-    "post_init_hook": "res_partner_title_postinstall",
     "installable": True,
 }

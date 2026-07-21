@@ -100,7 +100,7 @@
                     string="Annual Tax Receipts"
                     domain="[('type', '=', 'annual')]"
                 />
-                <group string="Group By" name="groupby">
+                <group>
                     <filter
                         name="date_groupby"
                         string="Date"

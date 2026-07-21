@@ -108,7 +108,7 @@ class DonationReport(models.Model):
         )
 
     def init(self):
-        tools.drop_view_if_exists(self._cr, self._table)
+        tools.drop_view_if_exists(self.env.cr, self._table)
         query = sql.SQL("CREATE OR REPLACE VIEW {0} AS ({1} FROM {2} {3} {4})").format(
             sql.Identifier(self._table),
             self._select(),
@@ -116,4 +116,4 @@ class DonationReport(models.Model):
             self._where(),
             self._group_by(),
         )  # pylint: disable=sql-injection
-        self._cr.execute(query)
+        self.env.cr.execute(query)

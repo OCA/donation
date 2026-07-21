@@ -328,7 +328,7 @@
                     string="Thanks to Print"
                     domain="[('thanks_printed', '=', False)]"
                 />
-                <group string="Group By" name="groupby">
+                <group>
                     <filter
                         name="date_groupby"
                         string="Date"

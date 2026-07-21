@@ -11,9 +11,19 @@ class TestDonationTaxReceipt(TransactionCase):
     def setUp(self):
         super().setUp()
         self.dt_receipt = self.env["donation.tax.receipt"]
-        self.partner = self.env.ref("base.res_partner_1")
+        self.partner = self.env["res.partner"].create(
+            {"name": "Tax Receipt Donor", "email": "donor@example.com"}
+        )
         self.company = self.env.ref("base.main_company")
-        self.product_id = self.env.ref("donation_base.product_product_donation")
+        self.product_id = self.env["product.product"].create(
+            {
+                "name": "Donation",
+                "type": "service",
+                "donation_type": "donation",
+                "tax_receipt_ok": True,
+                "taxes_id": False,
+            }
+        )
         self.dt_receipt_rec = self.dt_receipt.create(
             {
                 "date": fields.Date.today(),
@@ -46,7 +56,9 @@ class TestTaxReceiptAnnualCreate(TransactionCase):
         super().setUp()
         self.dt_receipt = self.env["donation.tax.receipt"]
         self.tax_receipt_print = self.env["donation.tax.receipt.print"]
-        self.partner = self.env.ref("base.res_partner_1")
+        self.partner = self.env["res.partner"].create(
+            {"name": "Annual Tax Receipt Donor", "email": "annual@example.com"}
+        )
         self.company = self.env.ref("base.main_company")
         self.dt_receipt_rec = self.dt_receipt.create(
             {

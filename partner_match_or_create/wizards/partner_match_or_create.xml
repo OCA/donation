@@ -17,7 +17,6 @@
                     <field name="phone" />
                     <field name="mobile" />
                     <field name="email" />
-                    <field name="title_id" />
                 </group>
                 <group name="main-address">
                     <label for="street" string="Address" />
@@ -69,7 +68,6 @@
                     string=""
                 >
                     <field name="update_partner_phone" />
-                    <field name="update_partner_mobile" />
                     <field name="update_partner_email" />
                 </group>
                 <group
@@ -112,7 +110,6 @@
                     string=""
                 >
                     <field name="update_phone" />
-                    <field name="update_mobile" />
                     <field name="update_email" />
                     <field name="update_address" />
                 </group>
