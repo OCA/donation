@@ -1,0 +1,327 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_match_or_create
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-11 21:58+0000\n"
+"PO-Revision-Date: 2026-01-11 21:58+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_res_partner_title__api_code
+msgid "API Code"
+msgstr "Code API"
+
+#. module: partner_match_or_create
+#: model_terms:ir.ui.view,arch_db:partner_match_or_create.view_partner_title_form
+#: model_terms:ir.ui.view,arch_db:partner_match_or_create.view_partner_title_tree
+msgid "API Code (do not modify)"
+msgstr "Code API (ne pas modifier)"
+
+#. module: partner_match_or_create
+#: model_terms:ir.ui.view,arch_db:partner_match_or_create.partner_match_or_create_form
+msgid "Address"
+msgstr "Adresse"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__street
+msgid "Address Line 1"
+msgstr "Adresse 1ère ligne"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__street2
+msgid "Address Line 2"
+msgstr "Adresse 2ème ligne"
+
+#. module: partner_match_or_create
+#: model_terms:ir.ui.view,arch_db:partner_match_or_create.partner_match_or_create_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__city
+#: model_terms:ir.ui.view,arch_db:partner_match_or_create.partner_match_or_create_form
+msgid "City"
+msgstr "Ville"
+
+#. module: partner_match_or_create
+#: model:ir.model,name:partner_match_or_create.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: partner_match_or_create
+#. odoo-python
+#: code:addons/partner_match_or_create/wizards/partner_match_or_create.py:0
+msgid ""
+"Contact <a href=# data-oe-model=res.partner data-oe-"
+"id=%(partner_id)d>%(partner_name)s</a> created from web form information."
+msgstr ""
+"Contact <a href=# data-oe-model=res.partner data-oe-"
+"id=%(partner_id)d>%(partner_name)s</a> créé à partir des informations du "
+"formulaire Web."
+
+#. module: partner_match_or_create
+#. odoo-python
+#: code:addons/partner_match_or_create/wizards/partner_match_or_create.py:0
+msgid ""
+"Contact created by the wizard of the module <em>partner_match_or_create</em>."
+msgstr ""
+"Contact créé par l'assistant du module <em>partner_match_or_create</em>."
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_partner_id
+msgid "Contact to Update"
+msgstr "Contact à mettre à jour"
+
+#. module: partner_match_or_create
+#. odoo-python
+#: code:addons/partner_match_or_create/wizards/partner_match_or_create.py:0
+msgid ""
+"Contact updated by the wizard of the module <em>partner_match_or_create</em>."
+msgstr ""
+"Contact mise à jour par l'assistant du module <em>partner_match_or_create</"
+"em>."
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__country_id
+#: model_terms:ir.ui.view,arch_db:partner_match_or_create.partner_match_or_create_form
+msgid "Country"
+msgstr "Pays"
+
+#. module: partner_match_or_create
+#: model_terms:ir.ui.view,arch_db:partner_match_or_create.partner_match_or_create_form
+msgid "Create New Contact"
+msgstr "Créer une nouveau contact"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__create_or_update
+msgid "Create Or Update"
+msgstr "Créer ou mettre à jour"
+
+#. module: partner_match_or_create
+#: model:ir.actions.act_window,name:partner_match_or_create.partner_match_or_create_action
+msgid "Create or Update Contact"
+msgstr "Créer ou mettre à jour un contact"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: partner_match_or_create
+#: model_terms:ir.ui.view,arch_db:partner_match_or_create.partner_match_or_create_form
+msgid "Current Address"
+msgstr "Adresse actuelle"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_partner_city
+msgid "Current City"
+msgstr "Ville actuelle"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_partner_country_id
+msgid "Current Country"
+msgstr "Pays actuel"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_partner_email
+msgid "Current E-mail"
+msgstr "E-mail actuel"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_partner_mobile
+msgid "Current Mobile"
+msgstr "Portable actuel"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_partner_phone
+msgid "Current Phone"
+msgstr "Téléphone actuel"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_partner_state_id
+msgid "Current State"
+msgstr "État actuel"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_partner_street
+msgid "Current Street"
+msgstr "Rue actuelle"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_partner_street2
+msgid "Current Street2"
+msgstr "Rue2 actuelle"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_partner_zip
+msgid "Current ZIP"
+msgstr "Code postal actuel"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__email
+msgid "E-mail"
+msgstr "E-mail"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__firstname
+msgid "Firstname"
+msgstr "Prénom"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__id
+msgid "ID"
+msgstr ""
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__lastname
+msgid "Lastname"
+msgstr "Nom de famille"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__mobile
+msgid "Mobile"
+msgstr "Portable"
+
+#. module: partner_match_or_create
+#. odoo-python
+#: code:addons/partner_match_or_create/wizards/partner_match_or_create.py:0
+msgid "New Partner"
+msgstr "Nouveau partenaire"
+
+#. module: partner_match_or_create
+#: model:ir.model,name:partner_match_or_create.model_res_partner_title
+msgid "Partner Title"
+msgstr "Titre du partenaire"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__phone
+msgid "Phone"
+msgstr "Téléphone"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__res_id
+msgid "Res"
+msgstr ""
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__res_model
+msgid "Res Model"
+msgstr "Modèle Res"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__state_id
+#: model_terms:ir.ui.view,arch_db:partner_match_or_create.partner_match_or_create_form
+msgid "State"
+msgstr "État"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__suggested_partner_ids
+msgid "Suggested Contacts"
+msgstr "Contacts suggérés"
+
+#. module: partner_match_or_create
+#: model_terms:ir.ui.view,arch_db:partner_match_or_create.partner_match_or_create_form
+msgid "Suggested Existing Contacts"
+msgstr "Contacts existants suggérés"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,help:partner_match_or_create.field_res_partner_title__api_code
+msgid "Technical code used by the API. Do not modify!"
+msgstr "Code technique utilisé par l'API. Ne pas modifier !"
+
+#. module: partner_match_or_create
+#. odoo-python
+#: code:addons/partner_match_or_create/wizards/partner_match_or_create.py:0
+msgid "The partner to update is not set."
+msgstr "Le partenaire à mettre à jour n'est pas défini."
+
+#. module: partner_match_or_create
+#: model:ir.model.constraint,message:partner_match_or_create.constraint_res_partner_title_api_code_uniq
+msgid "This API code already exists."
+msgstr "Ce code API existe déjà."
+
+#. module: partner_match_or_create
+#: model:ir.model.fields.selection,name:partner_match_or_create.selection__partner_match_or_create__create_or_update__update
+msgid "This partner already exists in Odoo"
+msgstr "Ce partenaire existe déjà dans Odoo"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields.selection,name:partner_match_or_create.selection__partner_match_or_create__create_or_update__create
+msgid "This partner doesn't already exists in Odoo"
+msgstr "Ce partenaire n'existe pas dans Odoo"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__title_id
+msgid "Title"
+msgstr "Titre"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_address
+msgid "Update Address"
+msgstr "Mettre à jour l'adresse"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_email
+msgid "Update E-mail"
+msgstr "Mettre à jour l'e-mail"
+
+#. module: partner_match_or_create
+#: model_terms:ir.ui.view,arch_db:partner_match_or_create.partner_match_or_create_form
+msgid "Update Existing Contact"
+msgstr "Mettre à jour un contact existant"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_mobile
+msgid "Update Mobile"
+msgstr "Mettre à jour le portable"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__update_phone
+msgid "Update Phone"
+msgstr "Mettre à jour le téléphone"
+
+#. module: partner_match_or_create
+#: model:ir.model,name:partner_match_or_create.model_partner_match_or_create
+msgid "Wizard to match/update an existing contact or create a new contact"
+msgstr ""
+"Assistant pour trouver/mettre à jour un contact existant ou créer un nouveau "
+"contact"
+
+#. module: partner_match_or_create
+#: model:ir.model.fields,field_description:partner_match_or_create.field_partner_match_or_create__zip
+#: model_terms:ir.ui.view,arch_db:partner_match_or_create.partner_match_or_create_form
+msgid "ZIP"
+msgstr "Code postal"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Dernière modification le"
