@@ -3,7 +3,7 @@
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -51,11 +51,11 @@ class ProductTemplate(models.Model):
             # constraint
             if product.donation_type and product.taxes_id:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "There shouldn't have any Customer Taxes on the "
-                        "donation product '%s'."
+                        "donation product '%s'.",
+                        product.display_name,
                     )
-                    % product.display_name
                 )
 
 

@@ -11,9 +11,9 @@ class DonationValidate(models.TransientModel):
 
     def run(self):
         self.ensure_one()
-        assert (
-            self.env.context.get("active_model") == "donation.donation"
-        ), "Source model must be donations"
+        assert self.env.context.get("active_model") == "donation.donation", (
+            "Source model must be donations"
+        )
         assert self.env.context.get("active_ids"), "No donations selected"
         donations = self.env["donation.donation"].browse(
             self.env.context.get("active_ids")

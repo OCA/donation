@@ -4,7 +4,7 @@
 
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Domain
 
@@ -248,7 +248,7 @@ class PartnerMatchOrCreate(models.TransientModel):
         partner = self.env["res.partner"].create(vals)
         model = self.env[self.res_model]
         partner.message_post(
-            body=_(
+            body=self.env._(
                 "Contact created by the wizard of the module "
                 "<em>partner_match_or_create</em>."
             )
@@ -256,7 +256,7 @@ class PartnerMatchOrCreate(models.TransientModel):
         record = model.browse(self.res_id)
         record.write({"partner_id": partner.id})
         record.message_post(
-            body=_(
+            body=self.env._(
                 "Contact <a href=# data-oe-model=res.partner data-oe-id=%(partner_id)d>"
                 "%(partner_name)s</a> created from web form information.",
                 partner_id=partner.id,
@@ -265,7 +265,7 @@ class PartnerMatchOrCreate(models.TransientModel):
         )
         action = {
             "type": "ir.actions.act_window",
-            "name": _("New Partner"),
+            "name": self.env._("New Partner"),
             "res_model": "res.partner",
             "view_mode": "form",
             "res_id": partner.id,
@@ -275,7 +275,7 @@ class PartnerMatchOrCreate(models.TransientModel):
     def update_partner(self):
         self.ensure_one()
         if not self.update_partner_id:
-            raise UserError(_("The partner to update is not set."))
+            raise UserError(self.env._("The partner to update is not set."))
         vals = {}
         if self.update_phone:
             vals["phone"] = self.mobile or self.phone
@@ -295,7 +295,7 @@ class PartnerMatchOrCreate(models.TransientModel):
         model = self.env[self.res_model]
         if vals:
             self.update_partner_id.write(vals)
-            msg = _(
+            msg = self.env._(
                 "Contact updated by the wizard of the module "
                 "<em>partner_match_or_create</em>."
             )

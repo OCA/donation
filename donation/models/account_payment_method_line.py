@@ -19,8 +19,7 @@ class AccountPaymentMethodLine(models.Model):
             if mode.donation and mode.payment_type != "inbound":
                 raise ValidationError(
                     self.env._(
-                        "Donation payment method '%s'"
-                        "is not an inbound payment method.",
+                        "Donation payment method '%s' is not an inbound payment method.",  # noqa: E501
                         mode.display_name,
                     )
                 )
