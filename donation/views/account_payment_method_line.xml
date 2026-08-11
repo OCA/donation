@@ -15,7 +15,9 @@
             in the account module (!), we'll add a filter on donation
             and, in the action below, we'll replace the domain
     by a default filter on donation payment methods (it will
-    make it easier to set donation=True on a payment mode) -->
+    make it easier to set donation=True on a payment mode).
+    In the meantime, I added a small glue module donation_payment_base_oca
+    that implements what is described above. -->
 
     <record
         id="account_payment_method_line_donation_action"

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_payment_method_line_form" model="ir.ui.view">
+        <field name="model">account.payment.method.line</field>
+        <field
+            name="inherit_id"
+            ref="account_payment_base_oca.account_payment_method_line_form"
+        />
+        <field name="arch" type="xml">
+            <field name="selectable" position="after">
+                <field name="donation" />
+            </field>
+        </field>
+    </record>
+
+    <record id="account_payment_method_line_search" model="ir.ui.view">
+        <field name="model">account.payment.method.line</field>
+        <field
+            name="inherit_id"
+            ref="account_payment_base_oca.account_payment_method_line_search"
+        />
+        <field name="arch" type="xml">
+            <filter name="not_selectable" position="after">
+                <separator />
+                <filter
+                    name="donation"
+                    string="Donation"
+                    domain="[('donation', '=', True)]"
+                />
+            </filter>
+        </field>
+    </record>
+
+    <record
+        id="donation.account_payment_method_line_donation_action"
+        model="ir.actions.act_window"
+    >
+        <field name="domain" />
+        <field
+            name="context"
+        >{'default_donation': True, 'default_payment_type': 'inbound', 'search_default_donation': True}</field>
+    </record>
+</odoo>
