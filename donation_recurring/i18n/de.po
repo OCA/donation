@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2019-02-08 16:50+0000\n"
-"Last-Translator: kempleton <kimdoelling@gmail.com>\n"
+"PO-Revision-Date: 2026-08-11 15:46+0000\n"
+"Last-Translator: smaddlsoft <jm.veddeler@gmail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: donation_recurring
 #: model:ir.model.fields.selection,name:donation_recurring.selection__donation_donation__recurring_template__active
@@ -24,7 +24,7 @@ msgstr "Aktiv"
 #. module: donation_recurring
 #: model_terms:ir.ui.view,arch_db:donation_recurring.donation_search
 msgid "Active Recurring Template"
-msgstr "Aktive wiederkehrende Vorlage"
+msgstr "Aktive Dauerspendenvorlage"
 
 #. module: donation_recurring
 #. odoo-python
@@ -34,51 +34,54 @@ msgid ""
 "As it is a recurring donation, the Tax Receipt Option has been changed from "
 "Each to Annual. You may want to change it also on the Donor form."
 msgstr ""
+"Da es sich um eine Dauerspende handelt, wurde die "
+"Spendenbescheinigungsoption von 'Einzel' auf 'Jährlich' geändert. Sie können "
+"dies auch im Spenderformular anpassen."
 
 #. module: donation_recurring
 #: model_terms:ir.ui.view,arch_db:donation_recurring.donation_recurring_generate_form
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate__company_id
 msgid "Company"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Erstellt von"
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Erstellt am"
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate__date
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: donation_recurring
 #: model:ir.model,name:donation_recurring.model_donation_donation
 msgid "Donation"
-msgstr ""
+msgstr "Spende"
 
 #. module: donation_recurring
 #: model_terms:ir.ui.view,arch_db:donation_recurring.donation_search
 msgid "From Recurring"
-msgstr ""
+msgstr "Aus Dauerspende"
 
 #. module: donation_recurring
 #: model_terms:ir.ui.view,arch_db:donation_recurring.donation_recurring_generate_form
 msgid "Generate"
-msgstr ""
+msgstr "Erzeugen"
 
 #. module: donation_recurring
 #: model:ir.actions.act_window,name:donation_recurring.donation_recurring_generate_action
@@ -86,100 +89,100 @@ msgstr ""
 #: model:ir.ui.menu,name:donation_recurring.donation_recurring_generate_menu
 #: model_terms:ir.ui.view,arch_db:donation_recurring.donation_recurring_generate_form
 msgid "Generate Recurring Donations"
-msgstr ""
+msgstr "Dauerspenden erzeugen"
 
 #. module: donation_recurring
 #: model_terms:ir.ui.view,arch_db:donation_recurring.donation_form
 msgid "History"
-msgstr ""
+msgstr "Verlauf"
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zuletzt geändert am"
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt aktualisiert von"
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt aktualisiert am"
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_donation__recurring_donation_ids
 msgid "Past Recurring Donations"
-msgstr ""
+msgstr "Vergangene Dauerspenden"
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_recurring_generate__payment_ref
 msgid "Payment Reference"
-msgstr ""
+msgstr "Zahlungsreferenz"
 
 #. module: donation_recurring
 #: model_terms:ir.ui.view,arch_db:donation_recurring.donation_form
 msgid "Re-activate"
-msgstr ""
+msgstr "Reaktivieren"
 
 #. module: donation_recurring
 #. odoo-python
 #: code:addons/donation_recurring/models/donation.py:0
 #, python-format
 msgid "Recurring Donation %s"
-msgstr ""
+msgstr "Dauerspende %s"
 
 #. module: donation_recurring
 #: model:ir.actions.act_window,name:donation_recurring.donation_recurring_action
 #: model:ir.ui.menu,name:donation_recurring.donation_recurring_menu
 msgid "Recurring Donations"
-msgstr ""
+msgstr "Dauerspenden"
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_donation__recurring_template
 msgid "Recurring Template"
-msgstr ""
+msgstr "Dauerspendenvorlage"
 
 #. module: donation_recurring
 #. odoo-python
 #: code:addons/donation_recurring/wizard/donation_recurring_generate.py:0
 #, python-format
 msgid "Recurring donations have already been generated for %s."
-msgstr ""
+msgstr "Dauerspenden für %s wurden bereits erzeugt."
 
 #. module: donation_recurring
 #: model:ir.model.fields,field_description:donation_recurring.field_donation_donation__source_recurring_id
 msgid "Source Recurring Template"
-msgstr ""
+msgstr "Ursprüngliche Dauerspendenvorlage"
 
 #. module: donation_recurring
 #: model_terms:ir.ui.view,arch_db:donation_recurring.donation_form
 msgid "Suspend"
-msgstr ""
+msgstr "Aussetzen"
 
 #. module: donation_recurring
 #: model:ir.model.fields.selection,name:donation_recurring.selection__donation_donation__recurring_template__suspended
 #: model_terms:ir.ui.view,arch_db:donation_recurring.donation_form
 msgid "Suspended"
-msgstr ""
+msgstr "Ausgesetzt"
 
 #. module: donation_recurring
 #. odoo-python
 #: code:addons/donation_recurring/models/donation.py:0
 #, python-format
 msgid "Suspended Recurring Donation %s"
-msgstr ""
+msgstr "Ausgesetzte Dauerspende %s"
 
 #. module: donation_recurring
 #: model_terms:ir.ui.view,arch_db:donation_recurring.donation_search
 msgid "Suspended Recurring Template"
-msgstr ""
+msgstr "Ausgesetzte Dauerspendenvorlage"
 
 #. module: donation_recurring
 #. odoo-python
@@ -187,6 +190,7 @@ msgstr ""
 #, python-format
 msgid "The recurring donation %s cannot have a tax receipt option 'Each'."
 msgstr ""
+"Die Dauerspende %s kann nicht die Spendenbescheinigungsoption 'Einzel' haben."
 
 #. module: donation_recurring
 #. odoo-python
@@ -195,20 +199,22 @@ msgstr ""
 msgid ""
 "The recurring donation template %s cannot have a Source Recurring Template"
 msgstr ""
+"Die Dauerspendenvorlage %s darf keine ursprüngliche Dauerspendenvorlage "
+"haben."
 
 #. module: donation_recurring
 #. odoo-python
 #: code:addons/donation_recurring/models/donation.py:0
 #, python-format
 msgid "The recurring donation template %s must stay in draft state."
-msgstr ""
+msgstr "Die Dauerspendenvorlage %s muss im Entwurfsstatus verbleiben."
 
 #. module: donation_recurring
 #. odoo-python
 #: code:addons/donation_recurring/models/donation.py:0
 #, python-format
 msgid "Update of Tax Receipt Option"
-msgstr ""
+msgstr "Aktualisierung der Spendenbescheinigungsoption"
 
 #. module: donation_recurring
 #. odoo-python
@@ -217,3 +223,5 @@ msgstr ""
 msgid ""
 "You cannot delete an active recurring donation. You must suspend it first."
 msgstr ""
+"Eine aktive Dauerspende kann nicht gelöscht werden. Sie muss zuerst "
+"ausgesetzt werden."
