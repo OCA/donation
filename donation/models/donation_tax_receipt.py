@@ -15,7 +15,7 @@ class DonationTaxReceipt(models.Model):
 
     @api.model
     def update_tax_receipt_annual_dict(
-        self, tax_receipt_annual_dict, start_date, end_date, company
+        self, tax_receipt_annual_dict, start_date, end_date, company, split_payment_method=False
     ):
         res = super().update_tax_receipt_annual_dict(
             tax_receipt_annual_dict, start_date, end_date, company
@@ -36,15 +36,22 @@ class DonationTaxReceipt(models.Model):
             tax_receipt_amount = donation.tax_receipt_total
             if company.currency_id.is_zero(tax_receipt_amount):
                 continue
-            partner = donation.commercial_partner_id
-            if partner not in tax_receipt_annual_dict:
-                tax_receipt_annual_dict[partner] = {
+            partner = donation.commercial_partner_id            
+            payment_mode = donation.payment_mode_id
+
+            if split_payment_method:
+                key = (partner,payment_mode) 
+            else:
+                key = (partner,)
+                
+            if key not in tax_receipt_annual_dict:
+                tax_receipt_annual_dict[key] = {
                     "amount": tax_receipt_amount,
                     "extra_vals": {"donation_ids": [(6, 0, [donation.id])]},
                 }
             else:
-                tax_receipt_annual_dict[partner]["amount"] += tax_receipt_amount
-                tax_receipt_annual_dict[partner]["extra_vals"]["donation_ids"][0][
+                tax_receipt_annual_dict[key]["amount"] += tax_receipt_amount
+                tax_receipt_annual_dict[key]["extra_vals"]["donation_ids"][0][
                     2
                 ].append(donation.id)
         return res

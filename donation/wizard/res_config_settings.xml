@@ -46,7 +46,7 @@
                                 />
                             </div>
                         </div>
-                       <div
+                        <div
                             class="col-12 col-lg-6 o_setting_box"
                             id="donation_check_total"
                         >
@@ -55,6 +55,14 @@
                             </div>
                             <div class="o_setting_right_pane">
                                 <label for="group_donation_check_total" />
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="split_receipts_payment_mode">
+                            <div class="o_setting_left_pane">
+                                    <field name="split_by_payment_mode" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="split_by_payment_mode" />
                             </div>
                         </div>
                     </div>

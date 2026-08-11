@@ -447,6 +447,18 @@ class DonationDonation(models.Model):
                     )
                     % donation.display_name
                 )
+            
+            mixed_in_kind = any([line.in_kind for line in donation.line_ids]) and any(
+                [not line.in_kind for line in donation.line_ids]
+            )
+            if mixed_in_kind:
+                raise UserError(
+                    _(
+                        "Donation %s has a mix of in-kind and non in-kind "
+                        "donation lines. Please separate them into two donations."
+                    )
+                    % donation.display_name
+                )
 
             vals = {"state": "done"}
             if full_in_kind and donation.payment_mode_id:

@@ -52,6 +52,11 @@ class DonationTaxReceipt(models.Model):
         required=True,
         tracking=True,
     )
+    payment_mode_id = fields.Many2one(
+        "account.payment.mode",
+        string="Payment Mode",
+        tracking=True,
+    )
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -67,7 +72,7 @@ class DonationTaxReceipt(models.Model):
 
     @api.model
     def update_tax_receipt_annual_dict(
-        self, tax_receipt_annual_dict, start_date, end_date, company
+        self, tax_receipt_annual_dict, start_date, end_date, company, split_payment_method=False
     ):
         """This method is inherited in donation and donation_sale
         It is called by the tax.receipt.annual.create wizard"""

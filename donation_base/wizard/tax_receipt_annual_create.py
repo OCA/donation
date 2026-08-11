@@ -37,16 +37,18 @@ class TaxReceiptAnnualCreate(models.TransientModel):
     )
 
     @api.model
-    def _prepare_annual_tax_receipt(self, partner, partner_dict):
+    def _prepare_annual_tax_receipt(self, key_table, partner_dict, split_payment_method=False):
         vals = {
             "company_id": self.company_id.id,
             "currency_id": self.company_id.currency_id.id,
             "amount": partner_dict["amount"],
             "type": "annual",
-            "partner_id": partner.id,
+            "partner_id": key_table[0].id,
             "date": self.end_date,
             "donation_date": self.end_date,
         }
+        if split_payment_method:
+            vals["payment_mode_id"] = key_table[1].id
         # designed to add add O2M fields donation_ids and invoice_ids
         vals.update(partner_dict["extra_vals"])
         return vals
@@ -58,10 +60,11 @@ class TaxReceiptAnnualCreate(models.TransientModel):
             self.start_date,
             self.end_date,
         )
+        split_by_payment_mode = self.company_id.donation_receipt_split_by_payment_mode
         dtro = self.env["donation.tax.receipt"]
         tax_receipt_annual_dict = {}
         self.env["donation.tax.receipt"].update_tax_receipt_annual_dict(
-            tax_receipt_annual_dict, self.start_date, self.end_date, self.company_id
+            tax_receipt_annual_dict, self.start_date, self.end_date, self.company_id, split_payment_method=split_by_payment_mode
         )
         tax_receipt_ids = []
         existing_annual_receipts = dtro.search(
@@ -74,22 +77,26 @@ class TaxReceiptAnnualCreate(models.TransientModel):
         )
         existing_annual_receipts_dict = {}
         for receipt in existing_annual_receipts:
-            existing_annual_receipts_dict[receipt.partner_id] = receipt
+            if split_by_payment_mode and receipt.payment_mode_id:
+                key = (receipt.partner_id, receipt.payment_mode_id.id)
+            else:
+                key = (receipt.partner_id,)
+            existing_annual_receipts_dict[key] = receipt
 
-        for partner, partner_dict in tax_receipt_annual_dict.items():
+        for key_table, partner_dict in tax_receipt_annual_dict.items():
             # Block if the partner already has an annual tax receipt
-            if partner in existing_annual_receipts_dict:
-                existing_receipt = existing_annual_receipts_dict[partner]
+            if key_table in existing_annual_receipts_dict:
+                existing_receipt = existing_annual_receipts_dict[key_table]
                 raise UserError(
                     _(
                         "The Donor '%(partner)s' already has an annual tax receipt "
                         "in this timeframe: %(receipt)s dated %(number)s.",
-                        partner=partner.display_name,
+                        partner=key_table[0].display_name,
                         receipt=existing_receipt.number,
                         date=format_date(self.env, existing_receipt.date),
                     )
                 )
-            vals = self._prepare_annual_tax_receipt(partner, partner_dict)
+            vals = self._prepare_annual_tax_receipt(key_table, partner_dict, split_payment_method=split_by_payment_mode)
             tax_receipt = dtro.create(vals)
             tax_receipt_ids.append(tax_receipt.id)
             logger.info("Tax receipt %s generated", tax_receipt.number)
