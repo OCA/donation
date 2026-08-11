@@ -6,21 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2019-01-26 15:41+0000\n"
-"Last-Translator: kempleton <kimdoelling@gmail.com>\n"
+"PO-Revision-Date: 2026-08-11 14:46+0000\n"
+"Last-Translator: smaddlsoft <jm.veddeler@gmail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.3\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_res_partner__donation_count
 #: model:ir.model.fields,field_description:donation.field_res_users__donation_count
 msgid "# of Donations"
-msgstr "# an Spenden"
+msgstr "Anzahl der Spenden"
 
 #. module: donation
 #: model:ir.actions.report,print_report_name:donation.report_thanks
@@ -28,47 +28,49 @@ msgid ""
 "'donation_thanks-%s%s' % (object.number, object.state == 'draft' and '-"
 "draft' or '')"
 msgstr ""
+"'Dankesschreiben-%s%s' % (object.number, object.state == 'draft' and '-"
+"Entwurf' or '')"
 
 #. module: donation
 #: model:ir.model.constraint,message:donation.constraint_donation_campaign_code_company_uniq
 msgid "A campaign with the same code already exists!"
-msgstr ""
+msgstr "Eine Kampagne mit demselben Code ist bereits vorhanden!"
 
 #. module: donation
 #: model:ir.model.constraint,message:donation.constraint_donation_donation_bank_statement_line_uniq
 msgid "A donation already exists for this bank statement line."
-msgstr ""
+msgstr "Für diese Kontoauszugszeile ist bereits eine Spende vorhanden."
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Aktion erforderlich"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__active
 #: model:ir.model.fields,field_description:donation.field_donation_thanks_template__active
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Aktivitäten"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Ausnahme-Aktivität"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Aktivitätsstatus"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Symbol des Aktivitätstyps"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__amount
@@ -94,17 +96,17 @@ msgstr "Betrag in Unternehmenswährung"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__analytic_distribution
 msgid "Analytic Distribution"
-msgstr ""
+msgstr "Kostenstellenverteilung"
 
 #. module: donation
 #: model:ir.model,name:donation.model_account_analytic_applicability
 msgid "Analytic Plan's Applicabilities"
-msgstr ""
+msgstr "Anwendungsbereiche des Analyseplans"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__analytic_precision
 msgid "Analytic Precision"
-msgstr ""
+msgstr "Analytische Genauigkeit"
 
 #. module: donation
 #: model:ir.model.fields.selection,name:donation.selection__donation_donation__tax_receipt_option__annual
@@ -118,22 +120,22 @@ msgstr "Sammelspendenbescheinigung"
 #: model_terms:ir.ui.view,arch_db:donation.donation_thanks_template_form
 #: model_terms:ir.ui.view,arch_db:donation.donation_thanks_template_search
 msgid "Archived"
-msgstr ""
+msgstr "Archiviert"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Anzahl der Anhänge"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Back to Draft"
-msgstr "Zurücksetzen auf Entwurf"
+msgstr "Zurück zum Entwurf"
 
 #. module: donation
 #: model:ir.model,name:donation.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Kontoauszugszeile"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_report_search
@@ -161,6 +163,8 @@ msgid ""
 "Cancelled donation '%s' is linked to a journal entry. This should never "
 "happen."
 msgstr ""
+"Abgebrochene Spende '%s' ist mit einem Buchungssatz verknüpft. Dies sollte "
+"niemals passieren."
 
 #. module: donation
 #. odoo-python
@@ -168,24 +172,29 @@ msgstr ""
 msgid ""
 "Cancelled donation '%s' is linked to a tax receipt. This should never happen."
 msgstr ""
+"Abgebrochene Spende '%s' ist mit einer Spendenbescheinigung verknüpft. Dies "
+"sollte niemals passieren."
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/donation.py:0
 msgid "Cannot validate donation %s because it doesn't have any lines!"
 msgstr ""
+"Spende %s kann nicht bestätigt werden, da keine Positionen vorhanden sind!"
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/donation.py:0
 msgid "Cannot validate donation %s because it is not in draft state."
 msgstr ""
+"Spende %s kann nicht bestätigt werden, da sie sich nicht im Entwurfsstatus "
+"befindet."
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/donation.py:0
 msgid "Cannot validate donation %s because the total amount is 0!"
-msgstr ""
+msgstr "Spende %s kann nicht bestätigt werden, da der Gesamtbetrag 0 ist!"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_report__product_categ_id
@@ -211,12 +220,12 @@ msgstr "Überprüfe Betrag"
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.res_config_settings_donation
 msgid "Check Total"
-msgstr ""
+msgstr "Gesamtbetrag prüfen"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_res_config_settings__group_donation_check_total
 msgid "Check Total on Donations"
-msgstr ""
+msgstr "Gesamtbetrag bei Spenden prüfen"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__code
@@ -231,7 +240,7 @@ msgstr "Code für eine Spendenkampagne"
 #. module: donation
 #: model:ir.model,name:donation.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__company_id
@@ -254,7 +263,7 @@ msgstr "Unternehmenswährung"
 #. module: donation
 #: model:ir.model,name:donation.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_config_menu
@@ -264,7 +273,7 @@ msgstr "Konfiguration"
 #. module: donation
 #: model:ir.model,name:donation.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__country_id
@@ -274,13 +283,13 @@ msgstr "Land"
 #. module: donation
 #: model:ir.ui.menu,name:donation.tax_receipt_annual_create_menu
 msgid "Create Annual Receipts"
-msgstr "Erstelle Sammelspendenbescheinigungen"
+msgstr "Sammelspendenbescheinigungen erstellen"
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/account_bank_statement_line.py:0
 msgid "Create Donation from Bank Statement Line"
-msgstr ""
+msgstr "Spende aus Kontoauszugszeile erstellen"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__create_uid
@@ -339,12 +348,12 @@ msgstr "Anzeigename"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__distribution_analytic_account_ids
 msgid "Distribution Analytic Account"
-msgstr ""
+msgstr "Kostenstellenzuordnung"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_account_analytic_applicability__business_domain
 msgid "Domain"
-msgstr ""
+msgstr "Bereich"
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_donation
@@ -367,6 +376,9 @@ msgid ""
 "by Credit Transfer Account is not set for company '%(company)s'. This should "
 "never happen."
 msgstr ""
+"Spende %(donation)s ist mit einer Kontoauszugszeile verknüpft, aber das "
+"Konto für Spenden per Überweisung ist bei Unternehmen '%(company)s' nicht "
+"konfiguriert. Dies sollte niemals passieren."
 
 #. module: donation
 #. odoo-python
@@ -375,18 +387,24 @@ msgid ""
 "Donation '%(donation)s' is linked to the tax receipt %(tax_receipt)s, so you "
 "cannot delete it."
 msgstr ""
+"Spende '%(donation)s' ist mit der Spendenbescheinigung %(tax_receipt)s "
+"verknüpft und kann daher nicht gelöscht werden."
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/donation.py:0
 msgid "Donation '%s' is in Done state, so you cannot delete it."
 msgstr ""
+"Spende '%s' befindet sich im Status 'Erledigt' und kann daher nicht gelöscht "
+"werden."
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/donation.py:0
 msgid "Donation '%s' is linked to a journal entry, so you cannot delete it."
 msgstr ""
+"Spende '%s' ist mit einem Buchungssatz verknüpft und kann daher nicht "
+"gelöscht werden."
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__campaign_id
@@ -403,7 +421,7 @@ msgstr "Spendenkampagnen"
 #. module: donation
 #: model:res.groups,name:donation.group_donation_check_total
 msgid "Donation Check Total"
-msgstr ""
+msgstr "Gesamtbetrag der Spende prüfen"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__donation_date
@@ -416,7 +434,7 @@ msgstr "Spendendatum"
 #: model:ir.model.fields,field_description:donation.field_donation_donation__line_ids
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Donation Lines"
-msgstr "Spendenzeile"
+msgstr "Spendenpositionen"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__number
@@ -426,24 +444,24 @@ msgstr "Spendennummer"
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_tax_receipt_menu
 msgid "Donation Tax Receipts"
-msgstr "Spendenbescheinigung"
+msgstr "Spendenbescheinigungen"
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_thanks_template
 msgid "Donation Thanks Letter Template"
-msgstr ""
+msgstr "Vorlage für Dankesschreiben"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_res_company__donation_account_id
 #: model:ir.model.fields,field_description:donation.field_res_config_settings__donation_account_id
 msgid "Donation by Credit Transfer Account"
-msgstr ""
+msgstr "Konto für Spenden per Überweisung"
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/account_payment_method_line.py:0
 msgid "Donation payment method '%s'is not an inbound payment method."
-msgstr ""
+msgstr "Zahlungsmethode '%s' ist keine Eingangszahlungsmethode."
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_action
@@ -468,7 +486,7 @@ msgstr "Spendenanalyse"
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_line_action
 msgid "Donations Lines"
-msgstr "Spendenzeilen"
+msgstr "Spendenpositionen"
 
 #. module: donation
 #: model:ir.model.fields.selection,name:donation.selection__donation_donation__state__done
@@ -497,7 +515,7 @@ msgstr "Entwurf"
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__tax_receipt_total
 msgid "Eligible Tax Receipt Sub-total in Company Currency"
-msgstr "berechtigte Zwischensumme Spendenbescheinigung"
+msgstr "Bescheinigungsfähige Zwischensumme in Unternehmenswährung"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_report__tax_receipt_ok
@@ -516,21 +534,23 @@ msgstr "Fehler:"
 #: code:addons/donation/models/donation.py:0
 msgid "Failed to get account for donation line with product '%s'."
 msgstr ""
+"Buchungskonto für Spendenposition mit Produkt '%s' konnte nicht ermittelt "
+"werden."
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Abonnenten"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Abonnenten (Partner)"
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Font-Awesome-Symbol, z. B. fa-tasks"
 
 #. module: donation
 #: model:ir.model.fields.selection,name:donation.selection__donation_donation__tax_receipt_option__each
@@ -542,7 +562,7 @@ msgstr "Für jede Spende"
 #. odoo-python
 #: code:addons/donation/models/donation.py:0
 msgid "Full in-kind donation: no journal entry generated."
-msgstr ""
+msgstr "Vollständige Sachspende: kein Buchungssatz erstellt."
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_report_search
@@ -553,7 +573,7 @@ msgstr "Gruppieren nach"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Enthält Nachrichten"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__id
@@ -569,32 +589,32 @@ msgstr "ID"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Symbol"
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Symbol zur Kennzeichnung einer Ausnahmeaktivität."
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Wenn aktiviert, erfordern neue Nachrichten Ihre Aufmerksamkeit."
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Wenn aktiviert, haben einige Nachrichten einen Zustellungsfehler."
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_account_payment_method_line__donation
 msgid "If enabled, this payment method will be available on donations"
-msgstr ""
+msgstr "Wenn aktiviert, steht diese Zahlungsmethode für Spenden zur Verfügung"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_thanks_template__image
 msgid "Image"
-msgstr ""
+msgstr "Bild"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__in_kind
@@ -605,7 +625,7 @@ msgstr "Sachspende"
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 msgid "In kind"
-msgstr ""
+msgstr "Sachspende"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__tax_receipt_ok
@@ -615,12 +635,12 @@ msgstr "Ist geeignet für Spendenbescheinigung"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Ist Abonnent"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__move_id
 msgid "Journal Entry"
-msgstr ""
+msgstr "Buchungssatz"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__write_uid
@@ -645,12 +665,12 @@ msgstr "Zuletzt aktualisiert am"
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_from_bank_statement_line_form
 msgid "Lines"
-msgstr ""
+msgstr "Positionen"
 
 #. module: donation
 #: model:ir.module.category,description:donation.module_category_donation
 msgid "Manage donations"
-msgstr "Verwalte Spenden"
+msgstr "Spenden verwalten"
 
 #. module: donation
 #: model:res.groups,name:donation.group_donation_manager
@@ -660,39 +680,41 @@ msgstr "Manager"
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_tree
 msgid "Mark all selected donation as Thanks Printed?"
-msgstr ""
+msgstr "Alle ausgewählten Spenden als 'Dankesschreiben gedruckt' markieren?"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_tree
 msgid "Mark as Thanks Printed"
-msgstr ""
+msgstr "Als 'Dankesschreiben gedruckt' markieren"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Nachrichtenzustellungsfehler"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Nachrichten"
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/account_bank_statement_line.py:0
 msgid "Missing Product for Donations via Credit Transfert for company '%s'."
 msgstr ""
+"Fehlende Produktkonfiguration für Spenden per Überweisung bei Unternehmen "
+"'%s'."
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/account_bank_statement_line.py:0
 msgid "Missing inbound payment method linked to the bank journal '%s'."
-msgstr ""
+msgstr "Fehlende Eingangszahlungsmethode für das Bank-Journal '%s'."
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Eigene Aktivitätsfrist"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__name
@@ -703,28 +725,28 @@ msgstr "Name"
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_campaign_search
 msgid "Name or Code"
-msgstr ""
+msgstr "Name oder Code"
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/donation.py:0
 msgid "New"
-msgstr ""
+msgstr "Neu"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Nächste Aktivitätsfrist"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Zusammenfassung nächste Aktivität"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Nächster Aktivitätstyp"
 
 #. module: donation
 #: model:ir.model.fields.selection,name:donation.selection__donation_donation__tax_receipt_option__none
@@ -739,22 +761,22 @@ msgstr "Notizen"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Anzahl der Aktionen"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Anzahl der Fehler"
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Anzahl der Nachrichten, die eine Aktion erfordern"
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Anzahl der Nachrichten mit Zustellungsfehler"
 
 #. module: donation
 #. odoo-python
@@ -763,6 +785,8 @@ msgid ""
 "On bank statement line '%(line)s', the amount (%(amount)s) is negative so it "
 "cannot be processed as a donation."
 msgstr ""
+"In der Kontoauszugszeile '%(line)s' ist der Betrag (%(amount)s) negativ und "
+"kann daher nicht als Spende verarbeitet werden."
 
 #. module: donation
 #. odoo-python
@@ -770,6 +794,8 @@ msgstr ""
 msgid ""
 "On bank statement line '%s', the partner is required to process a donation."
 msgstr ""
+"Für die Kontoauszugszeile '%s' muss ein Partner angegeben werden, um eine "
+"Spende zu verarbeiten."
 
 #. module: donation
 #. odoo-python
@@ -778,6 +804,8 @@ msgid ""
 "On the company %(company)s, the Product for Donations via Credit Transfer (%"
 "(product)s) is not a donation product !"
 msgstr ""
+"Beim Unternehmen %(company)s ist das Produkt für Spenden per Überweisung (%"
+"(product)s) kein Spendenprodukt!"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
@@ -788,19 +816,19 @@ msgstr "Weitere Informationen"
 #: model:ir.model.fields,field_description:donation.field_donation_donation__commercial_partner_id
 #: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Parent Donor"
-msgstr ""
+msgstr "Übergeordneter Spender"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 msgid "Partner"
-msgstr "Parnter"
+msgstr "Kontakt"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_report__country_id
 #: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 #: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Partner Country"
-msgstr "Partner Land"
+msgstr "Land des Kontakts"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__payment_method_line_id
@@ -812,14 +840,14 @@ msgstr "Zahlungsmethode"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_report__payment_method_line_id
 msgid "Payment Method Line"
-msgstr ""
+msgstr "Zahlungsmethodenzeile"
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.account_payment_method_line_donation_action
 #: model:ir.model,name:donation.model_account_payment_method_line
 #: model:ir.ui.menu,name:donation.account_payment_method_line_donation_menu
 msgid "Payment Methods"
-msgstr ""
+msgstr "Zahlungsmethoden"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__payment_ref
@@ -830,7 +858,7 @@ msgstr "Zahlungsreferenz"
 #. odoo-python
 #: code:addons/donation/models/donation.py:0
 msgid "Payment account is not set on payment method '%s'."
-msgstr ""
+msgstr "Zahlungskonto bei der Zahlungsmethode '%s' ist nicht konfiguriert."
 
 #. module: donation
 #. odoo-python
@@ -839,16 +867,18 @@ msgid ""
 "Payment method is not set on donation %s (only fully in-kind donations don't "
 "require a payment method)."
 msgstr ""
+"Bei Spende %s ist keine Zahlungsmethode hinterlegt (nur vollständige "
+"Sachspenden benötigen keine Zahlungsmethode)."
 
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_tax_receipt_print_menu
 msgid "Print Receipts"
-msgstr "Drucke Bescheinigung"
+msgstr "Bescheinigungen drucken"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Print Thanks Letter"
-msgstr ""
+msgstr "Dankesschreiben drucken"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__product_id
@@ -866,13 +896,13 @@ msgstr "Produktkategorie"
 #: model:ir.model.fields,field_description:donation.field_donation_line__product_donation_type
 #: model_terms:ir.ui.view,arch_db:donation.donation_report_search
 msgid "Product Type donation"
-msgstr ""
+msgstr "Produkttyp Spende"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_res_company__donation_credit_transfer_product_id
 #: model:ir.model.fields,field_description:donation.field_res_config_settings__donation_credit_transfer_product_id
 msgid "Product for Donations via Credit Transfer"
-msgstr ""
+msgstr "Produkt für Spenden per Überweisung"
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_product_action
@@ -894,22 +924,22 @@ msgstr "Verbundene Spenden"
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_report_title_menu
 msgid "Reporting"
-msgstr ""
+msgstr "Berichte"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Verantwortlicher Benutzer"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_form
 msgid "Save Default Values"
-msgstr "Speicher Default Werte"
+msgstr "Standardwerte speichern"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_from_bank_statement_line_form
 msgid "Save as Draft"
-msgstr ""
+msgstr "Als Entwurf speichern"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_campaign__sequence
@@ -922,12 +952,12 @@ msgstr "Reihenfolge"
 #: model:ir.actions.act_window,name:donation.donation_settings_action
 #: model:ir.ui.menu,name:donation.donation_settings_menu
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__bank_statement_line_id
 msgid "Source Bank Statement Line"
-msgstr ""
+msgstr "Ursprüngliche Kontoauszugszeile"
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_line__tax_receipt_ok
@@ -955,6 +985,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Status basierend auf Aktivitäten\n"
+"Überfällig: Fälligkeitsdatum ist bereits abgelaufen\n"
+"Heute: Aktivitätsdatum ist heute\n"
+"Geplant: Zukünftige Aktivitäten."
 
 #. module: donation
 #: model:ir.model,name:donation.model_donation_tax_receipt_option_switch
@@ -965,7 +999,7 @@ msgstr "Ändere Spendenbescheinigung"
 #: model:ir.model.fields,field_description:donation.field_donation_donation__tax_receipt_id
 #: model_terms:ir.ui.view,arch_db:donation.donation_line_tree
 msgid "Tax Receipt"
-msgstr "Steuerbeleg"
+msgstr "Spendenbescheinigung"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__tax_receipt_total
@@ -984,7 +1018,7 @@ msgstr "Spendenbescheinigung"
 #. module: donation
 #: model:ir.model,name:donation.model_donation_tax_receipt
 msgid "Tax Receipt for Donations"
-msgstr "Steuerbeleg für Spenden"
+msgstr "Spendenbescheinigung"
 
 #. module: donation
 #: model:ir.ui.menu,name:donation.donation_tax_title_menu
@@ -994,35 +1028,35 @@ msgstr "Spendenbescheinigungen"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_thanks_template__text
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #. module: donation
 #: model:ir.actions.report,name:donation.report_thanks
 msgid "Thanks Letter"
-msgstr ""
+msgstr "Dankesschreiben"
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_thanks_template_action
 #: model:ir.ui.menu,name:donation.donation_thanks_template_menu
 msgid "Thanks Letter Templates"
-msgstr ""
+msgstr "Dankesschreibenvorlagen"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__thanks_printed
 #: model:ir.model.fields,field_description:donation.field_donation_report__thanks_printed
 msgid "Thanks Printed"
-msgstr ""
+msgstr "Dankesschreiben gedruckt"
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__thanks_template_id
 #: model:ir.model.fields,field_description:donation.field_donation_report__thanks_template_id
 msgid "Thanks Template"
-msgstr ""
+msgstr "Dankesschreibenvorlage"
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_search
 msgid "Thanks to Print"
-msgstr ""
+msgstr "Zu druckende Dankesschreiben"
 
 #. module: donation
 #. odoo-python
@@ -1031,12 +1065,16 @@ msgid ""
 "The Donation by Credit Transfer Account '%(account)s' for company '%"
 "(company)s' is not reconciliable. This should never happen."
 msgstr ""
+"Das Konto für Spenden per Überweisung '%(account)s' bei Unternehmen '%"
+"(company)s' ist nicht ausgleichsfähig. Dies sollte niemals passieren."
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/account_bank_statement_line.py:0
 msgid "The Donation by Credit Transfer Accountis not set for company '%s'."
 msgstr ""
+"Das Konto für Spenden per Überweisung ist bei Unternehmen '%s' nicht "
+"konfiguriert."
 
 #. module: donation
 #. odoo-python
@@ -1045,13 +1083,15 @@ msgid ""
 "The amount of donation %(donation)s (%(check_total)s) is different from the "
 "sum of the donation lines (%(amount_total)s)."
 msgstr ""
+"Der Betrag der Spende %(donation)s (%(check_total)s) stimmt nicht mit der "
+"Summe der Spendenpositionen (%(amount_total)s) überein."
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/donation.py:0
 msgid ""
 "The date of donation %s should be today or in the past, not in the future!"
-msgstr ""
+msgstr "Das Datum der Spende %s darf nicht in der Zukunft liegen!"
 
 #. module: donation
 #. odoo-python
@@ -1060,6 +1100,8 @@ msgid ""
 "The payment method '%(pay_mode)s' selected on donation %(donation)s is not a "
 "donation payment method."
 msgstr ""
+"Die bei Spende %(donation)s ausgewählte Zahlungsmethode '%(pay_mode)s' ist "
+"keine Spendenzahlungsmethode."
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__thanks_printed
@@ -1067,6 +1109,7 @@ msgid ""
 "This field automatically becomes active when the thanks letter has been "
 "printed."
 msgstr ""
+"Dieses Feld wird automatisch aktiv, wenn das Dankesschreiben gedruckt wurde."
 
 #. module: donation
 #: model_terms:ir.ui.view,arch_db:donation.donation_validate_form
@@ -1083,12 +1126,12 @@ msgstr "Gesamt"
 #: model:ir.model.fields,help:donation.field_res_company__donation_account_id
 #: model:ir.model.fields,help:donation.field_res_config_settings__donation_account_id
 msgid "Transfer account for donations received by credit transfer. "
-msgstr ""
+msgstr "Transferkonto für per Überweisung eingegangene Spenden. "
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Art der Ausnahmeaktivität im Datensatz."
 
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_line__unit_price
@@ -1118,12 +1161,12 @@ msgstr "Bestätigen"
 #: model:ir.model,name:donation.model_donation_validate
 #: model_terms:ir.ui.view,arch_db:donation.donation_validate_form
 msgid "Validate Donations"
-msgstr "Bestätige Spenden"
+msgstr "Spenden bestätigen"
 
 #. module: donation
 #: model:ir.actions.act_window,name:donation.donation_validate_action
 msgid "Validate Draft Donations"
-msgstr "Bestätige Spenden Entwürfe"
+msgstr "Spendenentwürfe bestätigen"
 
 #. module: donation
 #: model:res.groups,name:donation.group_donation_viewer
@@ -1133,12 +1176,12 @@ msgstr "Betrachter"
 #. module: donation
 #: model:ir.model.fields,field_description:donation.field_donation_donation__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Website-Nachrichten"
 
 #. module: donation
 #: model:ir.model.fields,help:donation.field_donation_donation__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Website-Kommunikationsverlauf"
 
 #. module: donation
 #. odoo-python
@@ -1147,16 +1190,17 @@ msgid ""
 "You cannot cancel this donation because it is linked to the tax receipt %s. "
 "You should first delete this tax receipt (but it may not be legally allowed)."
 msgstr ""
-"Sie können die Spende nicht abbrechen, weil sie mit dem Steuerbeleg  %s1 "
-"verbunden ist. Sie müssen zuerst diesen Steuerbeleg löschen (aber dies mag "
-"rechtlich nicht erlaubt sein)."
+"Sie können die Spende nicht abbrechen, weil sie mit der Spendenbescheinigung "
+"%s verknüpft ist. Sie müssen zuerst diese Spendenbescheinigung löschen (dies "
+"ist möglicherweise rechtlich nicht zulässig)."
 
 #. module: donation
 #. odoo-python
 #: code:addons/donation/models/donation.py:0
 msgid "You cannot change the Tax Receipt Option when it is Annual."
 msgstr ""
-"Sie können nicht die Steuerbeleg Option ändern, wenn diese jährlich ist."
+"Sie können die Spendenbescheinigungsoption nicht ändern, wenn sie auf "
+"'Jährlich' gesetzt ist."
 
 #, python-format
 #~ msgid "A cancelled donation should not be linked to a tax receipt"
