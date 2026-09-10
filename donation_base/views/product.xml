@@ -25,7 +25,7 @@
                     domain="[('tax_receipt_ok', '=', True)]"
                 />
             </filter>
-            <filter name="type" position="after">
+            <filter name="group_by_type" position="after">
                 <filter
                     name="donation_type_groupby"
                     string="Donation Type"

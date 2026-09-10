@@ -4,7 +4,7 @@
     <record id="product_product_donation" model="product.product">
         <field name="name">Donation</field>
         <field name="default_code">DON</field>
-        <field name="categ_id" ref="product.product_category_5" />
+        <field name="categ_id" ref="product.product_category_services" />
         <field name="sale_ok" eval="True" />
         <field name="tax_receipt_ok" eval="True" />
         <field name="list_price">0</field>
@@ -18,7 +18,7 @@
     <record id="product_product_donation_notaxreceipt" model="product.product">
         <field name="name">Donation - no tax receipt</field>
         <field name="default_code">DON-NOTAXR</field>
-        <field name="categ_id" ref="product.product_category_5" />
+        <field name="categ_id" ref="product.product_category_services" />
         <field name="sale_ok" eval="True" />
         <field name="tax_receipt_ok" eval="False" />
         <field name="list_price">0</field>
@@ -32,7 +32,7 @@
     <record id="product_product_inkind_donation" model="product.product">
         <field name="name">In-Kind Donation</field>
         <field name="default_code">KIND-DON</field>
-        <field name="categ_id" ref="product.product_category_5" />
+        <field name="categ_id" ref="product.product_category_services" />
         <field name="sale_ok" eval="True" />
         <field name="tax_receipt_ok" eval="True" />
         <field name="list_price">0</field>
@@ -46,7 +46,7 @@
     <record id="product_product_inkind_donation_notaxreceipt" model="product.product">
         <field name="name">In-Kind Donation - no tax receipt</field>
         <field name="default_code">KIND-DON-NOTAXR</field>
-        <field name="categ_id" ref="product.product_category_5" />
+        <field name="categ_id" ref="product.product_category_services" />
         <field name="sale_ok" eval="True" />
         <field name="tax_receipt_ok" eval="False" />
         <field name="list_price">0</field>
