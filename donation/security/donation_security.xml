@@ -13,39 +13,34 @@
             <field name="sequence">45</field>
             <field name="parent_id" ref="base.module_category_accounting" />
         </record>
+        <record id="privilege_donation" model="res.groups.privilege">
+            <field name="name">Donations</field>
+            <field name="category_id" ref="module_category_donation" />
+            <field name="sequence">45</field>
+        </record>
         <record id="group_donation_viewer" model="res.groups">
             <field name="name">Viewer</field>
-            <field name="category_id" ref="module_category_donation" />
+            <field name="privilege_id" ref="privilege_donation" />
         </record>
         <record id="group_donation_user" model="res.groups">
             <field name="name">User</field>
-            <field name="category_id" ref="module_category_donation" />
+            <field name="privilege_id" ref="privilege_donation" />
             <field name="implied_ids" eval="[(4, ref('group_donation_viewer'))]" />
         </record>
         <record id="group_donation_manager" model="res.groups">
             <field name="name">Manager</field>
-            <field name="category_id" ref="module_category_donation" />
+            <field name="privilege_id" ref="privilege_donation" />
             <field name="implied_ids" eval="[(4, ref('group_donation_user'))]" />
-            <field name="users" eval="[(4, ref('base.user_root'))]" />
+            <field
+                name="user_ids"
+                eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
+            />
         </record>
         <record id="group_donation_check_total" model="res.groups">
             <field name="name">Donation Check Total</field>
-            <field name="category_id" ref="base.module_category_hidden" />
         </record>
     </data>
     <data noupdate="1">
-        <record id="base.default_user" model="res.users">
-            <field
-                name="groups_id"
-                eval="[(4, ref('donation.group_donation_manager'))]"
-            />
-        </record>
-        <record id="base.user_admin" model="res.users">
-            <field
-                name="groups_id"
-                eval="[(4, ref('donation.group_donation_manager'))]"
-            />
-        </record>
         <!-- Multi-company Rules -->
         <record id="donation_company_rule" model="ir.rule">
             <field name="name">Donation Multi-company</field>

@@ -1,10 +1,11 @@
 # Copyright 2014-2021 Barroux Abbey (http://www.barroux.org)
 # Copyright 2014-2021 Akretion France
+# Copyright 2026 Tiesa
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     "name": "Donation",
-    "version": "18.0.1.3.0",
+    "version": "19.0.1.0.0",
     "category": "Accounting",
     "license": "AGPL-3",
     "summary": "Manage donations",

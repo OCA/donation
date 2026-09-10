@@ -173,13 +173,10 @@ class DonationDonation(models.Model):
         copy=False,
     )
 
-    _sql_constraints = [
-        (
-            "bank_statement_line_uniq",
-            "unique(bank_statement_line_id)",
-            "A donation already exists for this bank statement line.",
-        )
-    ]
+    _bank_statement_line_uniq = models.Constraint(
+        "unique(bank_statement_line_id)",
+        "A donation already exists for this bank statement line.",
+    )
 
     @api.depends(
         "line_ids.unit_price",

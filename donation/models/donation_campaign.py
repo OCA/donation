@@ -21,13 +21,10 @@ class DonationCampaign(models.Model):
     company_id = fields.Many2one("res.company", ondelete="cascade")
     note = fields.Text("Notes")
 
-    _sql_constraints = [
-        (
-            "code_company_uniq",
-            "unique(code, company_id)",
-            "A campaign with the same code already exists!",
-        )
-    ]
+    _code_company_uniq = models.Constraint(
+        "unique(code, company_id)",
+        "A campaign with the same code already exists!",
+    )
 
     @api.depends("code", "name")
     def _compute_display_name(self):
