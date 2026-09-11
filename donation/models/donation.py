@@ -567,7 +567,8 @@ class DonationDonation(models.Model):
                 )
         self.write({"state": "draft"})
 
-    def unlink(self):
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_done(self):
         for donation in self:
             if donation.state == "done":
                 raise UserError(
@@ -576,6 +577,10 @@ class DonationDonation(models.Model):
                         donation.display_name,
                     )
                 )
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_linked_move(self):
+        for donation in self:
             if donation.move_id:
                 raise UserError(
                     self.env._(
@@ -584,6 +589,10 @@ class DonationDonation(models.Model):
                         donation.display_name,
                     )
                 )
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_linked_tax_receipt(self):
+        for donation in self:
             if donation.tax_receipt_id:
                 raise UserError(
                     self.env._(
@@ -593,7 +602,6 @@ class DonationDonation(models.Model):
                         tax_receipt=donation.tax_receipt_id.display_name,
                     )
                 )
-        return super().unlink()
 
     @api.depends("state", "number")
     def _compute_display_name(self):
