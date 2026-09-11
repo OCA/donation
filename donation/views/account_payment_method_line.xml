@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_payment_method_line_tree" model="ir.ui.view">
+        <field name="name">donation.account.payment.method.line.list</field>
+        <field name="model">account.payment.method.line</field>
+        <field name="inherit_id" ref="account.view_account_payment_method_line_tree" />
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="donation" optional="hide" widget="boolean_toggle" />
+            </field>
+        </field>
+    </record>
+
+    <!-- When we'll have a search view on account.payment.method.line
+            in the account module (!), we'll add a filter on donation
+            and, in the action below, we'll replace the domain
+    by a default filter on donation payment methods (it will
+    make it easier to set donation=True on a payment mode) -->
+
+    <record
+        id="account_payment_method_line_donation_action"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Payment Methods</field>
+        <field name="res_model">account.payment.method.line</field>
+        <field name="view_mode">list,form</field>
+        <field
+            name="domain"
+        >[('payment_type', '=', 'inbound'), ('donation', '=', True)]</field>
+        <field
+            name="context"
+        >{'default_donation': True, 'default_payment_type': 'inbound'}</field>
+    </record>
+    <menuitem
+        id="account_payment_method_line_donation_menu"
+        action="account_payment_method_line_donation_action"
+        parent="donation_config_donation_menu"
+        sequence="20"
+    />
+</odoo>
