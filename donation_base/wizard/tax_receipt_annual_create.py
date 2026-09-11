@@ -6,7 +6,7 @@
 import datetime
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.misc import format_date
 
@@ -81,7 +81,7 @@ class TaxReceiptAnnualCreate(models.TransientModel):
             if partner in existing_annual_receipts_dict:
                 existing_receipt = existing_annual_receipts_dict[partner]
                 raise UserError(
-                    _(
+                    self.env._(
                         "The Donor '%(partner)s' already has an annual tax receipt "
                         "in this timeframe: %(receipt)s dated %(date)s.",
                         partner=partner.display_name,
@@ -94,7 +94,7 @@ class TaxReceiptAnnualCreate(models.TransientModel):
             tax_receipt_ids.append(tax_receipt.id)
             logger.info("Tax receipt %s generated", tax_receipt.number)
         if not tax_receipt_ids:
-            raise UserError(_("No annual tax receipt to generate"))
+            raise UserError(self.env._("No annual tax receipt to generate"))
         logger.info("%d annual fiscal receipts generated", len(tax_receipt_ids))
         action = (
             self.env.ref("donation_base.donation_tax_receipt_action").sudo().read([])[0]

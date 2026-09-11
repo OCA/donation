@@ -3,7 +3,7 @@
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -59,10 +59,10 @@ class DonationTaxReceipt(models.Model):
             if "company_id" in vals:
                 self = self.with_company(vals["company_id"])
             date = vals.get("donation_date")
-            if vals.get("number", _("New")) == _("New"):
+            if vals.get("number", self.env._("New")) == self.env._("New"):
                 vals["number"] = self.env["ir.sequence"].next_by_code(
                     "donation.tax.receipt", sequence_date=date
-                ) or _("New")
+                ) or self.env._("New")
         return super().create(vals_list)
 
     @api.model
@@ -76,7 +76,9 @@ class DonationTaxReceipt(models.Model):
         self.ensure_one()
         if not self.partner_id.email:
             raise UserError(
-                _("Missing email on partner '%s'.") % self.partner_id.display_name
+                self.env._(
+                    "Missing email on partner '%s'.", self.partner_id.display_name
+                )
             )
         template = self.env.ref("donation_base.tax_receipt_email_template")
         layout_xmlid = "mail.mail_notification_light"
@@ -90,7 +92,7 @@ class DonationTaxReceipt(models.Model):
             force_email=True,
         )
         action = {
-            "name": _("Compose Email"),
+            "name": self.env._("Compose Email"),
             "type": "ir.actions.act_window",
             "view_mode": "form",
             "res_model": "mail.compose.message",

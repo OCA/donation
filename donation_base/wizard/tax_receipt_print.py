@@ -3,7 +3,7 @@
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -26,7 +26,7 @@ class DonationTaxReceiptPrint(models.TransientModel):
     def print_receipts(self):
         self.ensure_one()
         if not self.receipt_ids:
-            raise UserError(_("There are no tax receipts to print."))
+            raise UserError(self.env._("There are no tax receipts to print."))
         today = fields.Date.context_today(self)
         self.receipt_ids.write({"print_date": today})
         return self.env.ref("donation_base.report_donation_tax_receipt").report_action(
