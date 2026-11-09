@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  SPDX-FileCopyrightText: 2026 Coop IT Easy SC
+
+  SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+<odoo>
+    <template
+        id="portal_layout_donations"
+        name="Portal layout: donations menu entry"
+        inherit_id="portal.portal_breadcrumbs"
+        priority="40"
+    >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li
+                t-if="page_name == 'donations'"
+                class="breadcrumb-item active"
+            >Donations</li>
+        </xpath>
+    </template>
+
+    <template
+        id="portal_my_home_donations"
+        name="Portal My Home: donations entry"
+        inherit_id="portal.portal_my_home"
+        customize_show="True"
+        priority="40"
+    >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_service_category_enable" t-value="True" />
+        </xpath>
+        <div id="portal_service_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Donations</t>
+                <t t-set="url" t-value="'/my/donations'" />
+                <t t-set="text">Review the history of your donations</t>
+                <t t-set="placeholder_count" t-value="'donation_count'" />
+            </t>
+        </div>
+    </template>
+
+    <template id="portal_my_donations" name="My Donations">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Donations</t>
+            </t>
+            <t t-if="not lines">
+                <p class="alert alert-warning">
+                    There are currently no donations for your account.
+                </p>
+            </t>
+            <t t-if="lines">
+                <t t-call="portal.portal_table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Product</th>
+                            <th class="text-end">Quantity</th>
+                            <th class="text-end">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="lines" t-as="line">
+                            <td>
+                                <span
+                                    t-field="line.donation_date"
+                                    t-options='{"widget": "date"}'
+                                />
+                            </td>
+                            <td>
+                                <span t-out="product_names[line.id]" />
+                            </td>
+                            <td class="text-end">
+                                <span t-field="line.quantity" />
+                            </td>
+                            <td class="text-end">
+                                <span
+                                    t-field="line.amount"
+                                    t-options='{"widget": "monetary"}'
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

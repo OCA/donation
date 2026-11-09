@@ -1,0 +1,2 @@
+- [Coop IT Easy SC](https://github.com/OCA/donation):
+  - Simon Hick
