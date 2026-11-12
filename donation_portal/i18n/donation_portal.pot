@@ -1,0 +1,56 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* donation_portal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: donation_portal
+#: model_terms:ir.ui.view,arch_db:donation_portal.portal_my_donations
+msgid "Amount"
+msgstr ""
+
+#. module: donation_portal
+#: model_terms:ir.ui.view,arch_db:donation_portal.portal_my_donations
+msgid "Date"
+msgstr ""
+
+#. module: donation_portal
+#: model:ir.model.fields,field_description:donation_portal.field_donation_line__donation_date
+msgid "Donation Date"
+msgstr ""
+
+#. module: donation_portal
+#: model:ir.ui.view,arch_db:donation_portal.portal_layout_donations
+#: model_terms:ir.ui.view,arch_db:donation_portal.portal_my_donations
+#: model_terms:ir.ui.view,arch_db:donation_portal.portal_my_home_donations
+msgid "Donations"
+msgstr ""
+
+#. module: donation_portal
+#: model_terms:ir.ui.view,arch_db:donation_portal.portal_my_donations
+msgid "Product"
+msgstr ""
+
+#. module: donation_portal
+#: model_terms:ir.ui.view,arch_db:donation_portal.portal_my_donations
+msgid "Quantity"
+msgstr ""
+
+#. module: donation_portal
+#: model_terms:ir.ui.view,arch_db:donation_portal.portal_my_home_donations
+msgid "Review the history of your donations"
+msgstr ""
+
+#. module: donation_portal
+#: model_terms:ir.ui.view,arch_db:donation_portal.portal_my_donations
+msgid "There are currently no donations for your account."
+msgstr ""

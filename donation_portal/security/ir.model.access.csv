@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_donation_donation_portal,donation.donation portal,donation.model_donation_donation,base.group_portal,1,0,0,0
+access_donation_line_portal,donation.line portal,donation.model_donation_line,base.group_portal,1,0,0,0
